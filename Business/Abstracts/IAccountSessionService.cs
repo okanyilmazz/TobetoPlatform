@@ -19,6 +19,6 @@ namespace Business.Abstracts
         Task<CreatedAccountSessionResponse> AddAsync(CreateAccountSessionRequest createAccountSessionRequest);
         Task<UpdatedAccountSessionResponse> UpdateAsync(UpdateAccountSessionRequest updateAccountSessionRequest);
         Task<DeletedAccountSessionResponse> DeleteAsync(DeleteAccountSessionRequest deleteAccountSessionRequest);
-        Task<IPaginate<GetListAccountSessionResponse>> GetListAsync();
+        Task<IPaginate<GetListAccountResponse>> GetListAsync();
     }
 }

@@ -22,5 +22,6 @@ namespace Business.Abstracts
         Task<DeletedAccountResponse> DeleteAsync(DeleteAccountRequest deleteAccountRequest);
         Task<IPaginate<GetListAccountResponse>> GetListAsync();
         Task<GetListAccountResponse> GetByIdAsync(Guid id);        
+        Task<IPaginate<GetListAccountResponse>> GetBySessionIdAsync(Guid id);        
     }
 }

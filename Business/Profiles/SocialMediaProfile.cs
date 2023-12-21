@@ -27,6 +27,10 @@ namespace Business.Profiles
 
             CreateMap<SocialMedia, GetListSocialMediaResponse>().ReverseMap();
             CreateMap<IPaginate<SocialMedia>, Paginate<GetListSocialMediaResponse>>().ReverseMap();
+
+            CreateMap<List<SocialMedia>, Paginate<GetListSocialMediaResponse>>().ForMember(destinationMember: s => s.Items,
+
+                memberOptions: opt => opt.MapFrom(a => a.ToList())).ReverseMap();
         }
     }
 }

@@ -12,6 +12,7 @@ using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes;
 
@@ -45,10 +46,20 @@ public class SocialMediaManager : ISocialMediaService
         return deletedSocialMediaResponse;
     }
 
+    public async Task<IPaginate<GetListSocialMediaResponse>> GetByAccountIdAsync(Guid accountId)
+    {
+        var socialMediaList = await _socialMediaDal.GetListAsync(
+            include: s => s.Include(a => a.Accounts));
+        var filteredSocialMedias = socialMediaList
+            .Items.SelectMany(s => s.Accounts.Where(a => a.Id == accountId).Select(a => s)).ToList();
+        var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMediaList);
+        return mappedSocialMedias;
+    }
+
     public async Task<IPaginate<GetListSocialMediaResponse>> GetListAsync()
     {
-        var SocialMedias = await _socialMediaDal.GetListAsync();
-        var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(SocialMedias);
+        var socialMedias = await _socialMediaDal.GetListAsync();
+        var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMedias);
         return mappedSocialMedias;
     }
 

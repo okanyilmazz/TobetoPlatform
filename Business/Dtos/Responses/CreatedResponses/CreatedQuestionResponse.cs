@@ -9,7 +9,6 @@ namespace Business.Dtos.Responses.CreatedResponses
     public class CreatedQuestionResponse
     {
         public Guid Id { get; set; }
-        public Guid ExamId { get; set; }
         public string Description { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }

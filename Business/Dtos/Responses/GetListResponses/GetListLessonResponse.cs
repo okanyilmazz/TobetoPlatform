@@ -14,7 +14,6 @@ namespace Business.Dtos.Responses.GetListResponses
         public Guid LessonSubTypeId { get; set; }
         public Guid ProductionCompanyId { get; set; }
         public Guid EducationProgramLevelId { get; set; }
-
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

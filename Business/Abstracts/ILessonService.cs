@@ -22,5 +22,6 @@ namespace Business.Abstracts
         Task<UpdatedLessonResponse> UpdateAsync(UpdateLessonRequest updateLessonRequest);
         Task<IPaginate<GetListLessonResponse>> GetListAsync();
         Task<GetListLessonResponse> GetByIdAsync(Guid id);
+        Task<IPaginate<GetListLessonResponse>> GetByAccountIdAsync(Guid id);
     }
 }

@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -72,5 +73,17 @@ namespace Business.Concretes
             UpdatedLessonResponse updatedLessonResponse = _mapper.Map<UpdatedLessonResponse>(updatedLesson);
             return updatedLessonResponse;
         }
+
+        public async Task<IPaginate<GetListLessonResponse>> GetByAccountIdAsync(Guid id)
+        {
+            var lessonList = await _lessonDal.GetListAsync(
+               include: l => l.Include(a => a.Accounts));
+
+            var filteredLessons = lessonList
+                .Items.SelectMany(l => l.Accounts.Where(a => a.Id== id).Select(a => l)).ToList();
+            var mappedLesson= _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
+            return mappedLesson;
+        }
+
     }
 }

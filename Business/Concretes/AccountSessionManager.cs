@@ -51,10 +51,10 @@ namespace Business.Concretes
 
         }
 
-        public async Task<IPaginate<GetListAccountSessionResponse>> GetListAsync()
+        public async Task<IPaginate<GetListAccountResponse>> GetListAsync()
         {
             var accountSession = await _accountSessionDal.GetListAsync();
-            var mappedAccountSession = _mapper.Map<Paginate<GetListAccountSessionResponse>>(accountSession);
+            var mappedAccountSession = _mapper.Map<Paginate<GetListAccountResponse>>(accountSession);
             return mappedAccountSession;
         }
 

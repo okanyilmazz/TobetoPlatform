@@ -8,11 +8,11 @@ namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class SessionServices : ControllerBase
+public class SessionsController : Controller
 {
     ISessionService _sessionService;
 
-    public SessionServices(ISessionService sessionService)
+    public SessionsController(ISessionService sessionService)
     {
         _sessionService = sessionService;
     }

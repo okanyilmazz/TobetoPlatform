@@ -53,6 +53,17 @@ namespace Business.Concretes
             return deletedAccountResponse;
         }
 
+        public async Task<IPaginate<GetListAccountResponse>> GetBySessionIdAsync(Guid sessionId)
+        {
+            var accountProgramList = await _accountDal.GetListAsync(
+                include: e => e.Include(s => s.Sessions));
+
+            var filteredAccountPrograms = accountProgramList
+                .Items.SelectMany(e => e.Sessions.Where(s => s.Id == sessionId).Select(s => e)).ToList();
+            var mappedAccountProgram = _mapper.Map<Paginate<GetListAccountResponse>>(filteredAccountPrograms);
+            return mappedAccountProgram;
+        }
+
         public async Task<IPaginate<GetListAccountResponse>> GetListAsync()
         {
             var account = await _accountDal.GetListAsync();

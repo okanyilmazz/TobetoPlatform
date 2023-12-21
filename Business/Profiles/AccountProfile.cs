@@ -31,6 +31,9 @@ namespace Business.Profiles
 
             CreateMap<Account, GetListAccountResponse>().ReverseMap();
             CreateMap<IPaginate<Account>, Paginate<GetListAccountResponse>>().ReverseMap();
+
+            CreateMap<List<Account>, Paginate<GetListAccountResponse>>().ForMember(destinationMember: h => h.Items,
+                memberOptions: opt => opt.MapFrom(h=>h.ToList())).ReverseMap();
         }
     }
 }

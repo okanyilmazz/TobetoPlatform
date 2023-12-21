@@ -61,12 +61,17 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListCertificateResponse>> GetListAsync()
         {
-            var Certificate = await _certificateDal.GetListAsync();
-            var mappedCertificate = _mapper.Map<Paginate<GetListCertificateResponse>>(Certificate);
+            var certificate = await _certificateDal.GetListAsync();
+            var mappedCertificate = _mapper.Map<Paginate<GetListCertificateResponse>>(certificate);
             return mappedCertificate;
         }
 
-
+        public async Task<IPaginate<GetListCertificateResponse>> GetAccountIdAsync(Guid Id)
+        {
+            var certificate = await _certificateDal.GetListAsync(c => c.AccountId == Id);
+            var mappedCertificate = _mapper.Map<IPaginate<GetListCertificateResponse>>(certificate);
+            return mappedCertificate;
+        }
     }
 }
 

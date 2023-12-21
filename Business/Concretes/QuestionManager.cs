@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,6 +72,18 @@ namespace Business.Concretes
             Question updatedQuestion = await _questionDal.UpdateAsync(question);
             UpdatedQuestionResponse updatedQuestionResponse = _mapper.Map<UpdatedQuestionResponse>(updatedQuestion);
             return updatedQuestionResponse;
+        }
+
+        public async Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid examId)
+        {
+
+            var questionsList = await _questionDal.GetListAsync(
+                include: q => q.Include(e => e.Exams));
+            var filteredQuestionList = questionsList
+                .Items.SelectMany(q => q.Exams.Where(e => e.Id == examId).Select(e => q)).ToList();
+
+            var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(filteredQuestionList);
+            return mappedQuestions;
         }
     }
 }

@@ -8,7 +8,6 @@ namespace Business.Dtos.Requests.CreateRequests
 {
     public class CreateOccupationClassRequest
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

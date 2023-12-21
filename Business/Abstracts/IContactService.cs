@@ -20,5 +20,7 @@ namespace Business.Abstracts
         Task<UpdatedContactResponse> UpdateAsync(UpdateContactRequest updateContactRequest);
         Task<DeletedContactResponse> DeleteAsync(DeleteContactRequest deleteContactRequest);
         Task<IPaginate<GetListContactResponse>> GetListAsync();
+        Task<GetListContactResponse> GetByIdAsync(Guid id);
+
     }
 }

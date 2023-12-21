@@ -52,6 +52,13 @@ namespace Business.Concretes
             return deleteddegreeTypeResponse;
         }
 
+        public async Task<GetListDegreeTypeResponse> GetByIdAsync(Guid id)
+        {
+            var degreeTypes = await _degreeTypeDal.GetAsync(d => d.Id == id);
+            var mappeddegreeTypes = _mapper.Map<GetListDegreeTypeResponse>(degreeTypes);
+            return mappeddegreeTypes;
+        }
+
         public async Task<IPaginate<GetListDegreeTypeResponse>> GetListAsync()
         {
             var degreeTypes = await _degreeTypeDal.GetListAsync();

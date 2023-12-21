@@ -44,6 +44,13 @@ public class SurveyManager : ISurveyService
         return deletedSurveyResponse;
     }
 
+    public async Task<GetListSurveyResponse> GetByIdAsync(Guid id)
+    {
+        var surveys = await _surveyDal.GetAsync(s => s.Id == id);
+        var mappedSurveys = _mapper.Map<GetListSurveyResponse>(surveys);
+        return mappedSurveys;
+    }
+
     public async Task<IPaginate<GetListSurveyResponse>> GetListAsync()
     {
         var surveys = await _surveyDal.GetListAsync();

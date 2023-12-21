@@ -21,5 +21,7 @@ namespace Business.Abstracts
         Task<UpdatedDegreeTypeResponse> UpdateAsync(UpdateDegreeTypeRequest updateDegreeTypeRequest);
 
         Task<IPaginate<GetListDegreeTypeResponse>> GetListAsync();
+        Task<GetListDegreeTypeResponse> GetByIdAsync(Guid id);
+
     }
 }

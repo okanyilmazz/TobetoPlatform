@@ -1,5 +1,5 @@
 ﻿using Business.Dtos.Requests.CreateRequests;
-﻿using System;
+using System;
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
@@ -16,11 +16,12 @@ using System.Threading.Tasks;
 
 namespace Business.Abstracts
 {
-    public interface IProductionCompanyService 
+    public interface IProductionCompanyService
     {
         Task<CreatedProductionCompanyResponse> AddAsync(CreateProductionCompanyRequest createProductionCompanyRequest);
         Task<UpdatedProductionCompanyResponse> UpdateAsync(UpdateProductionCompanyRequest updateProductionCompanyRequest);
         Task<DeletedProductionCompanyResponse> DeleteAsync(DeleteProductionCompanyRequest deleteProductionCompanyRequest);
         Task<IPaginate<GetListProductionCompanyResponse>> GetListAsync();
+        Task<GetListProductionCompanyResponse> GetByIdAsync(Guid id);
     }
 }

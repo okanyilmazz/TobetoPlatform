@@ -24,6 +24,12 @@ namespace WebAPI.Controllers
             var result = await _contactService.GetListAsync();
             return Ok(result);
         }
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var result = await _contactService.GetByIdAsync(id);
+            return Ok(result);
+        }
 
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateContactRequest createContactRequest)

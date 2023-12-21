@@ -15,5 +15,7 @@ namespace Business.Abstracts
         Task<UpdatedExamResponse> UpdateAsync(UpdateExamRequest updateExamRequest);
         Task<DeletedExamResponse> DeleteAsync(DeleteExamRequest deleteExamRequest);
         Task<IPaginate<GetListExamResponse>> GetListAsync();
+        Task<GetListExamResponse> GetByIdAsync(Guid id);
+
     }
 }

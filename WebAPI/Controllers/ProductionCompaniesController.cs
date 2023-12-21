@@ -2,6 +2,7 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using DataAccess.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,7 +13,6 @@ namespace WebAPI.Controllers;
 public class ProductionCompaniesController : ControllerBase
 {
     IProductionCompanyService _productionCompanyService;
-
     public ProductionCompaniesController(IProductionCompanyService productionCompanyService)
     {
         _productionCompanyService = productionCompanyService;
@@ -22,6 +22,12 @@ public class ProductionCompaniesController : ControllerBase
     public async Task<IActionResult> GetListAsync()
     {
         var result = await _productionCompanyService.GetListAsync();
+        return Ok(result);
+    }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _productionCompanyService.GetByIdAsync(id);
         return Ok(result);
     }
 

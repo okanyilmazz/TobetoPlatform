@@ -17,14 +17,16 @@ namespace Business.Concretes;
 public class ProductionCompanyManager : IProductionCompanyService
 {
     IProductionCompanyDal _productionCompanyDal;
+    ILessonDal _lessonDal;
     IMapper _mapper;
     ProductionCompanyBusinessRules _productionCompanyBusinessRules;
 
-    public ProductionCompanyManager(IProductionCompanyDal productionCompanyDal, IMapper mapper, ProductionCompanyBusinessRules productionCompanyBusinessRules)
+    public ProductionCompanyManager(IProductionCompanyDal productionCompanyDal, IMapper mapper, ProductionCompanyBusinessRules productionCompanyBusinessRules, ILessonDal lessonDal)
     {
         _productionCompanyDal = productionCompanyDal;
         _mapper = mapper;
         _productionCompanyBusinessRules = productionCompanyBusinessRules;
+        _lessonDal = lessonDal;
     }
 
     public async Task<CreatedProductionCompanyResponse> AddAsync(CreateProductionCompanyRequest createProductionCompanyRequest)
@@ -47,6 +49,12 @@ public class ProductionCompanyManager : IProductionCompanyService
     {
         var ProductionCompanies = await _productionCompanyDal.GetListAsync();
         var mappedProductionCompanies = _mapper.Map<Paginate<GetListProductionCompanyResponse>>(ProductionCompanies);
+        return mappedProductionCompanies;
+    }
+    public async Task<GetListProductionCompanyResponse> GetByIdAsync(Guid id)
+    {
+        var ProductionCompanies = await _productionCompanyDal.GetAsync(p => p.Id == id);
+        var mappedProductionCompanies = _mapper.Map<GetListProductionCompanyResponse>(ProductionCompanies);
         return mappedProductionCompanies;
     }
 

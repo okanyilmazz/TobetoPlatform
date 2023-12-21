@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concretes
 {
-    public class ContactManager:IContactService
+    public class ContactManager : IContactService
     {
         IContactDal _contactDal;
         IMapper _mapper;
@@ -48,6 +48,13 @@ namespace Business.Concretes
             Contact deletedContact = await _contactDal.DeleteAsync(contact);
             DeletedContactResponse deletedContactResponse = _mapper.Map<DeletedContactResponse>(deletedContact);
             return deletedContactResponse;
+        }
+
+        public async Task<GetListContactResponse> GetByIdAsync(Guid id)
+        {
+            var Contact = await _contactDal.GetAsync(p => p.Id == id);
+            var mappedContact = _mapper.Map<GetListContactResponse>(Contact);
+            return mappedContact;
         }
 
         public async Task<IPaginate<GetListContactResponse>> GetListAsync()

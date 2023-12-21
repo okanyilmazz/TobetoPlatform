@@ -53,6 +53,13 @@ namespace Business.Concretes
             return deletedExamResponse;
         }
 
+        public async Task<GetListExamResponse> GetByIdAsync(Guid id)
+        {
+            var exams = await _examDal.GetAsync(e => e.Id == id);
+            var mappedExams = _mapper.Map<GetListExamResponse>(exams);
+            return mappedExams;
+        }
+
         public async Task<IPaginate<GetListExamResponse>> GetListAsync()
         {
             var exams = await _examDal.GetListAsync();

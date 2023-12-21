@@ -24,6 +24,12 @@ public class DegreeTypesController : ControllerBase
         var result = await _degreeTypeService.GetListAsync();
         return Ok(result);
     }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _degreeTypeService.GetByIdAsync(id);
+        return Ok(result);
+    }
 
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateDegreeTypeRequest createDegreeTypeRequest)

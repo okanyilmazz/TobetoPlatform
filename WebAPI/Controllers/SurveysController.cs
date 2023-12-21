@@ -23,6 +23,12 @@ public class SurveysController : ControllerBase
         var result = await _surveyService.GetListAsync();
         return Ok(result);
     }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _surveyService.GetByIdAsync(id);
+        return Ok(result);
+    }
 
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateSurveyRequest createSurveyRequest)

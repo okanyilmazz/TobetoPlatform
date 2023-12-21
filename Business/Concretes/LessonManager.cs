@@ -13,11 +13,6 @@ using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concretes
 {
@@ -58,10 +53,16 @@ namespace Business.Concretes
             return mappedLessons;
         }
 
-        public async Task<GetListLessonResponse> GetByIdAsync(Guid id)
+        public async Task<IPaginate<GetListLessonResponse>> GetByEducationProgramIdAsync(Guid educationProgramId)
         {
-            var lesson = await _lessonDal.GetAsync(l => l.Id == id);
-            var mappedLesson = _mapper.Map<GetListLessonResponse>(lesson);
+            var lessonList = await _lessonDal.GetListAsync(
+                include: l => l.Include(ep => ep.EducationPrograms));
+
+            var filteredLessons = lessonList
+                .Items.SelectMany(l => l.EducationPrograms
+                .Where(ep => ep.Id == educationProgramId).Select(ep => l))
+                .ToList();
+            var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
             return mappedLesson;
         }
 

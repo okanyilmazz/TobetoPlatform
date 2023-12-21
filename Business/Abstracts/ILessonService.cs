@@ -21,7 +21,11 @@ namespace Business.Abstracts
         Task<DeletedLessonResponse> DeleteAsync(DeleteLessonRequest deleteLessonRequest);
         Task<UpdatedLessonResponse> UpdateAsync(UpdateLessonRequest updateLessonRequest);
         Task<IPaginate<GetListLessonResponse>> GetListAsync();
+<<<<<<< Updated upstream
         Task<GetListLessonResponse> GetByIdAsync(Guid id);
         Task<IPaginate<GetListLessonResponse>> GetByAccountIdAsync(Guid id);
+=======
+        Task<IPaginate<GetListLessonResponse>> GetByEducationProgramIdAsync(Guid id);
+>>>>>>> Stashed changes
     }
 }

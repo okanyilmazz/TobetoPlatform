@@ -25,10 +25,10 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("GetById")]
-    public async Task<IActionResult> GetByIdAsync(Guid id)
+    [HttpGet("GetByEducationProgramId")]
+    public async Task<IActionResult> GetByEducationProgramIdAsync(Guid id)
     {
-        var result = await _lessonService.GetByIdAsync(id);
+        var result = await _lessonService.GetByEducationProgramIdAsync(id);
         return Ok(result);
     }
 

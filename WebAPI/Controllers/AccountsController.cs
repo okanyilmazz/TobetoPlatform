@@ -32,6 +32,14 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetBySessionId")]
+        public async Task<IActionResult> GetBySessionIdAsync(Guid id)
+        {
+            var result = await _accountService.GetBySessionIdAsync(id);
+            return Ok(result);
+        }
+
+
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAccountRequest createAccountRequest)
         {

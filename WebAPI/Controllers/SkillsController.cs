@@ -2,6 +2,7 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Entities.Concretes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,12 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetListAsync()
         {
             var result = await _skillService.GetListAsync();
+            return Ok(result);
+        }     
+        [HttpGet("GetBySkillId")]
+        public async Task<IActionResult> GetBySkillId(Guid id)
+        {
+            var result = await _skillService.GetBySkillIdAsync(id);
             return Ok(result);
         }
         [HttpPost("Add")]

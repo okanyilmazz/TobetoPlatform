@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concretes
 {
-    internal class EfSkillDal : EfRepositoryBase<Skill, Guid, TobetoPlatformContext>, ISkillDal
+    public class EfSkillDal : EfRepositoryBase<Skill, Guid, TobetoPlatformContext>, ISkillDal
     {
         public EfSkillDal(TobetoPlatformContext context) : base(context)
         {

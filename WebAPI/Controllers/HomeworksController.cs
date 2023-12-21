@@ -22,6 +22,12 @@ public class HomeworksController : ControllerBase
     {
         var result = await _homeworkService.GetListAsync();
         return Ok(result);
+    }  
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountId(Guid id)
+    {
+        var result = await _homeworkService.GetByAccountIdAsync(id);
+        return Ok(result);
     }
 
     [HttpPost("Add")]

@@ -51,6 +51,13 @@ namespace Business.Concretes
 
         }
 
+        public async Task<GetListAccountSessionResponse> GetByIdAsync(Guid id)
+        {
+            var accountSession = await _accountSessionDal.GetAsync(a=>a.Id == id);
+            var mappedAccountSession = _mapper.Map<GetListAccountSessionResponse>(accountSession);
+            return mappedAccountSession;
+        }
+
         public async Task<IPaginate<GetListAccountResponse>> GetListAsync()
         {
             var accountSession = await _accountSessionDal.GetListAsync();

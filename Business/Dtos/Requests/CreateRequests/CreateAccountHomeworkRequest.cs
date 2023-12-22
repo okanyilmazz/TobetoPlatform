@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos.Requests.CreateRequests
+﻿using Entities.Concretes;
+
+namespace Business.Dtos.Requests.CreateRequests
 {
     public class CreateAccountHomeworkRequest
     {

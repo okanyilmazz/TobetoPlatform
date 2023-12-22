@@ -46,6 +46,13 @@ namespace Business.Concretes
             return deletedAccountHomeworkeResponse;
         }
 
+        public async Task<GetListAccountHomeworkResponse> GetByIdAsync(Guid id)
+        {
+            var accountHomework = await _accountHomeworkDal.GetAsync(a=>a.Id == id);
+            var mappedAccountHomework = _mapper.Map<GetListAccountHomeworkResponse>(accountHomework);
+            return mappedAccountHomework;
+        }
+
         public async Task<IPaginate<GetListAccountHomeworkResponse>> GetListAsync()
         {
             var accountHomework = await _accountHomeworkDal.GetListAsync();

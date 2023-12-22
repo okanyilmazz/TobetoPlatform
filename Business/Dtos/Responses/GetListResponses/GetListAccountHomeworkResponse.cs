@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos.Responses.GetListResponses
+﻿using Entities.Concretes;
+
+namespace Business.Dtos.Responses.GetListResponses
 {
     public class GetListAccountHomeworkResponse
     {

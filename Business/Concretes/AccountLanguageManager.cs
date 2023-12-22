@@ -48,6 +48,13 @@ namespace Business.Concretes
             return responseAccountLanguage;
         }
 
+        public async Task<GetListAccountLanguageResponse> GetByIdAsync(Guid id)
+        {
+            var AccountLanguageListed = await _accountLanguageDal.GetAsync(a=>a.Id == id);
+            var mappedListed = _mapper.Map<GetListAccountLanguageResponse>(AccountLanguageListed);
+            return mappedListed;
+        }
+
         public async Task<IPaginate<GetListAccountLanguageResponse>> GetListAsync()
         {
             var AccountLanguageListed = await _accountLanguageDal.GetListAsync();

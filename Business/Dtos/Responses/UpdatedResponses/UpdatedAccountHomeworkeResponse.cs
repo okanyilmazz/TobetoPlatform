@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos.Responses.UpdatedResponses
+﻿using Entities.Concretes;
+
+namespace Business.Dtos.Responses.UpdatedResponses
 {
     public class UpdatedAccountHomeworkeResponse
     {

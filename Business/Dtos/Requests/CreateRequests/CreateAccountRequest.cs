@@ -5,7 +5,7 @@ namespace Business.Dtos.Requests.CreateRequests
     public class CreateAccountRequest
     {
         public Guid AddressId { get; set; }
-        public Guid UserId { get; set; } 
+        public Guid UserId { get; set; }
         public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
         public string Description { get; set; }

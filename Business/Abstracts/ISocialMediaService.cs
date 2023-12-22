@@ -16,5 +16,6 @@ namespace Business.Abstracts;
         Task<DeletedSocialMediaResponse> DeleteAsync(DeleteSocialMediaRequest deleteSocialMediaRequest);
         Task<UpdatedSocialMediaResponse> UpdateAsync(UpdateSocialMediaRequest updateSocialMediaRequest);
         Task<IPaginate<GetListSocialMediaResponse>> GetListAsync();
-    }
+        Task<IPaginate<GetListSocialMediaResponse>> GetByAccountIdAsync(Guid Id);
+}
 

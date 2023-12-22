@@ -27,9 +27,13 @@ namespace Business.Profiles
             CreateMap<Skill, DeleteSkillRequest>().ReverseMap();
             CreateMap<Skill, DeletedSkillResponse>().ReverseMap();
 
-
             CreateMap<IPaginate<Skill>, Paginate<GetListSkillResponse>>().ReverseMap();
             CreateMap<Skill, GetListSkillResponse>().ReverseMap();
+
+            CreateMap<List<Skill>, Paginate<GetListSkillResponse>>().ForMember(destinationMember: s => s.Items,
+                memberOptions: opt => opt.MapFrom(s => s.ToList())).ReverseMap();
+                
+
         }
     }
 }

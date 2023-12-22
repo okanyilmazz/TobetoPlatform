@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,12 +47,20 @@ namespace Business.Concretes
             return deletedHomeworkResponse;
         }
 
+        public async Task<IPaginate<GetListHomeworkResponse>> GetByAccountIdAsync(Guid id)
+        {
+            var homeworks = await _homeworkDal.GetListAsync(
+                include: a=>a.Include(a=>a.Accounts));
+            var filteredHomeworks = homeworks.Items.SelectMany(h=>h.Accounts.Where(a=>a.Id ==id).Select(a=>h)).ToList();
+            var mappedHomeworks = _mapper.Map<Paginate<GetListHomeworkResponse>>(filteredHomeworks);
+            return mappedHomeworks;
+        }
+
         public async Task<IPaginate<GetListHomeworkResponse>> GetListAsync()
         {
             var homeworks = await _homeworkDal.GetListAsync();
             var mappedHomeworks = _mapper.Map<Paginate<GetListHomeworkResponse>>(homeworks);
             return mappedHomeworks;
-
         }
 
         public async Task<UpdatedHomeworkResponse> UpdateAsync(UpdateHomeworkRequest updateHomeworkRequest)

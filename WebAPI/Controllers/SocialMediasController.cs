@@ -30,6 +30,14 @@ namespace WebAPI.Controllers
             var result = await _socialMediaService.GetListAsync();
             return Ok(result);
         }
+
+        [HttpGet("GetByAccountId")]
+        public async Task<IActionResult> GetByAccountIdAsync(Guid Id)
+        {
+            var result = await _socialMediaService.GetByAccountIdAsync(Id);
+            return Ok(result);
+        }
+
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateSocialMediaRequest createSocialMediaRequest)
         {

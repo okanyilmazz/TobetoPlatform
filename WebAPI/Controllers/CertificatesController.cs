@@ -25,6 +25,14 @@ public class CertificatesController : Controller
         return Ok(result);
     }
 
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid Id)
+    {
+        var result = await _certificateService.GetAccountIdAsync(Id);
+        return Ok(result);
+    }
+
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateCertificateRequest createCertificateRequest)
     {

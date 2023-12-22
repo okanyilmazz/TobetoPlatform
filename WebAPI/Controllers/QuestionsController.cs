@@ -24,6 +24,13 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetByExamId")]
+    public async Task<IActionResult> GetByExamIdAsync(Guid Id)
+    {
+        var result = await _questionService.GetByExamIdAsync(Id);
+        return Ok(result);
+    }
+
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {

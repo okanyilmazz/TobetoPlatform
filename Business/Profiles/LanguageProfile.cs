@@ -32,6 +32,8 @@ namespace Business.Profiles
             CreateMap<Language, GetListLanguageResponse>().ReverseMap();
             CreateMap<IPaginate<Language>, Paginate<GetListLanguageResponse>>().ReverseMap();
 
+            
+
         }
     }
 }

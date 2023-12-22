@@ -30,7 +30,10 @@ namespace Business.Profiles
             CreateMap<Homework, DeletedHomeworkResponse>().ReverseMap();
 
             CreateMap<IPaginate<Homework>, Paginate<GetListHomeworkResponse>>().ReverseMap();
-            CreateMap<Homework, GetListHomeworkResponse>().ReverseMap();  
+            CreateMap<Homework, GetListHomeworkResponse>().ReverseMap();
+
+            CreateMap<List<Homework>, Paginate<GetListHomeworkResponse>>().ForMember(destinationMember: h => h.Items,
+                memberOptions: opt => opt.MapFrom(h=>h.ToList())).ReverseMap();
         }
     }
 }

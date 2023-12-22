@@ -6,6 +6,7 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
+using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,6 @@ namespace Business.Abstracts
         Task<DeletedSkillResponse> DeleteAsync(DeleteSkillRequest deleteSkillRequest);
         Task<UpdatedSkillResponse> UpdateAsync(UpdateSkillRequest updateSkillRequest);
         Task<IPaginate<GetListSkillResponse>> GetListAsync();
+        Task<IPaginate<GetListSkillResponse>> GetBySkillIdAsync(Guid id);
     }
 }

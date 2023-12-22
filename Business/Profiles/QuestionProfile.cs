@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Business.Profiles
 {
-    public class QuestionProfile:Profile
+    public class QuestionProfile : Profile
     {
         public QuestionProfile()
         {
@@ -31,6 +31,10 @@ namespace Business.Profiles
 
             CreateMap<Question, GetListQuestionResponse>().ReverseMap();
             CreateMap<IPaginate<Question>, Paginate<GetListQuestionResponse>>().ReverseMap();
+
+            
+            CreateMap<List<Question>, Paginate<GetListQuestionResponse>>().ForMember(destinationMember: q => q.Items,
+                memberOptions: opt => opt.MapFrom(q => q.ToList())).ReverseMap();
         }
     }
 }

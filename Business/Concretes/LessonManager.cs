@@ -86,5 +86,9 @@ namespace Business.Concretes
             return mappedLesson;
         }
 
+        public Task<GetListLessonResponse> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

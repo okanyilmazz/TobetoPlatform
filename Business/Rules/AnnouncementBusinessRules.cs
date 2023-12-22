@@ -22,7 +22,7 @@ namespace Business.Rules
         public async Task IsExistsAnnouncement(Guid announcementId)
         {
             var result = await _announcementDal.GetListAsync(a => a.Id == announcementId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

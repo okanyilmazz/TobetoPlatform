@@ -23,7 +23,7 @@ namespace Business.Rules
             var result = await _blogDal.GetListAsync(
                 predicate: q => q.Id == BlogId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

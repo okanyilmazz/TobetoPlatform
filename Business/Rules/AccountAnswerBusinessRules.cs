@@ -25,7 +25,7 @@ namespace Business.Rules
             var result = await _accountAnswerDal.GetListAsync(
                 predicate: a => a.Id == accountAnswerId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

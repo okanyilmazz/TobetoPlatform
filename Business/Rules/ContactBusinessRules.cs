@@ -22,7 +22,7 @@ namespace Business.Rules
         {
             var result = await _contactDal.GetListAsync(
                 predicate: c => c.Id == contactId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

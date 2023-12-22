@@ -19,7 +19,7 @@ namespace Business.Rules
             var result = await _certificateDal.GetListAsync(
                 predicate: c => c.Id == certificateId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

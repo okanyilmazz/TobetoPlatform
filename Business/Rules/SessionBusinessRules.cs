@@ -22,7 +22,7 @@ namespace Business.Rules
         {
             var result = await _sessionDal.GetListAsync(
                 predicate: s => s.Id == sessionId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

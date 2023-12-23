@@ -68,11 +68,9 @@ public static class BusinessServiceRegistration
         services.AddScoped<IAddressService, AddressManager>();
         services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
         services.AddScoped<IOccupationClassService, OccupationClassManager>();
-
-
-
-        services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
         services.AddScoped<IAnnouncementService, AnnouncementManager>();
+        services.AddScoped<ICertificateService, CertificateManager>();
+
         services.AddScoped<ContactBusinessRules>();
         services.AddScoped<QuestionBusinessRules>();
         services.AddScoped<AddressBusinessRules>();

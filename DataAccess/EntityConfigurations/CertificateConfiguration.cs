@@ -16,8 +16,11 @@ namespace DataAccess.EntityConfigurations
             builder.ToTable("Certificates").HasKey(c => c.Id);
             builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
             builder.Property(c => c.Name).HasColumnName("Name").IsRequired();
+            builder.Property(c => c.Description).HasColumnName("Description").IsRequired();
+            builder.Property(c => c.FolderPath).HasColumnName("FolderPath").IsRequired();
             builder.HasIndex(indexExpression: c => c.Name, name: "UK_Name").IsUnique();
             builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
+         
         }
     }
 

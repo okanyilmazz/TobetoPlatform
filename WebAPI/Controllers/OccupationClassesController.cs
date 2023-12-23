@@ -25,6 +25,13 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var result = await _occupationClassService.GetByIdAsync(id);
+            return Ok(result);
+        }
+
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateOccupationClassRequest createOccupationClassRequest)
         {

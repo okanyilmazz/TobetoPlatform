@@ -15,6 +15,9 @@ namespace DataAccess.EntityConfigurations
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.HasIndex(indexExpression: p => p.Name, name: "UK_Name").IsUnique();
             builder.HasQueryFilter(p => !p.DeletedDate.HasValue);
+            //Has many???has one??
+            
+
         }
     }
 }

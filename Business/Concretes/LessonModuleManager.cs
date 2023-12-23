@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 
 namespace Business.Concretes;
@@ -59,5 +60,12 @@ public class LessonModuleManager : ILessonModuleService
         var lessonModuleListed = await _lessonModuleDal.GetListAsync();
         var mappedListed = _mapper.Map<Paginate<GetListLessonModuleResponse>>(lessonModuleListed);
         return mappedListed;
+    }
+
+    public async Task<GetListLessonModuleResponse> GetByIdAsync(Guid id)
+    {
+        var lessonModule = await _lessonModuleDal.GetAsync(lm => lm.Id == id);
+        var mappedLessonModeuleId = _mapper.Map<GetListLessonModuleResponse>(lessonModule);
+        return mappedLessonModeuleId;
     }
 }

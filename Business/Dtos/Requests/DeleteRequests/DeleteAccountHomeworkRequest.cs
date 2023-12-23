@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos.Requests.DeleteRequests
+﻿using Entities.Concretes;
+
+namespace Business.Dtos.Requests.DeleteRequests
 {
     public class DeleteAccountHomeworkRequest
     {

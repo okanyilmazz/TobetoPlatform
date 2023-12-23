@@ -23,7 +23,7 @@ namespace Business.Rules
             var result = await _languageLevelDal.GetListAsync(
                 predicate: l => l.Id == languageLevelId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

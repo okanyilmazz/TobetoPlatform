@@ -11,5 +11,8 @@ namespace Entities.Concretes
     {
         public Guid SurveyId { get; set; }
         public Guid OccupationClassId { get; set; }
+
+        public Survey? Survey { get; set; }
+        public OccupationClass? OccupationClass { get; set; }
     }
 }

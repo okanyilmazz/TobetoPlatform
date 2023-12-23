@@ -49,10 +49,17 @@ namespace Business.Concretes
             return deletedMediaNewResponse;
         }
 
+        public async Task<GetListMediaNewResponse> GetByIdAsync(Guid id)
+        {
+            var mediaNewId = await _mediaNewDal.GetAsync(m => m.Id == id);
+            var mappedMediaNew = _mapper.Map<GetListMediaNewResponse>(mediaNewId);
+            return mappedMediaNew;
+        }
+
         public async Task<IPaginate<GetListMediaNewResponse>> GetListAsync()
         {
-            var MediaNew = await _mediaNewDal.GetListAsync();
-            var mappedMediaNew = _mapper.Map<Paginate<GetListMediaNewResponse>>(MediaNew);
+            var mediaNew = await _mediaNewDal.GetListAsync();
+            var mappedMediaNew = _mapper.Map<Paginate<GetListMediaNewResponse>>(mediaNew);
             return mappedMediaNew;
         }
 

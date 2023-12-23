@@ -19,7 +19,7 @@ public class DegreeTypeBusinessRules : BaseBusinessRules
 
         var result = await _degreeTypeDal.GetListAsync(d => d.Id == degreeTypeId);
 
-        if (result == null)
+        if (result.Count == 0)
         {
             throw new Exception(BusinessMessages.DataNotFound);
         }

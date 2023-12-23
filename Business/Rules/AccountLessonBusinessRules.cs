@@ -10,23 +10,22 @@ using System.Threading.Tasks;
 
 namespace Business.Rules
 {
-    public class AnnouncementBusinessRules : BaseBusinessRules
+    public class AccountLessonBusinessRules : BaseBusinessRules
     {
-        IAnnouncementDal _announcementDal;
+        IAccountLessonDal _AccountLessonDal;
 
-        public AnnouncementBusinessRules(IAnnouncementDal announcementDal)
+        public AccountLessonBusinessRules(IAccountLessonDal AccountLessonDal)
         {
-            _announcementDal = announcementDal;
+            _AccountLessonDal = AccountLessonDal;
         }
 
-        public async Task IsExistsAnnouncement(Guid announcementId)
+        public async Task IsExistsAccountLesson(Guid AccountLessonId)
         {
-            var result = await _announcementDal.GetListAsync(a => a.Id == announcementId);
+            var result = await _AccountLessonDal.GetListAsync(a => a.Id == AccountLessonId);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }
         }
-
     }
 }

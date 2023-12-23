@@ -21,7 +21,7 @@ public class SocialMediaBusinessRules : BaseBusinessRules
 
         var result = await _socialMediaDal.GetListAsync(s => s.Id == socialMediaId);
 
-        if (result == null)
+        if (result.Count == 0)
         {
             throw new Exception(BusinessMessages.DataNotFound);
         }

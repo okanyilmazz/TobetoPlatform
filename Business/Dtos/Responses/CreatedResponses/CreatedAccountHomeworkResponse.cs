@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos.Responses.CreatedResponses
+﻿using Entities.Concretes;
+
+namespace Business.Dtos.Responses.CreatedResponses
 {
     public class CreatedAccountHomeworkResponse
     {

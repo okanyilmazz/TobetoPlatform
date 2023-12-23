@@ -21,7 +21,7 @@ namespace Business.Rules
         {
             var result = await _lessonSubjectDal.GetListAsync(
                 predicate: l => l.Id == lessonSubjectId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

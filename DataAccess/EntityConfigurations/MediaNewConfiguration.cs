@@ -13,12 +13,13 @@ namespace DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<MediaNew> builder)
         {
-            builder.ToTable("MediaNews").HasKey(c => c.Id);
-            builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
-            builder.Property(c => c.Title).HasColumnName("Title").IsRequired();
-            builder.HasIndex(indexExpression: c => c.Title, name: "UK_Title").IsUnique();
+            builder.ToTable("MediaNews").HasKey(m => m.Id);
+            builder.Property(m => m.Id).HasColumnName("Id").IsRequired();
+            builder.Property(m => m.Title).HasColumnName("Title").IsRequired();
+            builder.Property(m => m.Description).HasColumnName("Description").IsRequired();
+            builder.Property(m => m.ThumbnailPath).HasColumnName("ThumbnailPath").IsRequired();
+            builder.Property(m => m.ReleaseDate).HasColumnName("ReleaseDate").IsRequired();
             builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
         }
     }
 }
-                            

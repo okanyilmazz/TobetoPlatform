@@ -119,6 +119,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<UserBusinessRules>();
         services.AddScoped<HomeworkBusinessRules>();
         services.AddScoped<CityBusinessRules>();
+        services.AddScoped<AccountLessonBusinessRules>();
 
 
         services.AddValidatorsFromAssemblyContaining<IAssemblyHelper>();

@@ -21,16 +21,12 @@ namespace DataAccess.EntityConfigurations
             builder.HasQueryFilter(p => !p.DeletedDate.HasValue);
 
             builder.HasMany(p => p.EducationPrograms)
-                .WithMany(P => P.OccupationClasses)
-                .UsingEntity<EducationProgramOccupationClass>();
-                
-           builder.HasMany(p => p.EducationPrograms)
-                  .WithMany(P => P.OccupationClasses)
-                  .UsingEntity<EducationProgramOccupationClass>();
+                   .WithMany(P => P.OccupationClasses)
+                   .UsingEntity<EducationProgramOccupationClass>();
 
-             builder.HasMany(p => p.Exams)
-                .WithMany(P => P.OccupationClasses)
-                .UsingEntity<ExamOccupationClass>();
+            builder.HasMany(p => p.Exams)
+               .WithMany(P => P.OccupationClasses)
+               .UsingEntity<ExamOccupationClass>();
 
             builder.HasMany(p => p.Accounts)
                  .WithMany(P => P.OccupationClasses)
@@ -39,6 +35,8 @@ namespace DataAccess.EntityConfigurations
             builder.HasMany(p => p.Surveys)
                  .WithMany(P => P.OccupationClasses)
                   .UsingEntity<AccountOccupationClass>();
+
+
         }
     }
 }

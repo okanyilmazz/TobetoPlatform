@@ -20,7 +20,7 @@ namespace Business.Rules
             var result = await _educationProgramOccupationClassDal.GetListAsync(
                 predicate: e => e.Id == educationProgramOccupationClassId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

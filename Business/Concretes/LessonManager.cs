@@ -86,9 +86,17 @@ namespace Business.Concretes
             return mappedLesson;
         }
 
+<<<<<<< HEAD
         public Task<GetListLessonResponse> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
+=======
+        public async Task<GetListLessonResponse> GetByIdAsync(Guid id)
+        {
+            var lessons = await _lessonDal.GetAsync(l=>l.Id == id);
+            var mappedLessons = _mapper.Map<GetListLessonResponse>(lessons);
+            return mappedLessons;
+>>>>>>> 57b4e4647f5b7d36b2aae105b5d0f80b915afe04
         }
     }
 }

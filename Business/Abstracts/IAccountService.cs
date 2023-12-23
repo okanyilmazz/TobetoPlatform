@@ -16,7 +16,6 @@ namespace Business.Abstracts
 {
     public interface IAccountService
     {
-
         Task<CreatedAccountResponse> AddAsync(CreateAccountRequest createAccountRequest);
         Task<UpdatedAccountResponse> UpdateAsync(UpdateAccountRequest updateAccountRequest);
         Task<DeletedAccountResponse> DeleteAsync(DeleteAccountRequest deleteAccountRequest);

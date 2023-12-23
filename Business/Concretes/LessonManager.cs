@@ -80,14 +80,14 @@ namespace Business.Concretes
                include: l => l.Include(a => a.Accounts));
 
             var filteredLessons = lessonList
-                .Items.SelectMany(l => l.Accounts.Where(a => a.Id== id).Select(a => l)).ToList();
-            var mappedLesson= _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
+                .Items.SelectMany(l => l.Accounts.Where(a => a.Id == id).Select(a => l)).ToList();
+            var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
             return mappedLesson;
         }
 
         public async Task<GetListLessonResponse> GetByIdAsync(Guid id)
         {
-            var lesson = await _lessonDal.GetAsync(l=>l.Id == id);
+            var lesson = await _lessonDal.GetListAsync(l => l.Id == id);
             var mappedLesson = _mapper.Map<GetListLessonResponse>(lesson);
             return mappedLesson;
         }

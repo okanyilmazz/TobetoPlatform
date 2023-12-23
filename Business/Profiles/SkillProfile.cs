@@ -32,8 +32,6 @@ namespace Business.Profiles
 
             CreateMap<List<Skill>, Paginate<GetListSkillResponse>>().ForMember(destinationMember: s => s.Items,
                 memberOptions: opt => opt.MapFrom(s => s.ToList())).ReverseMap();
-                
-
         }
     }
 }

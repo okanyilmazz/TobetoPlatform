@@ -24,6 +24,13 @@ public class EducationProgramsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetListByOccupationClassId")]
+    public async Task<IActionResult> GetByOccupationClassId([FromQuery] Guid id)
+    {
+        var result = await _educationProgramService.GetByOccupationClassIdAsync(id);
+        return Ok(result);
+    }
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateEducationProgramRequest createEducationProgramRequest)
     {

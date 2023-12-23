@@ -46,9 +46,9 @@ public class SurveyManager : ISurveyService
 
     public async Task<GetListSurveyResponse> GetByIdAsync(Guid id)
     {
-        var surveys = await _surveyDal.GetAsync(s => s.Id == id);
-        var mappedSurveys = _mapper.Map<GetListSurveyResponse>(surveys);
-        return mappedSurveys;
+        var survey = await _surveyDal.GetAsync(s => s.Id == id);
+        var mappedSurvey = _mapper.Map<GetListSurveyResponse>(survey);
+        return mappedSurvey;
     }
 
     public async Task<IPaginate<GetListSurveyResponse>> GetListAsync()

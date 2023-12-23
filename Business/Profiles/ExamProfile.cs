@@ -31,10 +31,6 @@ namespace Business.Profiles
 
             CreateMap<Exam, GetListExamResponse>().ReverseMap();
             CreateMap<IPaginate<Exam>, Paginate<GetListExamResponse>>().ReverseMap();
-
-            CreateMap<Exam, GetListExamWithQuestionTypeResponse>().ReverseMap();
-            CreateMap<IPaginate<Exam>, Paginate<GetListExamWithQuestionTypeResponse>>().ReverseMap();
-
         }
     }
 }

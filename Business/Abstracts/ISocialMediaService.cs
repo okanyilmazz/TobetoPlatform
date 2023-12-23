@@ -10,12 +10,13 @@ using Core.DataAccess.Paging;
 
 namespace Business.Abstracts;
 
-	public interface ISocialMediaService
-	{
-        Task<CreatedSocialMediaResponse> AddAsync(CreateSocialMediaRequest createSocialMediaRequest);
-        Task<DeletedSocialMediaResponse> DeleteAsync(DeleteSocialMediaRequest deleteSocialMediaRequest);
-        Task<UpdatedSocialMediaResponse> UpdateAsync(UpdateSocialMediaRequest updateSocialMediaRequest);
-        Task<IPaginate<GetListSocialMediaResponse>> GetListAsync();
-        Task<IPaginate<GetListSocialMediaResponse>> GetByAccountIdAsync(Guid Id);
+public interface ISocialMediaService
+{
+    Task<IPaginate<GetListSocialMediaResponse>> GetListAsync();
+    Task<IPaginate<GetListSocialMediaResponse>> GetByAccountIdAsync(Guid Id);
+    Task<GetListSocialMediaResponse> GetByIdAsync(Guid id);
+    Task<CreatedSocialMediaResponse> AddAsync(CreateSocialMediaRequest createSocialMediaRequest);
+    Task<DeletedSocialMediaResponse> DeleteAsync(DeleteSocialMediaRequest deleteSocialMediaRequest);
+    Task<UpdatedSocialMediaResponse> UpdateAsync(UpdateSocialMediaRequest updateSocialMediaRequest);
 }
 

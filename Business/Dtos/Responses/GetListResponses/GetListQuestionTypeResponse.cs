@@ -8,4 +8,3 @@ namespace Business.Dtos.Responses.GetListResponses
         public string Name { get; set; }
     }
 }
-

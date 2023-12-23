@@ -9,5 +9,6 @@ namespace Business.Messages
     public class BusinessMessages
     {
         public static string DataNotFound = "This data could not be found.";
+        public static string DataAvailable = "This data is available.";
     }
 }

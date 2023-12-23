@@ -24,6 +24,7 @@ builder.Services.AddDataAccessServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 //builder.Host
 //.UseServiceProviderFactory(new AutofacServiceProviderFactory())
 //.ConfigureContainer<ContainerBuilder>(builder =>

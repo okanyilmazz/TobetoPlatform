@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using System;
 using System.Collections.Generic;
@@ -50,11 +51,18 @@ namespace Business.Concretes
             return deletedOccupationClassSurveyResponse;
         }
 
+        public async Task<GetListOccupationClassSurveyResponse> GetByIdAsync(Guid id)
+        {
+            var occupationClassSurveyId = await _occupationClassSurveyDal.GetAsync(o => o.Id == id);
+            var mappedoccupationClassSurvey = _mapper.Map<GetListOccupationClassSurveyResponse>(occupationClassSurveyId);
+            return mappedoccupationClassSurvey;
+        }
+
         public async Task<IPaginate<GetListOccupationClassSurveyResponse>> GetListAsync()
         {
-            var OccupationClassSurveys = await _occupationClassSurveyDal.GetListAsync();
-            var mappedOccupationClassSurveys = _mapper.Map<Paginate<GetListOccupationClassSurveyResponse>>(OccupationClassSurveys);
-            return mappedOccupationClassSurveys;
+            var OccupationClassSurvey = await _occupationClassSurveyDal.GetListAsync();
+            var mappedOccupationClassSurvey = _mapper.Map<Paginate<GetListOccupationClassSurveyResponse>>(OccupationClassSurvey);
+            return mappedOccupationClassSurvey;
         }
 
         public async Task<UpdatedOccupationClassSurveyResponse> UpdateAsync(UpdateOccupationClassSurveyRequest updateOccupationClassSurveyRequest)

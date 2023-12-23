@@ -24,6 +24,7 @@ namespace WebAPI.Controllers
             var result = await _cityService.GetListAsync();
             return Ok(result);
         }
+
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateCityRequest createCityRequest)
         {

@@ -27,6 +27,7 @@ namespace Business.Profiles
 
             CreateMap<ProductionCompany, GetListProductionCompanyResponse>().ReverseMap();
             CreateMap<IPaginate<ProductionCompany>, Paginate<GetListProductionCompanyResponse>>().ReverseMap();
+
         }
     }
 }

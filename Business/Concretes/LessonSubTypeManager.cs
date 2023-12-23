@@ -51,6 +51,13 @@ namespace Business.Concretes
             return mappedLessonSubType;
         }
 
+        public async Task<GetListLessonSubTypeResponse> GetByIdAsync(Guid id)
+        {
+            var lessonSubType = await _lessonSubTypeDal.GetAsync(l => l.Id == id);
+            var mappedLessonSubTypeId = _mapper.Map<GetListLessonSubTypeResponse>(lessonSubType);
+            return mappedLessonSubTypeId;
+        }
+
         public async Task<IPaginate<GetListLessonSubTypeResponse>> GetListAsync()
         {
             var lessonSubTypeList = await _lessonSubTypeDal.GetListAsync();

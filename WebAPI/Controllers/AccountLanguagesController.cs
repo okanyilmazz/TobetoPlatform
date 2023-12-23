@@ -24,6 +24,12 @@ namespace WebAPI.Controllers
             var result = await _accountLanguageService.GetListAsync();
             return Ok(result);
         }
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var result = await _accountLanguageService.GetByIdAsync(id);
+            return Ok(result);
+        }
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAccountLanguageRequest createAccountLanguageRequest)
         {

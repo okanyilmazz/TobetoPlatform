@@ -6,6 +6,7 @@ namespace Business.Dtos.Responses.CreatedResponses
     {
         public Guid Id { get; set; }
         public Guid AddressId { get; set; }
+        public Guid UserId { get; set; }
         public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
         public string Description { get; set; }

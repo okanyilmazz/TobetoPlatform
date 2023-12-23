@@ -22,5 +22,7 @@ namespace Business.Abstracts
         Task<UpdatedAccountHomeworkeResponse> UpdateAsync(UpdateAccountHomeworkRequest updateAccountHomeworkRequest);
         Task<DeletedAccountHomeworkResponse> DeleteAsync(DeleteAccountHomeworkRequest deleteAccountHomeworkRequest);
         Task<IPaginate<GetListAccountHomeworkResponse>> GetListAsync();
+        Task<GetListAccountHomeworkResponse> GetByIdAsync(Guid id);
+
     }
 }

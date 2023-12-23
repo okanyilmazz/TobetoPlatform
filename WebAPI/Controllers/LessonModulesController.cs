@@ -24,6 +24,13 @@ public class LessonModulesController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _lessonModuleService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLessonModuleRequest createLessonModuleRequest)
     {

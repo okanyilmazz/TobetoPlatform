@@ -49,10 +49,17 @@ namespace Business.Concretes
             return deletedAddressResponse;
         }
 
+        public async Task<GetListAddressResponse> GetByIdAsync(Guid Id)
+        {
+            var addresss = await _addressDal.GetAsync(a => a.Id == Id);
+            var mappedAddresses = _mapper.Map<GetListAddressResponse>(addresss);
+            return mappedAddresses;
+        }
+
         public async Task<IPaginate<GetListAddressResponse>> GetListAsync()
         {
-            var addresss = await _addressDal.GetListAsync();
-            var mappedAddresses = _mapper.Map<Paginate<GetListAddressResponse>>(addresss);
+            var address = await _addressDal.GetListAsync();
+            var mappedAddresses = _mapper.Map<Paginate<GetListAddressResponse>>(address);
             return mappedAddresses;
         }
 

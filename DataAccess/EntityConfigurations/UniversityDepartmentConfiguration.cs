@@ -13,7 +13,7 @@ namespace DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<UniversityDepartment> builder)
         {
-            builder.ToTable("UniversityDepartment").HasKey(a => a.Id);
+            builder.ToTable("UniversityDepartments").HasKey(a => a.Id);
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
             builder.Property(a => a.Name).HasColumnName("Name").IsRequired();
             builder.HasIndex(indexExpression: a => a.Name, name: "UK_Name").IsUnique();

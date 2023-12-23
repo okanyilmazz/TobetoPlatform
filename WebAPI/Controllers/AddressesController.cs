@@ -24,6 +24,14 @@ namespace WebAPI.Controllers
             var result = await _addressService.GetListAsync();
             return Ok(result);
         }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid Id)
+        {
+            var result = await _addressService.GetByIdAsync(Id);
+            return Ok(result);
+        }
+
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAddressRequest createAddressRequest)
         {

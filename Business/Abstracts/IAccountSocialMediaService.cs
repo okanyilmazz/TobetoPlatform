@@ -20,4 +20,5 @@ public interface IAccountSocialMediaService
     Task<UpdatedAccountSocialMediaResponse> UpdateAsync(UpdateAccountSocialMediaRequest updateAccountSocialMediaRequest);
     Task<DeletedAccountSocialMediaResponse> DeleteAsync(DeleteAccountSocialMediaRequest deleteAccountSocialMediaRequest);
     Task<IPaginate<GetListAccountSocialMediaResponse>> GetListAsync();
+    Task<GetListAccountSocialMediaResponse> GetByIdAsync(Guid Id);
 }

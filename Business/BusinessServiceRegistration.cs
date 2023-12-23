@@ -64,7 +64,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<ISocialMediaService, SocialMediaManager>();
         services.AddScoped<IExamQuestionService, ExamQuestionManager>();
         services.AddScoped<ICountryService, CountryManager>();
-        services.AddScoped<IAccountSkillService, AccountSkillManager>();
         services.AddScoped<IAddressService, AddressManager>();
         services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
         services.AddScoped<IOccupationClassService, OccupationClassManager>();

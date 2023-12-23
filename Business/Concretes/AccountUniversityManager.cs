@@ -45,6 +45,14 @@ public class AccountUniversityManager : IAccountUniversityService
         return deletedAccountUniversityResponse;
     }
 
+    public async Task<GetListAccountUniversityResponse> GetByIdAsync(Guid Id)
+    {
+        var accountUniversities = await _accountUniversityDal.GetAsync(a => a.Id == Id);
+        var mappedAccountUniversitie = _mapper.Map<GetListAccountUniversityResponse>(accountUniversities);
+        return mappedAccountUniversitie;
+
+    }
+
     public async Task<IPaginate<GetListAccountUniversityResponse>> GetListAsync()
     {
         var accountUniversities = await _accountUniversityDal.GetListAsync();

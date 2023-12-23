@@ -20,5 +20,6 @@ namespace Business.Abstracts
         Task<UpdatedBlogResponse> UpdateAsync(UpdateBlogRequest updateBlogRequest);
         Task<DeletedBlogResponse> DeleteAsync(DeleteBlogRequest deleteBlogRequest);
         Task<IPaginate<GetListBlogResponse>> GetListAsync();
+        Task<GetListBlogResponse> GetByIdAsync(Guid Id);
     }
 }

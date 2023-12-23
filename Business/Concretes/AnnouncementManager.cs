@@ -52,6 +52,13 @@ namespace Business.Concretes
             return deletedAnnouncementResponse;
         }
 
+        public async Task<GetListAnnouncementResponse> GetByIdAsync(Guid Id)
+        {
+            var announcement = await _announcementDal.GetAsync(a => a.Id == Id);
+            var mappedAnnouncement = _mapper.Map<GetListAnnouncementResponse>(announcement);
+            return mappedAnnouncement;
+        }
+
         public async Task<IPaginate<GetListAnnouncementResponse>> GetListAsync()
         {
             var announcement = await _announcementDal.GetListAsync(

@@ -16,7 +16,8 @@ namespace Entities.Concretes
         public string Description { get; set; }
         public DateTime BirthDate { get; set; }
         public string? ProfilePhotoPath { get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
+        public Address? Address { get; set; }
 
         public virtual ICollection<WorkExperience>? WorkExperiences { get; set; }
         public virtual ICollection<OccupationClass>? OccupationClasses { get; set; }

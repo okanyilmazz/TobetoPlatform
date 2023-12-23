@@ -25,12 +25,6 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetById")]
-        public async Task<IActionResult> GetByIdAsync(Guid id)
-        {
-            var result = await _accountService.GetByIdAsync(id);
-            return Ok(result);
-        }
 
         [HttpGet("GetBySessionId")]
         public async Task<IActionResult> GetBySessionIdAsync(Guid id)

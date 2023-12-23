@@ -21,7 +21,7 @@ namespace Business.Rules
         {
             var result = await _surveyDal.GetListAsync(
                 predicate: s => s.Id == surveyId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

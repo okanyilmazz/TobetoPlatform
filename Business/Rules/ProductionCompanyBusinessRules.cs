@@ -21,7 +21,7 @@ namespace Business.Rules
         public async Task IsExistsProductionCompany(Guid productionCompanyId)
         {
             var result = await _productionCompanyDal.GetListAsync(p => p.Id == productionCompanyId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

@@ -24,7 +24,7 @@ namespace Business.Rules
             var result = await _universityDepartmentDal.GetListAsync(
                 predicate: ud => ud.Id == universityDepartmentId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

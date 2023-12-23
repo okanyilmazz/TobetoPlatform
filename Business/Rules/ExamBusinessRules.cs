@@ -24,7 +24,7 @@ namespace Business.Rules
             var result = await _examDal.GetListAsync(
                 predicate: c => c.Id == examId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

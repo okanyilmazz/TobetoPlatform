@@ -23,7 +23,7 @@ namespace Business.Rules
         {
             var result = await _lessonModuleDal.GetListAsync(l => l.Id ==lessonModuleId );
 
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

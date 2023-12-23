@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos.Requests.UpdateRequests
+﻿using Entities.Concretes;
+
+namespace Business.Dtos.Requests.UpdateRequests
 {
     public class UpdateAccountHomeworkRequest
     {

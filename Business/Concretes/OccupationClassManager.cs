@@ -10,8 +10,8 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
-
 
 namespace Business.Concretes
 {
@@ -43,6 +43,13 @@ namespace Business.Concretes
             OccupationClass deletedOccupationClass = await _occupationClassDal.DeleteAsync(occupationClass);
             DeletedOccupationClassResponse deletedOccupationClassResponse = _mapper.Map<DeletedOccupationClassResponse>(deletedOccupationClass);
             return deletedOccupationClassResponse;
+        }
+
+        public async Task<GetListOccupationClassResponse> GetByIdAsync(Guid id)
+        {
+            var occupationClassId = await _occupationClassDal.GetAsync(o => o.Id == id);
+            var mappedoccupationClass = _mapper.Map<GetListOccupationClassResponse>(occupationClassId);
+            return mappedoccupationClass;
         }
 
         public async Task<IPaginate<GetListOccupationClassResponse>> GetListAsync()

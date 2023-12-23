@@ -11,11 +11,11 @@ namespace WebAPI.Controllers
     [ApiController]
     public class OccupationClassSurveysController : ControllerBase
     {
-        ICityService _occupationClassSurveyService;
+        IOccupationClassSurveyService _occupationClassSurveyService;
 
-        public OccupationClassSurveysController(ICityService occupationClassSurveyservice)
+        public OccupationClassSurveysController(IOccupationClassSurveyService occupationClassSurveyService)
         {
-            _occupationClassSurveyService = occupationClassSurveyservice;
+            _occupationClassSurveyService = occupationClassSurveyService;
         }
 
         [HttpGet("GetList")]
@@ -24,22 +24,30 @@ namespace WebAPI.Controllers
             var result = await _occupationClassSurveyService.GetListAsync();
             return Ok(result);
         }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var result = await _occupationClassSurveyService.GetByIdAsync(id);
+            return Ok(result);
+        }
+
         [HttpPost("Add")]
-        public async Task<IActionResult> AddAsync([FromBody] CreateCityRequest createOccupationClassSurveyRequest)
+        public async Task<IActionResult> AddAsync([FromBody] CreateOccupationClassSurveyRequest createOccupationClassSurveyRequest)
         {
             var result = await _occupationClassSurveyService.AddAsync(createOccupationClassSurveyRequest);
             return Ok(result);
         }
 
         [HttpPost("Delete")]
-        public async Task<IActionResult> DeleteAsync([FromBody] DeleteCityRequest deleteOccupationClassSurveyRequest)
+        public async Task<IActionResult> DeleteAsync([FromBody] DeleteOccupationClassSurveyRequest deleteOccupationClassSurveyRequest)
         {
             var result = await _occupationClassSurveyService.DeleteAsync(deleteOccupationClassSurveyRequest);
             return Ok(result);
         }
 
         [HttpPost("Update")]
-        public async Task<IActionResult> UpdateAsync([FromBody] UpdateCityRequest updateOccupationClassSurveyRequest)
+        public async Task<IActionResult> UpdateAsync([FromBody] UpdateOccupationClassSurveyRequest updateOccupationClassSurveyRequest)
         {
             var result = await _occupationClassSurveyService.UpdateAsync(updateOccupationClassSurveyRequest);
             return Ok(result);

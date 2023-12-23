@@ -30,7 +30,7 @@ public class ExamsController : ControllerBase
         var result = await _examService.AddAsync(createExamRequest);
         return Ok(result);
     }
-    //test
+    
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateExamRequest updateExamRequest)
     {

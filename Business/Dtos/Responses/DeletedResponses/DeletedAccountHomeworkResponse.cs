@@ -1,4 +1,6 @@
-﻿namespace Business.Dtos.Responses.DeletedResponses
+﻿using Entities.Concretes;
+
+namespace Business.Dtos.Responses.DeletedResponses
 {
     public class DeletedAccountHomeworkResponse
     {

@@ -23,7 +23,7 @@ namespace Business.Rules
             var result = await _educationProgramLevelDal.GetListAsync(
                 predicate: q => q.Id == educationProgramLevelId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

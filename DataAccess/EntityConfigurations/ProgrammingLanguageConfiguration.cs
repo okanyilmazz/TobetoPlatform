@@ -13,9 +13,15 @@ namespace DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ProgrammingLanguage> builder)
         {
-            builder.ToTable("ProgrammingLanguage").HasKey(c => c.Id);
-            builder.HasIndex(indexExpression: c => c.Name, name: "UK_Name").IsUnique();
+            builder.ToTable("ProgrammingLanguage").HasKey(p => p.Id);
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
             builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
+
+            builder.HasMany(e=>e.EducationPrograms)
+                .WithMany(p => p.ProgrammingLanguages)
+                .UsingEntity<EducationProgramProgrammingLanguage>();
+
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Business.Rules
         public async Task IsExistsMediaNew(Guid mediaNewId)
         {
             var result = await _mediaNewDal.GetListAsync(m => m.Id == mediaNewId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

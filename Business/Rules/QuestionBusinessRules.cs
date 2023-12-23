@@ -18,7 +18,7 @@ namespace Business.Rules
         {
             var result = await _questionDal.GetListAsync(
                 predicate: q => q.Id == questionId);
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

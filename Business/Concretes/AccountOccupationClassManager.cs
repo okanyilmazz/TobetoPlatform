@@ -50,6 +50,13 @@ namespace Business.Concretes
             return mappedAccountOccupationClass;
         }
 
+        public async Task<GetListAccountOccupationClassResponse> GetByIdAsync(Guid id)
+        {
+            var AccountOccupationClassList = await _accountOccupationClassDal.GetAsync(a=>a.Id == id);
+            var mappedAccountOccupationClass = _mapper.Map<GetListAccountOccupationClassResponse>(AccountOccupationClassList);
+            return mappedAccountOccupationClass;
+        }
+
         public async Task<IPaginate<GetListAccountOccupationClassResponse>> GetListAsync()
         {
             var AccountOccupationClassList = await _accountOccupationClassDal.GetListAsync();

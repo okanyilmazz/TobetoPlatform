@@ -22,7 +22,7 @@ namespace Business.Rules
         {
             var result = await _educationProgramLessonDal.GetListAsync(a => a.Id == educationProgramLessonId);
             if (result.Count == 0)
-            {
+            {   
                 throw new Exception(BusinessMessages.DataNotFound);
             }
         }

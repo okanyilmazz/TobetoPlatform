@@ -23,7 +23,7 @@ namespace Business.Rules
             var result = await _districtDal.GetListAsync(
                 predicate: q => q.Id == districtId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

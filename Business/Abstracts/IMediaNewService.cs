@@ -20,5 +20,6 @@ namespace Business.Abstracts
         Task<UpdatedMediaNewResponse> UpdateAsync(UpdateMediaNewRequest updateMediaNewRequest);
         Task<DeletedMediaNewResponse> DeleteAsync(DeleteMediaNewRequest deleteMediaNewRequest);
         Task<IPaginate<GetListMediaNewResponse>> GetListAsync();
+        Task<GetListMediaNewResponse> GetByIdAsync(Guid id);
     }
 }

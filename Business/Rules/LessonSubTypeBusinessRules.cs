@@ -26,7 +26,7 @@ namespace Business.Rules
                predicate: l => l.Id == lessonSubTypeId
                );
 
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

@@ -25,6 +25,12 @@ namespace WebAPI.Controllers
             var result = await _accountHomeworkService.GetListAsync();
             return Ok(result);
         }
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var result = await _accountHomeworkService.GetByIdAsync(id);
+            return Ok(result);
+        }
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAccountHomeworkRequest createAccountHomeworkRequest)
         {

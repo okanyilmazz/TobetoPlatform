@@ -49,6 +49,13 @@ namespace Business.Concretes
             return deletedAccountAnswerResponse;
         }
 
+        public async Task<GetListAccountAnswerResponse> GetByIdAsync(Guid id)
+        {
+            var accountAnswers = await _accountAnswerDal.GetAsync(a => a.Id == id);
+            var mappedAccountAnswers = _mapper.Map<GetListAccountAnswerResponse>(accountAnswers);
+            return mappedAccountAnswers;
+        }
+
         public async Task<IPaginate<GetListAccountAnswerResponse>> GetListAsync()
         {
             var accountAnswers = await _accountAnswerDal.GetListAsync();

@@ -13,8 +13,22 @@ namespace DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
-
             builder.ToTable("Accounts").HasKey(a => a.Id);
+            builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
+            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
+            builder.Property(a => a.AddressId).HasColumnName("AddressId").IsRequired();
+            builder.HasIndex(indexExpression: a => a.AddressId, name: "UK_AddressId").IsUnique();
+            builder.Property(a => a.UserId).HasColumnName("UserId").IsRequired();
+            builder.HasIndex(indexExpression: a => a.UserId, name: "UK_UserId").IsUnique();
+            builder.Property(a => a.PhoneNumber).HasColumnName("PhoneNumber").IsRequired();
+            builder.HasIndex(indexExpression: a => a.PhoneNumber, name: "UK_PhoneNumber").IsUnique();
+            builder.Property(a => a.NationalId).HasColumnName("NationalId").IsRequired();
+            builder.Property(a => a.Description).HasColumnName("Description").IsRequired();
+            builder.Property(a => a.BirthDate).HasColumnName("BirthDate").IsRequired();
+            builder.Property(a => a.ProfilePhotoPath).HasColumnName("ProfilePhotoPath");
+            //builder.HasIndex(indexExpression: a => a.ProfilePhotoPath, name: "UK_ProfilePhotoPath").IsUnique();
+            builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
+
             builder.HasOne(u => u.User);
             builder.HasMany(s => s.SocialMedias)
                 .WithMany(a => a.Accounts)
@@ -47,6 +61,8 @@ namespace DataAccess.EntityConfigurations
             builder.HasMany(u=>u.Universities)
                 .WithMany(a => a.Accounts)
                 .UsingEntity<AccountUniversity>();
+
+            builder.HasOne(a => a.Address);
         }
     }
 }

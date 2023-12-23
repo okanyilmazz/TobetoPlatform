@@ -15,5 +15,6 @@ namespace Entities.Concretes
 
         public ICollection<EducationProgram> EducationPrograms { get; set; }
         public ICollection<Account> Accounts { get; set; }
+       
     }
 }

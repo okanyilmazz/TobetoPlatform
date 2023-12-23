@@ -21,7 +21,7 @@ namespace Business.Rules
             var result = await _occupationClassSurveyDal.GetListAsync(
                 predicate: o => o.Id == occupationClassSurveyId
                 );
-            if (result == null)
+            if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

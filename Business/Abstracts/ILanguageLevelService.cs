@@ -20,5 +20,6 @@ namespace Business.Abstracts
         Task<CreatedLanguageLevelResponse> AddAsync(CreateLanguageLevelRequest createLanguageLevelRequest);
         Task<UpdatedLanguageLevelResponse> UpdateAsync(UpdateLanguageLevelRequest updateLanguageLevelRequest);
         Task<DeletedLanguageLevelResponse> DeleteAsync(DeleteLanguageLevelRequest deleteLanguageLevelRequest);
+        Task<GetListLanguageLevelResponse> GetByIdAsync(Guid id);
     }
 }

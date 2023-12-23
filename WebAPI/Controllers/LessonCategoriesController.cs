@@ -24,6 +24,13 @@ public class LessonCategoriesController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _lessonCategoryService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLessonCategoryRequest createLessonCategoryRequest)
     {

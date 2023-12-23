@@ -4,7 +4,10 @@ using Business.Rules;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq.Dynamic.Core;
 using System.Reflection;
 
 namespace Business;
@@ -119,7 +122,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<AccountLessonBusinessRules>();
 
 
-
+        services.AddValidatorsFromAssemblyContaining<IAssemblyHelper>();
+      
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     }

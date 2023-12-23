@@ -38,6 +38,12 @@ public class LessonsController : ControllerBase
         var result = await _lessonService.GetByAccountIdAsync(id);
         return Ok(result);
     }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _lessonService.GetByIdAsync(id);
+        return Ok(result);
+    }
 
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLessonRequest createLessonRequest)

@@ -10,7 +10,6 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 

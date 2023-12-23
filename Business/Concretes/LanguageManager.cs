@@ -11,11 +11,7 @@ using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes
 {
@@ -49,11 +45,25 @@ namespace Business.Concretes
             return responseLanguage;
         }
 
+        public async Task<GetListLanguageResponse> GetByIdAsync(Guid id)
+        {
+            var language = await _languageDal.GetListAsync(l => l.Id == id);
+            return _mapper.Map<GetListLanguageResponse>(language.Items.FirstOrDefault());
+        }
+
         public async Task<IPaginate<GetListLanguageResponse>> GetListAsync()
         {
             var languageListed = await _languageDal.GetListAsync();
             var mappedListed = _mapper.Map<Paginate<GetListLanguageResponse>>(languageListed);
             return mappedListed;
+        }
+        public async Task<IPaginate<GetListLanguageResponse>> GetByAccountIdAsync(Guid id)
+        {
+            var languages = await _languageDal.GetListAsync(
+                include: l => l.Include(a => a.Accounts));
+            var filteredLanguages = languages.Items.SelectMany(l => l.Accounts.Where(a => a.Id == id).Select(a => l)).ToList();
+            var mappedLanguages = _mapper.Map<Paginate<GetListLanguageResponse>>(filteredLanguages);
+            return mappedLanguages;
         }
 
         public async Task<UpdatedLanguageResponse> UpdateAsync(UpdateLanguageRequest updateLanguageRequest)

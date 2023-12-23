@@ -21,5 +21,7 @@ namespace Business.Abstracts
         Task<UpdatedLanguageResponse> UpdateAsync(UpdateLanguageRequest updateLanguageRequest);
         Task<DeletedLanguageResponse> DeleteAsync(DeleteLanguageRequest deleteLanguageRequest);
         Task<IPaginate<GetListLanguageResponse>> GetListAsync();
+        Task<GetListLanguageResponse> GetByIdAsync(Guid id);
+        Task<IPaginate<GetListLanguageResponse>> GetByAccountIdAsync(Guid id);
     }
 }

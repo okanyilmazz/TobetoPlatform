@@ -29,7 +29,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<IHomeworkService, HomeworkManager>();
         services.AddScoped<IEducationProgramProgrammingLanguageService, EducationProgramProgrammingLanguageManager>();
         services.AddScoped<IDegreeTypeService, DegreeTypeManager>();
-        services.AddScoped<IHomeworkService, HomeworkManager>();
         services.AddScoped<IAccountAnswerService, AccountAnswerManager>();
         services.AddScoped<IExamService, ExamManager>();
         services.AddScoped<IQuestionService, QuestionManager>();
@@ -67,8 +66,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<IAddressService, AddressManager>();
         services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
         services.AddScoped<IOccupationClassService, OccupationClassManager>();
-
-
 
         services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
         services.AddScoped<IAnnouncementService, AnnouncementManager>();
@@ -120,6 +117,8 @@ public static class BusinessServiceRegistration
 
 
 
+        services.AddScoped<LessonCategoryBusinessRules>();
+        
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     }

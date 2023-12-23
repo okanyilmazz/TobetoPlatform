@@ -20,5 +20,6 @@ namespace Business.Abstracts
         Task<UpdatedLessonCategoryResponse> UpdateAsync(UpdateLessonCategoryRequest updateLessonCategoryRequest);
         Task<DeletedLessonCategoryResponse> DeleteAsync(DeleteLessonCategoryRequest deleteLessonCategoryRequest);
         Task<IPaginate<GetListLessonCategoryResponse>> GetListAsync();
+        Task<GetListLessonCategoryResponse> GetByIdAsync(Guid id);
     }
 }

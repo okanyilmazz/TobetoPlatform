@@ -47,6 +47,12 @@ public class ExamQuestionManager : IExamQuestionService
         return deletedExamQuestionResponse;
     }
 
+    public async Task<GetListExamQuestionResponse> GetByIdAsync(Guid id)
+    {
+        var examQuestion = await _examQuestionDal.GetListAsync(h => h.Id == id);
+        return _mapper.Map<GetListExamQuestionResponse>(examQuestion.Items.FirstOrDefault());
+    }
+
     public async Task<IPaginate<GetListExamQuestionResponse>> GetListAsync()
     {
         var examQuestions = await _examQuestionDal.GetListAsync();

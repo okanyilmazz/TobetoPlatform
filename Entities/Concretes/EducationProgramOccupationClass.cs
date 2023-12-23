@@ -11,5 +11,7 @@ namespace Entities.Concretes
     {
         public Guid EducationProgramId { get; set; }
         public Guid OccupationClassId { get; set; }
+        public EducationProgram EducationProgram { get; set; }
+        public OccupationClass OccupationClass { get; set; }
     }
 }

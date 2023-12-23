@@ -1,11 +1,11 @@
 ﻿using Core.Entities;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Entities.Concretes;
 
 
 public class Exam : Entity<Guid>
 {
-    public Guid QuestionTypeId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public int Duration { get; set; }

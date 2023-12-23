@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 
 namespace Business.Concretes
@@ -42,6 +43,12 @@ namespace Business.Concretes
             EducationProgramLesson deletedEducationProgramLesson = await _educationProgramLessonDal.DeleteAsync(educationProgramLesson);
             DeletedEducationProgramLessonResponse deletedEducationProgramLessonResponse = _mapper.Map<DeletedEducationProgramLessonResponse>(deletedEducationProgramLesson);
             return deletedEducationProgramLessonResponse;
+        }
+
+        public async Task<GetListEducationProgramLessonResponse> GetByIdAsync(Guid id)
+        {
+            var EducationProgramLesson = await _educationProgramLessonDal.GetListAsync(h => h.Id == id);
+            return _mapper.Map<GetListEducationProgramLessonResponse>(EducationProgramLesson.Items.FirstOrDefault());
         }
 
         public async Task<IPaginate<GetListEducationProgramLessonResponse>> GetListAsync()

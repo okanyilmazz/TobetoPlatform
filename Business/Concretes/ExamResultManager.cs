@@ -61,6 +61,12 @@ namespace Business.Concretes
             UpdatedExamResultResponse updatedExamResultResponse = _mapper.Map<UpdatedExamResultResponse>(updatedExamResult);
             return updatedExamResultResponse;
         }
+
+        public async Task<GetListExamResultResponse> GetByIdAsync(Guid id)
+        {
+            var examResult = await _examResultDal.GetListAsync(h => h.Id == id);
+            return _mapper.Map<GetListExamResultResponse>(examResult.Items.FirstOrDefault());
+        }
     }
 }
 

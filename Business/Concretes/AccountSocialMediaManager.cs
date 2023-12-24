@@ -38,8 +38,8 @@ namespace Business.Concretes
 
         public async Task<DeletedAccountSocialMediaResponse> DeleteAsync(DeleteAccountSocialMediaRequest deleteAccountSocialMediaRequest)
         {
-            AccountSocialMedia accountSocialMedia = _mapper.Map<AccountSocialMedia>(deleteAccountSocialMediaRequest);
-            AccountSocialMedia deletedAccountSocialMedia = await _accountSocialMediaDal.DeleteAsync(accountSocialMedia);
+            AccountSocialMedia accountSocialMedia = await _accountSocialMediaDal.GetAsync(predicate:a=>a.Id == deleteAccountSocialMediaRequest.Id);
+            AccountSocialMedia deletedAccountSocialMedia = await _accountSocialMediaDal.DeleteAsync(accountSocialMedia,false);
             DeletedAccountSocialMediaResponse deletedAccountSocialMediaResponse = _mapper.Map<DeletedAccountSocialMediaResponse>(deletedAccountSocialMedia);
             return deletedAccountSocialMediaResponse;
         }

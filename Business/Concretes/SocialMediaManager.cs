@@ -40,8 +40,8 @@ public class SocialMediaManager : ISocialMediaService
     public async Task<DeletedSocialMediaResponse> DeleteAsync(DeleteSocialMediaRequest deleteSocialMediaRequest)
     {
         await _socialMediaBusinessRules.IsExistsSocialMedia(deleteSocialMediaRequest.Id);
-        SocialMedia socialMedia = _mapper.Map<SocialMedia>(deleteSocialMediaRequest);
-        SocialMedia deletedSocialMedia = await _socialMediaDal.DeleteAsync(socialMedia);
+        SocialMedia socialMedia = await _socialMediaDal.GetAsync(predicate: s=>s.Id == deleteSocialMediaRequest.Id);
+        SocialMedia deletedSocialMedia = await _socialMediaDal.DeleteAsync(socialMedia,false);
         DeletedSocialMediaResponse deletedSocialMediaResponse = _mapper.Map<DeletedSocialMediaResponse>(deletedSocialMedia);
         return deletedSocialMediaResponse;
     }

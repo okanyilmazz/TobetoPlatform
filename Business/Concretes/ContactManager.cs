@@ -44,8 +44,8 @@ namespace Business.Concretes
         public async Task<DeletedContactResponse> DeleteAsync(DeleteContactRequest deleteContactRequest)
         {
             await _contactBusinessRules.IsExistsContact(deleteContactRequest.Id);
-            Contact contact = _mapper.Map<Contact>(deleteContactRequest);
-            Contact deletedContact = await _contactDal.DeleteAsync(contact);
+            Contact contact = await _contactDal.GetAsync(predicate: c=>c.Id == deleteContactRequest.Id);
+            Contact deletedContact = await _contactDal.DeleteAsync(contact,false);
             DeletedContactResponse deletedContactResponse = _mapper.Map<DeletedContactResponse>(deletedContact);
             return deletedContactResponse;
         }

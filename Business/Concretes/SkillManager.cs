@@ -52,8 +52,8 @@ namespace Business.Concretes
         public async Task<DeletedSkillResponse> DeleteAsync(DeleteSkillRequest deleteSkillRequest)
         {
             await _skillBusinessRules.IsExistsSkill(deleteSkillRequest.Id);
-            Skill skill = _mapper.Map<Skill>(deleteSkillRequest);
-            Skill deletedSkill = await _skillDal.DeleteAsync(skill);
+            Skill skill = await _skillDal.GetAsync(predicate:s=>s.Id == deleteSkillRequest.Id);
+            Skill deletedSkill = await _skillDal.DeleteAsync(skill,false);
             DeletedSkillResponse deletedSkillResponse = _mapper.Map<DeletedSkillResponse>(deletedSkill);
             return deletedSkillResponse;
         }

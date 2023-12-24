@@ -27,7 +27,6 @@ namespace Business.Profiles
 
             CreateMap<QuestionType, GetListQuestionTypeResponse>().ReverseMap();
             CreateMap<IPaginate<QuestionType>, Paginate<GetListQuestionTypeResponse>>().ReverseMap();
-
         }
     }
 }

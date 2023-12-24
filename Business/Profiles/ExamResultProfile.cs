@@ -20,17 +20,17 @@ namespace Business.Profiles
     {
         public ExamResultProfile()
         {
-            CreateMap<ExamResultProfile, CreateExamResultRequest>().ReverseMap();
-            CreateMap<ExamResultProfile, CreatedExamResultResponse>().ReverseMap();
+            CreateMap<ExamResult, CreateExamResultRequest>().ReverseMap();
+            CreateMap<ExamResult, CreatedExamResultResponse>().ReverseMap();
 
-            CreateMap<ExamResultProfile, UpdateExamResultRequest>().ReverseMap();
-            CreateMap<ExamResultProfile, UpdatedExamResultResponse>().ReverseMap();
+            CreateMap<ExamResult, UpdateExamResultRequest>().ReverseMap();
+            CreateMap<ExamResult, UpdatedExamResultResponse>().ReverseMap();
 
-            CreateMap<ExamResultProfile, DeleteExamResultRequest>().ReverseMap();
-            CreateMap<ExamResultProfile, DeletedExamResultResponse>().ReverseMap();
+            CreateMap<ExamResult, DeleteExamResultRequest>().ReverseMap();
+            CreateMap<ExamResult, DeletedExamResultResponse>().ReverseMap();
 
-            CreateMap<IPaginate<ExamResultProfile>, Paginate<GetListExamResultResponse>>().ReverseMap();
-            CreateMap<ExamResultProfile, GetListExamResultResponse>().ReverseMap();
+            CreateMap<IPaginate<ExamResult>, Paginate<GetListExamResultResponse>>().ReverseMap();
+            CreateMap<ExamResult, GetListExamResultResponse>().ReverseMap();
         }
     }
 }

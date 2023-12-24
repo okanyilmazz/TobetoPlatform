@@ -14,6 +14,10 @@ namespace DataAccess.EntityConfigurations
             builder.Property(s => s.Content).HasColumnName("Content").IsRequired();
             builder.Property(s => s.ConnectionLink).HasColumnName("ConnectionLink").IsRequired();
 
+            builder.HasMany(s => s.OccupationClasses)
+                .WithMany(o => o.Surveys)
+                .UsingEntity<OccupationClassSurvey>();
+
             builder.HasQueryFilter(s => !s.DeletedDate.HasValue);
         }
     }

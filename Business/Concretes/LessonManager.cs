@@ -10,7 +10,6 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -81,8 +80,8 @@ namespace Business.Concretes
                include: l => l.Include(a => a.Accounts));
 
             var filteredLessons = lessonList
-                .Items.SelectMany(l => l.Accounts.Where(a => a.Id== id).Select(a => l)).ToList();
-            var mappedLesson= _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
+                .Items.SelectMany(l => l.Accounts.Where(a => a.Id == id).Select(a => l)).ToList();
+            var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
             return mappedLesson;
         }
 

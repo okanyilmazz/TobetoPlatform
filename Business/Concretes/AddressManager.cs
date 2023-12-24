@@ -49,16 +49,22 @@ namespace Business.Concretes
             return deletedAddressResponse;
         }
 
+        public async Task<GetListAddressResponse> GetByIdAsync(Guid Id)
+        {
+            var addresss = await _addressDal.GetAsync(a => a.Id == Id);
+            var mappedAddresses = _mapper.Map<GetListAddressResponse>(addresss);
+            return mappedAddresses;
+        }
+
         public async Task<IPaginate<GetListAddressResponse>> GetListAsync()
         {
-            var addresss = await _addressDal.GetListAsync();
-            var mappedAddresses = _mapper.Map<Paginate<GetListAddressResponse>>(addresss);
+            var address = await _addressDal.GetListAsync();
+            var mappedAddresses = _mapper.Map<Paginate<GetListAddressResponse>>(address);
             return mappedAddresses;
         }
 
         public async Task<UpdatedAddressResponse> UpdateAsync(UpdateAddressRequest updateAddressRequest)
         {
-            await _addressBusinessRules.IsExistsAddress(updateAddressRequest.Id);
             Address address = _mapper.Map<Address>(updateAddressRequest);
             Address updatedAddress = await _addressDal.UpdateAsync(address);
             UpdatedAddressResponse updatedAddressResponse = _mapper.Map<UpdatedAddressResponse>(updatedAddress);

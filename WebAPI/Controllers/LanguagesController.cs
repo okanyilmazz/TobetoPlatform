@@ -23,6 +23,18 @@ public class LanguagesController : ControllerBase
         var result = await _languageService.GetListAsync();
         return Ok(result);
     }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _languageService.GetByIdAsync(id);
+        return Ok(result);
+    }
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid id)
+    {
+        var result = await _languageService.GetByAccountIdAsync(id);
+        return Ok(result);
+    }
 
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLanguageRequest createLanguageRequest)

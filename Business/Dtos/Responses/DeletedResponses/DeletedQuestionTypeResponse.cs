@@ -8,4 +8,3 @@ namespace Business.Dtos.Responses.DeletedResponses
         public string Name { get; set; }
     }
 }
-

@@ -45,6 +45,7 @@ namespace Business.Concretes
         [ValidationAspect(typeof(SkillValidator))]
         public async Task<CreatedSkillResponse> AddAsync(CreateSkillRequest createSkillRequest)
         {
+            ValidationTool.Validate(new SkillValidator(), createSkillRequest);
             Skill skill = _mapper.Map<Skill>(createSkillRequest);
             Skill addedSkill = await _skillDal.AddAsync(skill);
             CreatedSkillResponse createdSkillResponse = _mapper.Map<CreatedSkillResponse>(addedSkill);
@@ -80,10 +81,17 @@ namespace Business.Concretes
         public async Task<IPaginate<GetListSkillResponse>> GetBySkillIdAsync(Guid id)
         {
             var skills = await _skillDal.GetListAsync(
-                include: s => s.Include(a=>a.Accounts));
-            var filteredSkills = skills.Items.SelectMany(s=>s.Accounts.Where(s=>s.Id==id).Select(a=>s)).ToList();
+                include: s => s.Include(a => a.Accounts));
+            var filteredSkills = skills.Items.SelectMany(s => s.Accounts.Where(s => s.Id == id).Select(a => s)).ToList();
             var mappedSkills = _mapper.Map<Paginate<GetListSkillResponse>>(skills);
             return mappedSkills;
+        }
+
+        public async Task<GetListSkillResponse> GetByIdAsync(Guid id)
+        {
+            var skill = await _skillDal.GetAsync(s => s.Id == id);
+            var mappedSkill = _mapper.Map<GetListSkillResponse>(skill);
+            return mappedSkill;
         }
     }
 }

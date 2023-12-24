@@ -17,6 +17,7 @@ namespace Business.Abstracts
     public interface IProjectService
     {
         Task<IPaginate<GetListProjectResponse>> GetListAsync();
+        Task<GetListProjectResponse> GetByIdAsync(Guid id);
         Task<CreatedProjectResponse> AddAsync(CreateProjectRequest createProjectRequest);
         Task<UpdatedProjectResponse> UpdateAsync(UpdateProjectRequest updateProjectRequest);
         Task<DeletedProjectResponse> DeleteAsync(DeleteProjectRequest deleteProjectRequest);

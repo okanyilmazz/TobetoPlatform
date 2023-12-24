@@ -24,6 +24,13 @@ public class ExamQuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _examQuestionService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateExamQuestionRequest createExamQuestionRequest)
     {
@@ -45,5 +52,3 @@ public class ExamQuestionsController : ControllerBase
         return Ok(result);
     }
 }
-
-

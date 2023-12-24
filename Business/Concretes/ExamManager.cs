@@ -8,6 +8,7 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Business.Helpers;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -24,25 +25,21 @@ namespace Business.Concretes
     public class ExamManager : IExamService
     {
         IExamDal _examDal;
-        IExamQuestionTypeService _examQuestionType;
+        ExamBusinessRules _examBusinessRules;
         IMapper _mapper;
 
-        public ExamManager(IExamDal examDal, IMapper mapper, IExamQuestionTypeService examQuestionType)
+        public ExamManager(IExamDal examDal, IMapper mapper, ExamBusinessRules examBusinessRules)
         {
             _examDal = examDal;
             _mapper = mapper;
-            _examQuestionType = examQuestionType;
+            _examBusinessRules = examBusinessRules;
         }
         public async Task<CreatedExamResponse> AddAsync(CreateExamRequest createExamRequest)
         {
-            Exam exam = _mapper.Map<Exam>(createExamRequest);
-            Exam addedExam = await _examDal.AddAsync(exam);
-
-            CreateExamQuestionTypeRequest createExamQuestionRequest =
-                ExamQuestionTypeMapper.MapToCreateExamQuestionRequest(createExamRequest.QuestionTypeId, addedExam.Id);
-            await _examQuestionType.AddAsync(createExamQuestionRequest);
-            CreatedExamResponse createdExamResponse = _mapper.Map<CreatedExamResponse>(addedExam);
-            return createdExamResponse;
+            var exam = _mapper.Map<Exam>(createExamRequest);
+            var addedExam = await _examDal.AddAsync(exam);
+            var responseExam = _mapper.Map<CreatedExamResponse>(addedExam);
+            return responseExam;
         }
 
         public async Task<DeletedExamResponse> DeleteAsync(DeleteExamRequest deleteExamRequest)
@@ -55,9 +52,8 @@ namespace Business.Concretes
 
         public async Task<GetListExamResponse> GetByIdAsync(Guid id)
         {
-            var exams = await _examDal.GetAsync(e => e.Id == id);
-            var mappedExams = _mapper.Map<GetListExamResponse>(exams);
-            return mappedExams;
+            var exam = await _examDal.GetListAsync(h => h.Id == id);
+            return _mapper.Map<GetListExamResponse>(exam.Items.FirstOrDefault());
         }
 
         public async Task<IPaginate<GetListExamResponse>> GetListAsync()

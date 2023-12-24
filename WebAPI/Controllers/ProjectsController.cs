@@ -24,6 +24,13 @@ public class ProjectsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync([FromQuery] Guid id)
+    {
+        var result = await _projectService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateProjectRequest createProjectRequest)
     {

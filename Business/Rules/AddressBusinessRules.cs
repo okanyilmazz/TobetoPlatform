@@ -20,9 +20,8 @@ namespace Business.Rules
 
         public async Task IsExistsAddress(Guid addressId)
         {
-            var result = await _addressDal.GetListAsync(
-                predicate: a => a.Id == addressId);
-            if (result.Count == 0)
+            var result = await _addressDal.GetListAsync(a => a.Id == addressId);
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

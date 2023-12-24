@@ -24,9 +24,17 @@ namespace WebAPI.Controllers
         {
             var result = await _skillService.GetListAsync();
             return Ok(result);
-        }     
+        }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync([FromQuery] Guid id)
+        {
+            var result = await _skillService.GetByIdAsync(id);
+            return Ok(result);
+        }
+
         [HttpGet("GetBySkillId")]
-        public async Task<IActionResult> GetBySkillId(Guid id)
+        public async Task<IActionResult> GetBySkillId([FromQuery] Guid id)
         {
             var result = await _skillService.GetBySkillIdAsync(id);
             return Ok(result);

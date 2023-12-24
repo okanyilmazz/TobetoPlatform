@@ -10,4 +10,6 @@ public class ExamResult : Entity<Guid>
     public int IncorrectOptionCount { get; set; }
     public int EmptyOptionCount { get; set; }
     public int Result { get; set; }
+    public Account Account { get; set; }
+    public Exam Exam { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Microsoft.Identity.Client;
 
 namespace Entities.Concretes;
 
@@ -11,4 +12,10 @@ public class AccountUniversity : Entity<Guid>
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
     public bool IsEducationActive { get; set; }
+
+
+    public Account? Accounts { get; set; }
+    public DegreeType? DegreeTypes { get; set; }
+    public University? Universities { get; set; }
+    public UniversityDepartment? UniversityDepartments { get; set; }
 }

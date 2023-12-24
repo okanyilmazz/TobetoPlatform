@@ -48,6 +48,13 @@ namespace Business.Concretes
             return deletedAccountSkillResponse;
         }
 
+        public async Task<GetListAccountSkillResponse> GetByIdAsync(Guid Id)
+        {
+            var accountSkill = await _accountSkillDal.GetAsync(a => a.Id == Id);
+            var mappedAccountSkill = _mapper.Map<GetListAccountSkillResponse>(accountSkill);
+            return mappedAccountSkill;
+        }
+
         public async Task<IPaginate<GetListAccountSkillResponse>> GetListAsync()
         {
             var accountSkills = await _accountSkillDal.GetListAsync();

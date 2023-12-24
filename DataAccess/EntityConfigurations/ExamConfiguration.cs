@@ -20,9 +20,9 @@ namespace DataAccess.EntityConfigurations
                 .WithMany(e => e.Exams)
                 .UsingEntity<ExamQuestion>();
 
-            builder.HasMany(e => e.QuestionTypes)
-                .WithMany(e => e.Exams)
-                .UsingEntity<ExamQuestionType>();
+         //   builder.HasMany(e => e.QuestionTypes)
+         //       .WithMany(e => e.Exams)
+         //       .UsingEntity<ExamQuestionType>();
 
             builder.HasMany(e => e.OccupationClasses)
                 .WithMany(e => e.Exams)

@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,33 +23,46 @@ namespace Business.Concretes
     {
         IEducationProgramDal _educationProgramDal;
         IMapper _mapper;
-
-        public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper)
+        IEducationProgramOccupationClassService _educationProgramOccupationClassService;
+        public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper, IEducationProgramOccupationClassService educationProgramOccupationClassService)
         {
             _educationProgramDal = educationProgramDal;
             _mapper = mapper;
+            _educationProgramOccupationClassService = educationProgramOccupationClassService;
         }
 
         public async Task<CreatedEducationProgramResponse> AddAsync(CreateEducationProgramRequest createEducationProgramRequest)
         {
-            EducationProgram EducationProgram = _mapper.Map<EducationProgram>(createEducationProgramRequest);
-            EducationProgram addedEducationProgram = await _educationProgramDal.AddAsync(EducationProgram);
+            EducationProgram educationProgram = _mapper.Map<EducationProgram>(createEducationProgramRequest);
+            EducationProgram addedEducationProgram = await _educationProgramDal.AddAsync(educationProgram);
             var mappedEducationProgram = _mapper.Map<CreatedEducationProgramResponse>(addedEducationProgram);
             return mappedEducationProgram;
         }
 
         public async Task<DeletedEducationProgramResponse> DeleteAsync(DeleteEducationProgramRequest deleteEducationProgramRequest)
         {
-            EducationProgram EducationProgram = _mapper.Map<EducationProgram>(deleteEducationProgramRequest);
-            EducationProgram deletedEducationProgram = await _educationProgramDal.DeleteAsync(EducationProgram);
+            EducationProgram educationProgram = _mapper.Map<EducationProgram>(deleteEducationProgramRequest);
+            EducationProgram deletedEducationProgram = await _educationProgramDal.DeleteAsync(educationProgram);
             var mappedEducationProgram = _mapper.Map<DeletedEducationProgramResponse>(deletedEducationProgram);
             return mappedEducationProgram;
         }
 
         public async Task<IPaginate<GetListEducationProgramResponse>> GetListAsync()
         {
-            var EducationProgramList = await _educationProgramDal.GetListAsync();
-            var mappedEducationProgram = _mapper.Map<Paginate<GetListEducationProgramResponse>>(EducationProgramList);
+            var educationProgramList = await _educationProgramDal.GetListAsync();
+            var mappedEducationProgram = _mapper.Map<Paginate<GetListEducationProgramResponse>>(educationProgramList);
+            return mappedEducationProgram;
+        }
+
+        public async Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId)
+        {
+
+            var educationProgramList = await _educationProgramDal.GetListAsync(
+                include: e => e.Include(o => o.OccupationClasses));
+
+            var filteredEducationPrograms = educationProgramList
+                .Items.SelectMany(ep => ep.OccupationClasses.Where(oc => oc.Id == occupationClassId).Select(oc => ep)).ToList();
+            var mappedEducationProgram = _mapper.Map<Paginate<GetListEducationProgramResponse>>(filteredEducationPrograms);
             return mappedEducationProgram;
         }
 

@@ -17,6 +17,11 @@ namespace DataAccess.EntityConfigurations
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
             builder.Property(a => a.Name).HasColumnName("Name").IsRequired();
             builder.HasIndex(indexExpression: a => a.Name, name: "UK_Name").IsUnique();
+
+            builder.HasMany(s => s.Accounts)
+                .WithMany(a => a.Skills)
+                .UsingEntity<AccountSkill>();
+
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
         }
     }

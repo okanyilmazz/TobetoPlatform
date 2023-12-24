@@ -44,6 +44,13 @@ namespace Business.Concretes
             return deletedAccountSocialMediaResponse;
         }
 
+        public async Task<GetListAccountSocialMediaResponse> GetByIdAsync(Guid Id)
+        {
+            var accountSocialMedia = await _accountSocialMediaDal.GetAsync(a => a.Id == Id);
+            var mappedAccountSocialMedias = _mapper.Map<GetListAccountSocialMediaResponse>(accountSocialMedia);
+            return mappedAccountSocialMedias;
+        }
+
         public async Task<IPaginate<GetListAccountSocialMediaResponse>> GetListAsync()
         {
             var accountSocialMediaList = await _accountSocialMediaDal.GetListAsync();

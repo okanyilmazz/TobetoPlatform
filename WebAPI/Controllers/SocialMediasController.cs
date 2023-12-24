@@ -23,7 +23,6 @@ namespace WebAPI.Controllers
             _socialMediaService = socialMediaService;
         }
 
-
         [HttpGet("GetList")]
         public async Task<IActionResult> GetListAsync()
         {
@@ -31,10 +30,17 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetByAccountId")]
-        public async Task<IActionResult> GetByAccountIdAsync(Guid Id)
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync([FromQuery] Guid id)
         {
-            var result = await _socialMediaService.GetByAccountIdAsync(Id);
+            var result = await _socialMediaService.GetByIdAsync(id);
+            return Ok(result);
+        }
+
+        [HttpGet("GetByAccountId")]
+        public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid id)
+        {
+            var result = await _socialMediaService.GetByAccountIdAsync(id);
             return Ok(result);
         }
 

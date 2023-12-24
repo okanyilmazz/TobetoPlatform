@@ -22,5 +22,7 @@ namespace Business.Abstracts
         Task<UpdatedSkillResponse> UpdateAsync(UpdateSkillRequest updateSkillRequest);
         Task<IPaginate<GetListSkillResponse>> GetListAsync();
         Task<IPaginate<GetListSkillResponse>> GetBySkillIdAsync(Guid id);
+        Task<GetListSkillResponse> GetByIdAsync(Guid id);
+
     }
 }

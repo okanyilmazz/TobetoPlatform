@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Business.Rules
 {
-    public class ExamQuestionType : BaseBusinessRules
+    public class ExamQuestionTypeBusinessRules : BaseBusinessRules
     {
         IExamQuestionTypeDal _examQuestionTypeDal;
 
-        public ExamQuestionType(IExamQuestionTypeDal examQuestionTypeDal)
+        public ExamQuestionTypeBusinessRules(IExamQuestionTypeDal examQuestionTypeDal)
         {
             _examQuestionTypeDal = examQuestionTypeDal;
         }
@@ -21,7 +21,7 @@ namespace Business.Rules
         public async Task IsExistsExamQuestionType(Guid examQuestionTypeId)
         {
             var result = await _examQuestionTypeDal.GetListAsync(e => e.Id == examQuestionTypeId);
-            if (result.Count == 0)
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

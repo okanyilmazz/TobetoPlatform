@@ -7,15 +7,11 @@ using Business.Dtos.Responses.CreatedResponses;
 using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concretes
 {
@@ -23,11 +19,13 @@ namespace Business.Concretes
     {
         IHomeworkDal _homeworkDal;
         IMapper _mapper;
+        HomeworkBusinessRules _homeworkBusinessRules;
 
-        public HomeworkManager(IHomeworkDal homeworkDal, IMapper mapper)
+        public HomeworkManager(IHomeworkDal homeworkDal, IMapper mapper, HomeworkBusinessRules homeworkBusinessRules)
         {
             _homeworkDal = homeworkDal;
             _mapper = mapper;
+            _homeworkBusinessRules = homeworkBusinessRules;
         }
 
         public async Task<CreatedHomeworkResponse> AddAsync(CreateHomeworkRequest createHomeworkRequest)
@@ -41,6 +39,7 @@ namespace Business.Concretes
 
         public async Task<DeletedHomeworkResponse> DeleteAsync(DeleteHomeworkRequest deleteHomeworkRequest)
         {
+            await _homeworkBusinessRules.IsExistsHomework(deleteHomeworkRequest.Id);
             Homework homework = _mapper.Map<Homework>(deleteHomeworkRequest);
             Homework deletedHomework = await _homeworkDal.DeleteAsync(homework, true);
             DeletedHomeworkResponse deletedHomeworkResponse = _mapper.Map<DeletedHomeworkResponse>(deletedHomework);
@@ -56,6 +55,12 @@ namespace Business.Concretes
             return mappedHomeworks;
         }
 
+        public async Task<GetListHomeworkResponse> GetByIdAsync(Guid id)
+        {
+            var homework = await _homeworkDal.GetListAsync(h => h.Id == id);
+            return _mapper.Map<GetListHomeworkResponse>(homework.Items.FirstOrDefault());
+        }
+
         public async Task<IPaginate<GetListHomeworkResponse>> GetListAsync()
         {
             var homeworks = await _homeworkDal.GetListAsync();
@@ -65,7 +70,7 @@ namespace Business.Concretes
 
         public async Task<UpdatedHomeworkResponse> UpdateAsync(UpdateHomeworkRequest updateHomeworkRequest)
         {
-
+            await _homeworkBusinessRules.IsExistsHomework(updateHomeworkRequest.Id);
             Homework homework = _mapper.Map<Homework>(updateHomeworkRequest);
             Homework updatedHomework = await _homeworkDal.UpdateAsync(homework);
             UpdatedHomeworkResponse updatedHomeworkResponse = _mapper.Map<UpdatedHomeworkResponse>(updatedHomework);

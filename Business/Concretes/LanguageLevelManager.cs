@@ -10,13 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concretes
 {
@@ -61,9 +55,15 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListLanguageLevelResponse>> GetListAsync()
         {
-            var LanguageLevelListed = await _languageLevelDal.GetListAsync();
-            var mappedListed = _mapper.Map<Paginate<GetListLanguageLevelResponse>>(LanguageLevelListed);
+            var languageLevelListed = await _languageLevelDal.GetListAsync();
+            var mappedListed = _mapper.Map<Paginate<GetListLanguageLevelResponse>>(languageLevelListed);
             return mappedListed;
-        }    
+        }
+
+        public async Task<GetListLanguageLevelResponse> GetByIdAsync(Guid id)
+        {
+            var languageLevel = await _languageLevelDal.GetListAsync(l => l.Id == id);
+            return _mapper.Map<GetListLanguageLevelResponse>(languageLevel.Items.FirstOrDefault());
+        }
     }
 }

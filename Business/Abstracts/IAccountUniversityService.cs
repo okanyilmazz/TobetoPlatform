@@ -21,6 +21,7 @@ namespace Business.Abstracts
         Task<DeletedAccountUniversityResponse> DeleteAsync(DeleteAccountUniversityRequest deleteAccountUniversityRequest);
 
         Task<IPaginate<GetListAccountUniversityResponse>> GetListAsync();
+        Task<GetListAccountUniversityResponse> GetByIdAsync(Guid Id);
 
     }
 }

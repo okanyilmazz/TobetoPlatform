@@ -76,7 +76,6 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid examId)
         {
-
             var questionsList = await _questionDal.GetListAsync(
                 include: q => q.Include(e => e.Exams));
             var filteredQuestionList = questionsList

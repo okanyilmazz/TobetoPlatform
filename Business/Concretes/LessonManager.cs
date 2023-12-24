@@ -10,7 +10,6 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -81,22 +80,16 @@ namespace Business.Concretes
                include: l => l.Include(a => a.Accounts));
 
             var filteredLessons = lessonList
-                .Items.SelectMany(l => l.Accounts.Where(a => a.Id== id).Select(a => l)).ToList();
-            var mappedLesson= _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
+                .Items.SelectMany(l => l.Accounts.Where(a => a.Id == id).Select(a => l)).ToList();
+            var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
             return mappedLesson;
         }
 
-<<<<<<< HEAD
-        public Task<GetListLessonResponse> GetByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-=======
         public async Task<GetListLessonResponse> GetByIdAsync(Guid id)
         {
-            var lessons = await _lessonDal.GetAsync(l=>l.Id == id);
-            var mappedLessons = _mapper.Map<GetListLessonResponse>(lessons);
-            return mappedLessons;
->>>>>>> 57b4e4647f5b7d36b2aae105b5d0f80b915afe04
+            var lesson = await _lessonDal.GetListAsync(l => l.Id == id);
+            var mappedLesson = _mapper.Map<GetListLessonResponse>(lesson);
+            return mappedLesson;
         }
     }
 }

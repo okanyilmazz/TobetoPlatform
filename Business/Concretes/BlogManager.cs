@@ -37,7 +37,7 @@ namespace Business.Concretes
         public async Task<CreatedBlogResponse> AddAsync(CreateBlogRequest createBlogRequest)
         {
             Blog blog = _mapper.Map<Blog>(createBlogRequest);
-            Blog createdBlog= await _blogDal.AddAsync(blog);
+            Blog createdBlog = await _blogDal.AddAsync(blog);
             CreatedBlogResponse createdBlogResponse = _mapper.Map<CreatedBlogResponse>(createdBlog);
             return createdBlogResponse;
         }
@@ -51,10 +51,17 @@ namespace Business.Concretes
             return deletedBlogResponse;
         }
 
+        public async Task<GetListBlogResponse> GetByIdAsync(Guid Id)
+        {
+            var blogs = await _blogDal.GetAsync(b => b.Id == Id);
+            var mappedBlogs = _mapper.Map<GetListBlogResponse>(blogs);
+            return mappedBlogs;
+        }
+
         public async Task<IPaginate<GetListBlogResponse>> GetListAsync()
         {
             var blogs = await _blogDal.GetListAsync();
-            var mappedBlogs= _mapper.Map<Paginate<GetListBlogResponse>>(blogs);
+            var mappedBlogs = _mapper.Map<Paginate<GetListBlogResponse>>(blogs);
             return mappedBlogs;
         }
 

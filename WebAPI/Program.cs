@@ -6,6 +6,7 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Hosting;
+using Core.CrossCuttingConcerns.Exceptions.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseAuthorization();
 

@@ -22,5 +22,6 @@ namespace Business.Abstracts
         Task<DeletedAnnouncementResponse> DeleteAsync(DeleteAnnouncementRequest deleteAnnouncementRequest);
 
         Task<IPaginate<GetListAnnouncementResponse>> GetListAsync();
+        Task<GetListAnnouncementResponse> GetByIdAsync(Guid Id);
     }
 }

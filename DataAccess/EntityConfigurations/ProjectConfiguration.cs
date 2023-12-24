@@ -22,7 +22,6 @@ namespace DataAccess.EntityConfigurations
             builder.HasMany(a => a.Announcements)
                 .WithMany(a => a.Projects)
                 .UsingEntity<AnnouncementProject>();
-
         }
     }
 }

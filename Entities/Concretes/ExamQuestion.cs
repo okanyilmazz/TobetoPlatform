@@ -11,5 +11,7 @@ namespace Entities.Concretes
     {
         public Guid QuestionId { get; set; }
         public Guid ExamId { get; set; }
+        public Question Question { get; set; }
+        public Exam Exam { get; set; }
     }
 }

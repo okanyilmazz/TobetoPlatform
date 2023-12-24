@@ -23,6 +23,12 @@ public class AccountSocialMediasController : ControllerBase
         var result = await _accountSocialMediaService.GetListAsync();
         return Ok(result);
     }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid Id)
+    {
+        var result = await _accountSocialMediaService.GetByIdAsync(Id);
+        return Ok(result);
+    }
 
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountSocialMediaRequest createAccountSocialMediaRequest)

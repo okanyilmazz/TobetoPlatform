@@ -25,6 +25,14 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid Id)
+        {
+            var result = await _announcementService.GetByIdAsync(Id);
+            return Ok(result);
+        }
+
+
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAnnouncementRequest createAnnouncementRequest)
         {

@@ -26,16 +26,22 @@ public class LessonsController : ControllerBase
     }
 
     [HttpGet("GetByEducationProgramId")]
-    public async Task<IActionResult> GetByEducationProgramIdAsync(Guid id)
+    public async Task<IActionResult> GetByEducationProgramIdAsync([FromQuery] Guid id)
     {
         var result = await _lessonService.GetByEducationProgramIdAsync(id);
         return Ok(result);
     }
 
     [HttpGet("GetByAccountId")]
-    public async Task<IActionResult> GetByAccountId(Guid id)
+    public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid id)
     {
         var result = await _lessonService.GetByAccountIdAsync(id);
+        return Ok(result);
+    }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _lessonService.GetByIdAsync(id);
         return Ok(result);
     }
 

@@ -23,6 +23,12 @@ public class AccountUniversitiesController : ControllerBase
         var result = await _accountUniversityService.GetListAsync();
         return Ok(result);
     }
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid Id)
+    {
+        var result = await _accountUniversityService.GetByIdAsync(Id);
+        return Ok(result);
+    }
 
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountUniversityRequest createAccountUniversityRequest)

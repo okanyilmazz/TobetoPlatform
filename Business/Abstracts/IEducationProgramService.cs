@@ -20,5 +20,7 @@ namespace Business.Abstracts
         Task<UpdatedEducationProgramResponse> UpdateAsync(UpdateEducationProgramRequest updateEducationProgramRequest);
         Task<DeletedEducationProgramResponse> DeleteAsync(DeleteEducationProgramRequest deleteEducationProgramRequest);
         Task<IPaginate<GetListEducationProgramResponse>> GetListAsync();
+        Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId);
+
     }
 }

@@ -15,9 +15,9 @@ namespace DataAccess.EntityConfigurations
             builder.HasIndex(indexExpression: q => q.Name, name: "UK_Name").IsUnique();
             builder.HasQueryFilter(q => !q.DeletedDate.HasValue);
 
-            builder.HasMany(e => e.Exams)
-            .WithMany(e => e.QuestionTypes)
-            .UsingEntity<ExamQuestionType>();
+            builder.HasMany(q => q.Questions)
+            .WithOne(qt => qt.QuestionType)
+            .HasForeignKey(q => q.QuestionTypeId);
         }
     }
 }

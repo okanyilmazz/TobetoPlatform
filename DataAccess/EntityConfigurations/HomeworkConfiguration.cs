@@ -13,10 +13,12 @@ namespace DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Homework> builder)
         {
-            builder.ToTable("Homeworks").HasKey(a => a.Id);
-            builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
-            builder.Property(a => a.Name).HasColumnName("Name").IsRequired();
-            builder.HasIndex(indexExpression: a => a.Name, name: "UK_Name").IsUnique();
+            builder.ToTable("Homeworks").HasKey(h => h.Id);
+            builder.Property(h => h.Id).HasColumnName("Id").IsRequired();
+            builder.Property(h => h.Name).HasColumnName("Name").IsRequired();
+            builder.Property(h => h.Description).HasColumnName("Description").IsRequired();
+            builder.Property(h => h.FilePath).HasColumnName("FilePath").IsRequired();
+            builder.Property(h => h.Deadline).HasColumnName("DeadLine").IsRequired();
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
         }
     }

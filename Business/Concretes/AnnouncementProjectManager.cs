@@ -50,6 +50,13 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
         return deletedAnnouncementProjectResponse;
     }
 
+    public async Task<GetListAnnouncementProjectResponse> GetByIdAsync(Guid Id)
+    {
+        var announcementProject = await _announcementProjectDal.GetAsync(a=> a.Id == Id);
+        var mappedAnnouncementProject = _mapper.Map<GetListAnnouncementProjectResponse>(announcementProject);
+        return mappedAnnouncementProject;
+    }
+
     public async Task<IPaginate<GetListAnnouncementProjectResponse>> GetListAsync()
     {
         var announcementProject = await _announcementProjectDal.GetListAsync();

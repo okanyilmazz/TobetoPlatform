@@ -15,5 +15,6 @@ public class AccountSocialMediaConfiguration : IEntityTypeConfiguration<AccountS
         builder.Property(s => s.SocialMediaId).HasColumnName("SocialMediaId").IsRequired();
         builder.Property(s => s.Url).HasColumnName("Url").IsRequired();
         builder.HasQueryFilter(s => !s.DeletedDate.HasValue);
+
     }
 }

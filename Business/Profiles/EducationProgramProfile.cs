@@ -30,6 +30,11 @@ namespace Business.Profiles
 
             CreateMap<IPaginate<EducationProgram>, Paginate<GetListEducationProgramResponse>>().ReverseMap();
             CreateMap<EducationProgram, GetListEducationProgramResponse>().ReverseMap();
+
+            CreateMap<List<EducationProgram>, Paginate<GetListEducationProgramResponse>>()
+                .ForMember(destinationMember: p => p.Items,
+                memberOptions: opt => opt.MapFrom(p => p.ToList())).ReverseMap();
+
         }
     }
 }

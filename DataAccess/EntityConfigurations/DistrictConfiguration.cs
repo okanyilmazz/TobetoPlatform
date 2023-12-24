@@ -14,13 +14,19 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<District> builder)
         {
             builder.ToTable("Districts").HasKey(d => d.Id);
+
             builder.Property(b => b.Id).HasColumnName("Id").IsRequired();
             builder.Property(b => b.Name).HasColumnName("Name").IsRequired();
             builder.Property(b => b.CityId).HasColumnName("CityId").IsRequired();
-            builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
 
-            builder.HasOne(h => h.Cities)
-              .WithMany(a => a.Districts); //??
+            builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
+
+
+            builder.HasOne(d => d.City)
+                .WithMany(c => c.Districts)
+                .HasForeignKey(d => d.CityId);
+
+            builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
         }
     }
 }

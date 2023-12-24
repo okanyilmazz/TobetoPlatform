@@ -1,4 +1,5 @@
 ﻿using Business.Messages;
+using Core.Business.Rules;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Rules
 {
-    public class LanguageLevelBusinessRules
+    public class LanguageLevelBusinessRules: BaseBusinessRules
     {
         private readonly ILanguageLevelDal _languageLevelDal;
 

@@ -1,6 +1,6 @@
 ﻿using Business.Messages;
+using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Rules
 {
-    public class BlogBusinessRules
+    public class BlogBusinessRules : BaseBusinessRules
     {
         private readonly IBlogDal _blogDal;
 
@@ -20,9 +20,7 @@ namespace Business.Rules
 
         public async Task IsExistsBlog(Guid BlogId)
         {
-            var result = await _blogDal.GetListAsync(
-                predicate: q => q.Id == BlogId
-                );
+            var result = await _blogDal.GetListAsync();
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

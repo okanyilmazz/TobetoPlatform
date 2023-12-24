@@ -11,14 +11,18 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<ProductionCompany> builder)
         {
             builder.ToTable("ProductionCompanies").HasKey(p => p.Id);
+
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(p => p.Name).HasColumnName("Name").IsRequired();
-            builder.HasIndex(indexExpression: p => p.Name, name: "UK_Name").IsUnique();
-            builder.HasQueryFilter(p => !p.DeletedDate.HasValue);
-            //Has many???has one??
-            
 
+            builder.HasIndex(indexExpression: p => p.Id, name: "UK_Id").IsUnique();
+            builder.HasIndex(indexExpression: p => p.Name, name: "UK_Name").IsUnique();
+
+            builder.HasMany(pc => pc.Lessons)
+                .WithOne(l => l.ProductionCompany)
+                .HasForeignKey(l => l.ProductionCompanyId);
+
+            builder.HasQueryFilter(p => !p.DeletedDate.HasValue);
         }
     }
 }
-

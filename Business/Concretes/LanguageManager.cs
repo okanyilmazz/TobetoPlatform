@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,7 +40,7 @@ namespace Business.Concretes
         public async Task<DeletedLanguageResponse> DeleteAsync(DeleteLanguageRequest deleteLanguageRequest)
         {
             await _languageBusinessRules.IsExistsLanguage(deleteLanguageRequest.Id);
-            var language = _mapper.Map<Language>(deleteLanguageRequest);
+            Language language = await _languageDal.GetAsync(predicate: l => l.Id == deleteLanguageRequest.Id);
             var deletedLanguage = await _languageDal.DeleteAsync(language);
             var responseLanguage = _mapper.Map<DeletedLanguageResponse>(deletedLanguage);
             return responseLanguage;
@@ -57,11 +58,11 @@ namespace Business.Concretes
             var mappedListed = _mapper.Map<Paginate<GetListLanguageResponse>>(languageListed);
             return mappedListed;
         }
-        public async Task<IPaginate<GetListLanguageResponse>> GetByAccountIdAsync(Guid id)
+        public async Task<IPaginate<GetListLanguageResponse>> GetByAccountIdAsync(Guid accountId)
         {
             var languages = await _languageDal.GetListAsync(
-                include: l => l.Include(a => a.Accounts));
-            var filteredLanguages = languages.Items.SelectMany(l => l.Accounts.Where(a => a.Id == id).Select(a => l)).ToList();
+                include: l => l.Include(a => a.AccountLanguages).ThenInclude(al=>al.Account));
+            var filteredLanguages = languages.Items.SelectMany(l => l.AccountLanguages.Where(a => a.AccountId == accountId).Select(a => l)).ToList();
             var mappedLanguages = _mapper.Map<Paginate<GetListLanguageResponse>>(filteredLanguages);
             return mappedLanguages;
         }

@@ -58,10 +58,10 @@ namespace Business.Concretes
         {
 
             var educationProgramList = await _educationProgramDal.GetListAsync(
-                include: e => e.Include(o => o.OccupationClasses));
+                include: e => e.Include(o => o.EducationProgramOccupationClasses).ThenInclude(epoc=>epoc.OccupationClass));
 
             var filteredEducationPrograms = educationProgramList
-                .Items.SelectMany(ep => ep.OccupationClasses.Where(oc => oc.Id == occupationClassId).Select(oc => ep)).ToList();
+                .Items.SelectMany(ep => ep.EducationProgramOccupationClasses.Where(oc => oc.OccupationClassId == occupationClassId).Select(oc => ep)).ToList();
             var mappedEducationProgram = _mapper.Map<Paginate<GetListEducationProgramResponse>>(filteredEducationPrograms);
             return mappedEducationProgram;
         }

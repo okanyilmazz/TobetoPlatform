@@ -8,7 +8,8 @@ public class AccountAnswer : Entity<Guid>
     public Guid ExamId { get; set; }
     public Guid QuestionId { get; set; }
     public string GivenAnswer { get; set; }
-    public Account? Account { get; set; }
-    public Exam? Exam { get; set; }
-    public Question? Question { get; set; }
+
+    public Account Account { get; set; }
+    public Exam Exam { get; set; }
+    public Question Question { get; set; }
 }

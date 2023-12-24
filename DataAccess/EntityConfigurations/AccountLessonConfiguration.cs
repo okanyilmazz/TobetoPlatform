@@ -14,17 +14,25 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<AccountLesson> builder)
         {
             builder.ToTable("AccountLessons").HasKey(b => b.Id);
+
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
-            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
             builder.Property(a => a.LessonId).HasColumnName("LessonId").IsRequired();
-            builder.HasIndex(indexExpression: a => a.LessonId, name: "UK_LessonId").IsUnique();
             builder.Property(a => a.AccountId).HasColumnName("AccountId").IsRequired();
-            builder.HasIndex(indexExpression: a => a.AccountId, name: "UK_AccountId").IsUnique();
+
+
+            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
+
+
+            builder.HasOne(al => al.Lesson)
+                .WithMany(l => l.AccountLessons)
+                .HasForeignKey(al => al.LessonId);
+
+            builder.HasOne(al => al.Account)
+                .WithMany(a => a.AccountLessons)
+                .HasForeignKey(al => al.AccountId);
+
 
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
-
-            builder.HasOne(a=>a.Lesson);
-            builder.HasOne(a=>a.Account);
         }
     }
 }

@@ -14,8 +14,8 @@ namespace Entities.Concretes
         public Guid DistrictId { get; set; }
         public string AddressDetail { get; set; }
 
-        public City? City { get; set; }
-        public Country? Country { get; set; }
-        public District? District { get; set; }
+        public City City { get; set; }
+        public Country Country { get; set; }
+        public District District { get; set; }
     }
 }

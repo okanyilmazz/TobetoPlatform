@@ -14,20 +14,22 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<Question> builder)
         {
             builder.ToTable("Questions").HasKey(b => b.Id);
-            builder.Property(b => b.CorrectOption).HasColumnName("Description").IsRequired();
-            builder.Property(b => b.CorrectOption).HasColumnName("OptionA").IsRequired();
-            builder.Property(b => b.CorrectOption).HasColumnName("OptionB").IsRequired();
-            builder.Property(b => b.CorrectOption).HasColumnName("OptionC").IsRequired();
-            builder.Property(b => b.CorrectOption).HasColumnName("OptionD").IsRequired();
+
+            builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
+            builder.Property(b => b.Description).HasColumnName("Description").IsRequired();
+            builder.Property(b => b.OptionA).HasColumnName("OptionA").IsRequired();
+            builder.Property(b => b.OptionB).HasColumnName("OptionB").IsRequired();
+            builder.Property(b => b.OptionC).HasColumnName("OptionC").IsRequired();
+            builder.Property(b => b.OptionD).HasColumnName("OptionD").IsRequired();
             builder.Property(b => b.CorrectOption).HasColumnName("CorrectOption").IsRequired();
 
-            builder.HasMany(e => e.Exams)
-             .WithMany(e => e.Questions)
-            .UsingEntity<ExamQuestion>();
+            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
 
             builder.HasOne(qt => qt.QuestionType)
                 .WithMany(q => q.Questions)
                 .HasForeignKey(q => q.QuestionTypeId);
+
+            builder.HasMany(q => q.ExamQuestions);
 
             builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
         }

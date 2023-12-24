@@ -16,19 +16,18 @@ namespace Entities.Concretes
         public string Description { get; set; }
         public DateTime BirthDate { get; set; }
         public string? ProfilePhotoPath { get; set; }
-        public User? User { get; set; }
-        public Address? Address { get; set; }
 
+        public User User { get; set; }
+        public Address Address { get; set; }
         public virtual ICollection<WorkExperience>? WorkExperiences { get; set; }
-        public virtual ICollection<OccupationClass>? OccupationClasses { get; set; }
-        public virtual ICollection<Skill>? Skills { get; set; }
+        public virtual ICollection<AccountOccupationClass>? AccountOccupationClasses { get; set; }
+        public virtual ICollection<AccountSkill>? AccountSkills { get; set; }
         public virtual ICollection<Certificate>? Certificates { get; set; }
-        public virtual ICollection<SocialMedia>? SocialMedias { get; set; }
-        public virtual ICollection<University>? Universities { get; set; }
-        public virtual ICollection<Language>? Languages { get; set; }
-        public virtual ICollection<Session>? Sessions { get; set; }
-        public virtual ICollection<Homework>? Homeworks { get; set; }
-        public virtual ICollection<Lesson>? Lessons { get; set; }
-
+        public virtual ICollection<AccountSocialMedia>? AccountSocialMedias { get; set; }
+        public virtual ICollection<AccountUniversity>? AccountUniversities { get; set; }
+        public virtual ICollection<AccountLanguage>? AccountLanguages { get; set; }
+        public virtual ICollection<AccountSession>? AccountSessions { get; set; }
+        public virtual ICollection<AccountHomework>? AccountHomeworks { get; set; }
+        public virtual ICollection<AccountLesson>? AccountLessons { get; set; }
     }
 }

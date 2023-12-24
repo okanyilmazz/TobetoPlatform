@@ -45,7 +45,7 @@ namespace Business.Concretes
 
         public async Task<DeletedAnnouncementResponse> DeleteAsync(DeleteAnnouncementRequest deleteAnnouncementRequest)
         {
-            await _announcementBusinessRules.IsExistsAnnouncement(deleteAnnouncementRequest.Id);
+           // await _announcementBusinessRules.IsExistsAnnouncement(deleteAnnouncementRequest.Id);
             Announcement announcement = _mapper.Map<Announcement>(deleteAnnouncementRequest);
             Announcement deletedAnnouncemenProject = await _announcementDal.DeleteAsync(announcement);
             DeletedAnnouncementResponse deletedAnnouncementResponse = _mapper.Map<DeletedAnnouncementResponse>(deletedAnnouncemenProject);
@@ -61,8 +61,7 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListAnnouncementResponse>> GetListAsync()
         {
-            var announcement = await _announcementDal.GetListAsync(
-                include: a => a.Include(p => p.Projects));
+            var announcement = await _announcementDal.GetListAsync();
             var mappedAnnouncement = _mapper.Map<Paginate<GetListAnnouncementResponse>>(announcement);
             return mappedAnnouncement;
         }

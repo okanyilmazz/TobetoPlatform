@@ -47,9 +47,9 @@ public class ProjectManager : IProjectService
 
     public async Task<DeletedProjectResponse> DeleteAsync(DeleteProjectRequest deleteProjectRequest)
     {
-        Project project = _mapper.Map<Project>(deleteProjectRequest);
-        Project deletedProject = await _projectDal.DeleteAsync(project, true);
-        DeletedProjectResponse responseProject = _mapper.Map<DeletedProjectResponse>(deletedProject);
+        Project project = await _projectDal.GetAsync(predicate: l => l.Id == deleteProjectRequest.Id);
+        await _projectDal.DeleteAsync(project);
+        DeletedProjectResponse responseProject = _mapper.Map<DeletedProjectResponse>(project);
         return responseProject;
     }
 

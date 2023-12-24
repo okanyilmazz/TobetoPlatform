@@ -14,7 +14,14 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<EducationProgramLevel> builder)
         {
             builder.ToTable("EducationProgramLevels").HasKey(c => c.Id);
+
+            builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
+            builder.Property(c => c.Name).HasColumnName("Name").IsRequired();
+
+
             builder.HasIndex(indexExpression:c => c.Name,name:"UK_Name").IsUnique();
+            builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
+
             builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
         }
     }

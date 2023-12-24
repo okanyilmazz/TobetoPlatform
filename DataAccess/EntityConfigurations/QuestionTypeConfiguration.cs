@@ -9,16 +9,20 @@ namespace DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<QuestionType> builder)
         {
-            builder.ToTable("QuestionTypes").HasKey(q => q.Id);
-            builder.Property(q => q.Id).HasColumnName("Id").IsRequired();
-            builder.Property(q => q.Name).HasColumnName("Name").IsRequired();
-            builder.HasIndex(indexExpression: q => q.Name, name: "UK_Name").IsUnique();
-            builder.HasQueryFilter(q => !q.DeletedDate.HasValue);
+            builder.ToTable("QuestionTypes").HasKey(qt => qt.Id);
 
-            builder.HasMany(q => q.Questions)
-            .WithOne(qt => qt.QuestionType)
+            builder.Property(qt => qt.Id).HasColumnName("Id").IsRequired();
+            builder.Property(qt => qt.Name).HasColumnName("Name").IsRequired();
+
+            builder.HasIndex(indexExpression: qt => qt.Id, name: "UK_Id").IsUnique();
+            builder.HasIndex(indexExpression: qt => qt.Name, name: "UK_Name").IsUnique();
+
+
+            builder.HasMany(qt => qt.Questions)
+            .WithOne(q => q.QuestionType)
             .HasForeignKey(q => q.QuestionTypeId);
+
+            builder.HasQueryFilter(qt => !qt.DeletedDate.HasValue);
         }
     }
 }
-

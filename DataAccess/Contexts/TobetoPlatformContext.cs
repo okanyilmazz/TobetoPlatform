@@ -14,15 +14,6 @@ public class TobetoPlatformContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
 
-    public TobetoPlatformContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
-    {
-        Configuration = configuration;
-        Database.EnsureCreated();
-    }
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-    }
 
     public DbSet<Skill> Skills { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
@@ -78,6 +69,16 @@ public class TobetoPlatformContext : DbContext
     public DbSet<Country> Countries { get; set; }
     public DbSet<ExamQuestion> ExamQuestions { get; set; }
 
+
+    public TobetoPlatformContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
+    {
+        Configuration = configuration;
+        Database.EnsureCreated();
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 
 
 }

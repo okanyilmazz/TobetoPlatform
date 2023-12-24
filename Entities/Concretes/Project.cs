@@ -6,5 +6,5 @@ public class Project : Entity<Guid>
 {
     public string Name { get; set; }
 
-    public virtual ICollection<Announcement>? Announcements { get; set; }
+    public virtual ICollection<AnnouncementProject>? AnnouncementProjects { get; set; }
 }

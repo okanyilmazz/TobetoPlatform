@@ -14,22 +14,23 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<EducationProgram> builder)
         {
             builder.ToTable("EducationPrograms").HasKey(e => e.Id);
+
+            builder.Property(ep => ep.Id).HasColumnName("Id").IsRequired();
+            builder.Property(ep => ep.Name).HasColumnName("Name").IsRequired();
+            builder.Property(ep => ep.EducationProgramLevelId).HasColumnName("EducationProgramLevelId").IsRequired();
+
+
+            builder.HasIndex(indexExpression: e => e.Id, name: "UK_Id").IsUnique();
             builder.HasIndex(indexExpression: e => e.Name, name: "UK_Name").IsUnique();
+
+
+            builder.HasOne(ep => ep.EducationProgramLevel);
+            builder.HasMany(ep => ep.EducationProgramLessons);
+            builder.HasMany(ep => ep.EducationProgramOccupationClasses);
+            builder.HasMany(ep => ep.EducationProgramProgrammingLanguages);
+
+
             builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
-            
-            builder.HasMany(e => e.ProgrammingLanguages) 
-                .WithMany(e => e.EducationPrograms) 
-                .UsingEntity<EducationProgramProgrammingLanguage>();
-
-            builder.HasMany(e => e.OccupationClasses)
-                .WithMany(e => e.EducationPrograms)
-                .UsingEntity<EducationProgramOccupationClass>();
-
-            builder.HasMany(e => e.Lessons)
-                .WithMany(e => e.EducationPrograms)
-                .UsingEntity<EducationProgramLesson>();
-
-
         }
     }
 }

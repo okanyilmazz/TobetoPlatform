@@ -8,9 +8,6 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
-using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -42,10 +39,10 @@ namespace Business.Concretes
         //[LogAspect]-->AOP.Bir metod hata verdiğinde çalışan kodlar AOP'dir.
         //[Validate]-[Performance]-RemoveCache]-[Transaction]
 
-        [ValidationAspect(typeof(SkillValidator))]
+
         public async Task<CreatedSkillResponse> AddAsync(CreateSkillRequest createSkillRequest)
         {
-            ValidationTool.Validate(new SkillValidator(), createSkillRequest);
+
             Skill skill = _mapper.Map<Skill>(createSkillRequest);
             Skill addedSkill = await _skillDal.AddAsync(skill);
             CreatedSkillResponse createdSkillResponse = _mapper.Map<CreatedSkillResponse>(addedSkill);
@@ -61,7 +58,7 @@ namespace Business.Concretes
             return deletedSkillResponse;
         }
 
-        [ValidationAspect(typeof(SkillValidator))]
+
         public async Task<UpdatedSkillResponse> UpdateAsync(UpdateSkillRequest updateSkillRequest)
         {
             await _skillBusinessRules.IsExistsSkill(updateSkillRequest.Id);
@@ -78,11 +75,11 @@ namespace Business.Concretes
             return mappedSkills;
         }
 
-        public async Task<IPaginate<GetListSkillResponse>> GetBySkillIdAsync(Guid id)
+        public async Task<IPaginate<GetListSkillResponse>> GetBySkillIdAsync(Guid accountId)
         {
             var skills = await _skillDal.GetListAsync(
-                include: s => s.Include(a => a.Accounts));
-            var filteredSkills = skills.Items.SelectMany(s => s.Accounts.Where(s => s.Id == id).Select(a => s)).ToList();
+                include: s => s.Include(a => a.AccountSkills).ThenInclude(ask => ask.Account));
+            var filteredSkills = skills.Items.SelectMany(s => s.AccountSkills.Where(s => s.AccountId == accountId).Select(a => s)).ToList();
             var mappedSkills = _mapper.Map<Paginate<GetListSkillResponse>>(skills);
             return mappedSkills;
         }

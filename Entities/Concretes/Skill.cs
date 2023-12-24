@@ -6,5 +6,5 @@ public class Skill : Entity<Guid>
 {
     public string Name { get; set; }
 
-    public virtual ICollection<Account>? Accounts { get; set; }
+    public virtual ICollection<AccountSkill>? AccountSkills { get; set; }
 }

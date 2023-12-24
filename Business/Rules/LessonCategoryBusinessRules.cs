@@ -5,8 +5,8 @@ using DataAccess.Abstracts;
 
 namespace Business.Rules
 {
-	public class LessonCategoryBusinessRules:BaseBusinessRules
-	{
+    public class LessonCategoryBusinessRules : BaseBusinessRules
+    {
 
         ILessonCategoryDal _lessonCategoryDal;
 

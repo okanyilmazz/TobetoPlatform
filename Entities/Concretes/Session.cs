@@ -9,6 +9,6 @@ public class Session : Entity<Guid>
     public DateTime EndDate { get; set; }
     public string RecordPath { get; set; }
 
-    public virtual ICollection<Account> Accounts { get; set; }
+    public virtual ICollection<AccountSession>? AccountSessions { get; set; }
     public OccupationClass OccupationClass { get; set; }
 }

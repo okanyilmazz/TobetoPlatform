@@ -47,7 +47,7 @@ namespace Business.Concretes
         public async Task<DeletedAccountResponse> DeleteAsync(DeleteAccountRequest deleteAccountRequest)
         {
             await _accountBusinessRules.IsExistsAccount(deleteAccountRequest.Id);
-            Account account = _mapper.Map<Account>(deleteAccountRequest);
+            Account account = await _accountDal.GetAsync(predicate: l => l.Id == deleteAccountRequest.Id);
             Account deletedAccount = await _accountDal.DeleteAsync(account);
             DeletedAccountResponse deletedAccountResponse = _mapper.Map<DeletedAccountResponse>(deletedAccount);
             return deletedAccountResponse;
@@ -56,10 +56,10 @@ namespace Business.Concretes
         public async Task<IPaginate<GetListAccountResponse>> GetBySessionIdAsync(Guid sessionId)
         {
             var accountProgramList = await _accountDal.GetListAsync(
-                include: e => e.Include(s => s.Sessions));
+                include: e => e.Include(s => s.AccountSkills).ThenInclude(ask => ask.Skill));
 
             var filteredAccountPrograms = accountProgramList
-                .Items.SelectMany(e => e.Sessions.Where(s => s.Id == sessionId).Select(s => e)).ToList();
+                .Items.SelectMany(e => e.AccountSessions.Where(s => s.SessionId == sessionId).Select(s => e)).ToList();
             var mappedAccountProgram = _mapper.Map<Paginate<GetListAccountResponse>>(filteredAccountPrograms);
             return mappedAccountProgram;
         }

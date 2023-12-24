@@ -11,5 +11,7 @@ namespace Entities.Concretes
     {
         public Guid UniversityId { get; set; }
         public string Name { get; set; }
+
+        public University University { get; set; }
     }
 }

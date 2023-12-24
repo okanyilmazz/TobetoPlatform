@@ -14,14 +14,15 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<SocialMedia> builder)
         {
             builder.ToTable("SocialMedias").HasKey(s => s.Id);
-            builder.Property(s=>s.Name).HasColumnName("Name");
-            builder.Property(s => s.IconPath).HasColumnName("IconPath");
+
+            builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
+            builder.Property(s => s.Name).HasColumnName("Name").IsRequired();
+            builder.Property(s => s.IconPath).HasColumnName("IconPath").IsRequired();
+
+            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
             builder.HasIndex(indexExpression: a => a.Name, name: "UK_Name").IsUnique();
 
-            builder.HasMany(s => s.Accounts)
-                .WithMany(s => s.SocialMedias)
-                .UsingEntity<AccountSocialMedia>();
-
+            builder.HasMany(sm => sm.AccountSocialMedias);
 
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
         }

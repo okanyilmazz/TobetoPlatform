@@ -14,12 +14,24 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<EducationProgramProgrammingLanguage> builder)
         {
             builder.ToTable("EducationProgramProgrammingLanguages").HasKey(e => e.Id);
+
+            builder.Property(e => e.Id).HasColumnName("Id").IsRequired();
             builder.Property(e => e.Id).HasColumnName("EducationProgramId").IsRequired();
             builder.Property(e => e.Id).HasColumnName("ProgrammingLanguageId").IsRequired();
-            builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
 
-            builder.HasOne(a => a.ProgrammingLanguages);
-            builder.HasOne(a => a.EducationPrograms);
+
+            builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
+
+
+            builder.HasOne(eppl => eppl.ProgrammingLanguage)
+                .WithMany(pl => pl.EducationProgramProgrammingLanguages)
+                .HasForeignKey(eppl => eppl.ProgrammingLanguageId);
+
+            builder.HasOne(eppl => eppl.EducationProgram)
+                 .WithMany(pl => pl.EducationProgramProgrammingLanguages)
+                 .HasForeignKey(eppl => eppl.EducationProgramId);
+
+            builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
         }
     }
 }

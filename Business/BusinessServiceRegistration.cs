@@ -66,11 +66,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<IAddressService, AddressManager>();
         services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
         services.AddScoped<IOccupationClassService, OccupationClassManager>();
-<<<<<<< HEAD
-=======
-
-        services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
->>>>>>> 0bdb018f5c4e533b059965b90dd50736040b90b9
         services.AddScoped<IAnnouncementService, AnnouncementManager>();
         services.AddScoped<ICertificateService, CertificateManager>();
 

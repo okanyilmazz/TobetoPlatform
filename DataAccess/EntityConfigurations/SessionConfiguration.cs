@@ -14,19 +14,20 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<Session> builder)
         {
             builder.ToTable("Sessions").HasKey(s => s.Id);
+
             builder.Property(s => s.Id).HasColumnName("Id").IsRequired();
             builder.Property(s => s.OccupationClassId).HasColumnName("OccupationClassId");
             builder.Property(s => s.StartDate).HasColumnName("StartDate");
             builder.Property(s => s.EndDate).HasColumnName("EndDate");
             builder.Property(s => s.RecordPath).HasColumnName("RecordPath");
 
-            builder.HasMany(s => s.Accounts)
-                .WithMany(s => s.Sessions)
-                .UsingEntity<AccountSession>();
+            builder.HasIndex(indexExpression: qt => qt.Id, name: "UK_Id").IsUnique();
 
             builder.HasOne(s => s.OccupationClass)
                 .WithMany(s => s.Sessions)
                 .HasForeignKey(s => s.OccupationClassId);
+
+            builder.HasMany(s => s.AccountSessions);
 
             builder.HasQueryFilter(s => !s.DeletedDate.HasValue);
         }

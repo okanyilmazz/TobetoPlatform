@@ -12,6 +12,7 @@ namespace Entities.Concretes
         public Guid HomeworkId { get; set; }
         public Guid AccountId { get; set; }
         public bool Status { get; set; }
+
         public Homework? Homework { get; set; }
         public Account? Account{ get; set; }
     }

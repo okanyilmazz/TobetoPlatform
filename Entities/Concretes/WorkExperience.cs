@@ -12,5 +12,7 @@ public class WorkExperience : Entity<Guid>
     public string Description { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
+
+    public City City { get; set; }
     public Account Account { get; set; }
 }

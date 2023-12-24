@@ -77,9 +77,9 @@ namespace Business.Concretes
         public async Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid examId)
         {
             var questionsList = await _questionDal.GetListAsync(
-                include: q => q.Include(e => e.Exams));
+                include: q => q.Include(e => e.ExamQuestions).ThenInclude(eq => eq.Exam));
             var filteredQuestionList = questionsList
-                .Items.SelectMany(q => q.Exams.Where(e => e.Id == examId).Select(e => q)).ToList();
+                .Items.SelectMany(q => q.ExamQuestions.Where(e => e.ExamId == examId).Select(e => q)).ToList();
 
             var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(filteredQuestionList);
             return mappedQuestions;

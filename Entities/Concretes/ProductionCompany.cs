@@ -6,5 +6,5 @@ public class ProductionCompany : Entity<Guid>
 {
     public string Name { get; set; }
 
-    public ICollection<Lesson>? Lessons { get; set; }
+    public virtual ICollection<Lesson> Lessons { get; set; }
 }

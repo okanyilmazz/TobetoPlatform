@@ -15,6 +15,7 @@ namespace Entities.Concretes
         public string FilePath { get; set; }
         public DateTime Deadline { get; set; }
 
-        public virtual ICollection<Account>? Accounts { get; set; }
+        public OccupationClass OccupationClass { get; set; }
+        public virtual ICollection<AccountHomework>? AccountHomeworks { get; set; }
     }
 }

@@ -14,19 +14,20 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<Exam> builder)
         {
             builder.ToTable("Exams").HasKey(b => b.Id);
+
             builder.Property(b => b.Name).HasColumnName("Name").IsRequired();
+            builder.Property(b => b.Description).HasColumnName("Description").IsRequired();
+            builder.Property(b => b.Duration).HasColumnName("Duration").IsRequired();
+            builder.Property(b => b.QuestionCount).HasColumnName("QuestionCount").IsRequired();
 
-            builder.HasMany(e => e.Questions)
-                .WithMany(e => e.Exams)
-                .UsingEntity<ExamQuestion>();
 
-         //   builder.HasMany(e => e.QuestionTypes)
-         //       .WithMany(e => e.Exams)
-         //       .UsingEntity<ExamQuestionType>();
+            builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
 
-            builder.HasMany(e => e.OccupationClasses)
-                .WithMany(e => e.Exams)
-                .UsingEntity<ExamOccupationClass>();
+
+            builder.HasMany(e => e.ExamQuestions);
+            builder.HasMany(e => e.ExamOccupationClasses);
+
+
             builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
         }
     }

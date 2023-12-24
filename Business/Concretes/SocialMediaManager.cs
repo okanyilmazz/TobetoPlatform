@@ -49,9 +49,9 @@ public class SocialMediaManager : ISocialMediaService
     public async Task<IPaginate<GetListSocialMediaResponse>> GetByAccountIdAsync(Guid accountId)
     {
         var socialMediaList = await _socialMediaDal.GetListAsync(
-            include: s => s.Include(a => a.Accounts));
+            include: s => s.Include(a => a.AccountSocialMedias).ThenInclude(asm=>asm.Account));
         var filteredSocialMedias = socialMediaList
-            .Items.SelectMany(s => s.Accounts.Where(a => a.Id == accountId).Select(a => s)).ToList();
+            .Items.SelectMany(s => s.AccountSocialMedias.Where(a => a.AccountId == accountId).Select(a => s)).ToList();
         var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMediaList);
         return mappedSocialMedias;
     }

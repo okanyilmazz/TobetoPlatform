@@ -14,21 +14,28 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<AccountLanguage> builder)
         {
             builder.ToTable("AccountLanguages").HasKey(a => a.Id);
+
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
-            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
             builder.Property(a => a.AccountId).HasColumnName("AccountId").IsRequired();
-            builder.HasIndex(indexExpression: a => a.AccountId, name: "UK_AccountId").IsUnique();
             builder.Property(a => a.LanguageId).HasColumnName("LanguageId").IsRequired();
-            builder.HasIndex(indexExpression: a => a.LanguageId, name: "UK_LanguageId").IsUnique();
             builder.Property(a => a.LanguageLevelId).HasColumnName("LanguageLevelId").IsRequired();
-            builder.HasIndex(indexExpression: a => a.LanguageLevelId, name: "UK_LanguageLevelId").IsUnique();
+
+
+            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
+
+
+            builder.HasOne(al => al.Account)
+                .WithMany(a => a.AccountLanguages)
+                .HasForeignKey(al => al.AccountId);
+
+            builder.HasOne(al => al.Language)
+                .WithMany(l => l.AccountLanguages)
+                .HasForeignKey(al => al.LanguageId);
+
+            builder.HasOne(al => al.LanguageLevel);
+
 
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
-
-            builder.HasOne(a=>a.Account);
-            builder.HasOne(a=>a.Language);
-            builder.HasOne(a=>a.LanguageLevel);
-
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Business.Concretes
         {
             await _blogBusinessRules.IsExistsBlog(deleteBlogRequest.Id);
             Blog blog = _mapper.Map<Blog>(deleteBlogRequest);
-            Blog deletedBlog = await _blogDal.DeleteAsync(blog);
+            Blog deletedBlog = await _blogDal.DeleteAsync(blog,true);
             DeletedBlogResponse deletedBlogResponse = _mapper.Map<DeletedBlogResponse>(deletedBlog);
             return deletedBlogResponse;
         }

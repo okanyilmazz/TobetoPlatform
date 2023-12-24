@@ -13,5 +13,5 @@ public class Question : Entity<Guid>
     public string CorrectOption { get; set; }
 
     public QuestionType QuestionType { get; set; }
-    public ICollection<Exam>? Exams { get; set; }
+    public ICollection<ExamQuestion>? ExamQuestions { get; set; }
 }

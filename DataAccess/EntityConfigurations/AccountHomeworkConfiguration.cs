@@ -14,23 +14,25 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<AccountHomework> builder)
         {
             builder.ToTable("AccountHomeworks").HasKey(a => a.Id);
+
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
-            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
             builder.Property(a => a.HomeworkId).HasColumnName("HomeworkId").IsRequired();
-            builder.HasIndex(indexExpression: a => a.HomeworkId, name: "UK_HomeworkId").IsUnique();
             builder.Property(a => a.AccountId).HasColumnName("AccountId").IsRequired();
-            builder.HasIndex(indexExpression: a => a.AccountId, name: "UK_AccountId").IsUnique();
             builder.Property(a => a.Status).HasColumnName("Status").IsRequired();
 
-            builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
+            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
 
-            builder.HasOne(a=>a.Homework);
-            builder.HasOne(a=>a.Account);
+
+            builder.HasOne(ah=>ah.Homework)
+                .WithMany(h=>h.AccountHomeworks)
+                .HasForeignKey(ah=>ah.HomeworkId);
+
+            builder.HasOne(ah => ah.Account)
+                .WithMany(a => a.AccountHomeworks)
+                .HasForeignKey(ah => ah.AccountId);
+
+
+            builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
         }
     }
 }
-
-//builder.HasIndex(indexExpression: a => a.UserId, name: "UK_UserId").IsUnique();
-//builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
-
-

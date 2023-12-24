@@ -14,8 +14,8 @@ public class AccountUniversity : Entity<Guid>
     public bool IsEducationActive { get; set; }
 
 
-    public Account? Accounts { get; set; }
-    public DegreeType? DegreeTypes { get; set; }
-    public University? Universities { get; set; }
-    public UniversityDepartment? UniversityDepartments { get; set; }
+    public Account? Account { get; set; }
+    public DegreeType? DegreeType { get; set; }
+    public University? University { get; set; }
+    public UniversityDepartment UniversityDepartment { get; set; }
 }

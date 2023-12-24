@@ -55,11 +55,11 @@ namespace Business.Concretes
         public async Task<IPaginate<GetListLessonResponse>> GetByEducationProgramIdAsync(Guid educationProgramId)
         {
             var lessonList = await _lessonDal.GetListAsync(
-                include: l => l.Include(ep => ep.EducationPrograms));
+                include: l => l.Include(ep => ep.EducationProgramLessons).ThenInclude(epl => epl.Lesson));
 
             var filteredLessons = lessonList
-                .Items.SelectMany(l => l.EducationPrograms
-                .Where(ep => ep.Id == educationProgramId).Select(ep => l))
+                .Items.SelectMany(l => l.EducationProgramLessons
+                .Where(ep => ep.EducationProgramId == educationProgramId).Select(ep => l))
                 .ToList();
             var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
             return mappedLesson;
@@ -77,17 +77,17 @@ namespace Business.Concretes
         public async Task<IPaginate<GetListLessonResponse>> GetByAccountIdAsync(Guid id)
         {
             var lessonList = await _lessonDal.GetListAsync(
-               include: l => l.Include(a => a.Accounts));
+               include: l => l.Include(a => a.AccountLessons).ThenInclude(al => al.Account));
 
             var filteredLessons = lessonList
-                .Items.SelectMany(l => l.Accounts.Where(a => a.Id == id).Select(a => l)).ToList();
+                .Items.SelectMany(l => l.AccountLessons.Where(a => a.Id == id).Select(a => l)).ToList();
             var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
             return mappedLesson;
         }
 
         public async Task<GetListLessonResponse> GetByIdAsync(Guid id)
         {
-            var lessons = await _lessonDal.GetAsync(l=>l.Id == id);
+            var lessons = await _lessonDal.GetAsync(l => l.Id == id);
             var mappedLessons = _mapper.Map<GetListLessonResponse>(lessons);
             return mappedLessons;
         }

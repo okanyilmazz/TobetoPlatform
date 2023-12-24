@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,17 +41,18 @@ namespace Business.Concretes
         public async Task<DeletedHomeworkResponse> DeleteAsync(DeleteHomeworkRequest deleteHomeworkRequest)
         {
             await _homeworkBusinessRules.IsExistsHomework(deleteHomeworkRequest.Id);
-            Homework homework = _mapper.Map<Homework>(deleteHomeworkRequest);
-            Homework deletedHomework = await _homeworkDal.DeleteAsync(homework, true);
+           // Homework homework = _mapper.Map<Homework>(deleteHomeworkRequest);
+            Homework homework = await _homeworkDal.GetAsync(predicate: l => l.Id == deleteHomeworkRequest.Id);
+            Homework deletedHomework = await _homeworkDal.DeleteAsync(homework);
             DeletedHomeworkResponse deletedHomeworkResponse = _mapper.Map<DeletedHomeworkResponse>(deletedHomework);
             return deletedHomeworkResponse;
         }
 
-        public async Task<IPaginate<GetListHomeworkResponse>> GetByAccountIdAsync(Guid id)
+        public async Task<IPaginate<GetListHomeworkResponse>> GetByAccountIdAsync(Guid accountId)
         {
             var homeworks = await _homeworkDal.GetListAsync(
-                include: a=>a.Include(a=>a.Accounts));
-            var filteredHomeworks = homeworks.Items.SelectMany(h=>h.Accounts.Where(a=>a.Id ==id).Select(a=>h)).ToList();
+                include: a => a.Include(a => a.AccountHomeworks).ThenInclude(ah => ah.Homework));
+            var filteredHomeworks = homeworks.Items.SelectMany(h => h.AccountHomeworks.Where(a => a.AccountId == accountId).Select(a => h)).ToList();
             var mappedHomeworks = _mapper.Map<Paginate<GetListHomeworkResponse>>(filteredHomeworks);
             return mappedHomeworks;
         }

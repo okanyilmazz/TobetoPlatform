@@ -7,8 +7,8 @@ using Entities.Concretes;
 
 namespace Business.Rules
 {
-	public class OccupationClassSurveyBusinessRules:BaseBusinessRules
-	{
+    public class OccupationClassSurveyBusinessRules : BaseBusinessRules
+    {
         private readonly IOccupationClassSurveyDal _occupationClassSurveyDal;
 
         public OccupationClassSurveyBusinessRules(IOccupationClassSurveyDal occupationClassSurveyDal)

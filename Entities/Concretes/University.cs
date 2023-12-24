@@ -11,6 +11,6 @@ namespace Entities.Concretes
     {
         public string Name { get; set; }
 
-        public virtual ICollection<Account>? Accounts { get; set; }
+        public virtual ICollection<AccountUniversity>? AccountUniversities { get; set; }
     }
 }

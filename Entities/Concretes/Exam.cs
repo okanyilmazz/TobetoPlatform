@@ -11,6 +11,6 @@ public class Exam : Entity<Guid>
     public int Duration { get; set; }
     public int QuestionCount { get; set; }
 
-    public ICollection<Question> Questions { get; set; }
-    public ICollection<OccupationClass> OccupationClasses { get; set; }
+    public virtual ICollection<ExamQuestion> ExamQuestions { get; set; }
+    public virtual ICollection<ExamOccupationClass> ExamOccupationClasses { get; set; }
 }

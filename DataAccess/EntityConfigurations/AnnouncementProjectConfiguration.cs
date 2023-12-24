@@ -14,13 +14,25 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<AnnouncementProject> builder)
         {
             builder.ToTable("AnnouncementProjects").HasKey(a => a.Id);
+
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
             builder.Property(a => a.ProjectId).HasColumnName("ProjectId").IsRequired();
             builder.Property(a => a.AnnouncementId).HasColumnName("AnnouncementId").IsRequired();
+
+
+            builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
+
+
+            builder.HasOne(ap => ap.Project)
+                .WithMany(p => p.AnnouncementProjects)
+                .HasForeignKey(ap => ap.ProjectId);
+
+            builder.HasOne(ap => ap.Announcement)
+               .WithMany(p => p.AnnouncementProjects)
+               .HasForeignKey(ap => ap.AnnouncementId);
+
+
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
-
-
-
         }
     }
 }

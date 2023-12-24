@@ -12,5 +12,8 @@ namespace Entities.Concretes
     {
         public Guid SkillId { get; set; }
         public Guid AccountId { get; set; }
+
+        public Account Account { get; set; }
+        public Skill Skill { get; set; }
     }
 }

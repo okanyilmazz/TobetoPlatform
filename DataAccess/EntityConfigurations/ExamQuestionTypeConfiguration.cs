@@ -14,9 +14,13 @@ namespace DataAccess.EntityConfigurations
         public void Configure(EntityTypeBuilder<ExamQuestionType> builder)
         {
             builder.ToTable("ExamQuestionTypes").HasKey(e => e.Id);
+
             builder.Property(e => e.Id).HasColumnName("Id").IsRequired();
             builder.Property(e => e.QuestionTypeId).HasColumnName("QuestionTypeId").IsRequired();
             builder.Property(e => e.ExamId).HasColumnName("ExamId").IsRequired();
+
+            builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
+
             builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
         }
     }

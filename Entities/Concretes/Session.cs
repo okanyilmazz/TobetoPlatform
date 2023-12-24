@@ -10,4 +10,5 @@ public class Session : Entity<Guid>
     public string RecordPath { get; set; }
 
     public virtual ICollection<Account> Accounts { get; set; }
+    public OccupationClass OccupationClass { get; set; }
 }

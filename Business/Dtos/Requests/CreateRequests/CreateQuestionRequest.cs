@@ -8,7 +8,6 @@ namespace Business.Dtos.Requests.CreateRequests
 {
     public class CreateQuestionRequest
     {
-
         public string Description { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }

@@ -48,7 +48,7 @@ public class ProjectManager : IProjectService
     public async Task<DeletedProjectResponse> DeleteAsync(DeleteProjectRequest deleteProjectRequest)
     {
         Project project = _mapper.Map<Project>(deleteProjectRequest);
-        Project deletedProject = await _projectDal.DeleteAsync(project,true);
+        Project deletedProject = await _projectDal.DeleteAsync(project, true);
         DeletedProjectResponse responseProject = _mapper.Map<DeletedProjectResponse>(deletedProject);
         return responseProject;
     }
@@ -58,5 +58,13 @@ public class ProjectManager : IProjectService
         var projectListed = await _projectDal.GetListAsync();
         var mappedListed = _mapper.Map<Paginate<GetListProjectResponse>>(projectListed);
         return mappedListed;
+    }
+
+    public async Task<GetListProjectResponse> GetByIdAsync(Guid id)
+    {
+        Project project = await _projectDal.GetAsync(
+            predicate: p => p.Id == id);
+        var mappedProduct = _mapper.Map<GetListProjectResponse>(project);
+        return mappedProduct;
     }
 }

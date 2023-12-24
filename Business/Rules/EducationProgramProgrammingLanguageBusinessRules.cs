@@ -11,15 +11,15 @@ namespace Business.Rules
 {
     public class EducationProgramProgrammingLanguageBusinessRules : BaseBusinessRules
     {
-        private readonly IEducationProgramProgrammingLanguageDal _educationProgramLanguageProgrammingDal;
+        private readonly IEducationProgramProgrammingLanguageDal _educationProgramProgrammingLanguageDal;
 
         public EducationProgramProgrammingLanguageBusinessRules(IEducationProgramProgrammingLanguageDal educationProgramProgrammingLanguageDal)
         {
-            _educationProgramLanguageProgrammingDal = educationProgramProgrammingLanguageDal;
+            _educationProgramProgrammingLanguageDal = educationProgramProgrammingLanguageDal;
         }
         public async Task IsExistsEducationProgramProgrammingLanguage(Guid educationProgramProgrammingLanguageId)
         {
-            var result = await _educationProgramLanguageProgrammingDal.GetListAsync(
+            var result = await _educationProgramProgrammingLanguageDal.GetListAsync(
                predicate: e => e.Id == educationProgramProgrammingLanguageId);
             if (result.Count == 0)
             {

@@ -22,9 +22,18 @@ namespace Business.Rules
         public async Task IsExistsAccount(Guid accountId)
         {
             var result = await _accountDal.GetListAsync(a => a.Id == accountId);
-            if (result.Count == 0)
+            if (result.Items.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
+            }
+        }
+
+        public async Task IsExistsNationalId(string nationalId)
+        {
+            var result = await _accountDal.GetListAsync(a => a.NationalId == nationalId);
+            if (result.Items.Count != 0)
+            {
+                throw new Exception(BusinessMessages.DataAvailable);
             }
         }
     }

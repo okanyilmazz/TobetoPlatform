@@ -18,20 +18,19 @@ public class CertificatesController : Controller
         _certificateService = certificateService;
     }
 
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _certificateService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync()
     {
         var result = await _certificateService.GetListAsync();
         return Ok(result);
     }
-
-    [HttpGet("GetByAccountId")]
-    public async Task<IActionResult> GetByAccountIdAsync(Guid Id)
-    {
-        var result = await _certificateService.GetAccountIdAsync(Id);
-        return Ok(result);
-    }
-
 
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateCertificateRequest createCertificateRequest)

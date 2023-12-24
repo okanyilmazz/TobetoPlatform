@@ -22,6 +22,12 @@ namespace WebAPI.Controllers
             _countryService = countryService;
         }
 
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var result = await _countryService.GetByIdAsync(id);
+            return Ok(result);
+        }
         [HttpGet("GetList")]
         public async Task<IActionResult> GetListAsync()
         {

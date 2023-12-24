@@ -46,6 +46,15 @@ public class CountryManager : ICountryService
         return deletedCountryResponse;
     }
 
+    public async Task<GetListCountryResponse> GetByIdAsync(Guid id)
+    {
+
+        var country = await _countryDal.GetAsync(c => c.Id == id);
+        var mappedCountry = _mapper.Map<GetListCountryResponse>(country);
+        return mappedCountry;
+
+    }
+
     public async Task<IPaginate<GetListCountryResponse>> GetListAsync()
     {
         var Countries = await _countryDal.GetListAsync();
@@ -54,7 +63,8 @@ public class CountryManager : ICountryService
     }
 
     public async Task<UpdatedCountryResponse> UpdateAsync(UpdateCountryRequest updateCountryRequest)
-    {   await _countryBusinessRules.IsExistsCountry(updateCountryRequest.Id);
+    {
+        await _countryBusinessRules.IsExistsCountry(updateCountryRequest.Id);
         Country country = _mapper.Map<Country>(updateCountryRequest);
         Country updatedCountry = await _countryDal.UpdateAsync(country);
         UpdatedCountryResponse updatedCountryResponse = _mapper.Map<UpdatedCountryResponse>(updatedCountry);

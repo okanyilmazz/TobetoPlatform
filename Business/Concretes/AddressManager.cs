@@ -65,7 +65,6 @@ namespace Business.Concretes
 
         public async Task<UpdatedAddressResponse> UpdateAsync(UpdateAddressRequest updateAddressRequest)
         {
-            await _addressBusinessRules.IsExistsAddress(updateAddressRequest.Id);
             Address address = _mapper.Map<Address>(updateAddressRequest);
             Address updatedAddress = await _addressDal.UpdateAsync(address);
             UpdatedAddressResponse updatedAddressResponse = _mapper.Map<UpdatedAddressResponse>(updatedAddress);

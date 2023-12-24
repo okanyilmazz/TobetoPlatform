@@ -1,6 +1,7 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,18 @@ namespace Business.Rules
         public async Task IsExistsUser(Guid userId)
         {
             var result = await _userDal.GetListAsync(a => a.Id == userId);
-            if (result.Count == 0)
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
+            }
+        }
+
+        public async Task IsExistsUserMail(string email)
+        {
+            var result = await _userDal.GetListAsync(a => a.Email == email);
+            if (result.Items.Count != 0)
+            {
+                throw new Exception(BusinessMessages.DataAvailable);
             }
         }
     }

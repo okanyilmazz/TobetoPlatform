@@ -50,6 +50,13 @@ namespace Business.Concretes
             return deletedCityResponse;
         }
 
+        public async Task<GetListCityResponse> GetByIdAsync(Guid id)
+        {
+            var city = await _cityDal.GetAsync(c=> c.Id == id);   
+            var mappedCity = _mapper.Map<GetListCityResponse>(city);
+            return mappedCity;
+        }
+
         public async Task<IPaginate<GetListCityResponse>> GetListAsync()
         {
             var Cities = await _cityDal.GetListAsync();

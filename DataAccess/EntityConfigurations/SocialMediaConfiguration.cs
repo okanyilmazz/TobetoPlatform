@@ -13,10 +13,17 @@ namespace DataAccess.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<SocialMedia> builder)
         {
-            builder.ToTable("SocialMedias");
+            builder.ToTable("SocialMedias").HasKey(s => s.Id);
+            builder.Property(s=>s.Name).HasColumnName("Name");
+            builder.Property(s => s.IconPath).HasColumnName("IconPath");
+            builder.HasIndex(indexExpression: a => a.Name, name: "UK_Name").IsUnique();
+
             builder.HasMany(s => s.Accounts)
                 .WithMany(s => s.SocialMedias)
                 .UsingEntity<AccountSocialMedia>();
+
+
+            builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
         }
     }
 }

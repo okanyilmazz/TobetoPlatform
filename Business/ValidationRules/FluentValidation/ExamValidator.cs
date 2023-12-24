@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class ExamValidatior : AbstractValidator<CreateExamRequest>
+    public class ExamValidator : AbstractValidator<CreateExamRequest>
     {
-        public ExamValidatior()
+        public ExamValidator()
         {
             RuleFor(p => p.Name).NotEmpty();
             RuleFor(p => p.Description).MinimumLength(2);

@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Business.Concretes
 {
@@ -57,10 +58,7 @@ namespace Business.Concretes
             var lessonList = await _lessonDal.GetListAsync(
                 include: l => l.Include(ep => ep.EducationProgramLessons).ThenInclude(epl => epl.Lesson));
 
-            var filteredLessons = lessonList
-                .Items.SelectMany(l => l.EducationProgramLessons
-                .Where(ep => ep.EducationProgramId == educationProgramId).Select(ep => l))
-                .ToList();
+            var filteredLessons = lessonList.Items.Where(e => e.EducationProgramLessons.Any(s => s.EducationProgramId == educationProgramId)).ToList();
             var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
             return mappedLesson;
         }

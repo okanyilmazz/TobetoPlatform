@@ -17,16 +17,14 @@ namespace Business.Concretes;
 public class ProductionCompanyManager : IProductionCompanyService
 {
     IProductionCompanyDal _productionCompanyDal;
-    ILessonDal _lessonDal;
     IMapper _mapper;
     ProductionCompanyBusinessRules _productionCompanyBusinessRules;
 
-    public ProductionCompanyManager(IProductionCompanyDal productionCompanyDal, IMapper mapper, ProductionCompanyBusinessRules productionCompanyBusinessRules, ILessonDal lessonDal)
+    public ProductionCompanyManager(IProductionCompanyDal productionCompanyDal, IMapper mapper, ProductionCompanyBusinessRules productionCompanyBusinessRules)
     {
         _productionCompanyDal = productionCompanyDal;
         _mapper = mapper;
         _productionCompanyBusinessRules = productionCompanyBusinessRules;
-        _lessonDal = lessonDal;
     }
 
     public async Task<CreatedProductionCompanyResponse> AddAsync(CreateProductionCompanyRequest createProductionCompanyRequest)

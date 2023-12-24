@@ -78,8 +78,7 @@ namespace Business.Concretes
         {
             var questionsList = await _questionDal.GetListAsync(
                 include: q => q.Include(e => e.ExamQuestions).ThenInclude(eq => eq.Exam));
-            var filteredQuestionList = questionsList
-                .Items.SelectMany(q => q.ExamQuestions.Where(e => e.ExamId == examId).Select(e => q)).ToList();
+            var filteredQuestionList = questionsList.Items.Where(e => e.ExamQuestions.Any(s => s.ExamId == examId)).ToList();
 
             var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(filteredQuestionList);
             return mappedQuestions;

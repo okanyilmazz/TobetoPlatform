@@ -51,7 +51,7 @@ public class SocialMediaManager : ISocialMediaService
         var socialMediaList = await _socialMediaDal.GetListAsync(
             include: s => s.Include(a => a.AccountSocialMedias).ThenInclude(asm=>asm.Account));
         var filteredSocialMedias = socialMediaList
-            .Items.SelectMany(s => s.AccountSocialMedias.Where(a => a.AccountId == accountId).Select(a => s)).ToList();
+            .Items.Where(e => e.AccountSocialMedias.Any(s => s.AccountId == accountId)).ToList();
         var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMediaList);
         return mappedSocialMedias;
     }

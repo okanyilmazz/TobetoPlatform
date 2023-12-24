@@ -26,10 +26,11 @@ namespace Business.Concretes
         IMapper _mapper;
         MediaNewBusinessRules _mediaNewBusinessRules;
 
-        public MediaNewManager(IMediaNewDal mediaNewDal, IMapper mapper)
+        public MediaNewManager(IMediaNewDal mediaNewDal, IMapper mapper, MediaNewBusinessRules mediaNewBusinessRules)
         {
             _mediaNewDal = mediaNewDal;
             _mapper = mapper;
+            _mediaNewBusinessRules = mediaNewBusinessRules;
         }
 
         public async Task<CreatedMediaNewResponse> AddAsync(CreateMediaNewRequest createMediaNewRequest)

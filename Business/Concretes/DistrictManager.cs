@@ -52,6 +52,13 @@ namespace Business.Concretes
             return deletedDistrictResponse;
         }
 
+        public async Task<GetListDistrictResponse> GetByIdAsync(Guid id)
+        {
+            var district = await _districtDal.GetAsync(c => c.Id == id);
+            var mappedDistrict = _mapper.Map<GetListDistrictResponse>(district);
+            return mappedDistrict;
+        }
+
         public async Task<IPaginate<GetListDistrictResponse>> GetListAsync()
         {
             var district = await _districtDal.GetListAsync();

@@ -17,6 +17,9 @@ namespace DataAccess.EntityConfigurations
             builder.Property(e => e.Id).HasColumnName("EducationProgramId").IsRequired();
             builder.Property(e => e.Id).HasColumnName("ProgrammingLanguageId").IsRequired();
             builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
+
+            builder.HasOne(a => a.ProgrammingLanguages);
+            builder.HasOne(a => a.EducationPrograms);
         }
     }
 }

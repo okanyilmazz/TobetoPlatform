@@ -87,9 +87,9 @@ namespace Business.Concretes
 
         public async Task<GetListLessonResponse> GetByIdAsync(Guid id)
         {
-            var lesson = await _lessonDal.GetListAsync(l => l.Id == id);
-            var mappedLesson = _mapper.Map<GetListLessonResponse>(lesson);
-            return mappedLesson;
+            var lessons = await _lessonDal.GetAsync(l=>l.Id == id);
+            var mappedLessons = _mapper.Map<GetListLessonResponse>(lessons);
+            return mappedLessons;
         }
     }
 }

@@ -16,6 +16,9 @@ namespace DataAccess.EntityConfigurations
             builder.ToTable("Contacts").HasKey(c => c.Id);
             builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
             builder.Property(c => c.FirstName).HasColumnName("FirstName").IsRequired();
+            builder.Property(c => c.LastName).HasColumnName("LastName").IsRequired();
+            builder.Property(c => c.Email).HasColumnName("Email").IsRequired();
+            builder.Property(c => c.Message).HasColumnName("Message").IsRequired();
             builder.HasIndex(indexExpression: c => c.FirstName, name: "UK_Name").IsUnique();
             builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
         }

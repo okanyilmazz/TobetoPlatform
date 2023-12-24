@@ -18,6 +18,13 @@ namespace WebAPI.Controllers
             _districtService = districtService;
         }
 
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetByIdAsync(Guid id)
+        {
+            var result = await _districtService.GetByIdAsync(id);
+            return Ok(result);
+        }
+
         [HttpGet("GetList")]
         public async Task<IActionResult> GetListAsync()
         {

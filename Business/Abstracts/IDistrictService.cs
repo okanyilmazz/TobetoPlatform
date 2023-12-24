@@ -20,5 +20,6 @@ namespace Business.Abstracts
         Task<DeletedDistrictResponse> DeleteAsync(DeleteDistrictRequest deleteDistrictRequest);
         Task<UpdatedDistrictResponse> UpdateAsync(UpdateDistrictRequest updateDistrictRequest);
         Task<IPaginate<GetListDistrictResponse>> GetListAsync();
+        Task<GetListDistrictResponse> GetByIdAsync(Guid id);
     }
 }

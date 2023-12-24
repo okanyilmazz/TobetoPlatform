@@ -21,6 +21,7 @@ namespace Business.Abstracts
         Task<UpdatedAccountResponse> UpdateAsync(UpdateAccountRequest updateAccountRequest);
         Task<DeletedAccountResponse> DeleteAsync(DeleteAccountRequest deleteAccountRequest);
         Task<IPaginate<GetListAccountResponse>> GetListAsync();
-        Task<IPaginate<GetListAccountResponse>> GetBySessionIdAsync(Guid id);        
+        Task<IPaginate<GetListAccountResponse>> GetBySessionIdAsync(Guid id);
+        Task<GetListAccountResponse> GetByIdAsync(Guid id);
     }
 }

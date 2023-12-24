@@ -52,7 +52,7 @@ namespace Business.Concretes
         public async Task<DeletedUserResponse> DeleteAsync(DeleteUserRequest deleteUserRequest)
         {
             await _userBusinessRules.IsExistsUser(deleteUserRequest.Id);
-            User user = _mapper.Map<User>(deleteUserRequest);
+            User user = await _userDal.GetAsync(predicate: u => u.Id == deleteUserRequest.Id);
             User deletedUser = await _userDal.DeleteAsync(user, true);
             DeletedUserResponse responseUser = _mapper.Map<DeletedUserResponse>(deletedUser);
             return responseUser;

@@ -40,9 +40,9 @@ namespace Business.Concretes
         public async Task<DeletedLessonResponse> DeleteAsync(DeleteLessonRequest deleteLessonRequest)
         {
             await _lessonBusinessRules.IsExistsLesson(deleteLessonRequest.Id);
-            Lesson lesson = _mapper.Map<Lesson>(deleteLessonRequest);
+            Lesson lesson= await _lessonDal.GetAsync(predicate:l=>l.Id == deleteLessonRequest.Id);
             Lesson deletedLesson = await _lessonDal.DeleteAsync(lesson);
-            DeletedLessonResponse deletedLessonResponse = _mapper.Map<DeletedLessonResponse>(deletedLesson);
+            DeletedLessonResponse deletedLessonResponse= _mapper.Map<DeletedLessonResponse>(deletedLesson);
             return deletedLessonResponse;
         }
 

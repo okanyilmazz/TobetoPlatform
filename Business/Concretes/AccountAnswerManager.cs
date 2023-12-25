@@ -43,7 +43,7 @@ namespace Business.Concretes
         public async Task<DeletedAccountAnswerResponse> DeleteAsync(DeleteAccountAnswerRequest deleteAccountAnswerRequest)
         {
             await _accountAnswerBusinessRules.IsExistsAccountAnswer(deleteAccountAnswerRequest.Id);
-            AccountAnswer accountAnswer = _mapper.Map<AccountAnswer>(deleteAccountAnswerRequest);
+            AccountAnswer accountAnswer = await _accountAnswerDal.GetAsync(predicate: l => l.Id == deleteAccountAnswerRequest.Id);
             AccountAnswer deletedAccountAnswer = await _accountAnswerDal.DeleteAsync(accountAnswer);
             DeletedAccountAnswerResponse deletedAccountAnswerResponse = _mapper.Map<DeletedAccountAnswerResponse>(deletedAccountAnswer);
             return deletedAccountAnswerResponse;

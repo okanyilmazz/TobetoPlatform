@@ -44,8 +44,8 @@ namespace Business.Concretes
         public async Task<DeletedEducationProgramProgrammingLanguageResponse> DeleteAsync(DeleteEducationProgramProgrammingLanguageRequest deleteEducationProgramProgrammingLanguageRequest)
         {
             await _educationProgramProgrammingLanguageBusinessRules.IsExistsEducationProgramProgrammingLanguage(deleteEducationProgramProgrammingLanguageRequest.Id);
-            EducationProgramProgrammingLanguage educationProgramLanguageProgramming = _mapper.Map<EducationProgramProgrammingLanguage>(deleteEducationProgramProgrammingLanguageRequest);
-            EducationProgramProgrammingLanguage deletedEducationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.DeleteAsync(educationProgramLanguageProgramming, true);
+            EducationProgramProgrammingLanguage educationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.GetAsync(predicate: l => l.Id == deleteEducationProgramProgrammingLanguageRequest.Id);
+            EducationProgramProgrammingLanguage deletedEducationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.DeleteAsync(educationProgramProgrammingLanguage, true);
             DeletedEducationProgramProgrammingLanguageResponse deletedEducationProgramProgrammingLanguageResponse = _mapper.Map<DeletedEducationProgramProgrammingLanguageResponse>(deletedEducationProgramProgrammingLanguage);
             return deletedEducationProgramProgrammingLanguageResponse;
         }

@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace Business.Concretes
         public async Task<DeletedAddressResponse> DeleteAsync(DeleteAddressRequest deleteAddressRequest)
         {
             await _addressBusinessRules.IsExistsAddress(deleteAddressRequest.Id);
-            Address address = _mapper.Map<Address>(deleteAddressRequest);
+            Address address = await _addressDal.GetAsync(predicate: l => l.Id == deleteAddressRequest.Id);
             Address deletedAddress = await _addressDal.DeleteAsync(address);
             DeletedAddressResponse deletedAddressResponse = _mapper.Map<DeletedAddressResponse>(deletedAddress);
             return deletedAddressResponse;

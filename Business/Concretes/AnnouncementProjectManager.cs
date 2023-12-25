@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
     public async Task<DeletedAnnouncementProjectResponse> DeleteAsync(DeleteAnnouncementProjectRequest deleteAnnouncementProjectRequest)
     {
         await _announcementProjectBusinessRules.IsExistsAnnouncementProject(deleteAnnouncementProjectRequest.Id);
-        AnnouncementProject announcementProject = _mapper.Map<AnnouncementProject>(deleteAnnouncementProjectRequest);
+        AnnouncementProject announcementProject = await _announcementProjectDal.GetAsync(predicate: l => l.Id == deleteAnnouncementProjectRequest.Id);
         AnnouncementProject deletedAnnouncemenProject = await _announcementProjectDal.DeleteAsync(announcementProject);
         DeletedAnnouncementProjectResponse deletedAnnouncementProjectResponse = _mapper.Map<DeletedAnnouncementProjectResponse>(deletedAnnouncemenProject);
         return deletedAnnouncementProjectResponse;

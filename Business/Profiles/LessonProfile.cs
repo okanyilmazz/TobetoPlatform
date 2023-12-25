@@ -31,9 +31,6 @@ namespace Business.Profiles
 
             CreateMap<List<Lesson>, Paginate<GetListLessonResponse>>().ForMember
             (destinationMember: a => a.Items, memberOptions: l => l.MapFrom(l => l.ToList())).ReverseMap();
-
-            CreateMap<List<Lesson>, Paginate<GetListLessonResponse>>().ForMember(destinationMember: l => l.Items,
-                memberOptions: opt => opt.MapFrom(l => l.ToList())).ReverseMap();
         }
     }
 }

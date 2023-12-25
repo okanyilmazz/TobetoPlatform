@@ -10,7 +10,8 @@ namespace Business.Dtos.Responses.GetListResponses
     {
         public Guid Id { get; set; }
         public Guid LanguageId { get; set; }
-        public Guid LessonSubCategoryId { get; set; }
+        public Guid LessonModuleId { get; set; }
+        public Guid LessonCategoryId { get; set; }
         public Guid LessonSubTypeId { get; set; }
         public Guid ProductionCompanyId { get; set; }
         public string Name { get; set; }

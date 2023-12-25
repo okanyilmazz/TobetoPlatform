@@ -44,7 +44,7 @@ namespace Business.Concretes
         public async Task<DeletedUniversityResponse> DeleteAsync(DeleteUniversityRequest deleteUniversityRequest)
         {
             await _universityBusinessRules.IsExistsUniversity(deleteUniversityRequest.Id);
-            University university = _mapper.Map<University>(deleteUniversityRequest);
+            University university= await _universityDal.GetAsync(predicate:u=>u.Id==deleteUniversityRequest.Id);
             University deletedUniversity = await _universityDal.DeleteAsync(university);
             DeletedUniversityResponse deletedUniversityResponse = _mapper.Map<DeletedUniversityResponse>(deletedUniversity);
             return deletedUniversityResponse;

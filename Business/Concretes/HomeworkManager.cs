@@ -52,7 +52,8 @@ namespace Business.Concretes
         {
             var homeworks = await _homeworkDal.GetListAsync(
                 include: a => a.Include(a => a.AccountHomeworks).ThenInclude(ah => ah.Homework));
-            var filteredHomeworks = homeworks.Items.SelectMany(h => h.AccountHomeworks.Where(a => a.AccountId == accountId).Select(a => h)).ToList();
+
+            var filteredHomeworks = homeworks.Items.Where(e => e.AccountHomeworks.Any(s => s.AccountId == accountId)).ToList();
             var mappedHomeworks = _mapper.Map<Paginate<GetListHomeworkResponse>>(filteredHomeworks);
             return mappedHomeworks;
         }

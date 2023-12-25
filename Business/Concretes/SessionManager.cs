@@ -44,8 +44,8 @@ namespace Business.Concretes
         public async Task<DeletedSessionResponse> DeleteAsync(DeleteSessionRequest deleteSessionRequest)
         {
             await _sessionBusinessRules.IsExistsSession(deleteSessionRequest.Id);
-            Session session = _mapper.Map<Session>(deleteSessionRequest);
-            Session deletedSession = await _sessionDal.DeleteAsync(session, true);
+            Session session = await _sessionDal.GetAsync(predicate: s => s.Id == deleteSessionRequest.Id);
+            Session deletedSession = await _sessionDal.DeleteAsync(session, false);
             DeletedSessionResponse deletedSessionResponse = _mapper.Map<DeletedSessionResponse>(deletedSession);
             return deletedSessionResponse;
         }

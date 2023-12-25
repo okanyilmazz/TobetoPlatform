@@ -21,7 +21,7 @@ namespace Business.Abstracts
         Task<DeletedSkillResponse> DeleteAsync(DeleteSkillRequest deleteSkillRequest);
         Task<UpdatedSkillResponse> UpdateAsync(UpdateSkillRequest updateSkillRequest);
         Task<IPaginate<GetListSkillResponse>> GetListAsync();
-        Task<IPaginate<GetListSkillResponse>> GetBySkillIdAsync(Guid id);
+        Task<IPaginate<GetListSkillResponse>> GetByAccountIdAsync(Guid id);
         Task<GetListSkillResponse> GetByIdAsync(Guid id);
 
     }

@@ -35,8 +35,8 @@ namespace Business.Concretes
 
         public async Task<CreatedAccountOccupationClassResponse> AddAsync(CreateAccountOccupationClassRequest createAccountOccupationClassRequest)
         {
-            AccountOccupationClass AccountOccupationClass = _mapper.Map<AccountOccupationClass>(createAccountOccupationClassRequest);
-            AccountOccupationClass addedAccountOccupationClass = await _accountOccupationClassDal.AddAsync(AccountOccupationClass);
+            AccountOccupationClass accountOccupationClass = _mapper.Map<AccountOccupationClass>(createAccountOccupationClassRequest);
+            AccountOccupationClass addedAccountOccupationClass = await _accountOccupationClassDal.AddAsync(accountOccupationClass);
             var mappedAccountOccupationClass = _mapper.Map<CreatedAccountOccupationClassResponse>(addedAccountOccupationClass);
             return mappedAccountOccupationClass;
         }
@@ -44,31 +44,31 @@ namespace Business.Concretes
         public async Task<DeletedAccountOccupationClassResponse> DeleteAsync(DeleteAccountOccupationClassRequest deleteAccountOccupationClassRequest)
         {
             await _accountOccupationClassRules.IsExistsAccountOccupationClass(deleteAccountOccupationClassRequest.Id);
-            AccountOccupationClass AccountOccupationClass = _mapper.Map<AccountOccupationClass>(deleteAccountOccupationClassRequest);
-            AccountOccupationClass deletedAccountOccupationClass = await _accountOccupationClassDal.DeleteAsync(AccountOccupationClass);
+            AccountOccupationClass accountOccupationClass = await _accountOccupationClassDal.GetAsync(predicate: a => a.Id == deleteAccountOccupationClassRequest.Id);
+            AccountOccupationClass deletedAccountOccupationClass = await _accountOccupationClassDal.DeleteAsync(accountOccupationClass, false);
             var mappedAccountOccupationClass = _mapper.Map<DeletedAccountOccupationClassResponse>(deletedAccountOccupationClass);
             return mappedAccountOccupationClass;
         }
 
         public async Task<GetListAccountOccupationClassResponse> GetByIdAsync(Guid id)
         {
-            var AccountOccupationClassList = await _accountOccupationClassDal.GetAsync(a=>a.Id == id);
-            var mappedAccountOccupationClass = _mapper.Map<GetListAccountOccupationClassResponse>(AccountOccupationClassList);
+            var accountOccupationClassList = await _accountOccupationClassDal.GetAsync(a => a.Id == id);
+            var mappedAccountOccupationClass = _mapper.Map<GetListAccountOccupationClassResponse>(accountOccupationClassList);
             return mappedAccountOccupationClass;
         }
 
         public async Task<IPaginate<GetListAccountOccupationClassResponse>> GetListAsync()
         {
-            var AccountOccupationClassList = await _accountOccupationClassDal.GetListAsync();
-            var mappedAccountOccupationClass = _mapper.Map<Paginate<GetListAccountOccupationClassResponse>>(AccountOccupationClassList);
+            var accountOccupationClassList = await _accountOccupationClassDal.GetListAsync();
+            var mappedAccountOccupationClass = _mapper.Map<Paginate<GetListAccountOccupationClassResponse>>(accountOccupationClassList);
             return mappedAccountOccupationClass;
         }
 
         public async Task<UpdatedAccountOccupationClassResponse> UpdateAsync(UpdateAccountOccupationClassRequest updateAccountOccupationClassRequest)
         {
             await _accountOccupationClassRules.IsExistsAccountOccupationClass(updateAccountOccupationClassRequest.Id);
-            AccountOccupationClass AccountOccupationClass = _mapper.Map<AccountOccupationClass>(updateAccountOccupationClassRequest);
-            AccountOccupationClass updateedAccountOccupationClass = await _accountOccupationClassDal.UpdateAsync(AccountOccupationClass);
+            AccountOccupationClass accountOccupationClass = _mapper.Map<AccountOccupationClass>(updateAccountOccupationClassRequest);
+            AccountOccupationClass updateedAccountOccupationClass = await _accountOccupationClassDal.UpdateAsync(accountOccupationClass);
             var mappedAccountOccupationClass = _mapper.Map<UpdatedAccountOccupationClassResponse>(updateedAccountOccupationClass);
             return mappedAccountOccupationClass;
         }

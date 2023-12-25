@@ -22,7 +22,7 @@ namespace Business.Concretes
         IMapper _mapper;
         LanguageBusinessRules _languageBusinessRules;
 
-        public LanguageManager(ILanguageDal languageDal,IMapper mapper, LanguageBusinessRules languageBusinessRules)
+        public LanguageManager(ILanguageDal languageDal, IMapper mapper, LanguageBusinessRules languageBusinessRules)
         {
             _languageDal = languageDal;
             _mapper = mapper;
@@ -61,8 +61,8 @@ namespace Business.Concretes
         public async Task<IPaginate<GetListLanguageResponse>> GetByAccountIdAsync(Guid accountId)
         {
             var languages = await _languageDal.GetListAsync(
-                include: l => l.Include(a => a.AccountLanguages).ThenInclude(al=>al.Account));
-            var filteredLanguages = languages.Items.SelectMany(l => l.AccountLanguages.Where(a => a.AccountId == accountId).Select(a => l)).ToList();
+                include: l => l.Include(a => a.AccountLanguages).ThenInclude(al => al.Account));
+            var filteredLanguages = languages.Items.Where(e => e.AccountLanguages.Any(s => s.AccountId == accountId)).ToList();
             var mappedLanguages = _mapper.Map<Paginate<GetListLanguageResponse>>(filteredLanguages);
             return mappedLanguages;
         }

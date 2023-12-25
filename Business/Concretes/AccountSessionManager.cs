@@ -44,8 +44,8 @@ namespace Business.Concretes
         public async Task<DeletedAccountSessionResponse> DeleteAsync(DeleteAccountSessionRequest deleteAccountSessionRequest)
         {
             await _accountSessionBusinessRules.IsExistsAccountSession(deleteAccountSessionRequest.Id);
-            AccountSession accountSession = _mapper.Map<AccountSession>(deleteAccountSessionRequest);
-            AccountSession deletedAccountSession = await _accountSessionDal.DeleteAsync(accountSession);
+            AccountSession accountSession = await _accountSessionDal.GetAsync(predicate: a => a.Id == deleteAccountSessionRequest.Id);
+            AccountSession deletedAccountSession = await _accountSessionDal.DeleteAsync(accountSession,false);
             DeletedAccountSessionResponse createdAccountSessionResponse = _mapper.Map<DeletedAccountSessionResponse>(deletedAccountSession);
             return createdAccountSessionResponse;
 
@@ -53,15 +53,15 @@ namespace Business.Concretes
 
         public async Task<GetListAccountSessionResponse> GetByIdAsync(Guid id)
         {
-            var accountSession = await _accountSessionDal.GetAsync(a=>a.Id == id);
+            var accountSession = await _accountSessionDal.GetAsync(a => a.Id == id);
             var mappedAccountSession = _mapper.Map<GetListAccountSessionResponse>(accountSession);
             return mappedAccountSession;
         }
 
-        public async Task<IPaginate<GetListAccountResponse>> GetListAsync()
+        public async Task<IPaginate<GetListAccountSessionResponse>> GetListAsync()
         {
             var accountSession = await _accountSessionDal.GetListAsync();
-            var mappedAccountSession = _mapper.Map<Paginate<GetListAccountResponse>>(accountSession);
+            var mappedAccountSession = _mapper.Map<Paginate<GetListAccountSessionResponse>>(accountSession);
             return mappedAccountSession;
         }
 

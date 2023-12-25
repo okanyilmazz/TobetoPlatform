@@ -40,8 +40,8 @@ public class LessonModuleManager : ILessonModuleService
     public async Task<DeletedLessonModuleResponse> DeleteAsync(DeleteLessonModuleRequest deleteLessonModuleRequest)
     {
         await _lessonModuleBusinessRules.IsExistsLessonModule(deleteLessonModuleRequest.Id);
-        LessonModule lessonModule = _mapper.Map<LessonModule>(deleteLessonModuleRequest);
-        LessonModule deletedLessonModule = await _lessonModuleDal.DeleteAsync(lessonModule);
+        LessonModule lessonModule = await _lessonModuleDal.GetAsync(predicate: l => l.Id == deleteLessonModuleRequest.Id);
+        LessonModule deletedLessonModule = await _lessonModuleDal.DeleteAsync(lessonModule,false);
         DeletedLessonModuleResponse deletedLessonModuleResponse = _mapper.Map<DeletedLessonModuleResponse>(deletedLessonModule);
         return deletedLessonModuleResponse;
     }

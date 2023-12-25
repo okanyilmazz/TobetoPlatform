@@ -33,10 +33,10 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("GetBySkillId")]
-        public async Task<IActionResult> GetBySkillId([FromQuery] Guid id)
+        [HttpGet("GetByAccountId")]
+        public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid id)
         {
-            var result = await _skillService.GetBySkillIdAsync(id);
+            var result = await _skillService.GetByAccountIdAsync(id);
             return Ok(result);
         }
         [HttpPost("Add")]

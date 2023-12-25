@@ -33,12 +33,6 @@ namespace Business.Concretes
             _mapper = mapper;
             _skillBusinessRules = skillBusinessRules;
         }
-        //[LogAspect] -->AOP.Bir metod hata verdiğinde çalışan kodlar AOP'dir.Burada tanımlandığında bütün class log'unu alır.
-        //ValidationTool.Validate(new SkillValidator(),createSkillRequest);
-        //Bir iş sınıfı başka sınıfları newlemez.Bundan dolayı böyle yapılır.
-        //[LogAspect]-->AOP.Bir metod hata verdiğinde çalışan kodlar AOP'dir.
-        //[Validate]-[Performance]-RemoveCache]-[Transaction]
-
 
         public async Task<CreatedSkillResponse> AddAsync(CreateSkillRequest createSkillRequest)
         {
@@ -52,8 +46,8 @@ namespace Business.Concretes
         public async Task<DeletedSkillResponse> DeleteAsync(DeleteSkillRequest deleteSkillRequest)
         {
             await _skillBusinessRules.IsExistsSkill(deleteSkillRequest.Id);
-            Skill skill = _mapper.Map<Skill>(deleteSkillRequest);
-            Skill deletedSkill = await _skillDal.DeleteAsync(skill);
+            Skill skill = await _skillDal.GetAsync(predicate:s=>s.Id == deleteSkillRequest.Id);
+            Skill deletedSkill = await _skillDal.DeleteAsync(skill,false);
             DeletedSkillResponse deletedSkillResponse = _mapper.Map<DeletedSkillResponse>(deletedSkill);
             return deletedSkillResponse;
         }
@@ -75,11 +69,11 @@ namespace Business.Concretes
             return mappedSkills;
         }
 
-        public async Task<IPaginate<GetListSkillResponse>> GetBySkillIdAsync(Guid accountId)
+        public async Task<IPaginate<GetListSkillResponse>> GetByAccountIdAsync(Guid accountId)
         {
             var skills = await _skillDal.GetListAsync(
                 include: s => s.Include(a => a.AccountSkills).ThenInclude(ask => ask.Account));
-            var filteredSkills = skills.Items.SelectMany(s => s.AccountSkills.Where(s => s.AccountId == accountId).Select(a => s)).ToList();
+            var filteredSkills = skills.Items.Where(e => e.AccountSkills.Any(s => s.AccountId == accountId)).ToList();
             var mappedSkills = _mapper.Map<Paginate<GetListSkillResponse>>(skills);
             return mappedSkills;
         }

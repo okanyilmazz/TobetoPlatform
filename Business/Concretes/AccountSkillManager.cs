@@ -42,8 +42,8 @@ namespace Business.Concretes
         public async Task<DeletedAccountSkillResponse> DeleteAsync(DeleteAccountSkillRequest deleteAccountSkillRequest)
         {
             await _accountSkillBusinessRules.IsExistsAccountSkill(deleteAccountSkillRequest.Id);
-            AccountSkill accountSkill = _mapper.Map<AccountSkill>(deleteAccountSkillRequest);
-            AccountSkill deletedAccountSkill = await _accountSkillDal.DeleteAsync(accountSkill);
+            AccountSkill accountSkill = await _accountSkillDal.GetAsync(predicate:a=>a.Id == deleteAccountSkillRequest.Id);
+            AccountSkill deletedAccountSkill = await _accountSkillDal.DeleteAsync(accountSkill,false);
             DeletedAccountSkillResponse deletedAccountSkillResponse = _mapper.Map<DeletedAccountSkillResponse>(deletedAccountSkill);
             return deletedAccountSkillResponse;
         }

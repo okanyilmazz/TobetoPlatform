@@ -8,6 +8,7 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
+using Castle.Components.DictionaryAdapter.Xml;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -16,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,13 +57,14 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListAccountResponse>> GetBySessionIdAsync(Guid sessionId)
         {
-            var accountProgramList = await _accountDal.GetListAsync(
-                include: e => e.Include(s => s.AccountSkills).ThenInclude(ask => ask.Skill));
+            var accountList = await _accountDal.GetListAsync(
+                 include: e => e.Include(s => s.AccountSessions).ThenInclude(ask => ask.Session));
 
-            var filteredAccountPrograms = accountProgramList
-                .Items.SelectMany(e => e.AccountSessions.Where(s => s.SessionId == sessionId).Select(s => e)).ToList();
-            var mappedAccountProgram = _mapper.Map<Paginate<GetListAccountResponse>>(filteredAccountPrograms);
-            return mappedAccountProgram;
+            var filteredAccounts = accountList
+                .Items.Where(e => e.AccountSessions.Any(s => s.SessionId == sessionId)).ToList();
+
+            var mappedAccounts = _mapper.Map<Paginate<GetListAccountResponse>>(filteredAccounts);
+            return mappedAccounts;
         }
 
         public async Task<IPaginate<GetListAccountResponse>> GetListAsync()

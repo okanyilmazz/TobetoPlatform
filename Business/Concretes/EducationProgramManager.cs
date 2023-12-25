@@ -23,12 +23,11 @@ namespace Business.Concretes
     {
         IEducationProgramDal _educationProgramDal;
         IMapper _mapper;
-        IEducationProgramOccupationClassService _educationProgramOccupationClassService;
-        public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper, IEducationProgramOccupationClassService educationProgramOccupationClassService)
+
+        public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper)
         {
             _educationProgramDal = educationProgramDal;
             _mapper = mapper;
-            _educationProgramOccupationClassService = educationProgramOccupationClassService;
         }
 
         public async Task<CreatedEducationProgramResponse> AddAsync(CreateEducationProgramRequest createEducationProgramRequest)
@@ -56,12 +55,11 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId)
         {
-
             var educationProgramList = await _educationProgramDal.GetListAsync(
-                include: e => e.Include(o => o.EducationProgramOccupationClasses).ThenInclude(epoc=>epoc.OccupationClass));
+                include: e => e.Include(o => o.EducationProgramOccupationClasses).ThenInclude(epoc => epoc.OccupationClass));
 
             var filteredEducationPrograms = educationProgramList
-                .Items.SelectMany(ep => ep.EducationProgramOccupationClasses.Where(oc => oc.OccupationClassId == occupationClassId).Select(oc => ep)).ToList();
+                .Items.Where(e => e.EducationProgramOccupationClasses.Any(s => s.OccupationClassId == occupationClassId)).ToList();
             var mappedEducationProgram = _mapper.Map<Paginate<GetListEducationProgramResponse>>(filteredEducationPrograms);
             return mappedEducationProgram;
         }

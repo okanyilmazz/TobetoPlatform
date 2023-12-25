@@ -17,6 +17,7 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 
         builder.Property(l => l.Id).HasColumnName("Id").IsRequired();
         builder.Property(l => l.LanguageId).HasColumnName("LanguageId").IsRequired();
+        builder.Property(l => l.LessonCategoryId).HasColumnName("LessonCategoryId").IsRequired();
         builder.Property(l => l.LessonModuleId).HasColumnName("LessonModuleId").IsRequired();
         builder.Property(l => l.LessonSubTypeId).HasColumnName("LessonSubTypeId").IsRequired();
         builder.Property(l => l.ProductionCompanyId).HasColumnName("ProductionCompanyId").IsRequired();

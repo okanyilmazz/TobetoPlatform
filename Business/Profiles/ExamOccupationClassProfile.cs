@@ -29,7 +29,12 @@ namespace Business.Profiles
             CreateMap<ExamOccupationClass, DeleteExamOccupationClassRequest>().ReverseMap();
             CreateMap<ExamOccupationClass, DeletedExamOccupationClassResponse>().ReverseMap();
 
-            CreateMap<ExamOccupationClass, GetListExamOccupationClassResponse>().ReverseMap();
+            CreateMap<ExamOccupationClass, GetListExamOccupationClassResponse>()
+                .ForMember(destinationMember: response => response.ExamName,
+                memberOptions: opt => opt.MapFrom(eoc => eoc.Exam.Name))
+                .ForMember(destinationMember: response => response.OccupationClassName,
+                memberOptions: opt => opt.MapFrom(eoc => eoc.OccupationClass.Name))
+                .ReverseMap();
             CreateMap<IPaginate<ExamOccupationClass>, Paginate<GetListExamOccupationClassResponse>>().ReverseMap();
         }
     }

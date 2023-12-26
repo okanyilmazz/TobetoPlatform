@@ -11,6 +11,7 @@ using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace Business.Concretes
         {
             await _accountSessionBusinessRules.IsExistsAccountSession(deleteAccountSessionRequest.Id);
             AccountSession accountSession = await _accountSessionDal.GetAsync(predicate: a => a.Id == deleteAccountSessionRequest.Id);
-            AccountSession deletedAccountSession = await _accountSessionDal.DeleteAsync(accountSession,false);
+            AccountSession deletedAccountSession = await _accountSessionDal.DeleteAsync(accountSession, false);
             DeletedAccountSessionResponse createdAccountSessionResponse = _mapper.Map<DeletedAccountSessionResponse>(deletedAccountSession);
             return createdAccountSessionResponse;
 
@@ -60,7 +61,9 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListAccountSessionResponse>> GetListAsync()
         {
-            var accountSession = await _accountSessionDal.GetListAsync();
+            var accountSession = await _accountSessionDal.GetListAsync(
+                include: ase => ase
+                .Include(ase => ase.Account).ThenInclude(a => a.User));
             var mappedAccountSession = _mapper.Map<Paginate<GetListAccountSessionResponse>>(accountSession);
             return mappedAccountSession;
         }

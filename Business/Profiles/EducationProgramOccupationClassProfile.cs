@@ -30,7 +30,13 @@ namespace Business.Profiles
             CreateMap<EducationProgramOccupationClass, UpdatedEducationProgramOccupationClassResponse>().ReverseMap();
 
             CreateMap<IPaginate<EducationProgramOccupationClass>, Paginate<GetListEducationProgramOccupationClassResponse>>().ReverseMap();
-            CreateMap<EducationProgramOccupationClass, GetListEducationProgramOccupationClassResponse>().ReverseMap();
+            CreateMap<EducationProgramOccupationClass, GetListEducationProgramOccupationClassResponse>()
+                .ForMember(destinationMember: response => response.EducationProgramName,
+                memberOptions: opt => opt.MapFrom(epoc => epoc.EducationProgram.Name))
+                .ForMember(destinationMember: response => response.OccupationClassName,
+                memberOptions: opt => opt.MapFrom(epoc => epoc.OccupationClass.Name)
+                )
+                .ReverseMap();
         }
     }
 }

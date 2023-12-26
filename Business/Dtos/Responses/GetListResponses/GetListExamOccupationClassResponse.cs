@@ -9,7 +9,7 @@ namespace Business.Dtos.Responses.GetListResponses
     public class GetListExamOccupationClassResponse
     {
         public Guid Id { get; set; }
-        public Guid ExamId { get; set; }
-        public Guid OccupationClassId { get; set; }
+        public string ExamName { get; set; }
+        public string OccupationClassName { get; set; }
     }
 }

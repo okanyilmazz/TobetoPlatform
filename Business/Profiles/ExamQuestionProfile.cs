@@ -29,9 +29,13 @@ namespace Business.Profiles
             CreateMap<ExamQuestion, DeleteExamQuestionRequest>().ReverseMap();
             CreateMap<ExamQuestion, DeletedExamQuestionResponse>().ReverseMap();
 
-            CreateMap<ExamQuestion, GetListExamQuestionResponse>().ReverseMap();
+            CreateMap<ExamQuestion, GetListExamQuestionResponse>()
+                .ForMember(destinationMember: response => response.ExamName,
+                memberOptions: eq => eq.MapFrom(eq => eq.Exam.Name))
+                .ForMember(destinationMember: response => response.QuestionName,
+                memberOptions: eq => eq.MapFrom(eq => eq.Question.Description))
+                .ReverseMap();
             CreateMap<IPaginate<ExamQuestion>, Paginate<GetListExamQuestionResponse>>().ReverseMap();
-
         }
     }
 }

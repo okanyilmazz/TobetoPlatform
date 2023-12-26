@@ -11,6 +11,7 @@ using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes;
 
@@ -49,15 +50,25 @@ public class AccountUniversityManager : IAccountUniversityService
 
     public async Task<GetListAccountUniversityResponse> GetByIdAsync(Guid Id)
     {
-        var accountUniversities = await _accountUniversityDal.GetAsync(a => a.Id == Id);
+        var accountUniversities = await _accountUniversityDal.GetAsync(
+            predicate: a => a.Id == Id,
+            include: au => au
+            .Include(au => au.University)
+            .Include(au => au.DegreeType)
+            .Include(au => au.UniversityDepartment)
+            .Include(au => au.Account).ThenInclude(a => a.User));
         var mappedAccountUniversitie = _mapper.Map<GetListAccountUniversityResponse>(accountUniversities);
         return mappedAccountUniversitie;
-
     }
 
     public async Task<IPaginate<GetListAccountUniversityResponse>> GetListAsync()
     {
-        var accountUniversities = await _accountUniversityDal.GetListAsync();
+        var accountUniversities = await _accountUniversityDal.GetListAsync(
+            include: au => au
+            .Include(au => au.University)
+            .Include(au => au.DegreeType)
+            .Include(au => au.UniversityDepartment)
+            .Include(au => au.Account).ThenInclude(a => a.User));
         var mappedaccountUniversities = _mapper.Map<Paginate<GetListAccountUniversityResponse>>(accountUniversities);
         return mappedaccountUniversities;
     }

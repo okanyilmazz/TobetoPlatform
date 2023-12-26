@@ -29,7 +29,13 @@ namespace Business.Profiles
             CreateMap<EducationProgramLesson, DeleteEducationProgramLessonRequest>().ReverseMap();
             CreateMap<EducationProgramLesson, DeletedEducationProgramLessonResponse>().ReverseMap();
 
-            CreateMap<EducationProgramLesson, GetListEducationProgramLessonResponse>().ReverseMap();
+            CreateMap<EducationProgramLesson, GetListEducationProgramLessonResponse>()
+                .ForMember(destinationMember: response => response.EducationProgramName,
+                memberOptions: opt => opt.MapFrom(epl => epl.EducationProgram.Name)
+                ).ForMember(destinationMember: response => response.LessonName,
+                memberOptions: opt => opt.MapFrom(epl => epl.Lesson.Name)
+                )
+                .ReverseMap();
             CreateMap<IPaginate<EducationProgramLesson>, Paginate<GetListEducationProgramLessonResponse>>().ReverseMap();
         }
     }

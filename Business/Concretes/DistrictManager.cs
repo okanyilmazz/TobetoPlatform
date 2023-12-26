@@ -41,12 +41,14 @@ namespace Business.Concretes
             District createdDistrict = await _districtDal.AddAsync(district);
             CreatedDistrictResponse createdDistrictResponse = _mapper.Map<CreatedDistrictResponse>(createdDistrict);
             return createdDistrictResponse;
+
         }
 
         public async Task<DeletedDistrictResponse> DeleteAsync(DeleteDistrictRequest deleteDistrictRequest)
         {
+
             await _districtBusinessRules.IsExistsDistrict(deleteDistrictRequest.Id);
-            District district = _mapper.Map<District>(deleteDistrictRequest);
+            District district = await _districtDal.GetAsync(predicate: l => l.Id == deleteDistrictRequest.Id);
             District deletedDistrict = await _districtDal.DeleteAsync(district);
             DeletedDistrictResponse deletedDistrictResponse = _mapper.Map<DeletedDistrictResponse>(deletedDistrict);
             return deletedDistrictResponse;

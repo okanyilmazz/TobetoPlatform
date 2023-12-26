@@ -3,7 +3,7 @@
     public class GetListOccupationClassSurveyResponse
     {
         public Guid Id { get; set; }
-        public Guid SurveyId { get; set; }
-        public Guid OccupationClassId { get; set; }
+        public string SurveyName { get; set; }
+        public string OccupationClassName { get; set; }
     }
 }

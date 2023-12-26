@@ -40,8 +40,8 @@ public class SocialMediaManager : ISocialMediaService
     public async Task<DeletedSocialMediaResponse> DeleteAsync(DeleteSocialMediaRequest deleteSocialMediaRequest)
     {
         await _socialMediaBusinessRules.IsExistsSocialMedia(deleteSocialMediaRequest.Id);
-        SocialMedia socialMedia = _mapper.Map<SocialMedia>(deleteSocialMediaRequest);
-        SocialMedia deletedSocialMedia = await _socialMediaDal.DeleteAsync(socialMedia);
+        SocialMedia socialMedia = await _socialMediaDal.GetAsync(predicate: s=>s.Id == deleteSocialMediaRequest.Id);
+        SocialMedia deletedSocialMedia = await _socialMediaDal.DeleteAsync(socialMedia,false);
         DeletedSocialMediaResponse deletedSocialMediaResponse = _mapper.Map<DeletedSocialMediaResponse>(deletedSocialMedia);
         return deletedSocialMediaResponse;
     }
@@ -51,7 +51,7 @@ public class SocialMediaManager : ISocialMediaService
         var socialMediaList = await _socialMediaDal.GetListAsync(
             include: s => s.Include(a => a.AccountSocialMedias).ThenInclude(asm=>asm.Account));
         var filteredSocialMedias = socialMediaList
-            .Items.SelectMany(s => s.AccountSocialMedias.Where(a => a.AccountId == accountId).Select(a => s)).ToList();
+            .Items.Where(e => e.AccountSocialMedias.Any(s => s.AccountId == accountId)).ToList();
         var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMediaList);
         return mappedSocialMedias;
     }

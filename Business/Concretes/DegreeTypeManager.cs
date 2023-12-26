@@ -45,8 +45,8 @@ namespace Business.Concretes
         public async Task<DeletedDegreeTypeResponse> DeleteAsync(DeleteDegreeTypeRequest deleteDegreeTypeRequest)
         {
             await _degreeTypeBusinessRules.IsExistsDegreeType(deleteDegreeTypeRequest.Id);
-            DegreeType degreeType = _mapper.Map<DegreeType>(deleteDegreeTypeRequest);
-            DegreeType deleteddegreeType = await _degreeTypeDal.DeleteAsync(degreeType, true);
+            DegreeType degreeType = await _degreeTypeDal.GetAsync(predicate:d=>d.Id == deleteDegreeTypeRequest.Id);
+            DegreeType deleteddegreeType = await _degreeTypeDal.DeleteAsync(degreeType, false);
             DeletedDegreeTypeResponse deleteddegreeTypeResponse =
             _mapper.Map<DeletedDegreeTypeResponse>(deleteddegreeType);
             return deleteddegreeTypeResponse;

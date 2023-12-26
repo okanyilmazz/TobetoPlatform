@@ -36,8 +36,8 @@ namespace Business.Concretes
 
         public async Task<DeletedQuestionTypeResponse> DeleteAsync(DeleteQuestionTypeRequest deleteQuestionTypeRequest)
         {
-            QuestionType questionType = _mapper.Map<QuestionType>(deleteQuestionTypeRequest);
-            QuestionType deletedQuestionType = await _questionTypeDal.DeleteAsync(questionType);
+            QuestionType questionType = await _questionTypeDal.GetAsync(predicate: q => q.Id == deleteQuestionTypeRequest.Id);
+            QuestionType deletedQuestionType = await _questionTypeDal.DeleteAsync(questionType,false);
             DeletedQuestionTypeResponse deletedQuestionTypeResponse = _mapper.Map<DeletedQuestionTypeResponse>(deletedQuestionType);
             return deletedQuestionTypeResponse;
         }

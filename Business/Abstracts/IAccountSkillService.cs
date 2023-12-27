@@ -15,6 +15,6 @@ namespace Business.Abstracts
         Task<UpdatedAccountSkillResponse> UpdateAsync(UpdateAccountSkillRequest updateAccountSkillRequest);
         Task<DeletedAccountSkillResponse> DeleteAsync(DeleteAccountSkillRequest deleteAccountSkillRequest);
         Task<IPaginate<GetListAccountSkillResponse>> GetListAsync();
-        Task<GetListAccountSkillResponse> GetByIdAsync(Guid Id);
+        Task<GetListAccountSkillResponse> GetByIdAsync(Guid id);
     }
 }

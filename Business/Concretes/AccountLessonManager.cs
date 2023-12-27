@@ -11,6 +11,7 @@ using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,6 @@ namespace Business.Concretes
             _mapper = mapper;
             _accountLessonBusinessRules = accountLessonBusinessRules;
         }
-
 
         public async Task<CreatedAccountLessonResponse> AddAsync(CreateAccountLessonRequest createAccountLessonRequest)
         {
@@ -50,14 +50,21 @@ namespace Business.Concretes
 
         public async Task<GetListAccountLessonResponse> GetByIdAsync(Guid id)
         {
-            var AccountLessonListed = await _accountLessonDal.GetAsync(a => a.Id == id);
+            var AccountLessonListed = await _accountLessonDal.GetAsync(
+                predicate: a => a.Id == id,
+                include: al => al
+                .Include(al => al.Account).ThenInclude(a => a.User)
+                .Include(al => al.Lesson));
             var mappedListed = _mapper.Map<GetListAccountLessonResponse>(AccountLessonListed);
             return mappedListed;
         }
 
         public async Task<IPaginate<GetListAccountLessonResponse>> GetListAsync()
         {
-            var AccountLessonListed = await _accountLessonDal.GetListAsync();
+            var AccountLessonListed = await _accountLessonDal.GetListAsync(
+                include: al => al
+                .Include(al => al.Account).ThenInclude(a => a.User)
+                .Include(al => al.Lesson));
             var mappedListed = _mapper.Map<Paginate<GetListAccountLessonResponse>>(AccountLessonListed);
             return mappedListed;
         }

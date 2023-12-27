@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,20 +54,29 @@ namespace Business.Concretes
 
         public async Task<GetListEducationProgramOccupationClassResponse> GetByIdAsync(Guid id)
         {
-            var educationProgramOccupationClass = await _educationProgramOccupationClassDal.GetListAsync(h => h.Id == id);
+            var educationProgramOccupationClass = await _educationProgramOccupationClassDal.GetListAsync(
+                predicate: h => h.Id == id,
+                include: epoc => epoc
+                .Include(epoc => epoc.OccupationClass)
+                .Include(epoc => epoc.EducationProgram));
             return _mapper.Map<GetListEducationProgramOccupationClassResponse>(educationProgramOccupationClass.Items.FirstOrDefault());
         }
 
         public async Task<IPaginate<GetListEducationProgramOccupationClassResponse>> GetListAsync()
         {
-            var EducationProgramOccupationClasss = await _educationProgramOccupationClassDal.GetListAsync();
+            var EducationProgramOccupationClasss = await _educationProgramOccupationClassDal.GetListAsync(
+                include: epoc => epoc
+                .Include(epoc => epoc.OccupationClass)
+                .Include(epoc => epoc.EducationProgram)
+
+                );
             var mappedEducationProgramOccupationClasses = _mapper.Map<Paginate<GetListEducationProgramOccupationClassResponse>>(EducationProgramOccupationClasss);
             return mappedEducationProgramOccupationClasses;
         }
 
         public async Task<UpdatedEducationProgramOccupationClassResponse> UpdateAsync(UpdateEducationProgramOccupationClassRequest updateEducationProgramOccupationClassRequest)
         {
-             await _educationProgramOccupationClassBusinessRules.IsExistsEducationProgramOccupationClass(updateEducationProgramOccupationClassRequest.Id);
+            await _educationProgramOccupationClassBusinessRules.IsExistsEducationProgramOccupationClass(updateEducationProgramOccupationClassRequest.Id);
             EducationProgramOccupationClass EducationProgramOccupationClass = _mapper.Map<EducationProgramOccupationClass>(updateEducationProgramOccupationClassRequest);
             EducationProgramOccupationClass updatedEducationProgramOccupationClass = await _educationProgramOccupationClassDal.UpdateAsync(EducationProgramOccupationClass);
             UpdatedEducationProgramOccupationClassResponse updatedEducationProgramOccupationClassResponse = _mapper.Map<UpdatedEducationProgramOccupationClassResponse>(updatedEducationProgramOccupationClass);

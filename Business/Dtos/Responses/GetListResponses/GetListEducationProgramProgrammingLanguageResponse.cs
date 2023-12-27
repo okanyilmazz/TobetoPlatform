@@ -3,7 +3,7 @@
     public class GetListEducationProgramProgrammingLanguageResponse
     {
         public Guid Id { get; set; }
-        public Guid EducationProgramId { get; set; }
-        public Guid ProgrammingLanguageId { get; set; }
+        public string EducationProgramName { get; set; }
+        public string ProgrammingLanguageName { get; set; }
     }
 }

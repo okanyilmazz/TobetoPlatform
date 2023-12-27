@@ -29,8 +29,14 @@ namespace Business.Profiles
             CreateMap<AccountHomework, DeleteAccountHomeworkRequest>().ReverseMap();
             CreateMap<AccountHomework, DeletedAccountHomeworkResponse>().ReverseMap();
 
-            CreateMap<AccountHomework, GetListAccountHomeworkResponse>().ReverseMap();
             CreateMap<IPaginate<AccountHomework>, Paginate<GetListAccountHomeworkResponse>>().ReverseMap();
+            CreateMap<AccountHomework, GetListAccountHomeworkResponse>()
+                .ForMember(destinationMember: response => response.HomeworkName,
+                memberOptions: opt => opt.MapFrom(ah => ah.Homework.Name))
+                .ForMember(destinationMember: response => response.AccountName,
+                memberOptions: opt => opt.MapFrom(ah => ah.Account.User.FirstName))
+                .ReverseMap();
+
         }
     }
 }

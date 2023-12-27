@@ -29,7 +29,10 @@ namespace Business.Profiles
             CreateMap<AccountSession, DeleteAccountSessionRequest>().ReverseMap();
             CreateMap<AccountSession, DeletedAccountSessionResponse>().ReverseMap();
 
-            CreateMap<AccountSession, GetListAccountSessionResponse>().ReverseMap();
+            CreateMap<AccountSession, GetListAccountSessionResponse>()
+                .ForMember(destinationMember: ase => ase.AccountName,
+                memberOptions: opt => opt.MapFrom(ase => ase.Account.User.FirstName))
+                .ReverseMap();
             CreateMap<IPaginate<AccountSession>, Paginate<GetListAccountSessionResponse>>().ReverseMap();
         }
     }

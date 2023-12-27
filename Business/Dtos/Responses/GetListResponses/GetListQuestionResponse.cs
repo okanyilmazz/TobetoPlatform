@@ -9,6 +9,7 @@ namespace Business.Dtos.Responses.GetListResponses
     public class GetListQuestionResponse
     {
         public Guid Id { get; set; }
+        public string QuestionTypeName { get; set; }
         public string Description { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }

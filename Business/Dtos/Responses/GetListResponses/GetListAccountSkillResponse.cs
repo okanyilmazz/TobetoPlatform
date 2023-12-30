@@ -9,7 +9,7 @@ namespace Business.Dtos.Responses.GetListResponses
     public class GetListAccountSkillResponse
     {
         public Guid Id { get; set; }
-        public Guid SkillId { get; set; }
-        public Guid AccountId { get; set; }
+        public string SkillName { get; set; }
+        public string AccountName { get; set; }
     }
 }

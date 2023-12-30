@@ -20,9 +20,8 @@ namespace Business.Rules
         }
         public async Task IsExistsContact(Guid contactId)
         {
-            var result = await _contactDal.GetListAsync(
-                predicate: c => c.Id == contactId);
-            if (result.Count == 0)
+            var result = await _contactDal.GetListAsync(predicate: c => c.Id == contactId, enableTracking: false);
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

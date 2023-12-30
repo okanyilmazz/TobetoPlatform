@@ -70,7 +70,7 @@ namespace Business.Concretes
         public async Task<UpdatedDegreeTypeResponse> UpdateAsync(UpdateDegreeTypeRequest updatedegreeTypeRequest)
         {
             await _degreeTypeBusinessRules.IsExistsDegreeType(updatedegreeTypeRequest.Id);
-            DegreeType degreeType = _mapper.Map<DegreeType>(updatedegreeTypeRequest);
+            DegreeType degreeType = _mapper.Map<DegreeType>(updatedegreeTypeRequest); 
             DegreeType updateddegreeType = await _degreeTypeDal.UpdateAsync(degreeType);
             UpdatedDegreeTypeResponse updateddegreeTypeResponse = _mapper.Map<UpdatedDegreeTypeResponse>
             (updateddegreeType);
@@ -78,3 +78,4 @@ namespace Business.Concretes
         }
     }
 }
+

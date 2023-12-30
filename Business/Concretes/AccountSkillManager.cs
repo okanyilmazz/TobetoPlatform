@@ -67,7 +67,7 @@ namespace Business.Concretes
                 include: acs => acs.
                 Include(acs => acs.Skill)
                 .Include(acs => acs.Account).ThenInclude(a => a.User));
-                
+
             var mappedAccountSkills = _mapper.Map<Paginate<GetListAccountSkillResponse>>(accountSkills);
             return mappedAccountSkills;
         }

@@ -20,8 +20,8 @@ namespace Business.Rules
 
         public async Task IsExistsAccountSkill(Guid accountSkillId)
         {
-            var result = await _accountSkillDal.GetListAsync(a => a.Id == accountSkillId);
-            if (result.Count == 0)
+            var result = await _accountSkillDal.GetAsync(predicate: a => a.Id == accountSkillId, enableTracking: false);
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

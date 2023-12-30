@@ -30,9 +30,13 @@ namespace Business.Profiles
             CreateMap<EducationProgramProgrammingLanguage, UpdateEducationProgramProgrammingLanguageRequest>().ReverseMap();
             CreateMap<EducationProgramProgrammingLanguage, UpdatedEducationProgramProgrammingLanguageResponse>().ReverseMap();
 
-
             CreateMap<IPaginate<EducationProgramProgrammingLanguage>, Paginate<GetListEducationProgramProgrammingLanguageResponse>>().ReverseMap();
-            CreateMap<EducationProgramProgrammingLanguage, GetListEducationProgramProgrammingLanguageResponse>().ReverseMap();
+            CreateMap<EducationProgramProgrammingLanguage, GetListEducationProgramProgrammingLanguageResponse>()
+                .ForMember(destinationMember: response => response.EducationProgramName,
+                memberOptions: opt => opt.MapFrom(eppl => eppl.EducationProgram))
+                .ForMember(destinationMember: response => response.ProgrammingLanguageName,
+                memberOptions: opt => opt.MapFrom(eppl => eppl.ProgrammingLanguage))
+                .ReverseMap();
         }
     }
 }

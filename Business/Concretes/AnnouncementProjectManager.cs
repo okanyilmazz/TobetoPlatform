@@ -11,6 +11,7 @@ using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,14 +53,22 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
 
     public async Task<GetListAnnouncementProjectResponse> GetByIdAsync(Guid Id)
     {
-        var announcementProject = await _announcementProjectDal.GetAsync(a=> a.Id == Id);
+        var announcementProject = await _announcementProjectDal.GetAsync(
+            predicate:a=> a.Id == Id,
+            include: ap=> ap
+            .Include(ap=>ap.Announcement)
+            .Include(ap=>ap.Project)
+            );
         var mappedAnnouncementProject = _mapper.Map<GetListAnnouncementProjectResponse>(announcementProject);
         return mappedAnnouncementProject;
     }
 
     public async Task<IPaginate<GetListAnnouncementProjectResponse>> GetListAsync()
     {
-        var announcementProject = await _announcementProjectDal.GetListAsync();
+        var announcementProject = await _announcementProjectDal.GetListAsync(
+             include: ap => ap
+            .Include(ap => ap.Announcement)
+            .Include(ap => ap.Project));
         var mappedAnnouncementProject = _mapper.Map<Paginate<GetListAnnouncementProjectResponse>>(announcementProject);
         return mappedAnnouncementProject;
     }

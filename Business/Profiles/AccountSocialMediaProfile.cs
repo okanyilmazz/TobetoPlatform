@@ -23,7 +23,12 @@ public class AccountSocialMediaProfile : Profile
         CreateMap<AccountSocialMedia, UpdatedAccountSocialMediaResponse>().ReverseMap();
         CreateMap<AccountSocialMedia, DeletedAccountSocialMediaResponse>().ReverseMap();
 
-        CreateMap<AccountSocialMedia, GetListAccountSocialMediaResponse>().ReverseMap();
+        CreateMap<AccountSocialMedia, GetListAccountSocialMediaResponse>()
+            .ForMember(destinationMember: response => response.SocialMediaName,
+            memberOptions: opt => opt.MapFrom(asm => asm.SocialMedia.Name))
+            .ForMember(destinationMember: response => response.AccountName,
+            memberOptions: opt => opt.MapFrom(asm => asm.Account.User.FirstName))
+            .ReverseMap();
         CreateMap<IPaginate<AccountSocialMedia>, Paginate<GetListAccountSocialMediaResponse>>().ReverseMap();
     }
 }

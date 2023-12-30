@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Business.Profiles
 {
-    public class OccupationClassSurveyProfile :  Profile
+    public class OccupationClassSurveyProfile : Profile
     {
         public OccupationClassSurveyProfile()
         {
@@ -30,7 +30,12 @@ namespace Business.Profiles
             CreateMap<OccupationClassSurvey, UpdatedOccupationClassSurveyResponse>().ReverseMap();
 
             CreateMap<IPaginate<OccupationClassSurvey>, Paginate<GetListOccupationClassSurveyResponse>>().ReverseMap();
-            CreateMap<OccupationClassSurvey, GetListOccupationClassSurveyResponse>().ReverseMap();
+            CreateMap<OccupationClassSurvey, GetListOccupationClassSurveyResponse>()
+                .ForMember(destinationMember: response => response.SurveyName,
+                memberOptions: opt => opt.MapFrom(ocs => ocs.Survey.Title))
+                .ForMember(destinationMember: response => response.OccupationClassName,
+                memberOptions: opt => opt.MapFrom(ocs => ocs.OccupationClass.Name))
+            .ReverseMap();
         }
     }
 }

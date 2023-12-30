@@ -29,7 +29,13 @@ namespace Business.Profiles
             CreateMap<AccountOccupationClass, DeletedAccountOccupationClassResponse>().ReverseMap();
 
             CreateMap<IPaginate<AccountOccupationClass>, Paginate<GetListAccountOccupationClassResponse>>().ReverseMap();
-            CreateMap<AccountOccupationClass, GetListAccountOccupationClassResponse>().ReverseMap();
+            CreateMap<AccountOccupationClass, GetListAccountOccupationClassResponse>()
+                .ForMember(destinationMember: response => response.OccupationClassName,
+                memberOptions: opt => opt.MapFrom(aoc => aoc.OccupationClass.Name))
+                .ForMember(destinationMember: response => response.AccountName,
+                memberOptions: opt => opt.MapFrom(aoc => aoc.Account.User.FirstName)
+                )
+                .ReverseMap();
         }
     }
 }

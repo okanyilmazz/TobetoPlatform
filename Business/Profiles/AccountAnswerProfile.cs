@@ -18,7 +18,7 @@ namespace Business.Profiles
 {
     public class AccountAnswerProfile : Profile
     {
-        public AccountAnswerProfile() 
+        public AccountAnswerProfile()
         {
             CreateMap<AccountAnswer, CreateAccountAnswerRequest>().ReverseMap();
             CreateMap<AccountAnswer, CreatedAccountAnswerResponse>().ReverseMap();
@@ -29,7 +29,16 @@ namespace Business.Profiles
             CreateMap<AccountAnswer, DeleteAccountAnswerRequest>().ReverseMap();
             CreateMap<AccountAnswer, DeletedAccountAnswerResponse>().ReverseMap();
 
-            CreateMap<AccountAnswer, GetListAccountAnswerResponse>().ReverseMap();
+            CreateMap<AccountAnswer, GetListAccountAnswerResponse>()
+                 .ForMember(destinationMember: caar => caar.ExamName,
+                memberOptions: opt => opt.MapFrom(aa => aa.Exam.Name))
+
+                 .ForMember(destinationMember: caar => caar.AccountName,
+                 memberOptions: opt => opt.MapFrom(aa => aa.Account.User.FirstName))
+
+                 .ForMember(destinationMember: caar => caar.QuestionName,
+                 memberOptions: opt => opt.MapFrom(aa => aa.Question.Description)).ReverseMap();
+
             CreateMap<IPaginate<AccountAnswer>, Paginate<GetListAccountAnswerResponse>>().ReverseMap();
         }
     }

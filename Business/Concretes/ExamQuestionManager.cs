@@ -11,6 +11,8 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.AspNetCore.Mvc.Formatters.Internal;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,13 +51,20 @@ public class ExamQuestionManager : IExamQuestionService
 
     public async Task<GetListExamQuestionResponse> GetByIdAsync(Guid id)
     {
-        var examQuestion = await _examQuestionDal.GetListAsync(h => h.Id == id);
-        return _mapper.Map<GetListExamQuestionResponse>(examQuestion.Items.FirstOrDefault());
+        var examQuestion = await _examQuestionDal.GetAsync(
+            predicate: eq => eq.Id == id,
+            include: eq => eq
+            .Include(eq => eq.Exam)
+            .Include(eq => eq.Question));
+        return _mapper.Map<GetListExamQuestionResponse>(examQuestion);
     }
 
     public async Task<IPaginate<GetListExamQuestionResponse>> GetListAsync()
     {
-        var examQuestions = await _examQuestionDal.GetListAsync();
+        var examQuestions = await _examQuestionDal.GetListAsync(
+            include: eq => eq
+            .Include(eq => eq.Exam)
+            .Include(eq => eq.Question));
         var mappedExamQuestions = _mapper.Map<Paginate<GetListExamQuestionResponse>>(examQuestions);
         return mappedExamQuestions;
     }

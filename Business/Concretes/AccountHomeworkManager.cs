@@ -11,6 +11,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,12 @@ namespace Business.Concretes
             _mapper = mapper;
         }
 
-        
+
         public async Task<CreatedAccountHomeworkResponse> AddAsync(CreateAccountHomeworkRequest createAccountHomeworkRequest)
         {
             AccountHomework accountHomework = _mapper.Map<AccountHomework>(createAccountHomeworkRequest);
             AccountHomework createdAccountHomework = await _accountHomeworkDal.AddAsync(accountHomework);
-            CreatedAccountHomeworkResponse createdAccountHomeworkResponse =_mapper.Map<CreatedAccountHomeworkResponse>(createdAccountHomework);
+            CreatedAccountHomeworkResponse createdAccountHomeworkResponse = _mapper.Map<CreatedAccountHomeworkResponse>(createdAccountHomework);
             return createdAccountHomeworkResponse;
         }
 
@@ -48,19 +49,26 @@ namespace Business.Concretes
 
         public async Task<GetListAccountHomeworkResponse> GetByIdAsync(Guid id)
         {
-            var accountHomework = await _accountHomeworkDal.GetAsync(a=>a.Id == id);
+            var accountHomework = await _accountHomeworkDal.GetAsync(
+                predicate: a => a.Id == id,
+                include: ah => ah
+                .Include(ah => ah.Account).ThenInclude(a => a.User)
+                .Include(ah => ah.Homework));
             var mappedAccountHomework = _mapper.Map<GetListAccountHomeworkResponse>(accountHomework);
             return mappedAccountHomework;
         }
 
         public async Task<IPaginate<GetListAccountHomeworkResponse>> GetListAsync()
         {
-            var accountHomework = await _accountHomeworkDal.GetListAsync();
+            var accountHomework = await _accountHomeworkDal.GetListAsync(
+                include: ah => ah
+                .Include(ah => ah.Account).ThenInclude(a => a.User)
+                .Include(ah => ah.Homework));
             var mappedAccountHomework = _mapper.Map<Paginate<GetListAccountHomeworkResponse>>(accountHomework);
             return mappedAccountHomework;
         }
 
-        public async  Task<UpdatedAccountHomeworkeResponse> UpdateAsync(UpdateAccountHomeworkRequest updateAccountHomeworkRequest)
+        public async Task<UpdatedAccountHomeworkeResponse> UpdateAsync(UpdateAccountHomeworkRequest updateAccountHomeworkRequest)
         {
             AccountHomework accountHomework = _mapper.Map<AccountHomework>(updateAccountHomeworkRequest);
             AccountHomework updatedAccountHomework = await _accountHomeworkDal.UpdateAsync(accountHomework);

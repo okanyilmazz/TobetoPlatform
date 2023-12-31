@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes
 {
@@ -47,13 +48,21 @@ namespace Business.Concretes
 
         public async Task<GetListEducationProgramLessonResponse> GetByIdAsync(Guid id)
         {
-            var EducationProgramLesson = await _educationProgramLessonDal.GetListAsync(h => h.Id == id);
-            return _mapper.Map<GetListEducationProgramLessonResponse>(EducationProgramLesson.Items.FirstOrDefault());
+            var EducationProgramLesson = await _educationProgramLessonDal.GetAsync(
+                predicate: h => h.Id == id,
+                include: epl => epl
+                    .Include(epl => epl.Lesson)
+                    .Include(epl => epl.EducationProgram));
+            return _mapper.Map<GetListEducationProgramLessonResponse>(EducationProgramLesson);
         }
 
         public async Task<IPaginate<GetListEducationProgramLessonResponse>> GetListAsync()
         {
-            var EducationProgramLesson = await _educationProgramLessonDal.GetListAsync();
+            var EducationProgramLesson = await _educationProgramLessonDal.GetListAsync(
+                include: epl => epl
+                .Include(epl => epl.Lesson)
+                .Include(epl => epl.EducationProgram)
+                );
             var mappedEducationProgramLesson = _mapper.Map<Paginate<GetListEducationProgramLessonResponse>>(EducationProgramLesson);
             return mappedEducationProgramLesson;
         }

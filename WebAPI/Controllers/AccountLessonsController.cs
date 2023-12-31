@@ -9,11 +9,11 @@ namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AccountLessonsService : ControllerBase
+public class AccountLessonsController : ControllerBase
 {
     IAccountLessonService _accountLessonService;
 
-    public AccountLessonsService(IAccountLessonService accountLessonService)
+    public AccountLessonsController(IAccountLessonService accountLessonService)
     {
         _accountLessonService = accountLessonService;
     }

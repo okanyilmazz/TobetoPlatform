@@ -11,6 +11,7 @@ using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,14 +51,23 @@ namespace Business.Concretes
 
         public async Task<GetListAccountLanguageResponse> GetByIdAsync(Guid id)
         {
-            var AccountLanguageListed = await _accountLanguageDal.GetAsync(a=>a.Id == id);
+            var AccountLanguageListed = await _accountLanguageDal.GetAsync(
+                predicate: a => a.Id == id,
+                include: al => al
+                .Include(al => al.Language)
+                .Include(al => al.LanguageLevel)
+                .Include(al => al.Account).ThenInclude(a => a.User));
             var mappedListed = _mapper.Map<GetListAccountLanguageResponse>(AccountLanguageListed);
             return mappedListed;
         }
 
         public async Task<IPaginate<GetListAccountLanguageResponse>> GetListAsync()
         {
-            var AccountLanguageListed = await _accountLanguageDal.GetListAsync();
+            var AccountLanguageListed = await _accountLanguageDal.GetListAsync(
+                include: al => al
+                .Include(al => al.Language)
+                .Include(al => al.LanguageLevel)
+                .Include(al => al.Account).ThenInclude(a => a.User));
             var mappedListed = _mapper.Map<Paginate<GetListAccountLanguageResponse>>(AccountLanguageListed);
             return mappedListed;
         }

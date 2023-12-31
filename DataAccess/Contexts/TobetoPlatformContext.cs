@@ -28,7 +28,7 @@ public class TobetoPlatformContext : DbContext
     public DbSet<EducationProgramLevel> EducationProgramLevels { get; set; }
     public DbSet<LessonSubType> LessonSubTypes { get; set; }
     public DbSet<LessonSubject> LessonSubjects { get; set; }
-    public DbSet<AccountUniversity> UniversityOfAccounts { get; set; }
+    public DbSet<AccountUniversity> AccountUniversities { get; set; }
     public DbSet<LessonModule> LessonModules { get; set; }
     public DbSet<AccountOccupationClass> AccountOccupationClasses { get; set; }
     public DbSet<EducationProgram> EducationPrograms { get; set; }
@@ -73,7 +73,7 @@ public class TobetoPlatformContext : DbContext
     public TobetoPlatformContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
     {
         Configuration = configuration;
-        Database.EnsureCreated();
+        //Database.EnsureCreated();
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Business.Rules
 {
-    public class CityBusinessRules:BaseBusinessRules
+    public class CityBusinessRules : BaseBusinessRules
     {
         private readonly ICityDal _cityDal;
 
@@ -18,11 +18,11 @@ namespace Business.Rules
             _cityDal = cityDal;
         }
 
-        public async Task IsExistsCity (Guid cityId) 
+        public async Task IsExistsCity(Guid cityId)
         {
-         var result = await _cityDal.GetListAsync(c=>c.Id == cityId);   
+            var result = await _cityDal.GetAsync(c => c.Id == cityId, enableTracking: false);
 
-            if(result.Count==0)
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

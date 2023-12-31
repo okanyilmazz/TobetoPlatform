@@ -31,6 +31,9 @@ namespace Business.Profiles
 
             CreateMap<IPaginate<City>, Paginate<GetListCityResponse>>().ReverseMap();
             CreateMap<City, GetListCityResponse>().ReverseMap();
+
+
+
         }
     }
 }

@@ -7,6 +7,7 @@ using Business.Dtos.Responses.CreatedResponses;
 using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -23,11 +24,13 @@ namespace Business.Concretes
     {
         IAccountSocialMediaDal _accountSocialMediaDal;
         IMapper _mapper;
+        AccountSocialMediaBusinessRules _accountSocialMediaBusinessRules;
 
-        public AccountSocialMediaManager(IAccountSocialMediaDal accountSocialMediaDal, IMapper mapper)
+        public AccountSocialMediaManager(IAccountSocialMediaDal accountSocialMediaDal, IMapper mapper, AccountSocialMediaBusinessRules accountSocialMediaBusinessRules)
         {
             _accountSocialMediaDal = accountSocialMediaDal;
             _mapper = mapper;
+            _accountSocialMediaBusinessRules = accountSocialMediaBusinessRules;
         }
         public async Task<CreatedAccountSocialMediaResponse> AddAsync(CreateAccountSocialMediaRequest createAccountSocialMediaRequest)
         {
@@ -71,8 +74,9 @@ namespace Business.Concretes
 
         public async Task<UpdatedAccountSocialMediaResponse> UpdateAsync(UpdateAccountSocialMediaRequest updateAccountSocialMediaRequest)
         {
-            AccountSocialMedia social = _mapper.Map<AccountSocialMedia>(updateAccountSocialMediaRequest);
-            AccountSocialMedia updatedAccountSocialMedia = await _accountSocialMediaDal.UpdateAsync(social);
+            await _accountSocialMediaBusinessRules.IsExistsAccountSocialMedia(updateAccountSocialMediaRequest.Id);
+            AccountSocialMedia accountSocialMedia = _mapper.Map<AccountSocialMedia>(updateAccountSocialMediaRequest);
+            AccountSocialMedia updatedAccountSocialMedia = await _accountSocialMediaDal.UpdateAsync(accountSocialMedia);
             UpdatedAccountSocialMediaResponse updatedAccountSocialMediaResponse = _mapper.Map<UpdatedAccountSocialMediaResponse>(updatedAccountSocialMedia);
             return updatedAccountSocialMediaResponse;
         }

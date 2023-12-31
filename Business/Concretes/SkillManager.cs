@@ -52,7 +52,6 @@ namespace Business.Concretes
             return deletedSkillResponse;
         }
 
-
         public async Task<UpdatedSkillResponse> UpdateAsync(UpdateSkillRequest updateSkillRequest)
         {
             await _skillBusinessRules.IsExistsSkill(updateSkillRequest.Id);
@@ -73,7 +72,7 @@ namespace Business.Concretes
         {
             var skills = await _skillDal.GetListAsync(
                 include: s => s.Include(a => a.AccountSkills).ThenInclude(ask => ask.Account));
-            var filteredSkills = skills.Items.Where(e => e.AccountSkills.Any(s => s.AccountId == accountId)).ToList();
+            var filteredSkills = skills.Items.Where(e => e.AccountSkills.Any(s => s.Account.Id == accountId)).ToList();
             var mappedSkills = _mapper.Map<Paginate<GetListSkillResponse>>(skills);
             return mappedSkills;
         }
@@ -86,3 +85,4 @@ namespace Business.Concretes
         }
     }
 }
+

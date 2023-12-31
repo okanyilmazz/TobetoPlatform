@@ -113,6 +113,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<CityBusinessRules>();
         services.AddScoped<ExamQuestionTypeBusinessRules>();
         services.AddScoped<AccountLessonBusinessRules>();
+        services.AddScoped<AccountSocialMediaBusinessRules>();
+
         services.AddScoped<EducationProgramBusinessRules>();
 
 

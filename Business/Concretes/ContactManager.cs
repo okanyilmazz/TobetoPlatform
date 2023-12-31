@@ -67,7 +67,7 @@ namespace Business.Concretes
         public async Task<UpdatedContactResponse> UpdateAsync(UpdateContactRequest updateContactRequest)
         {
             await _contactBusinessRules.IsExistsContact(updateContactRequest.Id);
-            Contact contact = _mapper.Map<Contact>(updateContactRequest);
+            Contact contact = _mapper.Map<Contact> (updateContactRequest);
             Contact updatedContact = await _contactDal.UpdateAsync(contact);
             UpdatedContactResponse updatedContactResponse = _mapper.Map<UpdatedContactResponse>(updatedContact);
             return updatedContactResponse;

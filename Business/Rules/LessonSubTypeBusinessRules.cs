@@ -23,7 +23,7 @@ namespace Business.Rules
         public async Task IsExistsLessonSubType(Guid lessonSubTypeId)
         {
             var result = await _lessonSubTypeDal.GetListAsync(
-               predicate: l => l.Id == lessonSubTypeId
+               predicate: l => l.Id == lessonSubTypeId, enableTracking: false
                );
 
             if (result.Count == 0)

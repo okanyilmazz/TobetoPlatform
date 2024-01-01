@@ -22,9 +22,9 @@ namespace Business.Rules
         public async Task IsExistsExamOccupationClass(Guid examOccupationClassId)
         {
             var result = await _examOccupationClassDal.GetListAsync(
-                predicate: e => e.Id == examOccupationClassId
+                predicate: e => e.Id == examOccupationClassId, enableTracking: false
                 );
-            if (result.Count == 0)
+            if (result.Count==0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

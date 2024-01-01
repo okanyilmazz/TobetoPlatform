@@ -20,7 +20,7 @@ namespace Business.Rules
         public async Task IsExistsLessonSubject(Guid lessonSubjectId)
         {
             var result = await _lessonSubjectDal.GetListAsync(
-                predicate: l => l.Id == lessonSubjectId);
+                predicate: l => l.Id == lessonSubjectId, enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

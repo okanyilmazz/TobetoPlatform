@@ -21,10 +21,8 @@ namespace Business.Rules
         public async Task IsExistsSkill(Guid skillId)
         {
 
-            var result = await _skillDal.GetListAsync(
-                predicate: s => s.Id == skillId
-                 );
-            if (result.Count == 0)
+            var result = await _skillDal.GetAsync(predicate: s => s.Id == skillId, enableTracking: false);
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

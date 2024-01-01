@@ -30,6 +30,7 @@ namespace Business.Profiles
             CreateMap<Contact, DeletedContactResponse>().ReverseMap();
 
             CreateMap<Contact, GetListContactResponse>().ReverseMap();
+
             CreateMap<IPaginate<Contact>, Paginate<GetListContactResponse>>().ReverseMap();
         }
     }

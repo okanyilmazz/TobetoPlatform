@@ -9,5 +9,7 @@ namespace Business.Dtos.Requests.CreateRequests
     public class CreateEducationProgramLevelRequest
     {
         public string Name { get; set; }
+        
+
     }
 }

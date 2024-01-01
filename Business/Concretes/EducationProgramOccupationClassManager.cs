@@ -46,8 +46,8 @@ namespace Business.Concretes
         public async Task<DeletedEducationProgramOccupationClassResponse> DeleteAsync(DeleteEducationProgramOccupationClassRequest deleteEducationProgramOccupationClassRequest)
         {
             await _educationProgramOccupationClassBusinessRules.IsExistsEducationProgramOccupationClass(deleteEducationProgramOccupationClassRequest.Id);
-            EducationProgramOccupationClass EducationProgramOccupationClass = _mapper.Map<EducationProgramOccupationClass>(deleteEducationProgramOccupationClassRequest);
-            EducationProgramOccupationClass deletedEducationProgramOccupationClass = await _educationProgramOccupationClassDal.DeleteAsync(EducationProgramOccupationClass);
+            EducationProgramOccupationClass educationProgramOccupationClass = await _educationProgramOccupationClassDal.GetAsync(predicate: e => e.Id == deleteEducationProgramOccupationClassRequest.Id);
+            EducationProgramOccupationClass deletedEducationProgramOccupationClass = await _educationProgramOccupationClassDal.DeleteAsync(educationProgramOccupationClass);
             DeletedEducationProgramOccupationClassResponse deletedEducationProgramOccupationClassResponse = _mapper.Map<DeletedEducationProgramOccupationClassResponse>(deletedEducationProgramOccupationClass);
             return deletedEducationProgramOccupationClassResponse;
         }

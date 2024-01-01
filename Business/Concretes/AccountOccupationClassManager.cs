@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,14 +53,22 @@ namespace Business.Concretes
 
         public async Task<GetListAccountOccupationClassResponse> GetByIdAsync(Guid id)
         {
-            var accountOccupationClassList = await _accountOccupationClassDal.GetAsync(a => a.Id == id);
+            var accountOccupationClassList = await _accountOccupationClassDal.GetAsync(
+                predicate: a => a.Id == id,
+                include: aoc => aoc.
+                Include(aoc => aoc.OccupationClass)
+                .Include(aoc => aoc.Account).ThenInclude(a => a.User));
             var mappedAccountOccupationClass = _mapper.Map<GetListAccountOccupationClassResponse>(accountOccupationClassList);
             return mappedAccountOccupationClass;
         }
 
         public async Task<IPaginate<GetListAccountOccupationClassResponse>> GetListAsync()
         {
-            var accountOccupationClassList = await _accountOccupationClassDal.GetListAsync();
+            var accountOccupationClassList = await _accountOccupationClassDal.GetListAsync(
+                include: aoc => aoc.
+                Include(aoc => aoc.OccupationClass)
+                .Include(aoc => aoc.Account).ThenInclude(a => a.User)
+                );
             var mappedAccountOccupationClass = _mapper.Map<Paginate<GetListAccountOccupationClassResponse>>(accountOccupationClassList);
             return mappedAccountOccupationClass;
         }

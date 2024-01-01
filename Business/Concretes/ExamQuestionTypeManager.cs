@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Business.Concretes
         {
             _examQuestionTypeDal = examQuestionTypeDal;
             _mapper = mapper;
-            _examQuestionTypeBusinessRules = examQuestionTypeBusinessRules; 
+            _examQuestionTypeBusinessRules = examQuestionTypeBusinessRules;
         }
 
         public async Task<CreatedExamQuestionTypeResponse> AddAsync(CreateExamQuestionTypeRequest createExamQuestionTypeRequest)
@@ -52,13 +53,20 @@ namespace Business.Concretes
 
         public async Task<GetListExamQuestionTypeResponse> GetByIdAsync(Guid id)
         {
-            var examQuestionType = await _examQuestionTypeDal.GetListAsync(h => h.Id == id);
-            return _mapper.Map<GetListExamQuestionTypeResponse>(examQuestionType.Items.FirstOrDefault());
+            var examQuestionType = await _examQuestionTypeDal.GetAsync(
+                predicate: eqt => eqt.Id == id,
+                include: eqt => eqt
+                .Include(eqt => eqt.QuestionType)
+                .Include(eqt => eqt.Exam));
+            return _mapper.Map<GetListExamQuestionTypeResponse>(examQuestionType);
         }
 
         public async Task<IPaginate<GetListExamQuestionTypeResponse>> GetListAsync()
         {
-            var examQuestionType = await _examQuestionTypeDal.GetListAsync();
+            var examQuestionType = await _examQuestionTypeDal.GetListAsync(
+                include: eqt => eqt
+                .Include(eqt => eqt.QuestionType)
+                .Include(eqt => eqt.Exam));
             var mappedExamQuestionType = _mapper.Map<Paginate<GetListExamQuestionTypeResponse>>(examQuestionType);
             return mappedExamQuestionType;
         }

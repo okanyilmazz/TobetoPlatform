@@ -29,8 +29,17 @@ namespace Business.Profiles
             CreateMap<AnnouncementProject, DeleteAnnouncementProjectRequest>().ReverseMap();
             CreateMap<AnnouncementProject, DeletedAnnouncementProjectResponse>().ReverseMap();
 
-            CreateMap<AnnouncementProject, GetListAnnouncementProjectResponse>().ReverseMap();
+            CreateMap<AnnouncementProject, GetListAnnouncementProjectResponse>()
+                .ForMember(destinationMember:response=>response.AnnouncementName,memberOptions:
+                opt=>opt.MapFrom(ap=>ap.Announcement.Title))
+                .ForMember(destinationMember:response=>response.ProjectName,memberOptions:
+                opt=>opt.MapFrom(ap=>ap.Project.Name))
+                
+                
+                .ReverseMap();
             CreateMap<IPaginate<AnnouncementProject>, Paginate<GetListAnnouncementProjectResponse>>().ReverseMap();
+
+            
         }
     }
 }

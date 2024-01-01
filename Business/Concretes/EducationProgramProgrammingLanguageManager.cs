@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,14 +53,21 @@ namespace Business.Concretes
 
         public async Task<GetListEducationProgramProgrammingLanguageResponse> GetByIdAsync(Guid id)
         {
-            var EducationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.GetAsync(p => p.Id == id);
+            var EducationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.GetAsync(
+                predicate: p => p.Id == id,
+                include: ep => ep
+                .Include(ep => ep.EducationProgram)
+                .Include(ep => ep.ProgrammingLanguage));
             var mappedEducationProgramProgrammingLanguage = _mapper.Map<GetListEducationProgramProgrammingLanguageResponse>(EducationProgramProgrammingLanguage);
             return mappedEducationProgramProgrammingLanguage;
         }
 
         public async Task<IPaginate<GetListEducationProgramProgrammingLanguageResponse>> GetListAsync()
         {
-            var EducationProgramProgrammingLanguages = await _educationProgramProgrammingLanguageDal.GetListAsync();
+            var EducationProgramProgrammingLanguages = await _educationProgramProgrammingLanguageDal.GetListAsync(
+                include: ep => ep
+                .Include(ep => ep.EducationProgram)
+                .Include(ep => ep.ProgrammingLanguage));
             var mappedEducationProgramProgrammingLanguages = _mapper.Map<Paginate<GetListEducationProgramProgrammingLanguageResponse>>(EducationProgramProgrammingLanguages);
             return mappedEducationProgramProgrammingLanguages;
         }

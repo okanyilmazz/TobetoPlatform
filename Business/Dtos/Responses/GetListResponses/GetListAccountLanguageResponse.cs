@@ -3,8 +3,8 @@
     public class GetListAccountLanguageResponse
     {
         public Guid Id { get; set; }
-        public Guid AccountId { get; set; }
-        public Guid LanguageId { get; set; }
-        public Guid LanguageLevelId { get; set; }
+        public string AccountName { get; set; }
+        public string LanguageName { get; set; }
+        public string LanguageLevelName { get; set; }
     }
 }

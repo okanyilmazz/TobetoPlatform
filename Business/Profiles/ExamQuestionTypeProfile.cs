@@ -29,7 +29,12 @@ namespace Business.Profiles
             CreateMap<ExamQuestionType, DeletedExamQuestionTypeResponse>().ReverseMap();
 
             CreateMap<IPaginate<ExamQuestionType>, Paginate<GetListExamQuestionTypeResponse>>().ReverseMap();
-            CreateMap<ExamQuestionType, GetListExamQuestionTypeResponse>().ReverseMap();
+            CreateMap<ExamQuestionType, GetListExamQuestionTypeResponse>()
+                .ForMember(destinationMember: response => response.ExamName,
+                memberOptions: eq => eq.MapFrom(eq => eq.Exam.Name))
+                .ForMember(destinationMember: response => response.QuestionTypeName,
+                memberOptions: eq => eq.MapFrom(eq => eq.QuestionType.Name))
+                .ReverseMap();
         }
     }
 }

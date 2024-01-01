@@ -3,7 +3,7 @@
     public class GetListExamQuestionTypeResponse
     {
         public Guid Id { get; set; }
-        public Guid QuestionTypeId { get; set; }
-        public Guid ExamId { get; set; }
+        public string ExamName { get; set; }
+        public string QuestionTypeName { get; set; }
     }
 }

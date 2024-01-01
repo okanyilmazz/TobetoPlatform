@@ -30,9 +30,14 @@ namespace Business.Profiles
             CreateMap<District, DeleteDistrictRequest>().ReverseMap();
             CreateMap<District, DeletedDistrictResponse>().ReverseMap();
 
+            CreateMap<District, GetListDistrictResponse>()
+
+                .ForMember(destinationMember: response => response.CityName,
+                memberOptions: opt => opt.MapFrom(d => d.City.Name))
+                .ReverseMap();
 
             CreateMap<IPaginate<District>, Paginate<GetListDistrictResponse>>().ReverseMap();
-            CreateMap<District, GetListDistrictResponse>().ReverseMap();
+            
         }
     }
 }

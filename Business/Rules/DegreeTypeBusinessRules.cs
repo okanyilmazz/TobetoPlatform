@@ -17,9 +17,9 @@ public class DegreeTypeBusinessRules : BaseBusinessRules
     public async Task IsExistsDegreeType(Guid degreeTypeId)
     {
 
-        var result = await _degreeTypeDal.GetListAsync(d => d.Id == degreeTypeId);
+        var result = await _degreeTypeDal.GetAsync(d => d.Id == degreeTypeId, enableTracking: false);
 
-        if (result.Count == 0)
+        if (result == null)
         {
             throw new Exception(BusinessMessages.DataNotFound);
         }

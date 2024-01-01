@@ -53,14 +53,20 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListQuestionResponse>> GetListAsync()
         {
-            var questions = await _questionDal.GetListAsync();
+            var questions = await _questionDal.GetListAsync(
+                include: q => q.Include(q => q.QuestionType)
+
+                );
             var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(questions);
             return mappedQuestions;
         }
 
         public async Task<GetListQuestionResponse> GetByIdAsync(Guid id)
         {
-            var question = await _questionDal.GetAsync(q => q.Id == id);
+            var question = await _questionDal.GetAsync(
+                predicate: q => q.Id == id,
+                include: q => q.
+                Include(q => q.QuestionType));
             var mappedQuestion = _mapper.Map<GetListQuestionResponse>(question);
             return mappedQuestion;
         }

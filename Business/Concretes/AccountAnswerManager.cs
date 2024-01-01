@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,14 +52,23 @@ namespace Business.Concretes
 
         public async Task<GetListAccountAnswerResponse> GetByIdAsync(Guid id)
         {
-            var accountAnswers = await _accountAnswerDal.GetAsync(a => a.Id == id);
+            var accountAnswers = await _accountAnswerDal.GetAsync(
+                predicate: a => a.Id == id,
+                include: aa => aa
+                .Include(a => a.Exam)
+                .Include(a => a.Account).ThenInclude(a => a.User)
+                .Include(a => a.Question));
             var mappedAccountAnswers = _mapper.Map<GetListAccountAnswerResponse>(accountAnswers);
             return mappedAccountAnswers;
         }
 
         public async Task<IPaginate<GetListAccountAnswerResponse>> GetListAsync()
         {
-            var accountAnswers = await _accountAnswerDal.GetListAsync();
+            var accountAnswers = await _accountAnswerDal.GetListAsync(
+                include: aa => aa
+                .Include(a => a.Exam)
+                .Include(a => a.Account).ThenInclude(a => a.User)
+                .Include(a => a.Question));
             var mappedAccountAnswers = _mapper.Map<Paginate<GetListAccountAnswerResponse>>(accountAnswers);
             return mappedAccountAnswers;
         }

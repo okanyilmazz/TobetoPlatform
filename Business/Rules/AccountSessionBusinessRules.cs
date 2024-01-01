@@ -23,7 +23,7 @@ namespace Business.Rules
         public async Task IsExistsAccountSession(Guid accountSessionId)
         {
             var result = await _accountSessionDal.GetListAsync(
-                predicate: a => a.Id == accountSessionId
+                predicate: a => a.Id == accountSessionId,enableTracking:false
                 );
             if (result.Count == 0)
             {

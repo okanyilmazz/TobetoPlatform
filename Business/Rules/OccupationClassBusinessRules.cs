@@ -20,7 +20,7 @@ namespace Business.Rules
 
         public async Task IsExistsOccupationClass(Guid occupationClassId)
         {
-            var result = await _occupationClassDal.GetListAsync(a => a.Id == occupationClassId);
+            var result = await _occupationClassDal.GetListAsync(a => a.Id == occupationClassId, enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

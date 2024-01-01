@@ -21,7 +21,7 @@ namespace Business.Rules
         public async Task IsExistsSession(Guid sessionId)
         {
             var result = await _sessionDal.GetListAsync(
-                predicate: s => s.Id == sessionId);
+                predicate: s => s.Id == sessionId, enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

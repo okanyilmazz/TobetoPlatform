@@ -68,7 +68,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<IOccupationClassService, OccupationClassManager>();
         services.AddScoped<IAnnouncementService, AnnouncementManager>();
         services.AddScoped<ICertificateService, CertificateManager>();
-
         services.AddScoped<ContactBusinessRules>();
         services.AddScoped<QuestionBusinessRules>();
         services.AddScoped<AddressBusinessRules>();
@@ -116,6 +115,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<AccountLessonBusinessRules>();
         services.AddScoped<AccountSocialMediaBusinessRules>();
 
+        services.AddScoped<EducationProgramBusinessRules>();
 
 
         services.AddScoped<LessonCategoryBusinessRules>();

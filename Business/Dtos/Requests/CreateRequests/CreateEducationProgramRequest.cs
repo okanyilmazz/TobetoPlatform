@@ -9,5 +9,6 @@ namespace Business.Dtos.Requests.CreateRequests
     public class CreateEducationProgramRequest
     {
         public string Name { get; set; }
+        public Guid EducationProgramLevelId { get; set; }
     }
 }

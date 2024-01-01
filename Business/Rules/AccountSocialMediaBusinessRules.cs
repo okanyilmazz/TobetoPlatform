@@ -21,7 +21,7 @@ namespace Business.Rules
 
         public async Task IsExistsAccountSocialMedia(Guid accountSocialMediaId)
         {
-            var result = await _accountSocialMediaDal.GetListAsync(a => a.Id == accountSocialMediaId, enableTracking: false);
+            var result = await _accountSocialMediaDal.GetAsync(a => a.Id == accountSocialMediaId, enableTracking: false);
             if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

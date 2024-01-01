@@ -26,13 +26,13 @@ namespace Business.Concretes
         IEducationProgramDal _educationProgramDal;
         IMapper _mapper;
         EducationProgramBusinessRules _educationProgramBusinessRules;
-        IEducationProgramOccupationClassService _educationProgramOccupationClassService;
-        public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper, EducationProgramBusinessRules educationProgramBusinessRules, IEducationProgramOccupationClassService educationProgramOccupationClassService)
+
+        public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper, EducationProgramBusinessRules educationProgramBusinessRules)
         {
             _educationProgramDal = educationProgramDal;
             _mapper = mapper;
             _educationProgramBusinessRules = educationProgramBusinessRules;
-            _educationProgramOccupationClassService = educationProgramOccupationClassService;
+           
         }
 
         public async Task<CreatedEducationProgramResponse> AddAsync(CreateEducationProgramRequest createEducationProgramRequest)
@@ -54,9 +54,12 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListEducationProgramResponse>> GetListAsync()
         {
-            var educationProgramList = await _educationProgramDal.GetListAsync();
-            var mappedEducationProgram = _mapper.Map<Paginate<GetListEducationProgramResponse>>(educationProgramList);
-            return mappedEducationProgram;
+            var educationProgram = await _educationProgramDal.GetListAsync(
+                include: ep => ep
+               .Include(ep => ep.EducationProgramLevel));
+
+            var mappedEducationPrograms= _mapper.Map<Paginate<GetListEducationProgramResponse>>(educationProgram);
+            return mappedEducationPrograms;
         }
 
         public async Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId)

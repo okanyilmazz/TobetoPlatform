@@ -21,10 +21,10 @@ namespace Business.Rules
 
         public async Task IsExistsDistrict(Guid districtId)
         {
-            var result = await _districtDal.GetListAsync(
-                predicate: q => q.Id == districtId, enableTracking: false
+            var result = await _districtDal.GetAsync(
+                predicate: d => d.Id == districtId, enableTracking: false
                 );
-            if (result.Count==0)
+            if (result==null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

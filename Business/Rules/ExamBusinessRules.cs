@@ -21,10 +21,10 @@ namespace Business.Rules
 
         public async Task IsExistsExam(Guid examId)
         {
-            var result = await _examDal.GetListAsync(
+            var result = await _examDal.GetAsync(
                 predicate: c => c.Id == examId, enableTracking: false
                 );
-            if (result.Count==0)
+            if (result==null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

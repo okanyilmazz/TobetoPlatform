@@ -18,10 +18,10 @@ namespace Business.Rules
 
         public async Task IsExistsEducationProgramOccupationClass(Guid educationProgramOccupationClassId)
         {
-            var result = await _educationProgramOccupationClassDal.GetListAsync(
+            var result = await _educationProgramOccupationClassDal.GetAsync(
                 predicate: e => e.Id == educationProgramOccupationClassId, enableTracking: false
                 );
-            if (result.Count==0)
+            if (result==null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

@@ -22,11 +22,11 @@ namespace Business.Rules
 
         public async Task IsExistsLessonSubType(Guid lessonSubTypeId)
         {
-            var result = await _lessonSubTypeDal.GetListAsync(
+            var result = await _lessonSubTypeDal.GetAsync(
                predicate: l => l.Id == lessonSubTypeId, enableTracking: false
                );
 
-            if (result.Count == 0)
+            if (result==null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

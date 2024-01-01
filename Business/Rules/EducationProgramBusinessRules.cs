@@ -16,8 +16,9 @@ public class EducationProgramBusinessRules : BaseBusinessRules
 
     public async Task IsExistsEducationProgram(Guid educationProgramId)
     {
-        var result = await _educationProgramDal.GetListAsync(ep => ep.Id == educationProgramId, enableTracking: false);
-        if (result.Count==0)
+        var result = await _educationProgramDal.GetAsync(
+        predicate: ep => ep.Id == educationProgramId, enableTracking: false);
+        if (result==null)
         {
             throw new Exception(BusinessMessages.DataNotFound);
         }

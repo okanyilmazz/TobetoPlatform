@@ -9,6 +9,7 @@ namespace Business.Dtos.Responses.DeletedResponses
     public class DeletedQuestionResponse
     {
         public Guid Id { get; set; }
+        public Guid QuestionTypeId { get; set; }
         public string Description { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }

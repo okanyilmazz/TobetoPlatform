@@ -5,8 +5,10 @@ namespace Business.Dtos.Responses.GetListResponses
     public class GetListAccountResponse
     {
         public Guid Id { get; set; }
-        public Guid AddressId { get; set; }
-        public Guid UserId { get; set; }
+        public string CityName { get; set; }
+        public string DistrictName { get; set; }
+        public string CountryName { get; set; }
+        public string UserName { get; set; }
         public string PhoneNumber { get; set; }
         public string NationalId { get; set; }
         public string Description { get; set; }

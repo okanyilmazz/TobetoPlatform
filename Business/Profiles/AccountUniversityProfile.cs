@@ -29,11 +29,17 @@ namespace Business.Profiles
             CreateMap<AccountUniversity, DeleteAccountUniversityRequest>().ReverseMap();
             CreateMap<AccountUniversity, DeletedAccountUniversityResponse>().ReverseMap();
 
-            CreateMap<AccountUniversity, GetListAccountUniversityResponse>().ReverseMap();
+            CreateMap<AccountUniversity, GetListAccountUniversityResponse>()
+                .ForMember(destinationMember: response => response.UniversityName,
+                memberOptions: opt => opt.MapFrom(au => au.University.Name))
+                .ForMember(destinationMember: response => response.UniversityDepartmentName,
+                memberOptions: opt => opt.MapFrom(au => au.UniversityDepartment.Name))
+                .ForMember(destinationMember: response => response.DegreeTypeName,
+                memberOptions: opt => opt.MapFrom(au => au.DegreeType.Name))
+                .ForMember(destinationMember: response => response.AccountName,
+                memberOptions: opt => opt.MapFrom(au => au.Account.User.FirstName))
+                .ReverseMap();
             CreateMap<IPaginate<AccountUniversity>, Paginate<GetListAccountUniversityResponse>>().ReverseMap();
-
-
-
         }
     }
 }

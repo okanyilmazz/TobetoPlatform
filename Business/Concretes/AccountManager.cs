@@ -69,14 +69,25 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListAccountResponse>> GetListAsync()
         {
-            var account = await _accountDal.GetListAsync();
+            var account = await _accountDal.GetListAsync(
+                 include: a => a
+                .Include(a => a.Address).ThenInclude(a => a.District)
+                .Include(a => a.Address).ThenInclude(a => a.City)
+                .Include(a => a.Address).ThenInclude(a => a.Country)
+                .Include(a => a.User));
             var mappedAccountSession = _mapper.Map<Paginate<GetListAccountResponse>>(account);
             return mappedAccountSession;
         }
 
         public async Task<GetListAccountResponse> GetByIdAsync(Guid id)
         {
-            var account = await _accountDal.GetAsync(a => a.Id == id);
+            var account = await _accountDal.GetAsync(
+                predicate: a => a.Id == id,
+                include: a => a
+                .Include(a => a.Address).ThenInclude(a => a.District)
+                .Include(a => a.Address).ThenInclude(a => a.City)
+                .Include(a => a.Address).ThenInclude(a => a.Country)
+                .Include(a => a.User));
             var mappedAccount = _mapper.Map<GetListAccountResponse>(account);
             return mappedAccount;
         }

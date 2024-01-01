@@ -6,6 +6,7 @@ namespace Entities.Concretes
     {
         public Guid LanguageId { get; set; }
         public Guid LessonModuleId { get; set; }
+        public Guid LessonCategoryId { get; set; }
         public Guid LessonSubTypeId { get; set; }
         public Guid ProductionCompanyId { get; set; }
         public string Name { get; set; }
@@ -14,6 +15,7 @@ namespace Entities.Concretes
         public int Duration { get; set; }
 
         public LessonModule LessonModule { get; set; }
+        public LessonCategory LessonCategory { get; set; }
         public LessonSubType LessonSubType { get; set; }
         public ProductionCompany ProductionCompany { get; set; }
         public Language Language { get; set; }

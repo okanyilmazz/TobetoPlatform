@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,14 +53,23 @@ namespace Business.Concretes
 
         public async Task<GetListAddressResponse> GetByIdAsync(Guid Id)
         {
-            var addresss = await _addressDal.GetAsync(a => a.Id == Id);
+            var addresss = await _addressDal.GetAsync(
+                predicate: a => a.Id == Id,
+                include: a => a
+                .Include(a => a.District)
+                .Include(a => a.City)
+                .Include(a => a.Country));
             var mappedAddresses = _mapper.Map<GetListAddressResponse>(addresss);
             return mappedAddresses;
         }
 
         public async Task<IPaginate<GetListAddressResponse>> GetListAsync()
         {
-            var address = await _addressDal.GetListAsync();
+            var address = await _addressDal.GetListAsync(
+                include: a => a
+                .Include(a => a.District)
+                .Include(a => a.City)
+                .Include(a => a.Country));
             var mappedAddresses = _mapper.Map<Paginate<GetListAddressResponse>>(address);
             return mappedAddresses;
         }

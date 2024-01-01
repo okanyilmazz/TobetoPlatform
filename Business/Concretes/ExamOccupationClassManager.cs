@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace Business.Concretes
         public async Task<DeletedExamOccupationClassResponse> DeleteAsync(DeleteExamOccupationClassRequest deleteExamOccupationClassRequest)
         {
             await _examOccupationClassBusinessRules.IsExistsExamOccupationClass(deleteExamOccupationClassRequest.Id);
-            ExamOccupationClass examOccupationClass = _mapper.Map<ExamOccupationClass>(deleteExamOccupationClassRequest);
+            ExamOccupationClass examOccupationClass = await _examOccupationClassDal.GetAsync(predicate: eoc => eoc.Id == deleteExamOccupationClassRequest.Id);
             ExamOccupationClass deletedExamOccupationClass = await _examOccupationClassDal.DeleteAsync(examOccupationClass);
             DeletedExamOccupationClassResponse deletedExamOccupationClassResponse = _mapper.Map<DeletedExamOccupationClassResponse>(deletedExamOccupationClass);
             return deletedExamOccupationClassResponse;
@@ -53,13 +54,20 @@ namespace Business.Concretes
 
         public async Task<GetListExamOccupationClassResponse> GetByIdAsync(Guid id)
         {
-            var examOccupationClass = await _examOccupationClassDal.GetListAsync(h => h.Id == id);
-            return _mapper.Map<GetListExamOccupationClassResponse>(examOccupationClass.Items.FirstOrDefault());
+            var examOccupationClass = await _examOccupationClassDal.GetAsync(
+                predicate: eoc => eoc.Id == id,
+                include: eoc => eoc
+                .Include(eoc => eoc.Exam)
+                .Include(eoc => eoc.OccupationClass));
+            return _mapper.Map<GetListExamOccupationClassResponse>(examOccupationClass);
         }
 
         public async Task<IPaginate<GetListExamOccupationClassResponse>> GetListAsync()
         {
-            var examOccupationClasses = await _examOccupationClassDal.GetListAsync();
+            var examOccupationClasses = await _examOccupationClassDal.GetListAsync(
+                include: eoc => eoc
+                .Include(eoc => eoc.Exam)
+                .Include(eoc => eoc.OccupationClass));
             var mappedExamOccupationClasses = _mapper.Map<Paginate<GetListExamOccupationClassResponse>>(examOccupationClasses);
             return mappedExamOccupationClasses;
         }

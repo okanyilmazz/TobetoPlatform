@@ -12,6 +12,7 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +42,14 @@ namespace Business.Concretes
             District createdDistrict = await _districtDal.AddAsync(district);
             CreatedDistrictResponse createdDistrictResponse = _mapper.Map<CreatedDistrictResponse>(createdDistrict);
             return createdDistrictResponse;
+
         }
 
         public async Task<DeletedDistrictResponse> DeleteAsync(DeleteDistrictRequest deleteDistrictRequest)
         {
+
             await _districtBusinessRules.IsExistsDistrict(deleteDistrictRequest.Id);
-            District district = _mapper.Map<District>(deleteDistrictRequest);
+            District district = await _districtDal.GetAsync(predicate: l => l.Id == deleteDistrictRequest.Id);
             District deletedDistrict = await _districtDal.DeleteAsync(district);
             DeletedDistrictResponse deletedDistrictResponse = _mapper.Map<DeletedDistrictResponse>(deletedDistrict);
             return deletedDistrictResponse;
@@ -54,16 +57,25 @@ namespace Business.Concretes
 
         public async Task<GetListDistrictResponse> GetByIdAsync(Guid id)
         {
-            var district = await _districtDal.GetAsync(c => c.Id == id);
-            var mappedDistrict = _mapper.Map<GetListDistrictResponse>(district);
-            return mappedDistrict;
+            var district = await _districtDal.GetAsync(
+              predicate: d => d.Id == id,
+              include: d => d
+              .Include(d => d.City));
+              
+            var mappedDistricts= _mapper.Map<GetListDistrictResponse>(district);
+            return mappedDistricts;
+
         }
 
         public async Task<IPaginate<GetListDistrictResponse>> GetListAsync()
         {
-            var district = await _districtDal.GetListAsync();
-            var mappedDistrict = _mapper.Map<Paginate<GetListDistrictResponse>>(district);
-            return mappedDistrict;
+            var district = await _districtDal.GetListAsync(
+                 include: d => d
+                .Include(d => d.City));
+
+
+            var mappedDistricts = _mapper.Map<Paginate<GetListDistrictResponse>>(district);
+            return mappedDistricts;
         }
 
         public async Task<UpdatedDistrictResponse> UpdateAsync(UpdateDistrictRequest updateDistrictRequest)

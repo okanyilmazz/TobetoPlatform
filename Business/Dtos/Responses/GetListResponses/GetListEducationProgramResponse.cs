@@ -11,5 +11,6 @@ namespace Business.Dtos.Responses.GetListResponses
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string EducationProgramLevelName { get; set; }
     }
 }

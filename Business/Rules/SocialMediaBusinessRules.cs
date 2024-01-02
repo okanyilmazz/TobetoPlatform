@@ -19,9 +19,9 @@ public class SocialMediaBusinessRules : BaseBusinessRules
     public async Task IsExistsSocialMedia(Guid socialMediaId)
     {
 
-        var result = await _socialMediaDal.GetListAsync(s => s.Id == socialMediaId);
+        var result = await _socialMediaDal.GetAsync(s => s.Id == socialMediaId, enableTracking: false);
 
-        if (result.Count == 0)
+        if (result == null)
         {
             throw new Exception(BusinessMessages.DataNotFound);
         }

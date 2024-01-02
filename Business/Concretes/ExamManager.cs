@@ -44,7 +44,8 @@ namespace Business.Concretes
 
         public async Task<DeletedExamResponse> DeleteAsync(DeleteExamRequest deleteExamRequest)
         {
-            Exam exam = _mapper.Map<Exam>(deleteExamRequest);
+            await _examBusinessRules.IsExistsExam(deleteExamRequest.Id);
+            Exam exam = await _examDal.GetAsync(predicate: e => e.Id == deleteExamRequest.Id);
             Exam deletedExam = await _examDal.DeleteAsync(exam);
             DeletedExamResponse deletedExamResponse = _mapper.Map<DeletedExamResponse>(deletedExam);
             return deletedExamResponse;

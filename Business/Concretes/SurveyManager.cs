@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 
 namespace Business.Concretes;
@@ -38,8 +39,8 @@ public class SurveyManager : ISurveyService
     public async Task<DeletedSurveyResponse> DeleteAsync(DeleteSurveyRequest deleteSurveyRequest)
     {
         await _surveyBusinessRules.IsExistsSurvey(deleteSurveyRequest.Id);
-        Survey survey = _mapper.Map<Survey>(deleteSurveyRequest);
-        Survey deletedSurvey = await _surveyDal.DeleteAsync(survey, true);
+        Survey survey = await _surveyDal.GetAsync(predicate: o => o.Id == deleteSurveyRequest.Id);
+        Survey deletedSurvey = await _surveyDal.DeleteAsync(survey, false);
         DeletedSurveyResponse deletedSurveyResponse = _mapper.Map<DeletedSurveyResponse>(deletedSurvey);
         return deletedSurveyResponse;
     }

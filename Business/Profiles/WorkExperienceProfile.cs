@@ -25,5 +25,14 @@ public class WorkExperienceProfile : Profile
 
         CreateMap<WorkExperience, GetListWorkExperienceResponse>().ReverseMap();
         CreateMap<IPaginate<WorkExperience>, Paginate<GetListWorkExperienceResponse>>().ReverseMap();
+
+        CreateMap<WorkExperience, GetListWorkExperienceResponse>()
+               .ForMember(destinationMember: response => response.CityName,
+               memberOptions: opt => opt.MapFrom(we => we.City.Name))
+               .ForMember(destinationMember: response => response.AccountName,
+               memberOptions: opt => opt.MapFrom(we => we.Account.User.FirstName)).ReverseMap();
+
+             
+
     }
 }

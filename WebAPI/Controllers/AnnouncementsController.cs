@@ -2,8 +2,10 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
-using Microsoft.AspNetCore.Http;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebAPI.Controllers
 {
@@ -32,7 +34,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-
+        [CustomValidation(typeof(CreateAnnouncementRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAnnouncementRequest createAnnouncementRequest)
         {

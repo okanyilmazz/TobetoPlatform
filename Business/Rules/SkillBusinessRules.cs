@@ -22,6 +22,7 @@ namespace Business.Rules
         {
 
             var result = await _skillDal.GetListAsync(predicate: s => s.Id == skillId, enableTracking: false);
+
             if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

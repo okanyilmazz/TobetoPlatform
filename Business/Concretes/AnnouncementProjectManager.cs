@@ -46,7 +46,8 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
     public async Task<DeletedAnnouncementProjectResponse> DeleteAsync(DeleteAnnouncementProjectRequest deleteAnnouncementProjectRequest)
     {
         await _announcementProjectBusinessRules.IsExistsAnnouncementProject(deleteAnnouncementProjectRequest.Id);
-        AnnouncementProject announcementProject = await _announcementProjectDal.GetAsync(predicate: l => l.Id == deleteAnnouncementProjectRequest.Id);
+
+        AnnouncementProject announcementProject = await _announcementProjectDal.GetAsync(predicate:a=>a.Id==deleteAnnouncementProjectRequest.Id);
         AnnouncementProject deletedAnnouncemenProject = await _announcementProjectDal.DeleteAsync(announcementProject);
         DeletedAnnouncementProjectResponse deletedAnnouncementProjectResponse = _mapper.Map<DeletedAnnouncementProjectResponse>(deletedAnnouncemenProject);
         return deletedAnnouncementProjectResponse;

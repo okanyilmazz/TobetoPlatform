@@ -44,8 +44,8 @@ namespace Business.Concretes
         public async Task<DeletedMediaNewResponse> DeleteAsync(DeleteMediaNewRequest deleteMediaNewRequest)
         {
             await _mediaNewBusinessRules.IsExistsMediaNew(deleteMediaNewRequest.Id);
-            MediaNew mediaNew = _mapper.Map<MediaNew>(deleteMediaNewRequest);
-            MediaNew deletedMediaNew = await _mediaNewDal.DeleteAsync(mediaNew);
+            MediaNew mediaNew = await _mediaNewDal.GetAsync(predicate: a => a.Id == deleteMediaNewRequest.Id);
+            MediaNew deletedMediaNew = await _mediaNewDal.DeleteAsync(mediaNew, false);
             DeletedMediaNewResponse deletedMediaNewResponse = _mapper.Map<DeletedMediaNewResponse>(deletedMediaNew);
             return deletedMediaNewResponse;
         }

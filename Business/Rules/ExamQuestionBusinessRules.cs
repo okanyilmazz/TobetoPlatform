@@ -9,23 +9,23 @@ using System.Threading.Tasks;
 
 namespace Business.Rules
 {
-    public class MediaNewBusinessRules : BaseBusinessRules
+    public class ExamQuestionBusinessRules : BaseBusinessRules
     {
-        IMediaNewDal _mediaNewDal;
+        IExamQuestionDal _examQuestionDal;
 
-        public MediaNewBusinessRules(IMediaNewDal mediaNewDal)
+        public ExamQuestionBusinessRules(IExamQuestionDal examQuestionDal)
         {
-            _mediaNewDal = mediaNewDal;
+            _examQuestionDal = examQuestionDal;
         }
 
-        public async Task IsExistsMediaNew(Guid mediaNewId)
+
+        public async Task IsExistsExamQuestion(Guid examQuestionId)
         {
-            var result = await _mediaNewDal.GetListAsync(m => m.Id == mediaNewId, enableTracking: false);
+            var result = await _examQuestionDal.GetListAsync(h => h.Id == examQuestionId,enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }
         }
-
     }
 }

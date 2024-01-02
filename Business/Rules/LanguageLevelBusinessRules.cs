@@ -22,7 +22,7 @@ namespace Business.Rules
         public async Task IsExistsLanguageLevel(Guid languageLevelId)
         {
             var result = await _languageLevelDal.GetListAsync(
-                predicate: l => l.Id == languageLevelId
+                predicate: l => l.Id == languageLevelId, enableTracking: false
                 );
             if (result.Count == 0)
             {

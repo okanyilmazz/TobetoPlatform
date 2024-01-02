@@ -21,7 +21,7 @@ namespace Business.Rules
         public async Task IsExistsAccountUniversity(Guid accountUniversityId)
         {
             var result = await _accountUniversityDal.GetListAsync(
-                predicate: a => a.Id == accountUniversityId);
+                predicate: a => a.Id == accountUniversityId,enableTracking:false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

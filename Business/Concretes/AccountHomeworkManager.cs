@@ -7,6 +7,7 @@ using Business.Dtos.Responses.CreatedResponses;
 using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -24,10 +25,12 @@ namespace Business.Concretes
     {
         IAccountHomeworkDal _accountHomeworkDal;
         IMapper _mapper;
-        public AccountHomeworkManager(IAccountHomeworkDal accountHomeworkDal, IMapper mapper)
+        AccountHomeworkBusinessRules _accountHomeworkBusinessRules;
+        public AccountHomeworkManager(IAccountHomeworkDal accountHomeworkDal, IMapper mapper, AccountHomeworkBusinessRules accountHomeworkBusinessRules)
         {
             _accountHomeworkDal = accountHomeworkDal;
             _mapper = mapper;
+            _accountHomeworkBusinessRules = accountHomeworkBusinessRules;
         }
 
 
@@ -41,7 +44,8 @@ namespace Business.Concretes
 
         public async Task<DeletedAccountHomeworkResponse> DeleteAsync(DeleteAccountHomeworkRequest deleteAccountHomeworkRequest)
         {
-            AccountHomework accountHomework = _mapper.Map<AccountHomework>(deleteAccountHomeworkRequest);
+            await _accountHomeworkBusinessRules.IsExistsAccountHomework(deleteAccountHomeworkRequest.Id);
+            AccountHomework accountHomework = await _accountHomeworkDal.GetAsync(predicate: a => a.Id == deleteAccountHomeworkRequest.Id);
             AccountHomework deletedAccountHomework = await _accountHomeworkDal.DeleteAsync(accountHomework);
             DeletedAccountHomeworkResponse deletedAccountHomeworkeResponse = _mapper.Map<DeletedAccountHomeworkResponse>(deletedAccountHomework);
             return deletedAccountHomeworkeResponse;
@@ -70,6 +74,7 @@ namespace Business.Concretes
 
         public async Task<UpdatedAccountHomeworkeResponse> UpdateAsync(UpdateAccountHomeworkRequest updateAccountHomeworkRequest)
         {
+            await _accountHomeworkBusinessRules.IsExistsAccountHomework(updateAccountHomeworkRequest.Id);
             AccountHomework accountHomework = _mapper.Map<AccountHomework>(updateAccountHomeworkRequest);
             AccountHomework updatedAccountHomework = await _accountHomeworkDal.UpdateAsync(accountHomework);
             UpdatedAccountHomeworkeResponse updatedAccountHomeworkeResponse = _mapper.Map<UpdatedAccountHomeworkeResponse>(updatedAccountHomework);

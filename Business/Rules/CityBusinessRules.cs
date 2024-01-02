@@ -20,8 +20,7 @@ namespace Business.Rules
 
         public async Task IsExistsCity(Guid cityId)
         {
-
-            var result = await _cityDal.GetListAsync(c => c.Id == cityId, enableTracking: false);
+            var result = await _cityDal.GetAsync(c => c.Id == cityId, enableTracking: false);
 
             if (result == null)
             {

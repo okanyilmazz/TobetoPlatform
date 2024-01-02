@@ -21,10 +21,8 @@ namespace Business.Rules
 
         public async Task IsExistsCountry(Guid countryId)
         {
-
-            var result = await _countryDal.GetListAsync(predicate: c => c.Id == countryId, enableTracking: false);
-            if (result.Count == 0)
-
+            var result = await _countryDal.GetAsync(predicate: c => c.Id == countryId, enableTracking: false);
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

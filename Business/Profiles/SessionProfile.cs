@@ -30,10 +30,10 @@ namespace Business.Profiles
             CreateMap<Session, DeletedSessionResponse>().ReverseMap();
 
             CreateMap<IPaginate<Session>, Paginate<GetListSessionResponse>>().ReverseMap();
+
             CreateMap<Session, GetListSessionResponse>()
-                .ForMember(destinationMember: s => s.OccupationClassName,
-                memberOptions: opt => opt.MapFrom(oc => oc.OccupationClass.Name))
-                .ReverseMap();
+            .ForMember(destinationMember: response => response.OccupationClassName,
+            memberOptions: opt => opt.MapFrom(s => s.OccupationClass.Name)).ReverseMap();
         }
     }
 }

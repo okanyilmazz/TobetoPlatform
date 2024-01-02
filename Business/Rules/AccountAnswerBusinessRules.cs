@@ -22,10 +22,10 @@ namespace Business.Rules
 
         public async Task IsExistsAccountAnswer(Guid accountAnswerId)
         {
-            var result = await _accountAnswerDal.GetListAsync(
-                predicate: a => a.Id == accountAnswerId
+            var result = await _accountAnswerDal.GetAsync(
+                predicate: q => q.Id == accountAnswerId, enableTracking: false
                 );
-            if (result.Count == 0)
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

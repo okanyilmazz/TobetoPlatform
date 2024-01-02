@@ -10,7 +10,9 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,14 +54,22 @@ namespace Business.Concretes
 
         public async Task<IPaginate<GetListSessionResponse>> GetListAsync()
         {
-            var sessions = await _sessionDal.GetListAsync();
-            var mappedSessions = _mapper.Map<Paginate<GetListSessionResponse>>(sessions);
-            return mappedSessions;
+            var session = await _sessionDal.GetListAsync(
+                              include: s => s
+                             .Include(s => s.OccupationClass));
+
+
+            var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
+            return mappedSession;
         }
 
         public async Task<GetListSessionResponse> GetByIdAsync(Guid id)
         {
-            var session = await _sessionDal.GetAsync(s => s.Id == id);
+            var session = await _sessionDal.GetAsync(
+           predicate: s => s.Id == id,
+           include: s => s
+           .Include(s => s.OccupationClass));
+
             var mappedSession = _mapper.Map<GetListSessionResponse>(session);
             return mappedSession;
         }

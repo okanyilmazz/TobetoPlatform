@@ -44,9 +44,9 @@ namespace Business.Concretes
 
         public async Task<DeletedAddressResponse> DeleteAsync(DeleteAddressRequest deleteAddressRequest)
         {
-            await _addressBusinessRules.IsExistsAddress(deleteAddressRequest.Id);
+            await _addressBusinessRules.IsExistsAdress(deleteAddressRequest.Id);
             Address address = await _addressDal.GetAsync(predicate: l => l.Id == deleteAddressRequest.Id);
-            Address deletedAddress = await _addressDal.DeleteAsync(address);
+            Address deletedAddress = await _addressDal.DeleteAsync(address,false);
             DeletedAddressResponse deletedAddressResponse = _mapper.Map<DeletedAddressResponse>(deletedAddress);
             return deletedAddressResponse;
         }

@@ -1,6 +1,7 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,10 @@ namespace Business.Rules
         }
         public async Task IsExistsEducationProgramProgrammingLanguage(Guid educationProgramProgrammingLanguageId)
         {
-            var result = await _educationProgramProgrammingLanguageDal.GetListAsync(
-               predicate: e => e.Id == educationProgramProgrammingLanguageId);
-            if (result.Count == 0)
+            var result = await _educationProgramProgrammingLanguageDal.GetAsync(
+                predicate: e => e.Id == educationProgramProgrammingLanguageId, enableTracking: false
+                );
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

@@ -2,6 +2,7 @@
 using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 
 namespace Business.Rules
 {
@@ -16,10 +17,10 @@ namespace Business.Rules
 
         public async Task IsExistsCertificate(Guid certificateId)
         {
-            var result = await _certificateDal.GetListAsync(
-                predicate: c => c.Id == certificateId
+            var result = await _certificateDal.GetAsync(
+                predicate: q => q.Id == certificateId, enableTracking: false
                 );
-            if (result.Count == 0)
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

@@ -1,6 +1,7 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,12 @@ namespace Business.Rules
             _blogDal = blogDal;
         }
 
-        public async Task IsExistsBlog(Guid BlogId)
+        public async Task IsExistsBlog(Guid blogId)
         {
-            var result = await _blogDal.GetListAsync();
-            if (result.Count == 0)
+            var result = await _blogDal.GetAsync(
+                predicate: q => q.Id == blogId, enableTracking: false
+                );
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

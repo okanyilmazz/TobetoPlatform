@@ -32,7 +32,9 @@ namespace Business.Profiles
             CreateMap<IPaginate<City>, Paginate<GetListCityResponse>>().ReverseMap();
             CreateMap<City, GetListCityResponse>().ReverseMap();
 
-
+            CreateMap<City, GetListCityResponse>()
+            .ForMember(destinationMember: response => response.CountryName,
+       memberOptions: opt => opt.MapFrom(c => c.Country.Name)).ReverseMap();
 
         }
     }

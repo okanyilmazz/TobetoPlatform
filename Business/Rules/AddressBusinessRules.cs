@@ -1,6 +1,7 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,15 @@ namespace Business.Rules
             _addressDal = addressDal;
         }
 
-        public async Task IsExistsAddress(Guid addressId)
+        public async Task IsExistsAdress(Guid addressId)
         {
-            var result = await _addressDal.GetListAsync(a => a.Id == addressId);
+            var result = await _addressDal.GetAsync(
+                predicate: q => q.Id == addressId, enableTracking: false
+                );
             if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }
-
         }
     }
 }

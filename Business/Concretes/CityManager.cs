@@ -10,7 +10,9 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,24 +46,32 @@ namespace Business.Concretes
         public async Task<DeletedCityResponse> DeleteAsync(DeleteCityRequest deleteCityRequest)
         {
             await _cityBusinessRules.IsExistsCity(deleteCityRequest.Id);
-            City City = await _cityDal.GetAsync(predicate: c=>c.Id == deleteCityRequest.Id);
-            City deletedCity = await _cityDal.DeleteAsync(City,false);
+            City City = await _cityDal.GetAsync(predicate: c => c.Id == deleteCityRequest.Id);
+            City deletedCity = await _cityDal.DeleteAsync(City, false);
             DeletedCityResponse deletedCityResponse = _mapper.Map<DeletedCityResponse>(deletedCity);
             return deletedCityResponse;
         }
 
         public async Task<GetListCityResponse> GetByIdAsync(Guid id)
         {
-            var city = await _cityDal.GetAsync(c=> c.Id == id);   
+            var city = await _cityDal.GetAsync(
+            predicate: c => c.Id == id,
+           include: c => c
+          .Include(c => c.Country));
+
             var mappedCity = _mapper.Map<GetListCityResponse>(city);
             return mappedCity;
         }
 
         public async Task<IPaginate<GetListCityResponse>> GetListAsync()
         {
-            var Cities = await _cityDal.GetListAsync();
-            var mappedCities= _mapper.Map<Paginate<GetListCityResponse>>(Cities);
-            return mappedCities;
+            var city = await _cityDal.GetListAsync(
+                             include: c => c
+                            .Include(c => c.Country));
+
+
+            var mappedCity = _mapper.Map<Paginate<GetListCityResponse>>(city);
+            return mappedCity;
         }
 
         public async Task<UpdatedCityResponse> UpdateAsync(UpdateCityRequest updateCityRequest)

@@ -12,7 +12,6 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,29 +45,22 @@ namespace Business.Concretes
         public async Task<DeletedOccupationClassSurveyResponse> DeleteAsync(DeleteOccupationClassSurveyRequest deleteOccupationClassSurveyRequest)
         {
             await _occupationClassSurveyBusinessRules.IsExistsOccupationClassSurvey(deleteOccupationClassSurveyRequest.Id);
-            OccupationClassSurvey OccupationClassSurvey = _mapper.Map<OccupationClassSurvey>(deleteOccupationClassSurveyRequest);
-            OccupationClassSurvey deletedOccupationClassSurvey = await _occupationClassSurveyDal.DeleteAsync(OccupationClassSurvey);
+            OccupationClassSurvey occupationClassSurvey = await _occupationClassSurveyDal.GetAsync(predicate: a => a.Id == deleteOccupationClassSurveyRequest.Id);
+            OccupationClassSurvey deletedOccupationClassSurvey = await _occupationClassSurveyDal.DeleteAsync(occupationClassSurvey, false);
             DeletedOccupationClassSurveyResponse deletedOccupationClassSurveyResponse = _mapper.Map<DeletedOccupationClassSurveyResponse>(deletedOccupationClassSurvey);
             return deletedOccupationClassSurveyResponse;
         }
 
         public async Task<GetListOccupationClassSurveyResponse> GetByIdAsync(Guid id)
         {
-            var occupationClassSurveyId = await _occupationClassSurveyDal.GetAsync(
-                predicate: ocs => ocs.Id == id,
-                include: ocs => ocs
-                .Include(ocs => ocs.OccupationClass)
-                .Include(ocs => ocs.Survey));
+            var occupationClassSurveyId = await _occupationClassSurveyDal.GetAsync(o => o.Id == id);
             var mappedoccupationClassSurvey = _mapper.Map<GetListOccupationClassSurveyResponse>(occupationClassSurveyId);
             return mappedoccupationClassSurvey;
         }
 
         public async Task<IPaginate<GetListOccupationClassSurveyResponse>> GetListAsync()
         {
-            var OccupationClassSurvey = await _occupationClassSurveyDal.GetListAsync(
-                 include: ocs => ocs
-                .Include(ocs => ocs.OccupationClass)
-                .Include(ocs => ocs.Survey));
+            var OccupationClassSurvey = await _occupationClassSurveyDal.GetListAsync();
             var mappedOccupationClassSurvey = _mapper.Map<Paginate<GetListOccupationClassSurveyResponse>>(OccupationClassSurvey);
             return mappedOccupationClassSurvey;
         }

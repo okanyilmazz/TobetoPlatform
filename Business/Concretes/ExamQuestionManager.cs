@@ -7,12 +7,11 @@ using Business.Dtos.Responses.CreatedResponses;
 using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.Concretes;
-using Microsoft.AspNetCore.Mvc.Formatters.Internal;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +24,14 @@ public class ExamQuestionManager : IExamQuestionService
 {
     IExamQuestionDal _examQuestionDal;
     IMapper _mapper;
+    ExamQuestionBusinessRules _examQuestionBusinessRules;
 
-    public ExamQuestionManager(IExamQuestionDal examQuestionDal, IMapper mapper)
+    public ExamQuestionManager(IExamQuestionDal examQuestionDal, IMapper mapper, ExamQuestionBusinessRules examQuestionBusinessRules)
     {
         _examQuestionDal = examQuestionDal;
         _mapper = mapper;
+        _examQuestionBusinessRules = examQuestionBusinessRules;
     }
-
 
     public async Task<CreatedExamQuestionResponse> AddAsync(CreateExamQuestionRequest createExamQuestionRequest)
     {
@@ -43,28 +43,23 @@ public class ExamQuestionManager : IExamQuestionService
 
     public async Task<DeletedExamQuestionResponse> DeleteAsync(DeleteExamQuestionRequest deleteExamQuestionRequest)
     {
-        ExamQuestion examQuestion = _mapper.Map<ExamQuestion>(deleteExamQuestionRequest);
-        ExamQuestion deletedExamQuestion = await _examQuestionDal.DeleteAsync(examQuestion);
-        DeletedExamQuestionResponse deletedExamQuestionResponse = _mapper.Map<DeletedExamQuestionResponse>(deletedExamQuestion);
-        return deletedExamQuestionResponse;
+        await _examQuestionBusinessRules.IsExistsExamQuestion(deleteExamQuestionRequest.Id);
+        ExamQuestion examQuestion = await _examQuestionDal.GetAsync(predicate: a => a.Id == deleteExamQuestionRequest.Id);
+        ExamQuestion deletedExamQuestion = await _examQuestionDal.DeleteAsync(examQuestion, false);
+        DeletedExamQuestionResponse createdExamQuestionResponse = _mapper.Map<DeletedExamQuestionResponse>(deletedExamQuestion);
+        return createdExamQuestionResponse;
+
     }
 
     public async Task<GetListExamQuestionResponse> GetByIdAsync(Guid id)
     {
-        var examQuestion = await _examQuestionDal.GetAsync(
-            predicate: eq => eq.Id == id,
-            include: eq => eq
-            .Include(eq => eq.Exam)
-            .Include(eq => eq.Question));
-        return _mapper.Map<GetListExamQuestionResponse>(examQuestion);
+        var examQuestion = await _examQuestionDal.GetListAsync(h => h.Id == id);
+        return _mapper.Map<GetListExamQuestionResponse>(examQuestion.Items.FirstOrDefault());
     }
 
     public async Task<IPaginate<GetListExamQuestionResponse>> GetListAsync()
     {
-        var examQuestions = await _examQuestionDal.GetListAsync(
-            include: eq => eq
-            .Include(eq => eq.Exam)
-            .Include(eq => eq.Question));
+        var examQuestions = await _examQuestionDal.GetListAsync();
         var mappedExamQuestions = _mapper.Map<Paginate<GetListExamQuestionResponse>>(examQuestions);
         return mappedExamQuestions;
     }

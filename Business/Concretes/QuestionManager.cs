@@ -45,28 +45,22 @@ namespace Business.Concretes
         public async Task<DeletedQuestionResponse> DeleteAsync(DeleteQuestionRequest deleteQuestionRequest)
         {
             await _questionBusinessRules.IsExistsQuestion(deleteQuestionRequest.Id);
-            Question question = _mapper.Map<Question>(deleteQuestionRequest);
-            Question deletedQuestion = await _questionDal.DeleteAsync(question);
-            DeletedQuestionResponse deletedQuestionResponse = _mapper.Map<DeletedQuestionResponse>(deletedQuestion);
-            return deletedQuestionResponse;
+            Question question = await _questionDal.GetAsync(predicate: a => a.Id == deleteQuestionRequest.Id);
+            Question deletedQuestion = await _questionDal.DeleteAsync(question, false);
+            DeletedQuestionResponse createdQuestionResponse = _mapper.Map<DeletedQuestionResponse>(deletedQuestion);
+            return createdQuestionResponse;
         }
 
         public async Task<IPaginate<GetListQuestionResponse>> GetListAsync()
         {
-            var questions = await _questionDal.GetListAsync(
-                include: q => q.Include(q => q.QuestionType)
-
-                );
+            var questions = await _questionDal.GetListAsync();
             var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(questions);
             return mappedQuestions;
         }
 
         public async Task<GetListQuestionResponse> GetByIdAsync(Guid id)
         {
-            var question = await _questionDal.GetAsync(
-                predicate: q => q.Id == id,
-                include: q => q.
-                Include(q => q.QuestionType));
+            var question = await _questionDal.GetAsync(q => q.Id == id);
             var mappedQuestion = _mapper.Map<GetListQuestionResponse>(question);
             return mappedQuestion;
         }

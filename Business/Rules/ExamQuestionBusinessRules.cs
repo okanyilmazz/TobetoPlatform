@@ -21,7 +21,7 @@ namespace Business.Rules
 
         public async Task IsExistsExamQuestion(Guid examQuestionId)
         {
-            var result = await _examQuestionDal.GetListAsync(h => h.Id == examQuestionId);
+            var result = await _examQuestionDal.GetListAsync(h => h.Id == examQuestionId,enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

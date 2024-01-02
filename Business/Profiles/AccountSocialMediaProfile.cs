@@ -27,7 +27,7 @@ public class AccountSocialMediaProfile : Profile
             .ForMember(destinationMember: response => response.SocialMediaName,
             memberOptions: opt => opt.MapFrom(asm => asm.SocialMedia.Name))
             .ForMember(destinationMember: response => response.AccountName,
-            memberOptions: opt => opt.MapFrom(asm => asm.Account.User.FirstName))
+            memberOptions: opt => opt.MapFrom(asm => asm.Account.User.FirstName +" "+ asm.Account.User.FirstName))
             .ReverseMap();
         CreateMap<IPaginate<AccountSocialMedia>, Paginate<GetListAccountSocialMediaResponse>>().ReverseMap();
     }

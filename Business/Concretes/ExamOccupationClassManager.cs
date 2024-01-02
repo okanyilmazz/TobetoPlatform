@@ -46,7 +46,7 @@ namespace Business.Concretes
         public async Task<DeletedExamOccupationClassResponse> DeleteAsync(DeleteExamOccupationClassRequest deleteExamOccupationClassRequest)
         {
             await _examOccupationClassBusinessRules.IsExistsExamOccupationClass(deleteExamOccupationClassRequest.Id);
-            ExamOccupationClass examOccupationClass = _mapper.Map<ExamOccupationClass>(deleteExamOccupationClassRequest);
+            ExamOccupationClass examOccupationClass = await _examOccupationClassDal.GetAsync(predicate: eoc => eoc.Id == deleteExamOccupationClassRequest.Id);
             ExamOccupationClass deletedExamOccupationClass = await _examOccupationClassDal.DeleteAsync(examOccupationClass);
             DeletedExamOccupationClassResponse deletedExamOccupationClassResponse = _mapper.Map<DeletedExamOccupationClassResponse>(deletedExamOccupationClass);
             return deletedExamOccupationClassResponse;

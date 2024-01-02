@@ -68,7 +68,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<IOccupationClassService, OccupationClassManager>();
         services.AddScoped<IAnnouncementService, AnnouncementManager>();
         services.AddScoped<ICertificateService, CertificateManager>();
-
         services.AddScoped<ContactBusinessRules>();
         services.AddScoped<QuestionBusinessRules>();
         services.AddScoped<AddressBusinessRules>();
@@ -114,11 +113,13 @@ public static class BusinessServiceRegistration
         services.AddScoped<CityBusinessRules>();
         services.AddScoped<ExamQuestionTypeBusinessRules>();
         services.AddScoped<AccountLessonBusinessRules>();
-
-
-
+        services.AddScoped<AccountSocialMediaBusinessRules>();
+        services.AddScoped<EducationProgramBusinessRules>();
+        services.AddScoped<QuestionTypeBusinessRules>();
         services.AddScoped<LessonCategoryBusinessRules>();
-        
+        services.AddScoped<ExamQuestionBusinessRules>();
+        services.AddScoped<ProgrammingLanguageBusinessRules>();
+
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     

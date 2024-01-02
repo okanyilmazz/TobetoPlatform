@@ -17,6 +17,8 @@ namespace DataAccess.EntityConfigurations
             builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
             builder.HasIndex(indexExpression: c => c.Name, name: "UK_Name").IsUnique();
 
+            builder.HasMany(c => c.Addresses);
+
             builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
         }
     }

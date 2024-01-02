@@ -7,6 +7,7 @@ using Business.Dtos.Responses.CreatedResponses;
 using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -23,11 +24,13 @@ namespace Business.Concretes
     {
         IProgrammingLanguageDal _programmingLanguageDal;
         IMapper _mapper;
+        ProgrammingLanguageBusinessRules _programmingLanguageBusinessRules;
 
-        public ProgrammingLanguageManager(IProgrammingLanguageDal programmingLanguageDal, IMapper mapper)
+        public ProgrammingLanguageManager(IProgrammingLanguageDal programmingLanguageDal, IMapper mapper, ProgrammingLanguageBusinessRules programmingLanguageBusinessRules)
         {
             _programmingLanguageDal = programmingLanguageDal;
             _mapper = mapper;
+            _programmingLanguageBusinessRules = programmingLanguageBusinessRules;
         }
 
         public async Task<CreatedProgrammingLanguageResponse> AddAsync(CreateProgrammingLanguageRequest createProgrammingLanguageRequest)
@@ -40,10 +43,11 @@ namespace Business.Concretes
 
         public async Task<DeletedProgrammingLanguageResponse> DeleteAsync(DeleteProgrammingLanguageRequest deleteProgrammingLanguageRequest)
         {
-            ProgrammingLanguage programmingLanguage = _mapper.Map<ProgrammingLanguage>(deleteProgrammingLanguageRequest);
-            ProgrammingLanguage deletedProgrammingLanguage = await _programmingLanguageDal.DeleteAsync(programmingLanguage);
-            DeletedProgrammingLanguageResponse deletedProgrammingLanguageResponse = _mapper.Map<DeletedProgrammingLanguageResponse>(deletedProgrammingLanguage);
-            return deletedProgrammingLanguageResponse;
+            await _programmingLanguageBusinessRules.IsExistsProgrammingLanguage(deleteProgrammingLanguageRequest.Id);
+            ProgrammingLanguage programmingLanguage = await _programmingLanguageDal.GetAsync(predicate: a => a.Id == deleteProgrammingLanguageRequest.Id);
+            ProgrammingLanguage deletedProgrammingLanguage = await _programmingLanguageDal.DeleteAsync(programmingLanguage, false);
+            DeletedProgrammingLanguageResponse createdProgrammingLanguageResponse = _mapper.Map<DeletedProgrammingLanguageResponse>(deletedProgrammingLanguage);
+            return createdProgrammingLanguageResponse;
         }
 
         public async Task<IPaginate<GetListProgrammingLanguageResponse>> GetListAsync()

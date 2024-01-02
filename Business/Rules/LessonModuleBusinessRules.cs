@@ -21,9 +21,9 @@ namespace Business.Rules
 
         public async Task IsExistsLessonModule(Guid lessonModuleId)
         {
-            var result = await _lessonModuleDal.GetListAsync(l => l.Id ==lessonModuleId );
+            var result = await _lessonModuleDal.GetAsync(predicate: l => l.Id == lessonModuleId, enableTracking: false);
 
-            if (result.Count == 0)
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

@@ -26,6 +26,6 @@ namespace Business.Rules
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }
-        }
+        } 
     }
 }

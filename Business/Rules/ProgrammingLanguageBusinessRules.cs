@@ -23,7 +23,7 @@ namespace Business.Rules
 
             var result = await _programmingLanguageDal.GetListAsync(
                 predicate: s => s.Id == programmingLanguageId
-                 );
+                 , enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

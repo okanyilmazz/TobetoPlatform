@@ -66,8 +66,21 @@ public class ExamQuestionManager : IExamQuestionService
 
     public async Task<UpdatedExamQuestionResponse> UpdateAsync(UpdateExamQuestionRequest updateExamQuestionRequest)
     {
+        await _examQuestionBusinessRules.IsExistsExamQuestion(updateExamQuestionRequest.Id);
         ExamQuestion examQuestion = _mapper.Map<ExamQuestion>(updateExamQuestionRequest);
-        ExamQuestion updatedExamQuestion = await _examQuestionDal.UpdateAsync(examQuestion);
+        ExamQuestion updatedExamQuestion = await _examQuestionDal.UpdateAsync
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            (examQuestion);
         UpdatedExamQuestionResponse updatedExamQuestionResponse = _mapper.Map<UpdatedExamQuestionResponse>(updatedExamQuestion);
         return updatedExamQuestionResponse;
     }

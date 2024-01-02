@@ -66,6 +66,7 @@ namespace Business.Concretes
 
         public async Task<UpdatedProgrammingLanguageResponse> UpdateAsync(UpdateProgrammingLanguageRequest updateProgrammingLanguageRequest)
         {
+            await _programmingLanguageBusinessRules.IsExistsProgrammingLanguage(updateProgrammingLanguageRequest.Id);
             ProgrammingLanguage programmingLanguage = _mapper.Map<ProgrammingLanguage>(updateProgrammingLanguageRequest);
             ProgrammingLanguage updatedProgrammingLanguage = await _programmingLanguageDal.UpdateAsync(programmingLanguage);
             UpdatedProgrammingLanguageResponse updatedProgrammingLanguageResponse = _mapper.Map<UpdatedProgrammingLanguageResponse>(updatedProgrammingLanguage);

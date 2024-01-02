@@ -7,6 +7,7 @@ using Business.Dtos.Responses.CreatedResponses;
 using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -23,11 +24,12 @@ public class ProjectManager : IProjectService
 {
     IProjectDal _projectDal;
     IMapper _mapper;
-
-    public ProjectManager(IProjectDal projectDal, IMapper mapper)
+    ProjectBusinessRules _projectBusinessRules;
+    public ProjectManager(IProjectDal projectDal, IMapper mapper, ProjectBusinessRules projectBusinessRules)
     {
         _projectDal = projectDal;
         _mapper = mapper;
+        _projectBusinessRules = projectBusinessRules;
     }
     public async Task<CreatedProjectResponse> AddAsync(CreateProjectRequest createProjectRequest)
     {
@@ -39,6 +41,7 @@ public class ProjectManager : IProjectService
 
     public async Task<UpdatedProjectResponse> UpdateAsync(UpdateProjectRequest updateProjectRequest)
     {
+        await _projectBusinessRules.IsExistsProject(updateProjectRequest.Id);
         Project project = _mapper.Map<Project>(updateProjectRequest);
         Project updatedProject = await _projectDal.UpdateAsync(project);
         UpdatedProjectResponse responseProject = _mapper.Map<UpdatedProjectResponse>(updatedProject);
@@ -47,6 +50,7 @@ public class ProjectManager : IProjectService
 
     public async Task<DeletedProjectResponse> DeleteAsync(DeleteProjectRequest deleteProjectRequest)
     {
+        await _projectBusinessRules.IsExistsProject(deleteProjectRequest.Id);
         Project project = await _projectDal.GetAsync(predicate: l => l.Id == deleteProjectRequest.Id);
         await _projectDal.DeleteAsync(project);
         DeletedProjectResponse responseProject = _mapper.Map<DeletedProjectResponse>(project);

@@ -21,8 +21,10 @@ namespace Business.Rules
 
         public async Task IsExistsAccount(Guid accountId)
         {
-            var result = await _accountDal.GetListAsync(a => a.Id == accountId);
-            if (result.Items.Count == 0)
+            var result = await _accountDal.GetAsync(
+                predicate: a => a.Id == accountId,
+                enableTracking: false);
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }
@@ -30,8 +32,10 @@ namespace Business.Rules
 
         public async Task IsExistsNationalId(string nationalId)
         {
-            var result = await _accountDal.GetListAsync(a => a.NationalId == nationalId);
-            if (result.Items.Count != 0)
+            var result = await _accountDal.GetAsync(
+                predicate: a => a.NationalId == nationalId,
+                enableTracking: false);
+            if (result != null)
             {
                 throw new Exception(BusinessMessages.DataAvailable);
             }

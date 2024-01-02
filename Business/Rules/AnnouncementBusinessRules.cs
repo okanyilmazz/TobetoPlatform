@@ -21,12 +21,13 @@ namespace Business.Rules
 
         public async Task IsExistsAnnouncement(Guid announcementId)
         {
-            var result = await _announcementDal.GetListAsync(a => a.Id == announcementId);
-            if (result.Count == 0)
+            var result = await _announcementDal.GetAsync(
+                predicate: a => a.Id == announcementId,
+                enableTracking: false);
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }
         }
-
     }
 }

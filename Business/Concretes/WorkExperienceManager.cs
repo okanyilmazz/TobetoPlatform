@@ -9,7 +9,9 @@ using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes;
 
@@ -41,9 +43,25 @@ public class WorkExperienceManager : IWorkExperienceService
 
     public async Task<IPaginate<GetListWorkExperienceResponse>> GetListAsync()
     {
-        var workExperiences = await _workExperienceDal.GetListAsync();
-        var mappedWorkExperiences = _mapper.Map<Paginate<GetListWorkExperienceResponse>>(workExperiences);
-        return mappedWorkExperiences;
+        var workExperience = await _workExperienceDal.GetListAsync(
+                include: we => we
+                .Include(we => we.City)
+                .Include(we => we.Account).ThenInclude(we=>we.User));
+
+        var mappedWorkExperience = _mapper.Map<Paginate<GetListWorkExperienceResponse>>(workExperience);
+        return mappedWorkExperience;
+    }
+
+    public async Task<GetListWorkExperienceResponse> GetByIdAsync(Guid id)
+    {
+        var workExperience = await _workExperienceDal.GetAsync(
+            predicate: we => we.Id == id,
+            include: we => we
+            .Include(we => we.City)
+            .Include(we => we.Account).ThenInclude(we => we.User));
+            
+        var mappedWorkExperience = _mapper.Map<GetListWorkExperienceResponse>(workExperience);
+        return mappedWorkExperience;
     }
 
     public async Task<UpdatedWorkExperienceResponse> UpdateAsync(UpdateWorkExperienceRequest updateWorkExperienceRequest)

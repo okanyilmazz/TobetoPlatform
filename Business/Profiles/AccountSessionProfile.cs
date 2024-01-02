@@ -31,7 +31,7 @@ namespace Business.Profiles
 
             CreateMap<AccountSession, GetListAccountSessionResponse>()
                 .ForMember(destinationMember: ase => ase.AccountName,
-                memberOptions: opt => opt.MapFrom(ase => ase.Account.User.FirstName))
+                memberOptions: opt => opt.MapFrom(ase => ase.Account.User.FirstName + " " + ase.Account.User.LastName))
                 .ReverseMap();
             CreateMap<IPaginate<AccountSession>, Paginate<GetListAccountSessionResponse>>().ReverseMap();
         }

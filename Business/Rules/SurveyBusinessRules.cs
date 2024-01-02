@@ -20,7 +20,7 @@ namespace Business.Rules
         public async Task IsExistsSurvey(Guid surveyId)
         {
             var result = await _surveyDal.GetListAsync(
-                predicate: s => s.Id == surveyId);
+                predicate: s => s.Id == surveyId, enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

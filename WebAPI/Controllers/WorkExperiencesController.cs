@@ -24,6 +24,14 @@ public class WorkExperiencesController : ControllerBase
         return Ok(result);
     }
 
+
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _workExperienceService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateWorkExperienceRequest createWorkExperienceRequest)
     {

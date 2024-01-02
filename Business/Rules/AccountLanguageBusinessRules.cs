@@ -21,8 +21,11 @@ namespace Business.Rules
 
         public async Task IsExistsAccountLanguage(Guid accountLanguageId)
         {
-            var result = await _accountLanguageDal.GetListAsync(a => a.Id == accountLanguageId);
-            if (result.Count == 0)
+            var result = await _accountLanguageDal.GetAsync(
+                predicate: a => a.Id == accountLanguageId,
+                enableTracking: false);
+
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

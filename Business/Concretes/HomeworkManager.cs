@@ -60,15 +60,25 @@ namespace Business.Concretes
 
         public async Task<GetListHomeworkResponse> GetByIdAsync(Guid id)
         {
-            var homework = await _homeworkDal.GetListAsync(h => h.Id == id);
-            return _mapper.Map<GetListHomeworkResponse>(homework.Items.FirstOrDefault());
+            var homework = await _homeworkDal.GetAsync(
+            predicate: h => h.Id == id,
+            include: h => h
+            .Include(h => h.OccupationClass));
+            
+
+            var mappedHomework = _mapper.Map<GetListHomeworkResponse>(homework);
+            return mappedHomework;
         }
 
         public async Task<IPaginate<GetListHomeworkResponse>> GetListAsync()
         {
-            var homeworks = await _homeworkDal.GetListAsync();
-            var mappedHomeworks = _mapper.Map<Paginate<GetListHomeworkResponse>>(homeworks);
-            return mappedHomeworks;
+            var homework = await _homeworkDal.GetListAsync(
+                include: h => h
+                .Include(h => h.OccupationClass));
+                
+
+            var mappedHomework = _mapper.Map<Paginate<GetListHomeworkResponse>>(homework);
+            return mappedHomework;
         }
 
         public async Task<UpdatedHomeworkResponse> UpdateAsync(UpdateHomeworkRequest updateHomeworkRequest)

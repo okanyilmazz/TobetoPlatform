@@ -21,7 +21,8 @@ namespace Business.Rules
 
         public async Task IsExistsUser(Guid userId)
         {
-            var result = await _userDal.GetListAsync(a => a.Id == userId);
+
+            var result = await _userDal.GetAsync(a => a.Id == userId, enableTracking: false);
             if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

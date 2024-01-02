@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 
 namespace Business.Concretes;
@@ -37,8 +38,8 @@ public class ProductionCompanyManager : IProductionCompanyService
     public async Task<DeletedProductionCompanyResponse> DeleteAsync(DeleteProductionCompanyRequest deleteProductionCompanyRequest)
     {
         await _productionCompanyBusinessRules.IsExistsProductionCompany(deleteProductionCompanyRequest.Id);
-        ProductionCompany productionCompany = _mapper.Map<ProductionCompany>(deleteProductionCompanyRequest);
-        ProductionCompany deletedProductionCompany = await _productionCompanyDal.DeleteAsync(productionCompany);
+        ProductionCompany productionCompany = await _productionCompanyDal.GetAsync(predicate: a => a.Id == deleteProductionCompanyRequest.Id);
+        ProductionCompany deletedProductionCompany = await _productionCompanyDal.DeleteAsync(productionCompany, false);
         DeletedProductionCompanyResponse deletedProductionCompanyResponse = _mapper.Map<DeletedProductionCompanyResponse>(deletedProductionCompany);
         return deletedProductionCompanyResponse;
     }

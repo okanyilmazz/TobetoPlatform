@@ -5,8 +5,8 @@ namespace Business.Dtos.Responses.GetListResponses
     public class GetListWorkExperienceResponse
     {
         public Guid Id { get; set; }
-        public Guid CityId { get; set; }
-        public Guid AccountId { get; set; }
+        public Guid CityName { get; set; }
+        public Guid AccountName { get; set; }
         public string Industry { get; set; }
         public string CompanyName { get; set; }
         public string Department { get; set; }

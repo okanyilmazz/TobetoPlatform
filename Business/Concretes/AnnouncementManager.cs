@@ -45,8 +45,8 @@ namespace Business.Concretes
 
         public async Task<DeletedAnnouncementResponse> DeleteAsync(DeleteAnnouncementRequest deleteAnnouncementRequest)
         {
-           // await _announcementBusinessRules.IsExistsAnnouncement(deleteAnnouncementRequest.Id);
-            Announcement announcement = _mapper.Map<Announcement>(deleteAnnouncementRequest);
+           await _announcementBusinessRules.IsExistsAnnouncement(deleteAnnouncementRequest.Id);
+            Announcement announcement = await _announcementDal.GetAsync(predicate: a => a.Id == deleteAnnouncementRequest.Id);
             Announcement deletedAnnouncemenProject = await _announcementDal.DeleteAsync(announcement);
             DeletedAnnouncementResponse deletedAnnouncementResponse = _mapper.Map<DeletedAnnouncementResponse>(deletedAnnouncemenProject);
             return deletedAnnouncementResponse;

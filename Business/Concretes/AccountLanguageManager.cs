@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -43,8 +44,8 @@ namespace Business.Concretes
         public async Task<DeletedAccountLanguageResponse> DeleteAsync(DeleteAccountLanguageRequest deleteAccountLanguageRequest)
         {
             await _accountLanguageBusinessRules.IsExistsAccountLanguage(deleteAccountLanguageRequest.Id);
-            var AccountLanguage = _mapper.Map<AccountLanguage>(deleteAccountLanguageRequest);
-            var deletedAccountLanguage = await _accountLanguageDal.DeleteAsync(AccountLanguage);
+            AccountLanguage accountLanguage = await _accountLanguageDal.GetAsync(predicate: a => a.Id == deleteAccountLanguageRequest.Id);
+            var deletedAccountLanguage = await _accountLanguageDal.DeleteAsync(accountLanguage);
             var responseAccountLanguage = _mapper.Map<DeletedAccountLanguageResponse>(deletedAccountLanguage);
             return responseAccountLanguage;
         }

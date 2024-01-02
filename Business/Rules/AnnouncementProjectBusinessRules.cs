@@ -22,8 +22,9 @@ namespace Business.Rules
         public async Task IsExistsAnnouncementProject(Guid announcementProjectId)
         {
             var result = await _announcementProjectDal.GetAsync(
-                predicate: q => q.Id == announcementProjectId, enableTracking: false
-                );
+                predicate: a => a.Id == announcementProjectId,
+                enableTracking: false);
+
             if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

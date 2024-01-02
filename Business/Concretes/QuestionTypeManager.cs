@@ -8,6 +8,7 @@ using Business.Dtos.Responses.CreatedResponses;
 using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
+using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
@@ -20,11 +21,13 @@ namespace Business.Concretes
 
         IQuestionTypeDal _questionTypeDal;
         IMapper _mapper;
+        QuestionTypeBusinessRules _questionTypeBusinessRules;
 
-        public QuestionTypeManager(IQuestionTypeDal questionTypeDal, IMapper mapper)
+        public QuestionTypeManager(IQuestionTypeDal questionTypeDal, IMapper mapper, QuestionTypeBusinessRules questionTypeBusinessRules)
         {
             _questionTypeDal = questionTypeDal;
             _mapper = mapper;
+            _questionTypeBusinessRules = questionTypeBusinessRules;
         }
         public async Task<CreatedQuestionTypeResponse> AddAsync(CreateQuestionTypeRequest createQuestionTypeRequest)
         {
@@ -36,8 +39,9 @@ namespace Business.Concretes
 
         public async Task<DeletedQuestionTypeResponse> DeleteAsync(DeleteQuestionTypeRequest deleteQuestionTypeRequest)
         {
+            await _questionTypeBusinessRules.IsExistsQuestionType(deleteQuestionTypeRequest.Id);
             QuestionType questionType = await _questionTypeDal.GetAsync(predicate: q => q.Id == deleteQuestionTypeRequest.Id);
-            QuestionType deletedQuestionType = await _questionTypeDal.DeleteAsync(questionType,false);
+            QuestionType deletedQuestionType = await _questionTypeDal.DeleteAsync(questionType, false);
             DeletedQuestionTypeResponse deletedQuestionTypeResponse = _mapper.Map<DeletedQuestionTypeResponse>(deletedQuestionType);
             return deletedQuestionTypeResponse;
         }
@@ -52,6 +56,7 @@ namespace Business.Concretes
 
         public async Task<UpdatedQuestionTypeResponse> UpdateAsync(UpdateQuestionTypeRequest updateQuestionTypeRequest)
         {
+            await _questionTypeBusinessRules.IsExistsQuestionType(updateQuestionTypeRequest.Id);
             QuestionType questionType = _mapper.Map<QuestionType>(updateQuestionTypeRequest);
             QuestionType updatedQuestionType = await _questionTypeDal.UpdateAsync(questionType);
             UpdatedQuestionTypeResponse updatedQuestionTypeResponse = _mapper.Map<UpdatedQuestionTypeResponse>(updatedQuestionType);

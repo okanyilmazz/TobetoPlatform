@@ -43,10 +43,12 @@ namespace Business.Concretes
         public async Task<DeletedEducationProgramLevelResponse> DeleteAsync(DeleteEducationProgramLevelRequest deleteEducationProgramLevelRequest)
         {
             await _educationProgramLevelBusinessRules.IsExistsEducationProgramLevel(deleteEducationProgramLevelRequest.Id);
-            EducationProgramLevel educationProgramLevel = _mapper.Map<EducationProgramLevel>(deleteEducationProgramLevelRequest);
+            EducationProgramLevel educationProgramLevel = await _educationProgramLevelDal.GetAsync(
+            predicate: epl => epl.Id == deleteEducationProgramLevelRequest.Id);
             EducationProgramLevel deletedEducationProgramLevel = await _educationProgramLevelDal.DeleteAsync(educationProgramLevel);
-            DeletedEducationProgramLevelResponse mapperEducationProgram = _mapper.Map<DeletedEducationProgramLevelResponse>(deletedEducationProgramLevel);
-            return mapperEducationProgram;
+            DeletedEducationProgramLevelResponse deletedEducationProgramLevelResponse = _mapper.Map<DeletedEducationProgramLevelResponse>
+            (deletedEducationProgramLevel);
+            return deletedEducationProgramLevelResponse;
         }
 
         public async Task<IPaginate<GetListEducationProgramLevelResponse>> GetListAsync()

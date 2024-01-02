@@ -21,10 +21,10 @@ namespace Business.Rules
 
         public async Task IsExistsUniversityDepartment(Guid universityDepartmentId)
         {
-            var result = await _universityDepartmentDal.GetListAsync(
-                predicate: ud => ud.Id == universityDepartmentId
+            var result = await _universityDepartmentDal.GetAsync(
+                predicate: ud => ud.Id == universityDepartmentId, enableTracking: false
                 );
-            if (result.Count == 0)
+            if (result == null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

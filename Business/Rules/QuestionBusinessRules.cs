@@ -17,7 +17,7 @@ namespace Business.Rules
         public async Task IsExistsQuestion(Guid questionId)
         {
             var result = await _questionDal.GetListAsync(
-                predicate: q => q.Id == questionId);
+                predicate: q => q.Id == questionId, enableTracking: false);
             if (result.Count == 0)
             {
                 throw new Exception(BusinessMessages.DataNotFound);

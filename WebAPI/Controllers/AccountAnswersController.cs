@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -23,6 +26,8 @@ public class AccountAnswersController : ControllerBase
         var result = await _accountAnswersService.GetListAsync();
         return Ok(result);
     }
+
+
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -30,6 +35,8 @@ public class AccountAnswersController : ControllerBase
         return Ok(result);
     }
 
+
+    [CustomValidation(typeof(CreateAccountAnswerRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountAnswerRequest createAccountAnswerRequest)
     {
@@ -37,12 +44,16 @@ public class AccountAnswersController : ControllerBase
         return Ok(result);
     }
 
+
+
+    [CustomValidation(typeof(UpdateAccountAnswerRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountAnswerRequest updateAccountAnswerRequest)
     {
         var result = await _accountAnswersService.UpdateAsync(updateAccountAnswerRequest);
         return Ok(result);
     }
+
 
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountAnswerRequest deleteAccountAnswerRequest)

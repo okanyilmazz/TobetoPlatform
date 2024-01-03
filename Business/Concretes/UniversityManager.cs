@@ -10,13 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concretes
 {
@@ -44,15 +38,7 @@ namespace Business.Concretes
         public async Task<DeletedUniversityResponse> DeleteAsync(DeleteUniversityRequest deleteUniversityRequest)
         {
             await _universityBusinessRules.IsExistsUniversity(deleteUniversityRequest.Id);
-<<<<<<< HEAD
             University university = await _universityDal.GetAsync(predicate: u => u.Id == deleteUniversityRequest.Id);
-=======
-
-            
-
-            University university= await _universityDal.GetAsync(predicate:u=>u.Id==deleteUniversityRequest.Id);
-
->>>>>>> Diana
             University deletedUniversity = await _universityDal.DeleteAsync(university);
             DeletedUniversityResponse deletedUniversityResponse = _mapper.Map<DeletedUniversityResponse>(deletedUniversity);
             return deletedUniversityResponse;

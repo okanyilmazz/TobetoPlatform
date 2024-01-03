@@ -119,6 +119,10 @@ public static class BusinessServiceRegistration
         services.AddScoped<LessonCategoryBusinessRules>();
         services.AddScoped<ExamQuestionBusinessRules>();
         services.AddScoped<ProgrammingLanguageBusinessRules>();
+        services.AddScoped<ProjectBusinessRules>();
+        services.AddScoped<AccountHomeworkBusinessRules>();
+
+
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;

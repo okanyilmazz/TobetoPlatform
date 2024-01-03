@@ -2,7 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
-using Microsoft.AspNetCore.Http;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -25,6 +27,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+
         [HttpGet("GetById")]
         public async Task<IActionResult> GetByIdAsync(Guid Id)
         {
@@ -32,6 +35,8 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+
+        [CustomValidation(typeof(CreateAccountSkillRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAccountSkillRequest createAccountSkillRequest)
         {
@@ -39,12 +44,15 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+
+        [CustomValidation(typeof(UpdateAccountSkillRequestValidator))]
         [HttpPost("Update")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountSkillRequest updateAccountSkillRequest)
         {
             var result = await _accountSkillsService.UpdateAsync(updateAccountSkillRequest);
             return Ok(result);
         }
+
 
         [HttpPost("Delete")]
         public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountSkillRequest deleteAccountSkillRequest)

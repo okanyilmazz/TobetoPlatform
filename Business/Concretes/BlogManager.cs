@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace Business.Concretes
         public async Task<DeletedBlogResponse> DeleteAsync(DeleteBlogRequest deleteBlogRequest)
         {
             await _blogBusinessRules.IsExistsBlog(deleteBlogRequest.Id);
-            Blog blog = _mapper.Map<Blog>(deleteBlogRequest);
+            Blog blog = await _blogDal.GetAsync(predicate: l => l.Id == deleteBlogRequest.Id);
             Blog deletedBlog = await _blogDal.DeleteAsync(blog,true);
             DeletedBlogResponse deletedBlogResponse = _mapper.Map<DeletedBlogResponse>(deletedBlog);
             return deletedBlogResponse;

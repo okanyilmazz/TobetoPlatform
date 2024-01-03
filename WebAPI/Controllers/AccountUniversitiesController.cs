@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -17,12 +20,15 @@ public class AccountUniversitiesController : ControllerBase
         _accountUniversityService = accountUniversityService;
     }
 
+
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync()
     {
         var result = await _accountUniversityService.GetListAsync();
         return Ok(result);
     }
+
+
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid Id)
     {
@@ -30,6 +36,8 @@ public class AccountUniversitiesController : ControllerBase
         return Ok(result);
     }
 
+
+    [CustomValidation(typeof(CreateAccountUniversityRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountUniversityRequest createAccountUniversityRequest)
     {
@@ -37,12 +45,15 @@ public class AccountUniversitiesController : ControllerBase
         return Ok(result);
     }
 
+
+    [CustomValidation(typeof(UpdateAccountUniversityRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountUniversityRequest updateAccountUniversityRequest)
     {
         var result = await _accountUniversityService.UpdateAsync(updateAccountUniversityRequest);
         return Ok(result);
     }
+
 
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountUniversityRequest deleteAccountUniversityRequest)

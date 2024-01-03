@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using DataAccess.Abstracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,12 +28,16 @@ namespace WebAPI.Controllers
             var result = await _accountHomeworkService.GetListAsync();
             return Ok(result);
         }
+
+
         [HttpGet("GetById")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var result = await _accountHomeworkService.GetByIdAsync(id);
             return Ok(result);
         }
+
+        [CustomValidation(typeof(CreateAccountHomeworkRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAccountHomeworkRequest createAccountHomeworkRequest)
         {
@@ -38,12 +45,15 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+
+        [CustomValidation(typeof(UpdateAccountHomeworkRequestValidator))]
         [HttpPost("Delete")]
         public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountHomeworkRequest deleteAccountHomeworkRequest)
         {
             var result = await _accountHomeworkService.DeleteAsync(deleteAccountHomeworkRequest);
             return Ok(result);
         }
+
 
         [HttpPost("Update")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountHomeworkRequest updateAccountHomeworkRequest)

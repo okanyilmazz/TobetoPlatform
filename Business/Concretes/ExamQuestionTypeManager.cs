@@ -45,10 +45,11 @@ namespace Business.Concretes
         public async Task<DeletedExamQuestionTypeResponse> DeleteAsync(DeleteExamQuestionTypeRequest deleteExamQuestionTypeRequest)
         {
             await _examQuestionTypeBusinessRules.IsExistsExamQuestionType(deleteExamQuestionTypeRequest.Id);
-            ExamQuestionType examQuestionType = _mapper.Map<ExamQuestionType>(deleteExamQuestionTypeRequest);
+            ExamQuestionType examQuestionType= await _examQuestionTypeDal.GetAsync(predicate: eq => eq.Id == deleteExamQuestionTypeRequest.Id);
             ExamQuestionType deletedExamQuestionType = await _examQuestionTypeDal.DeleteAsync(examQuestionType);
-            DeletedExamQuestionTypeResponse deletedExamQuestionTypeResponse = _mapper.Map<DeletedExamQuestionTypeResponse>(deletedExamQuestionType);
+            DeletedExamQuestionTypeResponse deletedExamQuestionTypeResponse = _mapper.Map<DeletedExamQuestionTypeResponse>(examQuestionType);
             return deletedExamQuestionTypeResponse;
+
         }
 
         public async Task<GetListExamQuestionTypeResponse> GetByIdAsync(Guid id)

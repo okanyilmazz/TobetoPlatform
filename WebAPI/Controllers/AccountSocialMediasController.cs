@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -23,6 +26,8 @@ public class AccountSocialMediasController : ControllerBase
         var result = await _accountSocialMediaService.GetListAsync();
         return Ok(result);
     }
+
+
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid Id)
     {
@@ -30,6 +35,8 @@ public class AccountSocialMediasController : ControllerBase
         return Ok(result);
     }
 
+
+    [CustomValidation(typeof(CreateAccountSocialMediaRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountSocialMediaRequest createAccountSocialMediaRequest)
     {
@@ -37,12 +44,15 @@ public class AccountSocialMediasController : ControllerBase
         return Ok(result);
     }
 
+
+    [CustomValidation(typeof(UpdateAccountSocialMediaRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountSocialMediaRequest updateAccountSocialMediaRequest)
     {
         var result = await _accountSocialMediaService.UpdateAsync(updateAccountSocialMediaRequest);
         return Ok(result);
     }
+
 
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountSocialMediaRequest deleteAccountSocialMediaRequest)

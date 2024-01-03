@@ -45,7 +45,7 @@ namespace Business.Concretes
         public async Task<DeletedCertificateResponse> DeleteAsync(DeleteCertificateRequest deleteCertificateRequest)
         {
             await _certificateBusinessRules.IsExistsCertificate(deleteCertificateRequest.Id);
-            Certificate certificate = _mapper.Map<Certificate>(deleteCertificateRequest);
+            Certificate certificate = await _certificateDal.GetAsync(predicate: l => l.Id == deleteCertificateRequest.Id);
             Certificate deletedCertificate = await _certificateDal.DeleteAsync(certificate);
             DeletedCertificateResponse deletedCertificateResponse = _mapper.Map<DeletedCertificateResponse>(deletedCertificate);
             return deletedCertificateResponse;

@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -31,13 +34,15 @@ public class ExamsController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateExamRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateExamRequest createExamRequest)
     {
         var result = await _examService.AddAsync(createExamRequest);
         return Ok(result);
     }
-    
+
+    [CustomValidation(typeof(UpdateExamRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateExamRequest updateExamRequest)
     {

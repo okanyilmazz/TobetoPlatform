@@ -34,6 +34,13 @@ namespace Business.Profiles
 
             CreateMap<List<Homework>, Paginate<GetListHomeworkResponse>>().ForMember(destinationMember: h => h.Items,
                 memberOptions: opt => opt.MapFrom(h=>h.ToList())).ReverseMap();
+
+            CreateMap<Homework, GetListHomeworkResponse>()
+              .ForMember(destinationMember: response => response.OccupationClassName,
+              memberOptions: opt => opt.MapFrom(h => h.OccupationClass.Name)).ReverseMap();
+             
+
+
         }
     }
 }

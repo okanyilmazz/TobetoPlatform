@@ -2,7 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -24,24 +26,34 @@ namespace WebAPI.Controllers
             var result = await _accountLanguageService.GetListAsync();
             return Ok(result);
         }
+
+
         [HttpGet("GetById")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var result = await _accountLanguageService.GetByIdAsync(id);
             return Ok(result);
         }
+
+
+        [CustomValidation(typeof(CreateAccountLanguageRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateAccountLanguageRequest createAccountLanguageRequest)
         {
             var result = await _accountLanguageService.AddAsync(createAccountLanguageRequest);
             return Ok(result);
         }
+
+
+        [CustomValidation(typeof(UpdateAccountLanguageRequestValidator))]
         [HttpPost("Update")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountLanguageRequest updateAccountLanguageRequest)
         {
             var result = await _accountLanguageService.UpdateAsync(updateAccountLanguageRequest);
             return Ok(result);
         }
+
+
         [HttpPost("Delete")]
         public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountLanguageRequest deleteAccountLanguageRequest)
         {

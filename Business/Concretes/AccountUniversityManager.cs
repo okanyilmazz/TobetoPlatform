@@ -40,10 +40,12 @@ public class AccountUniversityManager : IAccountUniversityService
     public async Task<DeletedAccountUniversityResponse> DeleteAsync(DeleteAccountUniversityRequest deleteAccountUniversityRequest)
     {
         await _accountUniversityBusinessRules.IsExistsAccountUniversity(deleteAccountUniversityRequest.Id);
-        AccountUniversity accountUniversity = _mapper.Map<AccountUniversity>(deleteAccountUniversityRequest);
-        AccountUniversity deletedAccountUniversity = await _accountUniversityDal.DeleteAsync(accountUniversity, true);
+        AccountUniversity accountUniversity = await _accountUniversityDal.GetAsync(predicate: au => au.Id == deleteAccountUniversityRequest.Id);
+        AccountUniversity deletedAccountUniversity = await _accountUniversityDal.DeleteAsync(accountUniversity);
         DeletedAccountUniversityResponse deletedAccountUniversityResponse = _mapper.Map<DeletedAccountUniversityResponse>(deletedAccountUniversity);
         return deletedAccountUniversityResponse;
+
+
     }
 
     public async Task<GetListAccountUniversityResponse> GetByIdAsync(Guid Id)

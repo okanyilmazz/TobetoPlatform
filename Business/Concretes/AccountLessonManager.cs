@@ -10,6 +10,7 @@ using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -42,10 +43,10 @@ namespace Business.Concretes
         public async Task<DeletedAccountLessonResponse> DeleteAsync(DeleteAccountLessonRequest deleteAccountLessonRequest)
         {
             await _accountLessonBusinessRules.IsExistsAccountLesson(deleteAccountLessonRequest.Id);
-            var AccountLesson = _mapper.Map<AccountLesson>(deleteAccountLessonRequest);
-            var deletedAccountLesson = await _accountLessonDal.DeleteAsync(AccountLesson);
-            var responseAccountLesson = _mapper.Map<DeletedAccountLessonResponse>(deletedAccountLesson);
-            return responseAccountLesson;
+            AccountLesson accountLesson = await _accountLessonDal.GetAsync(predicate: l => l.Id == deleteAccountLessonRequest.Id);
+            AccountLesson deletedAccountLesson = await _accountLessonDal.DeleteAsync(accountLesson);
+            DeletedAccountLessonResponse deletedAccountLessonResponse = _mapper.Map<DeletedAccountLessonResponse>(deletedAccountLesson);
+            return deletedAccountLessonResponse;
         }
 
         public async Task<GetListAccountLessonResponse> GetByIdAsync(Guid id)

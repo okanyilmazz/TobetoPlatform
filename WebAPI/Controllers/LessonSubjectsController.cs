@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Entities.Concretes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +35,7 @@ public class LessonSubjectsController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateLessonSubjectRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLessonSubjectRequest createLessonSubjectRequest)
     {
@@ -39,6 +43,7 @@ public class LessonSubjectsController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateLessonSubjectRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateLessonSubjectRequest updateLessonSubjectRequest)
     {

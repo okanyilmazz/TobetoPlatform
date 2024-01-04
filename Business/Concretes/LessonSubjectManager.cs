@@ -50,9 +50,11 @@ public class LessonSubjectManager : ILessonSubjectService
         return _mapper.Map<GetListLessonSubjectResponse>(lessonSubject.Items.FirstOrDefault());
     }
 
-    public async Task<IPaginate<GetListLessonSubjectResponse>> GetListAsync()
+    public async Task<IPaginate<GetListLessonSubjectResponse>> GetListAsync(PageRequest pageRequest)
     {
-        var lessonSubjectListed = await _lessonSubjectDal.GetListAsync();
+        var lessonSubjectListed = await _lessonSubjectDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize);
         var mappedListed = _mapper.Map<Paginate<GetListLessonSubjectResponse>>(lessonSubjectListed);
         return mappedListed;
     }

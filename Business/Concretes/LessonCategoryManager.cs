@@ -50,9 +50,12 @@ namespace Business.Concretes
             return _mapper.Map<GetListLessonCategoryResponse>(lessonCategory.Items.FirstOrDefault());
         }
 
-        public async Task<IPaginate<GetListLessonCategoryResponse>> GetListAsync()
+        public async Task<IPaginate<GetListLessonCategoryResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var lessonCategoryList = await _lessonCategoryDal.GetListAsync();
+            var lessonCategoryList = await _lessonCategoryDal.GetListAsync(
+                index:pageRequest.PageIndex,
+                size:pageRequest.PageSize);
+
             var mappedLessonCategory = _mapper.Map<Paginate<GetListLessonCategoryResponse>>(lessonCategoryList);
             return mappedLessonCategory;
         }

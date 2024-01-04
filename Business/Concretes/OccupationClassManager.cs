@@ -40,7 +40,7 @@ namespace Business.Concretes
         {
             await _occupationClassBusinessRules.IsExistsOccupationClass(deleteOccupationClassRequest.Id);
             OccupationClass occupationClass = await _occupationClassDal.GetAsync(predicate: o => o.Id == deleteOccupationClassRequest.Id);
-            OccupationClass deletedOccupationClass = await _occupationClassDal.DeleteAsync(occupationClass,false);
+            OccupationClass deletedOccupationClass = await _occupationClassDal.DeleteAsync(occupationClass, false);
             DeletedOccupationClassResponse deletedOccupationClassResponse = _mapper.Map<DeletedOccupationClassResponse>(deletedOccupationClass);
             return deletedOccupationClassResponse;
         }
@@ -52,9 +52,11 @@ namespace Business.Concretes
             return mappedoccupationClass;
         }
 
-        public async Task<IPaginate<GetListOccupationClassResponse>> GetListAsync()
+        public async Task<IPaginate<GetListOccupationClassResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var occupationClasss = await _occupationClassDal.GetListAsync();
+            var occupationClasss = await _occupationClassDal.GetListAsync(
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
             var mappedOccupationClasses = _mapper.Map<Paginate<GetListOccupationClassResponse>>(occupationClasss);
             return mappedOccupationClasses;
         }

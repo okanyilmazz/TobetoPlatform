@@ -6,6 +6,8 @@ using Business.Abstracts;
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,6 +31,7 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateQuestionTypeRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateQuestionTypeRequest createQuestionTypeRequest)
     {
@@ -36,6 +39,7 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateQuestionTypeRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateQuestionTypeRequest updateQuestionTypeRequest)
     {

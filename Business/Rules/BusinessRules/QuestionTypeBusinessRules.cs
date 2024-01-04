@@ -20,10 +20,10 @@ namespace Business.Rules
 
         public async Task IsExistsQuestionType(Guid questionTypeId)
         {
-            var result = await _questionTypeDal.GetListAsync(
-                predicate: q => q.Id == questionTypeId);
+            var result = await _questionTypeDal.GetAsync(
+                predicate: q => q.Id == questionTypeId, enableTracking:false);
 
-            if (result.Count == 0)
+            if (result==null)
             {
                 throw new Exception(BusinessMessages.DataNotFound);
             }

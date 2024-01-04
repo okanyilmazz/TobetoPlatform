@@ -57,9 +57,10 @@ namespace Business.Concretes
             return mappedMediaNew;
         }
 
-        public async Task<IPaginate<GetListMediaNewResponse>> GetListAsync()
+        public async Task<IPaginate<GetListMediaNewResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var mediaNew = await _mediaNewDal.GetListAsync();
+            var mediaNew = await _mediaNewDal.GetListAsync(index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
             var mappedMediaNew = _mapper.Map<Paginate<GetListMediaNewResponse>>(mediaNew);
             return mappedMediaNew;
         }

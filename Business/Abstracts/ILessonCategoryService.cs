@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedLessonCategoryResponse> AddAsync(CreateLessonCategoryRequest createLessonCategoryRequest);
         Task<UpdatedLessonCategoryResponse> UpdateAsync(UpdateLessonCategoryRequest updateLessonCategoryRequest);
         Task<DeletedLessonCategoryResponse> DeleteAsync(DeleteLessonCategoryRequest deleteLessonCategoryRequest);
-        Task<IPaginate<GetListLessonCategoryResponse>> GetListAsync();
+        Task<IPaginate<GetListLessonCategoryResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListLessonCategoryResponse> GetByIdAsync(Guid id);
     }
 }

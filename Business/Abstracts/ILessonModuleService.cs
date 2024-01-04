@@ -22,7 +22,7 @@ namespace Business.Abstracts
         Task<CreatedLessonModuleResponse> AddAsync(CreateLessonModuleRequest createLessonModuleRequest);
         Task<UpdatedLessonModuleResponse> UpdateAsync(UpdateLessonModuleRequest updateLessonModuleRequest);
         Task<DeletedLessonModuleResponse> DeleteAsync(DeleteLessonModuleRequest deleteLessonModuleRequest);
-        Task<IPaginate<GetListLessonModuleResponse>> GetListAsync();
+        Task<IPaginate<GetListLessonModuleResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListLessonModuleResponse> GetByIdAsync(Guid id);
     }
 }

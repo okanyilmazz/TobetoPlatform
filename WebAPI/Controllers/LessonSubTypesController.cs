@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -31,6 +34,7 @@ public class LessonSubTypesController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateLessonSubTypeRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLessonSubTypeRequest createLessonSubTypeRequest)
     {
@@ -38,6 +42,7 @@ public class LessonSubTypesController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateLessonSubTypeRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateLessonSubTypeRequest updateLessonSubTypeRequest)
     {

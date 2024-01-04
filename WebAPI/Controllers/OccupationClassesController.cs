@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +35,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [CustomValidation(typeof(CreateOccupationClassRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateOccupationClassRequest createOccupationClassRequest)
         {
@@ -39,6 +43,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [CustomValidation(typeof(UpdateOccupationClassRequestValidator))]
         [HttpPost("Update")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateOccupationClassRequest updateOccupationClassRequest)
         {

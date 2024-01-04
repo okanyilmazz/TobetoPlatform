@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -32,6 +35,7 @@ public class WorkExperiencesController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateWorkExperienceRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateWorkExperienceRequest createWorkExperienceRequest)
     {
@@ -39,6 +43,7 @@ public class WorkExperiencesController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateWorkExperienceRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateWorkExperienceRequest updateWorkExperienceRequest)
     {

@@ -61,9 +61,11 @@ namespace Business.Concretes
             return updatedSkillResponse;
         }
 
-        public async Task<IPaginate<GetListSkillResponse>> GetListAsync()
+        public async Task<IPaginate<GetListSkillResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var skills = await _skillDal.GetListAsync();
+            var skills = await _skillDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize);
             var mappedSkills = _mapper.Map<Paginate<GetListSkillResponse>>(skills);
             return mappedSkills;
         }

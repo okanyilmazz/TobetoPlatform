@@ -41,12 +41,14 @@ public class WorkExperienceManager : IWorkExperienceService
         return deletedWorkExperienceResponse;
     }
 
-    public async Task<IPaginate<GetListWorkExperienceResponse>> GetListAsync()
+    public async Task<IPaginate<GetListWorkExperienceResponse>> GetListAsync(PageRequest pageRequest)
     {
         var workExperience = await _workExperienceDal.GetListAsync(
                 include: we => we
                 .Include(we => we.City)
-                .Include(we => we.Account).ThenInclude(we=>we.User));
+                .Include(we => we.Account).ThenInclude(we=>we.User),
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
 
         var mappedWorkExperience = _mapper.Map<Paginate<GetListWorkExperienceResponse>>(workExperience);
         return mappedWorkExperience;
@@ -59,7 +61,6 @@ public class WorkExperienceManager : IWorkExperienceService
             include: we => we
             .Include(we => we.City)
             .Include(we => we.Account).ThenInclude(we => we.User));
-            
         var mappedWorkExperience = _mapper.Map<GetListWorkExperienceResponse>(workExperience);
         return mappedWorkExperience;
     }

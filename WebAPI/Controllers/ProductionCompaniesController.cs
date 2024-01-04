@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using DataAccess.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +34,7 @@ public class ProductionCompaniesController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateProductionCompanyRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateProductionCompanyRequest createProductionCompanyRequest)
     {
@@ -38,6 +42,7 @@ public class ProductionCompaniesController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateProductionCompanyRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateProductionCompanyRequest updateProductionCompanyRequest)
     {

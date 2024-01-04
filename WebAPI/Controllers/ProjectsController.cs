@@ -2,6 +2,8 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -31,6 +33,7 @@ public class ProjectsController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateProjectRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateProjectRequest createProjectRequest)
     {
@@ -38,6 +41,7 @@ public class ProjectsController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateProjectRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateProjectRequest updateProjectRequest)
     {

@@ -2,6 +2,8 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -38,6 +40,7 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateQuestionRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateQuestionRequest createQuestionRequest)
     {
@@ -45,6 +48,7 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateQuestionRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateQuestionRequest updateQuestionRequest)
     {

@@ -2,6 +2,8 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -31,6 +33,7 @@ public class SessionsController : Controller
         return Ok(result);
     }
 
+    [CustomValidation(typeof(CreateSessionRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateSessionRequest createSessionRequest)
     {
@@ -38,6 +41,7 @@ public class SessionsController : Controller
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateSessionRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateSessionRequest updateSessionRequest)
     {

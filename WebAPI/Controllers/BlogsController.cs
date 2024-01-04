@@ -2,6 +2,10 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,7 +36,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-
+        [CustomValidation(typeof(CreateBlogRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateBlogRequest createBlogRequest)
         {
@@ -47,6 +51,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [CustomValidation(typeof(UpdateBlogRequestValidator))]
         [HttpPost("Update")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateBlogRequest updateBlogRequest)
         {

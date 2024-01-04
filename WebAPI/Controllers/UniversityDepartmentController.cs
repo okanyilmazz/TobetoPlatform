@@ -6,9 +6,11 @@ using Business.Abstracts;
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPI.Controllers;
 
@@ -28,7 +30,7 @@ public class UniversityDepartmentsController : Controller
         var result = await _universityDepartmentService.GetListAsync();
         return Ok(result);
     }
-
+    [CustomValidation(typeof(CreateUniversityDepartmentRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateUniversityDepartmentRequest createUniversityDepartmentRequest)
     {
@@ -36,6 +38,7 @@ public class UniversityDepartmentsController : Controller
         return Ok(result);
     }
 
+    [CustomValidation(typeof(UpdateUniversityDepartmentRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateUniversityDepartmentRequest updateUniversityDepartmentRequest)
     {

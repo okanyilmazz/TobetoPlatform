@@ -14,7 +14,7 @@ namespace Business.Abstracts
         Task<CreatedOccupationClassResponse> AddAsync(CreateOccupationClassRequest createOccupationClassRequest);
         Task<UpdatedOccupationClassResponse> UpdateAsync(UpdateOccupationClassRequest updateOccupationClassRequest);
         Task<DeletedOccupationClassResponse> DeleteAsync(DeleteOccupationClassRequest deleteOccupationClassRequest);
-        Task<IPaginate<GetListOccupationClassResponse>> GetListAsync();
+        Task<IPaginate<GetListOccupationClassResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListOccupationClassResponse> GetByIdAsync(Guid id);
     }
 }

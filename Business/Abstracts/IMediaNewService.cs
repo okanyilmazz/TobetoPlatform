@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedMediaNewResponse> AddAsync(CreateMediaNewRequest createMediaNewRequest);
         Task<UpdatedMediaNewResponse> UpdateAsync(UpdateMediaNewRequest updateMediaNewRequest);
         Task<DeletedMediaNewResponse> DeleteAsync(DeleteMediaNewRequest deleteMediaNewRequest);
-        Task<IPaginate<GetListMediaNewResponse>> GetListAsync();
+        Task<IPaginate<GetListMediaNewResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListMediaNewResponse> GetByIdAsync(Guid id);
     }
 }

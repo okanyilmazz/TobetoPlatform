@@ -46,9 +46,11 @@ namespace Business.Concretes
             return deletedLessonResponse;
         }
 
-        public async Task<IPaginate<GetListLessonResponse>> GetListAsync()
+        public async Task<IPaginate<GetListLessonResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var lessons = await _lessonDal.GetListAsync();
+            var lessons = await _lessonDal.GetListAsync(
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
             var mappedLessons = _mapper.Map<Paginate<GetListLessonResponse>>(lessons);
             return mappedLessons;
         }

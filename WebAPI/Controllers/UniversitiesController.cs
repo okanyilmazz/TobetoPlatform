@@ -2,6 +2,9 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +27,7 @@ namespace WebAPI.Controllers
             var result = await _universityService.GetListAsync();
             return Ok(result);
         }
-
+        [CustomValidation(typeof(CreateUniversityRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateUniversityRequest createUniversityRequest)
         {
@@ -32,6 +35,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [CustomValidation(typeof(UpdateUniversityRequestValidator))]
         [HttpPost("Update")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateUniversityRequest updateUniversityRequest)
         {

@@ -32,7 +32,7 @@ public class WorkExperienceProfile : Profile
                .ForMember(destinationMember: response => response.AccountName,
                memberOptions: opt => opt.MapFrom(we => we.Account.User.FirstName)).ReverseMap();
 
-             
+
 
     }
 }

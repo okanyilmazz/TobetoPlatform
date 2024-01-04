@@ -2,6 +2,10 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +35,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [CustomValidation(typeof(CreateContactRequestValidator))]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] CreateContactRequest createContactRequest)
         {
@@ -38,6 +43,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
+        [CustomValidation(typeof(UpdateContactRequestValidator))]
         [HttpPost("Update")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateContactRequest updateContactRequest)
         {

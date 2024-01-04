@@ -44,9 +44,12 @@ public class ProductionCompanyManager : IProductionCompanyService
         return deletedProductionCompanyResponse;
     }
 
-    public async Task<IPaginate<GetListProductionCompanyResponse>> GetListAsync()
+    public async Task<IPaginate<GetListProductionCompanyResponse>> GetListAsync(PageRequest pageRequest)
     {
-        var ProductionCompanies = await _productionCompanyDal.GetListAsync();
+        var ProductionCompanies = await _productionCompanyDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize
+            );
         var mappedProductionCompanies = _mapper.Map<Paginate<GetListProductionCompanyResponse>>(ProductionCompanies);
         return mappedProductionCompanies;
     }

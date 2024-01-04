@@ -21,7 +21,7 @@ namespace Business.Abstracts
         Task<CreatedProductionCompanyResponse> AddAsync(CreateProductionCompanyRequest createProductionCompanyRequest);
         Task<UpdatedProductionCompanyResponse> UpdateAsync(UpdateProductionCompanyRequest updateProductionCompanyRequest);
         Task<DeletedProductionCompanyResponse> DeleteAsync(DeleteProductionCompanyRequest deleteProductionCompanyRequest);
-        Task<IPaginate<GetListProductionCompanyResponse>> GetListAsync();
+        Task<IPaginate<GetListProductionCompanyResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListProductionCompanyResponse> GetByIdAsync(Guid id);
     }
 }

@@ -20,7 +20,7 @@ namespace Business.Abstracts
         Task<CreatedProgrammingLanguageResponse> AddAsync(CreateProgrammingLanguageRequest createProgrammingLanguageRequest);
         Task<UpdatedProgrammingLanguageResponse> UpdateAsync(UpdateProgrammingLanguageRequest updateProgrammingLanguageRequest);
         Task<DeletedProgrammingLanguageResponse> DeleteAsync(DeleteProgrammingLanguageRequest deleteProgrammingLanguageRequest);
-        Task<IPaginate<GetListProgrammingLanguageResponse>> GetListAsync();
+        Task<IPaginate<GetListProgrammingLanguageResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListProgrammingLanguageResponse> GetByIdAsync(Guid id);
     }
 }

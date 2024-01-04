@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedOccupationClassSurveyResponse> AddAsync(CreateOccupationClassSurveyRequest createOccupationClassSurveyRequest);
         Task<UpdatedOccupationClassSurveyResponse> UpdateAsync(UpdateOccupationClassSurveyRequest updateOccupationClassSurveyRequest);
         Task<DeletedOccupationClassSurveyResponse> DeleteAsync(DeleteOccupationClassSurveyRequest deleteOccupationClassSurveyRequest);
-        Task<IPaginate<GetListOccupationClassSurveyResponse>> GetListAsync();
+        Task<IPaginate<GetListOccupationClassSurveyResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListOccupationClassSurveyResponse> GetByIdAsync(Guid Id);
     }
 }

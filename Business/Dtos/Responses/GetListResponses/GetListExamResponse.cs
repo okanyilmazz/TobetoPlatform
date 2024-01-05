@@ -13,7 +13,5 @@ namespace Business.Dtos.Responses.GetListResponses
         public string Description { get; set; }
         public int Duration { get; set; }
         public int QuestionCount { get; set; }
-
-        public ICollection<GetListOccupationClassResponse> OccupationClasses{ get; set; }
     }
 }

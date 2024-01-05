@@ -5,6 +5,7 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Validation;
+using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -21,9 +22,9 @@ public class AccountOccupationClassesController : ControllerBase
     }
 
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _accountOccupationClass.GetListAsync();
+        var result = await _accountOccupationClass.GetListAsync(pageRequest);
         return Ok(result);
     }
 
@@ -36,7 +37,6 @@ public class AccountOccupationClassesController : ControllerBase
     }
 
 
-    [CustomValidation(typeof(CreateAccountOccupationClassRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountOccupationClassRequest createAccountOccupationClassRequest)
     {
@@ -45,7 +45,6 @@ public class AccountOccupationClassesController : ControllerBase
     }
 
 
-    [CustomValidation(typeof(UpdateAccountOccupationClassRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountOccupationClassRequest updateOccupationClassOfAccountRequest)
     {

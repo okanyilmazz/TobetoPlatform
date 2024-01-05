@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Core.CrossCuttingConcerns.Validation;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.DataAccess.Paging;
 
 namespace WebAPI.Controllers;
 
@@ -21,9 +22,9 @@ public class AccountLessonsController : ControllerBase
     }
 
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _accountLessonService.GetListAsync();
+        var result = await _accountLessonService.GetListAsync(pageRequest);
         return Ok(result);
     }
 
@@ -36,7 +37,6 @@ public class AccountLessonsController : ControllerBase
     }
 
 
-    [CustomValidation(typeof(CreateAccountLessonRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountLessonRequest createAccountLessonRequest)
     {
@@ -45,7 +45,6 @@ public class AccountLessonsController : ControllerBase
     }
 
 
-    [CustomValidation(typeof(UpdateAccountLessonRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountLessonRequest updateAccountLessonRequest)
     {

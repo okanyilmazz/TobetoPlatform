@@ -12,8 +12,6 @@ namespace Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidator
     {
         public UpdateAccountSocialMediaRequestValidator()
         {
-            RuleFor(asm => asm.SocialMediaId).NotEmpty();
-            RuleFor(asm => asm.AccountId).NotEmpty();
             RuleFor(asm => asm.Url).NotEmpty();
             RuleFor(asm => asm.Url).MaximumLength(255);
         }

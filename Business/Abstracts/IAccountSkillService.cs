@@ -7,14 +7,13 @@ using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
 
-namespace Business.Abstracts
+namespace Business.Abstracts;
+
+public interface IAccountSkillService
 {
-    public interface IAccountSkillService
-    {
-        Task<CreatedAccountSkillResponse> AddAsync(CreateAccountSkillRequest createAccountSkillRequest);
-        Task<UpdatedAccountSkillResponse> UpdateAsync(UpdateAccountSkillRequest updateAccountSkillRequest);
-        Task<DeletedAccountSkillResponse> DeleteAsync(DeleteAccountSkillRequest deleteAccountSkillRequest);
-        Task<IPaginate<GetListAccountSkillResponse>> GetListAsync();
-        Task<GetListAccountSkillResponse> GetByIdAsync(Guid id);
-    }
+    Task<CreatedAccountSkillResponse> AddAsync(CreateAccountSkillRequest createAccountSkillRequest);
+    Task<UpdatedAccountSkillResponse> UpdateAsync(UpdateAccountSkillRequest updateAccountSkillRequest);
+    Task<DeletedAccountSkillResponse> DeleteAsync(DeleteAccountSkillRequest deleteAccountSkillRequest);
+    Task<IPaginate<GetListAccountSkillResponse>> GetListAsync(PageRequest pageRequest);
+    Task<GetListAccountSkillResponse> GetByIdAsync(Guid id);
 }

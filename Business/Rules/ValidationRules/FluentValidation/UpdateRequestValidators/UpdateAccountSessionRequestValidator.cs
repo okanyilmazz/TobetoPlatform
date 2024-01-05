@@ -12,8 +12,6 @@ namespace Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidator
     {
         public UpdateAccountSessionRequestValidator()
         {
-            RuleFor(a => a.AccountId).NotEmpty();
-            RuleFor(a => a.SessionId).NotEmpty();
             RuleFor(a => a.Status).NotEmpty();
         }
     }

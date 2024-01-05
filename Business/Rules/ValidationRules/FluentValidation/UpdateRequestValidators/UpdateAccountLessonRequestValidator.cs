@@ -12,8 +12,6 @@ namespace Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidator
     {
         public UpdateAccountLessonRequestValidator()
         {
-            RuleFor(al => al.AccountId).NotEmpty();
-            RuleFor(al => al.LessonId).NotEmpty();
         }
     }
 }

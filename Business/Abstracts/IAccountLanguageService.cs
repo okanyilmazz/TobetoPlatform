@@ -6,21 +6,14 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Abstracts
+namespace Business.Abstracts;
+
+public interface IAccountLanguageService
 {
-    public interface IAccountLanguageService
-    {
-        Task<CreatedAccountLanguageResponse> AddAsync(CreateAccountLanguageRequest createAccountLanguageRequest);
-        Task<UpdatedAccountLanguageResponse> UpdateAsync(UpdateAccountLanguageRequest updateAccountLanguageRequest);
-        Task<DeletedAccountLanguageResponse> DeleteAsync(DeleteAccountLanguageRequest deleteAccountLanguageRequest);
-        Task<IPaginate<GetListAccountLanguageResponse>> GetListAsync();
-        Task<GetListAccountLanguageResponse> GetByIdAsync(Guid id);
-
-    }
+    Task<CreatedAccountLanguageResponse> AddAsync(CreateAccountLanguageRequest createAccountLanguageRequest);
+    Task<UpdatedAccountLanguageResponse> UpdateAsync(UpdateAccountLanguageRequest updateAccountLanguageRequest);
+    Task<DeletedAccountLanguageResponse> DeleteAsync(DeleteAccountLanguageRequest deleteAccountLanguageRequest);
+    Task<IPaginate<GetListAccountLanguageResponse>> GetListAsync(PageRequest pageRequest);
+    Task<GetListAccountLanguageResponse> GetByIdAsync(Guid id);
 }

@@ -12,73 +12,68 @@ using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Concretes
+namespace Business.Concretes;
+
+public class AccountSkillManager : IAccountSkillService
 {
-    public class AccountSkillManager : IAccountSkillService
+    IAccountSkillDal _accountSkillDal;
+    IMapper _mapper;
+    AccountSkillBusinessRules _accountSkillBusinessRules;
+
+    public AccountSkillManager(IAccountSkillDal accountSkillDal, IMapper mapper, AccountSkillBusinessRules accountSkillBusinessRules)
     {
-        IAccountSkillDal _accountSkillDal;
-        IMapper _mapper;
-        AccountSkillBusinessRules _accountSkillBusinessRules;
+        _accountSkillDal = accountSkillDal;
+        _mapper = mapper;
+        _accountSkillBusinessRules = accountSkillBusinessRules;
+    }
+    public async Task<CreatedAccountSkillResponse> AddAsync(CreateAccountSkillRequest createAccountSkillRequest)
+    {
+        AccountSkill accountSkill = _mapper.Map<AccountSkill>(createAccountSkillRequest);
+        AccountSkill addedAccountSkill = await _accountSkillDal.AddAsync(accountSkill);
+        CreatedAccountSkillResponse createdAccountSkillResponse = _mapper.Map<CreatedAccountSkillResponse>(addedAccountSkill);
+        return createdAccountSkillResponse;
+    }
 
-        public AccountSkillManager(IAccountSkillDal accountSkillDal, IMapper mapper, AccountSkillBusinessRules accountSkillBusinessRules)
-        {
-            _accountSkillDal = accountSkillDal;
-            _mapper = mapper;
-            _accountSkillBusinessRules = accountSkillBusinessRules;
-        }
-        public async Task<CreatedAccountSkillResponse> AddAsync(CreateAccountSkillRequest createAccountSkillRequest)
-        {
-            AccountSkill accountSkill = _mapper.Map<AccountSkill>(createAccountSkillRequest);
-            AccountSkill addedAccountSkill = await _accountSkillDal.AddAsync(accountSkill);
-            CreatedAccountSkillResponse createdAccountSkillResponse = _mapper.Map<CreatedAccountSkillResponse>(addedAccountSkill);
-            return createdAccountSkillResponse;
-        }
+    public async Task<DeletedAccountSkillResponse> DeleteAsync(DeleteAccountSkillRequest deleteAccountSkillRequest)
+    {
+        await _accountSkillBusinessRules.IsExistsAccountSkill(deleteAccountSkillRequest.Id);
+        AccountSkill accountSkill = await _accountSkillDal.GetAsync(predicate: a => a.Id == deleteAccountSkillRequest.Id);
+        AccountSkill deletedAccountSkill = await _accountSkillDal.DeleteAsync(accountSkill, false);
+        DeletedAccountSkillResponse deletedAccountSkillResponse = _mapper.Map<DeletedAccountSkillResponse>(deletedAccountSkill);
+        return deletedAccountSkillResponse;
+    }
 
-        public async Task<DeletedAccountSkillResponse> DeleteAsync(DeleteAccountSkillRequest deleteAccountSkillRequest)
-        {
-            await _accountSkillBusinessRules.IsExistsAccountSkill(deleteAccountSkillRequest.Id);
-            AccountSkill accountSkill = await _accountSkillDal.GetAsync(predicate: a => a.Id == deleteAccountSkillRequest.Id);
-            AccountSkill deletedAccountSkill = await _accountSkillDal.DeleteAsync(accountSkill, false);
-            DeletedAccountSkillResponse deletedAccountSkillResponse = _mapper.Map<DeletedAccountSkillResponse>(deletedAccountSkill);
-            return deletedAccountSkillResponse;
-        }
+    public async Task<GetListAccountSkillResponse> GetByIdAsync(Guid id)
+    {
+        var accountSkill = await _accountSkillDal.GetAsync(
+            predicate: a => a.Id == id,
+            include: acs => acs.
+            Include(acs => acs.Skill)
+            .Include(acs => acs.Account).ThenInclude(a => a.User));
+        var mappedAccountSkill = _mapper.Map<GetListAccountSkillResponse>(accountSkill);
+        return mappedAccountSkill;
+    }
 
-        public async Task<GetListAccountSkillResponse> GetByIdAsync(Guid id)
-        {
-            var accountSkill = await _accountSkillDal.GetAsync(
-                predicate: a => a.Id == id,
-                include: acs => acs.
-                Include(acs => acs.Skill)
-                .Include(acs => acs.Account).ThenInclude(a => a.User));
-            var mappedAccountSkill = _mapper.Map<GetListAccountSkillResponse>(accountSkill);
-            return mappedAccountSkill;
-        }
+    public async Task<IPaginate<GetListAccountSkillResponse>> GetListAsync(PageRequest pageRequest)
+    {
+        var accountSkills = await _accountSkillDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize,
+            include: acs => acs.
+            Include(acs => acs.Skill)
+            .Include(acs => acs.Account).ThenInclude(a => a.User));
 
-        public async Task<IPaginate<GetListAccountSkillResponse>> GetListAsync()
-        {
-            var accountSkills = await _accountSkillDal.GetListAsync(
-                include: acs => acs.
-                Include(acs => acs.Skill)
-                .Include(acs => acs.Account).ThenInclude(a => a.User));
+        var mappedAccountSkills = _mapper.Map<Paginate<GetListAccountSkillResponse>>(accountSkills);
+        return mappedAccountSkills;
+    }
 
-            var mappedAccountSkills = _mapper.Map<Paginate<GetListAccountSkillResponse>>(accountSkills);
-            return mappedAccountSkills;
-        }
-
-        public async Task<UpdatedAccountSkillResponse> UpdateAsync(UpdateAccountSkillRequest updateAccountSkillRequest)
-        {
-            await _accountSkillBusinessRules.IsExistsAccountSkill(updateAccountSkillRequest.Id);
-            AccountSkill accountSkill = _mapper.Map<AccountSkill>(updateAccountSkillRequest);
-            AccountSkill updatedAccountSkill = await _accountSkillDal.UpdateAsync(accountSkill);
-            UpdatedAccountSkillResponse updatedAccountSkillResponse = _mapper.Map<UpdatedAccountSkillResponse>(updatedAccountSkill);
-            return updatedAccountSkillResponse;
-        }
+    public async Task<UpdatedAccountSkillResponse> UpdateAsync(UpdateAccountSkillRequest updateAccountSkillRequest)
+    {
+        await _accountSkillBusinessRules.IsExistsAccountSkill(updateAccountSkillRequest.Id);
+        AccountSkill accountSkill = _mapper.Map<AccountSkill>(updateAccountSkillRequest);
+        AccountSkill updatedAccountSkill = await _accountSkillDal.UpdateAsync(accountSkill);
+        UpdatedAccountSkillResponse updatedAccountSkillResponse = _mapper.Map<UpdatedAccountSkillResponse>(updatedAccountSkill);
+        return updatedAccountSkillResponse;
     }
 }

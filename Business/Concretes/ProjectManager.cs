@@ -57,9 +57,12 @@ public class ProjectManager : IProjectService
         return responseProject;
     }
 
-    public async Task<IPaginate<GetListProjectResponse>> GetListAsync()
+    public async Task<IPaginate<GetListProjectResponse>> GetListAsync(PageRequest pageRequest)
     {
-        var projectListed = await _projectDal.GetListAsync();
+        var projectListed = await _projectDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize
+            );
         var mappedListed = _mapper.Map<Paginate<GetListProjectResponse>>(projectListed);
         return mappedListed;
     }

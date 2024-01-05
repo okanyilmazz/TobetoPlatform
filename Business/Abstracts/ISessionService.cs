@@ -16,7 +16,7 @@ namespace Business.Abstracts
 {
     public interface ISessionService
     {
-        Task<IPaginate<GetListSessionResponse>> GetListAsync();
+        Task<IPaginate<GetListSessionResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListSessionResponse> GetByIdAsync(Guid id);
         Task<CreatedSessionResponse> AddAsync(CreateSessionRequest createSessionRequest);
         Task<UpdatedSessionResponse> UpdateAsync(UpdateSessionRequest updateSessionRequest);

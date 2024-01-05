@@ -12,7 +12,7 @@ namespace Business.Abstracts
 {
     public interface IQuestionTypeService
 	{
-        Task<IPaginate<GetListQuestionTypeResponse>> GetListAsync();
+        Task<IPaginate<GetListQuestionTypeResponse>> GetListAsync(PageRequest pageRequest);
         Task<CreatedQuestionTypeResponse> AddAsync(CreateQuestionTypeRequest createQuestionTypeRequest);
         Task<UpdatedQuestionTypeResponse> UpdateAsync(UpdateQuestionTypeRequest updateQuestionTypeRequest);
         Task<DeletedQuestionTypeResponse> DeleteAsync(DeleteQuestionTypeRequest deleteQuestionTypeRequest);

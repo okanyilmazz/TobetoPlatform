@@ -5,6 +5,7 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Validation;
+using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,9 +23,9 @@ public class ProductionCompaniesController : ControllerBase
     }
 
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _productionCompanyService.GetListAsync();
+        var result = await _productionCompanyService.GetListAsync(pageRequest);
         return Ok(result);
     }
     [HttpGet("GetById")]

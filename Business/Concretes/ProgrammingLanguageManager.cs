@@ -50,9 +50,12 @@ namespace Business.Concretes
             return createdProgrammingLanguageResponse;
         }
 
-        public async Task<IPaginate<GetListProgrammingLanguageResponse>> GetListAsync()
+        public async Task<IPaginate<GetListProgrammingLanguageResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var programmingLanguages = await _programmingLanguageDal.GetListAsync();
+            var programmingLanguages = await _programmingLanguageDal.GetListAsync(
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize
+                );
             var mappedProgrammingLanguages = _mapper.Map<Paginate<GetListProgrammingLanguageResponse>>(programmingLanguages);
             return mappedProgrammingLanguages;
         }

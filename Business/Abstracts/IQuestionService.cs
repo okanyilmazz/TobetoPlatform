@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedQuestionResponse> AddAsync(CreateQuestionRequest createQuestionRequest);
         Task<UpdatedQuestionResponse> UpdateAsync(UpdateQuestionRequest updateQuestionRequest);
         Task<DeletedQuestionResponse> DeleteAsync(DeleteQuestionRequest deleteQuestionRequest);
-        Task<IPaginate<GetListQuestionResponse>> GetListAsync();
+        Task<IPaginate<GetListQuestionResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListQuestionResponse> GetByIdAsync(Guid id);
         Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid Id);
     }

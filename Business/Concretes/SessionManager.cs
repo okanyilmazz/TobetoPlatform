@@ -52,11 +52,13 @@ namespace Business.Concretes
             return deletedSessionResponse;
         }
 
-        public async Task<IPaginate<GetListSessionResponse>> GetListAsync()
+        public async Task<IPaginate<GetListSessionResponse>> GetListAsync(PageRequest pageRequest)
         {
             var session = await _sessionDal.GetListAsync(
-                              include: s => s
-                             .Include(s => s.OccupationClass));
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize,
+                include: s => s
+                .Include(s => s.OccupationClass));
 
 
             var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);

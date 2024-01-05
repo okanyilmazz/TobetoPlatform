@@ -51,9 +51,12 @@ namespace Business.Concretes
             return createdQuestionResponse;
         }
 
-        public async Task<IPaginate<GetListQuestionResponse>> GetListAsync()
+        public async Task<IPaginate<GetListQuestionResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var questions = await _questionDal.GetListAsync();
+            var questions = await _questionDal.GetListAsync(
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize
+                );
             var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(questions);
             return mappedQuestions;
         }

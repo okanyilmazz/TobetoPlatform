@@ -63,9 +63,11 @@ namespace Business.Concretes
             return mappedoccupationClassSurvey;
         }
 
-        public async Task<IPaginate<GetListOccupationClassSurveyResponse>> GetListAsync()
+        public async Task<IPaginate<GetListOccupationClassSurveyResponse>> GetListAsync(PageRequest pageRequest)
         {
             var OccupationClassSurvey = await _occupationClassSurveyDal.GetListAsync(
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize,
                  include: ocs => ocs.
                 Include(ocs => ocs.OccupationClass)
                 .Include(ocs => ocs.Survey));

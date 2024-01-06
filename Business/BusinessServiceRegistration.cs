@@ -17,6 +17,8 @@ public static class BusinessServiceRegistration
 {
     public static IServiceCollection AddBusinessServices(this IServiceCollection services)
     {
+        services.AddScoped<IAuthService, AuthManager>();
+        services.AddScoped<ITokenHelper, JwtHelper>();
         services.AddScoped<IAccountService, AccountManager>();
         services.AddScoped<IAccountAnswerService, AccountAnswerManager>();
         services.AddScoped<IAccountHomeworkService, AccountHomeworkManager>();

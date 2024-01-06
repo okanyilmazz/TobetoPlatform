@@ -55,9 +55,11 @@ public class CountryManager : ICountryService
 
     }
 
-    public async Task<IPaginate<GetListCountryResponse>> GetListAsync()
+    public async Task<IPaginate<GetListCountryResponse>> GetListAsync(PageRequest pageRequest)
     {
-        var Countries = await _countryDal.GetListAsync();
+        var Countries = await _countryDal.GetListAsync(
+        index: pageRequest.PageIndex,
+        size: pageRequest.PageSize);
         var mappedCountries = _mapper.Map<Paginate<GetListCountryResponse>>(Countries);
         return mappedCountries;
     }

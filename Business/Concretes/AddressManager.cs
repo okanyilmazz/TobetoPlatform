@@ -63,13 +63,15 @@ namespace Business.Concretes
             return mappedAddresses;
         }
 
-        public async Task<IPaginate<GetListAddressResponse>> GetListAsync()
+        public async Task<IPaginate<GetListAddressResponse>> GetListAsync(PageRequest pageRequest)
         {
             var address = await _addressDal.GetListAsync(
                 include: a => a
                 .Include(a => a.District)
                 .Include(a => a.City)
-                .Include(a => a.Country));
+                .Include(a => a.Country),
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
             var mappedAddresses = _mapper.Map<Paginate<GetListAddressResponse>>(address);
             return mappedAddresses;
         }

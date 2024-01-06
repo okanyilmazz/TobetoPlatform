@@ -15,6 +15,6 @@ public interface ICountryService
     Task<CreatedCountryResponse> AddAsync(CreateCountryRequest createCountryRequest);
     Task<UpdatedCountryResponse> UpdateAsync(UpdateCountryRequest updateCountryRequest);
     Task<DeletedCountryResponse> DeleteAsync(DeleteCountryRequest deleteCountryRequest);
-    Task<IPaginate<GetListCountryResponse>> GetListAsync();
+    Task<IPaginate<GetListCountryResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListCountryResponse> GetByIdAsync(Guid id);
 }

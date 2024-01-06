@@ -9,6 +9,7 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Validation;
+using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -32,9 +33,9 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
         [HttpGet("GetList")]
-        public async Task<IActionResult> GetListAsync()
+        public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
         {
-            var result = await _countryService.GetListAsync();
+            var result = await _countryService.GetListAsync(pageRequest);
             return Ok(result);
         }
 

@@ -52,11 +52,13 @@ namespace Business.Concretes
             return deletedEducationProgramResponse;
         }
 
-        public async Task<IPaginate<GetListEducationProgramResponse>> GetListAsync()
+        public async Task<IPaginate<GetListEducationProgramResponse>> GetListAsync(PageRequest pageRequest)
         {
             var educationProgram = await _educationProgramDal.GetListAsync(
                 include: ep => ep
-               .Include(ep => ep.EducationProgramLevel));
+                .Include(ep => ep.EducationProgramLevel),
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
 
             var mappedEducationPrograms= _mapper.Map<Paginate<GetListEducationProgramResponse>>(educationProgram);
             return mappedEducationPrograms;

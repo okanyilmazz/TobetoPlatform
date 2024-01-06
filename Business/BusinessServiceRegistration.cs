@@ -17,10 +17,20 @@ public static class BusinessServiceRegistration
 {
     public static IServiceCollection AddBusinessServices(this IServiceCollection services)
     {
-        services.AddScoped<IAuthService, AuthManager>();
-        services.AddScoped<ITokenHelper, JwtHelper>();
-
-        services.AddScoped<ILessonService, LessonManager>();
+        services.AddScoped<IAccountService, AccountManager>();
+        services.AddScoped<IAccountAnswerService, AccountAnswerManager>();
+        services.AddScoped<IAccountHomeworkService, AccountHomeworkManager>();
+        services.AddScoped<IAccountLanguageService, AccountLanguageManager>();
+        services.AddScoped<IAccountLessonService, AccountLessonManager>();
+        services.AddScoped<IAccountOccupationClassService, AccountOccupationClassManager>();
+        services.AddScoped<IAccountSessionService, AccountSessionManager>();
+        services.AddScoped<IAccountSkillService, AccountSkillManager>();
+        services.AddScoped<IAccountSocialMediaService, AccountSocialMediaManager>();
+        services.AddScoped<IAccountUniversityService, AccountUniversityManager>();
+        services.AddScoped<IAddressService, AddressManager>();
+        services.AddScoped<IAnnouncementService, AnnouncementManager>();
+        services.AddScoped<IAnnouncementProjectService, AnnouncementProjectManager>();
+        services.AddScoped<IBlogService, BlogManager>();
         services.AddScoped<ICertificateService, CertificateManager>();
         services.AddScoped<ICityService, CityManager>();
         services.AddScoped<IContactService, ContactManager>();

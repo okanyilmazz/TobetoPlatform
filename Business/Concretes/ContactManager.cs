@@ -57,9 +57,11 @@ namespace Business.Concretes
             return mappedContact;
         }
 
-        public async Task<IPaginate<GetListContactResponse>> GetListAsync()
+        public async Task<IPaginate<GetListContactResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var Contact = await _contactDal.GetListAsync();
+            var Contact = await _contactDal.GetListAsync(
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
             var mappedContact = _mapper.Map<Paginate<GetListContactResponse>>(Contact);
             return mappedContact;
         }

@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedDistrictResponse> AddAsync(CreateDistrictRequest createDistrictRequest);
         Task<DeletedDistrictResponse> DeleteAsync(DeleteDistrictRequest deleteDistrictRequest);
         Task<UpdatedDistrictResponse> UpdateAsync(UpdateDistrictRequest updateDistrictRequest);
-        Task<IPaginate<GetListDistrictResponse>> GetListAsync();
+        Task<IPaginate<GetListDistrictResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListDistrictResponse> GetByIdAsync(Guid id);
     }
 }

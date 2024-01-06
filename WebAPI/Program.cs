@@ -40,9 +40,10 @@ builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().A
 
 builder.Services.AddBusinessServices();
 builder.Services.AddDataAccessServices(builder.Configuration);
-//builder.Services.AddCoreServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
+
 
 
 var app = builder.Build();
@@ -60,8 +61,6 @@ app.UseAuthentication();
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
-app.UseCors();
 
 app.UseAuthorization();
 app.UseCors(opt => opt.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());

@@ -20,7 +20,7 @@ namespace Business.Abstracts
         Task<DeletedDegreeTypeResponse> DeleteAsync(DeleteDegreeTypeRequest deleteDegreeTypeRequest);
         Task<UpdatedDegreeTypeResponse> UpdateAsync(UpdateDegreeTypeRequest updateDegreeTypeRequest);
 
-        Task<IPaginate<GetListDegreeTypeResponse>> GetListAsync();
+        Task<IPaginate<GetListDegreeTypeResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListDegreeTypeResponse> GetByIdAsync(Guid id);
 
     }

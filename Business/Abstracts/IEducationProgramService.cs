@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedEducationProgramResponse> AddAsync(CreateEducationProgramRequest createEducationProgramRequest);
         Task<UpdatedEducationProgramResponse> UpdateAsync(UpdateEducationProgramRequest updateEducationProgramRequest);
         Task<DeletedEducationProgramResponse> DeleteAsync(DeleteEducationProgramRequest deleteEducationProgramRequest);
-        Task<IPaginate<GetListEducationProgramResponse>> GetListAsync();
+        Task<IPaginate<GetListEducationProgramResponse>> GetListAsync(PageRequest pageRequest);
         Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId);
 
     }

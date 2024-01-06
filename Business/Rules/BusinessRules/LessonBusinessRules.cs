@@ -1,30 +1,27 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class LessonBusinessRules : BaseBusinessRules
 {
-    public class LessonBusinessRules : BaseBusinessRules
+    ILessonDal _lessonDal;
+
+    public LessonBusinessRules(ILessonDal lessonDal)
     {
-        ILessonDal _lessonDal;
+        _lessonDal = lessonDal;
+    }
 
-        public LessonBusinessRules(ILessonDal lessonDal)
-        {
-            _lessonDal = lessonDal;
-        }
+    public async Task IsExistsLesson(Guid lessonId)
+    {
+        var result = await _lessonDal.GetAsync(
+            predicate: l => l.Id == lessonId,
+            enableTracking: false);
 
-        public async Task IsExistsLesson(Guid lessonId)
+        if (result == null)
         {
-            var result = await _lessonDal.GetListAsync(l => l.Id == lessonId, enableTracking: false);
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

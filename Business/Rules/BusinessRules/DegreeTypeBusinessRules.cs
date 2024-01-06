@@ -1,5 +1,4 @@
-﻿using System;
-using Business.Messages;
+﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
 
@@ -16,14 +15,13 @@ public class DegreeTypeBusinessRules : BaseBusinessRules
 
     public async Task IsExistsDegreeType(Guid degreeTypeId)
     {
-
-        var result = await _degreeTypeDal.GetAsync(d => d.Id == degreeTypeId, enableTracking: false);
+        var result = await _degreeTypeDal.GetAsync(
+            predicate:d => d.Id == degreeTypeId, 
+            enableTracking: false);
 
         if (result == null)
         {
-            throw new Exception(BusinessMessages.DataNotFound);
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }
-
-

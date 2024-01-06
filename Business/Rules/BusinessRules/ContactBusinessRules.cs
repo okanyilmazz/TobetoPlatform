@@ -1,30 +1,27 @@
-﻿using Business.Dtos.Requests.CreateRequests;
-using Business.Messages;
+﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class ContactBusinessRules : BaseBusinessRules
 {
-    public class ContactBusinessRules : BaseBusinessRules
-    {
-        private readonly IContactDal _contactDal;
+    private readonly IContactDal _contactDal;
 
-        public ContactBusinessRules(IContactDal contactDal)
+    public ContactBusinessRules(IContactDal contactDal)
+    {
+        _contactDal = contactDal;
+    }
+
+    public async Task IsExistsContact(Guid contactId)
+    {
+        var result = await _contactDal.GetAsync(
+            predicate: c => c.Id == contactId,
+            enableTracking: false);
+
+        if (result == null)
         {
-            _contactDal = contactDal;
-        }
-        public async Task IsExistsContact(Guid contactId)
-        {
-            var result = await _contactDal.GetAsync(predicate: c => c.Id == contactId, enableTracking: false);
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

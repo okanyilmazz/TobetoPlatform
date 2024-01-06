@@ -2,24 +2,26 @@
 using Core.Business.Rules;
 using DataAccess.Abstracts;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class AccountOccupationClassBusinessRules : BaseBusinessRules
 {
-    public class AccountOccupationClassBusinessRules : BaseBusinessRules
+    IAccountOccupationClassDal _accountOccupationClassDal;
+
+    public AccountOccupationClassBusinessRules(IAccountOccupationClassDal accountOccupationClassDal)
     {
-        IAccountOccupationClassDal _accountOccupationClassDal;
+        _accountOccupationClassDal = accountOccupationClassDal;
+    }
 
-        public AccountOccupationClassBusinessRules(IAccountOccupationClassDal accountOccupationClassDal)
-        {
-            _accountOccupationClassDal = accountOccupationClassDal;
-        }
+    public async Task IsExistsAccountOccupationClass(Guid accountOccupationClassId)
+    {
+        var result = await _accountOccupationClassDal.GetAsync(
+            predicate: aoc => aoc.Id == accountOccupationClassId,
+            enableTracking: false);
 
-        public async Task IsExistsAccountOccupationClass(Guid accountOccupationClassId)
+        if (result == null)
         {
-            var result = await _accountOccupationClassDal.GetAsync(predicate: aoc => aoc.Id == accountOccupationClassId, enableTracking: false);
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

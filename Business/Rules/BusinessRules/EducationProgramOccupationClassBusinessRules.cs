@@ -1,30 +1,27 @@
-﻿using System;
-using Business.Messages;
+﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using Entities.Concretes;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class EducationProgramOccupationClassBusinessRules : BaseBusinessRules
 {
-	public class EducationProgramOccupationClassBusinessRules : BaseBusinessRules
+    private readonly IEducationProgramOccupationClassDal _educationProgramOccupationClassDal;
+
+    public EducationProgramOccupationClassBusinessRules(IEducationProgramOccupationClassDal educationProgramOccupationClassDal)
     {
-        private readonly IEducationProgramOccupationClassDal _educationProgramOccupationClassDal;
+        _educationProgramOccupationClassDal = educationProgramOccupationClassDal;
+    }
 
-        public EducationProgramOccupationClassBusinessRules(IEducationProgramOccupationClassDal educationProgramOccupationClassDal)
-        {
-            _educationProgramOccupationClassDal = educationProgramOccupationClassDal;
-        }
+    public async Task IsExistsEducationProgramOccupationClass(Guid educationProgramOccupationClassId)
+    {
+        var result = await _educationProgramOccupationClassDal.GetAsync(
+            predicate: e => e.Id == educationProgramOccupationClassId,
+            enableTracking: false);
 
-        public async Task IsExistsEducationProgramOccupationClass(Guid educationProgramOccupationClassId)
+        if (result == null)
         {
-            var result = await _educationProgramOccupationClassDal.GetAsync(
-                predicate: e => e.Id == educationProgramOccupationClassId, enableTracking: false
-                );
-            if (result==null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

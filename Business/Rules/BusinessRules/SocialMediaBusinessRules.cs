@@ -1,9 +1,6 @@
-﻿using System;
-using Business.Messages;
+﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using Entities.Concretes;
 
 namespace Business.Rules;
 
@@ -18,12 +15,13 @@ public class SocialMediaBusinessRules : BaseBusinessRules
 
     public async Task IsExistsSocialMedia(Guid socialMediaId)
     {
-
-        var result = await _socialMediaDal.GetAsync(s => s.Id == socialMediaId, enableTracking: false);
+        var result = await _socialMediaDal.GetAsync(
+            predicate: s => s.Id == socialMediaId,
+            enableTracking: false);
 
         if (result == null)
         {
-            throw new Exception(BusinessMessages.DataNotFound);
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

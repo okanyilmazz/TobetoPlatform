@@ -15,10 +15,13 @@ public class UserBusinessRules : BaseBusinessRules
 
     public async Task IsExistsUser(Guid userId)
     {
-        var result = await _userDal.GetAsync(a => a.Id == userId, enableTracking: false);
+        var result = await _userDal.GetAsync(
+            predicate:a => a.Id == userId, 
+            enableTracking: false);
+
         if (result == null)
         {
-            throw new Exception(BusinessMessages.DataNotFound);
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 
@@ -27,9 +30,10 @@ public class UserBusinessRules : BaseBusinessRules
         var result = await _userDal.GetAsync(
             predicate: a => a.Email == email,
             enableTracking: false);
+
         if (result != null)
         {
-            throw new Exception(BusinessMessages.DataAvailable);
+            throw new BusinessException(BusinessMessages.DataAvailable);
         }
     }
 }

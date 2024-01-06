@@ -1,31 +1,27 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class AccountSocialMediaBusinessRules : BaseBusinessRules
 {
-    public class AccountSocialMediaBusinessRules : BaseBusinessRules
+    IAccountSocialMediaDal _accountSocialMediaDal;
+
+    public AccountSocialMediaBusinessRules(IAccountSocialMediaDal accountSocialMediaDal)
     {
-        IAccountSocialMediaDal _accountSocialMediaDal;
+        _accountSocialMediaDal = accountSocialMediaDal;
+    }
 
-        public AccountSocialMediaBusinessRules(IAccountSocialMediaDal accountSocialMediaDal)
-        {
-            _accountSocialMediaDal = accountSocialMediaDal;
-        }
+    public async Task IsExistsAccountSocialMedia(Guid accountSocialMediaId)
+    {
+        var result = await _accountSocialMediaDal.GetAsync(
+            predicate: a => a.Id == accountSocialMediaId,
+            enableTracking: false);
 
-        public async Task IsExistsAccountSocialMedia(Guid accountSocialMediaId)
+        if (result == null)
         {
-            var result = await _accountSocialMediaDal.GetAsync(a => a.Id == accountSocialMediaId, enableTracking: false);
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

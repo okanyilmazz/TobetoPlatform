@@ -1,33 +1,27 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class BlogBusinessRules : BaseBusinessRules
 {
-    public class BlogBusinessRules : BaseBusinessRules
+    private readonly IBlogDal _blogDal;
+
+    public BlogBusinessRules(IBlogDal blogDal)
     {
-        private readonly IBlogDal _blogDal;
+        _blogDal = blogDal;
+    }
 
-        public BlogBusinessRules(IBlogDal blogDal)
-        {
-            _blogDal = blogDal;
-        }
+    public async Task IsExistsBlog(Guid blogId)
+    {
+        var result = await _blogDal.GetAsync(
+            predicate: b => b.Id == blogId, 
+            enableTracking: false);
 
-        public async Task IsExistsBlog(Guid blogId)
+        if (result == null)
         {
-            var result = await _blogDal.GetAsync(
-                predicate: q => q.Id == blogId, enableTracking: false
-                );
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

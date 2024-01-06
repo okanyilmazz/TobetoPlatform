@@ -50,9 +50,11 @@ namespace Business.Concretes
             return deletedUniversityDepartmentResponse;
         }
 
-        public async Task<IPaginate<GetListUniversityDepartmentResponse>> GetListAsync()
+        public async Task<IPaginate<GetListUniversityDepartmentResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var universityDepartment = await _universityDepartmentDal.GetListAsync();
+            var universityDepartment = await _universityDepartmentDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize);
             var mappedUniversityDepartment = _mapper.Map<Paginate<GetListUniversityDepartmentResponse>>(universityDepartment);
             return mappedUniversityDepartment;
         }

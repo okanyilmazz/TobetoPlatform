@@ -12,8 +12,7 @@ namespace Business.Rules.ValidationRules.FluentValidation.CreateRequestValidator
     {
         public CreateAccountLessonRequestValidator()
         {
-            RuleFor(al => al.AccountId).NotEmpty();
-            RuleFor(al => al.LessonId).NotEmpty();
+           
         }
     }
 }

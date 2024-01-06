@@ -52,9 +52,11 @@ public class SurveyManager : ISurveyService
         return mappedSurvey;
     }
 
-    public async Task<IPaginate<GetListSurveyResponse>> GetListAsync()
+    public async Task<IPaginate<GetListSurveyResponse>> GetListAsync(PageRequest pageRequest)
     {
-        var surveys = await _surveyDal.GetListAsync();
+        var surveys = await _surveyDal.GetListAsync(
+        index: pageRequest.PageIndex,
+        size: pageRequest.PageSize);
         var mappedSurveys = _mapper.Map<Paginate<GetListSurveyResponse>>(surveys);
         return mappedSurveys;
     }

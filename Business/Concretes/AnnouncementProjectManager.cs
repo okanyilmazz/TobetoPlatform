@@ -47,7 +47,7 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
     {
         await _announcementProjectBusinessRules.IsExistsAnnouncementProject(deleteAnnouncementProjectRequest.Id);
 
-        AnnouncementProject announcementProject = await _announcementProjectDal.GetAsync(predicate:a=>a.Id==deleteAnnouncementProjectRequest.Id);
+        AnnouncementProject announcementProject = await _announcementProjectDal.GetAsync(predicate: a => a.Id == deleteAnnouncementProjectRequest.Id);
         AnnouncementProject deletedAnnouncemenProject = await _announcementProjectDal.DeleteAsync(announcementProject);
         DeletedAnnouncementProjectResponse deletedAnnouncementProjectResponse = _mapper.Map<DeletedAnnouncementProjectResponse>(deletedAnnouncemenProject);
         return deletedAnnouncementProjectResponse;
@@ -56,21 +56,23 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
     public async Task<GetListAnnouncementProjectResponse> GetByIdAsync(Guid Id)
     {
         var announcementProject = await _announcementProjectDal.GetAsync(
-            predicate:a=> a.Id == Id,
-            include: ap=> ap
-            .Include(ap=>ap.Announcement)
-            .Include(ap=>ap.Project)
+            predicate: a => a.Id == Id,
+            include: ap => ap
+            .Include(ap => ap.Announcement)
+            .Include(ap => ap.Project)
             );
         var mappedAnnouncementProject = _mapper.Map<GetListAnnouncementProjectResponse>(announcementProject);
         return mappedAnnouncementProject;
     }
 
-    public async Task<IPaginate<GetListAnnouncementProjectResponse>> GetListAsync()
+    public async Task<IPaginate<GetListAnnouncementProjectResponse>> GetListAsync(PageRequest pageRequest)
     {
         var announcementProject = await _announcementProjectDal.GetListAsync(
              include: ap => ap
             .Include(ap => ap.Announcement)
-            .Include(ap => ap.Project));
+            .Include(ap => ap.Project),
+             index: pageRequest.PageIndex,
+             size: pageRequest.PageSize);
         var mappedAnnouncementProject = _mapper.Map<Paginate<GetListAnnouncementProjectResponse>>(announcementProject);
         return mappedAnnouncementProject;
     }

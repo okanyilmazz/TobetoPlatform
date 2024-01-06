@@ -19,7 +19,7 @@ public interface IAccountLessonService
     Task<CreatedAccountLessonResponse> AddAsync(CreateAccountLessonRequest createLessonOfAccountRequest);
     Task<UpdatedAccountLessonResponse> UpdateAsync(UpdateAccountLessonRequest updateLessonOfAccountRequest);
     Task<DeletedAccountLessonResponse> DeleteAsync(DeleteAccountLessonRequest deleteLessonOfAccountRequest);
-    Task<IPaginate<GetListAccountLessonResponse>> GetListAsync();
+    Task<IPaginate<GetListAccountLessonResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListAccountLessonResponse> GetByIdAsync(Guid id);
 
 }

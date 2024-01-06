@@ -1,31 +1,27 @@
-﻿using System;
-using Business.Messages;
+﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using Entities.Concretes;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class OccupationClassSurveyBusinessRules : BaseBusinessRules
 {
-    public class OccupationClassSurveyBusinessRules : BaseBusinessRules
+    private readonly IOccupationClassSurveyDal _occupationClassSurveyDal;
+
+    public OccupationClassSurveyBusinessRules(IOccupationClassSurveyDal occupationClassSurveyDal)
     {
-        private readonly IOccupationClassSurveyDal _occupationClassSurveyDal;
+        _occupationClassSurveyDal = occupationClassSurveyDal;
+    }
 
-        public OccupationClassSurveyBusinessRules(IOccupationClassSurveyDal occupationClassSurveyDal)
+    public async Task IsExistsOccupationClassSurvey(Guid occupationClassSurveyId)
+    {
+        var result = await _occupationClassSurveyDal.GetAsync(
+            predicate: o => o.Id == occupationClassSurveyId,
+            enableTracking: false);
+       
+        if (result == null)
         {
-            _occupationClassSurveyDal = occupationClassSurveyDal;
-        }
-
-        public async Task IsExistsOccupationClassSurvey(Guid occupationClassSurveyId)
-        {
-            var result = await _occupationClassSurveyDal.GetListAsync(
-                predicate: o => o.Id == occupationClassSurveyId
-                , enableTracking: false);
-            if (result.Count == 0)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }
-

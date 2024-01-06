@@ -67,11 +67,13 @@ namespace Business.Concretes
 
         }
 
-        public async Task<IPaginate<GetListDistrictResponse>> GetListAsync()
+        public async Task<IPaginate<GetListDistrictResponse>> GetListAsync(PageRequest pageRequest)
         {
             var district = await _districtDal.GetListAsync(
-                 include: d => d
-                .Include(d => d.City));
+                include: d => d
+                .Include(d => d.City),
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
 
 
             var mappedDistricts = _mapper.Map<Paginate<GetListDistrictResponse>>(district);

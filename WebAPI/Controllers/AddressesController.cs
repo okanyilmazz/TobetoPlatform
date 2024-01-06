@@ -8,6 +8,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Core.DataAccess.Paging;
 
 
 namespace WebAPI.Controllers
@@ -24,9 +25,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetList")]
-        public async Task<IActionResult> GetListAsync()
+        public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
         {
-            var result = await _addressService.GetListAsync();
+            var result = await _addressService.GetListAsync(pageRequest);
             return Ok(result);
         }
 

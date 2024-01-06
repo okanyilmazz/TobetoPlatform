@@ -59,9 +59,11 @@ namespace Business.Concretes
             return updatedCertificateResponse;
         }
 
-        public async Task<IPaginate<GetListCertificateResponse>> GetListAsync()
+        public async Task<IPaginate<GetListCertificateResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var certificate = await _certificateDal.GetListAsync();
+            var certificate = await _certificateDal.GetListAsync(
+             index: pageRequest.PageIndex,
+             size: pageRequest.PageSize);
             var mappedCertificate = _mapper.Map<Paginate<GetListCertificateResponse>>(certificate);
             return mappedCertificate;
         }

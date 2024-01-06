@@ -12,7 +12,7 @@ namespace Business.Abstracts;
 
 public interface ISocialMediaService
 {
-    Task<IPaginate<GetListSocialMediaResponse>> GetListAsync();
+    Task<IPaginate<GetListSocialMediaResponse>> GetListAsync(PageRequest pageRequest);
     Task<IPaginate<GetListSocialMediaResponse>> GetByAccountIdAsync(Guid Id);
     Task<GetListSocialMediaResponse> GetByIdAsync(Guid id);
     Task<CreatedSocialMediaResponse> AddAsync(CreateSocialMediaRequest createSocialMediaRequest);

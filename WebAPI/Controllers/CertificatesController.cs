@@ -6,6 +6,7 @@ using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -30,9 +31,9 @@ public class CertificatesController : Controller
     }
 
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _certificateService.GetListAsync();
+        var result = await _certificateService.GetListAsync(pageRequest);
         return Ok(result);
     }
 

@@ -13,8 +13,6 @@ namespace Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidator
     {
         public UpdateAccountOccupationClassRequestValidator()
         {
-            RuleFor(a => a.AccountId).NotEmpty();
-            RuleFor(a => a.OccupationClassId).NotEmpty();
         }
     }
 }

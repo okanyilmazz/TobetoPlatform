@@ -1,33 +1,27 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class UniversityDepartmentBusinessRules : BaseBusinessRules
 {
-    public class UniversityDepartmentBusinessRules : BaseBusinessRules
+    private readonly IUniversityDepartmentDal _universityDepartmentDal;
+
+    public UniversityDepartmentBusinessRules(IUniversityDepartmentDal universityDepartmentDal)
     {
-        private readonly IUniversityDepartmentDal _universityDepartmentDal;
+        _universityDepartmentDal = universityDepartmentDal;
+    }
 
-        public UniversityDepartmentBusinessRules(IUniversityDepartmentDal universityDepartmentDal)
-        {
-            _universityDepartmentDal = universityDepartmentDal;
-        }
+    public async Task IsExistsUniversityDepartment(Guid universityDepartmentId)
+    {
+        var result = await _universityDepartmentDal.GetAsync(
+            predicate: ud => ud.Id == universityDepartmentId, 
+            enableTracking: false);
 
-        public async Task IsExistsUniversityDepartment(Guid universityDepartmentId)
+        if (result == null)
         {
-            var result = await _universityDepartmentDal.GetAsync(
-                predicate: ud => ud.Id == universityDepartmentId, enableTracking: false
-                );
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

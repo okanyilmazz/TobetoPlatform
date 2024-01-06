@@ -1,31 +1,27 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class ExamQuestionTypeBusinessRules : BaseBusinessRules
 {
-    public class ExamQuestionTypeBusinessRules : BaseBusinessRules
+    IExamQuestionTypeDal _examQuestionTypeDal;
+
+    public ExamQuestionTypeBusinessRules(IExamQuestionTypeDal examQuestionTypeDal)
     {
-        IExamQuestionTypeDal _examQuestionTypeDal;
+        _examQuestionTypeDal = examQuestionTypeDal;
+    }
 
-        public ExamQuestionTypeBusinessRules(IExamQuestionTypeDal examQuestionTypeDal)
+    public async Task IsExistsExamQuestionType(Guid examQuestionTypeId)
+    {
+        var result = await _examQuestionTypeDal.GetAsync(
+            predicate: e => e.Id == examQuestionTypeId,
+            enableTracking: false);
+
+        if (result == null)
         {
-            _examQuestionTypeDal = examQuestionTypeDal;
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
-
-        public async Task IsExistsExamQuestionType(Guid examQuestionTypeId)
-        {
-            var result = await _examQuestionTypeDal.GetListAsync(e => e.Id == examQuestionTypeId, enableTracking: false);
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
-        }
-
     }
 }

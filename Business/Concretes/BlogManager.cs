@@ -59,9 +59,11 @@ namespace Business.Concretes
             return mappedBlogs;
         }
 
-        public async Task<IPaginate<GetListBlogResponse>> GetListAsync()
+        public async Task<IPaginate<GetListBlogResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var blogs = await _blogDal.GetListAsync();
+            var blogs = await _blogDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize);
             var mappedBlogs = _mapper.Map<Paginate<GetListBlogResponse>>(blogs);
             return mappedBlogs;
         }

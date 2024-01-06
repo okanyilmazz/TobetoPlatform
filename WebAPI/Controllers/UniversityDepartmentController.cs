@@ -9,6 +9,7 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Validation;
+using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -25,11 +26,12 @@ public class UniversityDepartmentsController : Controller
     }
 
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _universityDepartmentService.GetListAsync();
+        var result = await _universityDepartmentService.GetListAsync(pageRequest);
         return Ok(result);
     }
+
     [CustomValidation(typeof(CreateUniversityDepartmentRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateUniversityDepartmentRequest createUniversityDepartmentRequest)

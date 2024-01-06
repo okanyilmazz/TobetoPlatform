@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedWorkExperienceResponse> AddAsync(CreateWorkExperienceRequest createWorkExperienceRequest);
         Task<DeletedWorkExperienceResponse> DeleteAsync(DeleteWorkExperienceRequest deleteWorkExperienceRequest);
         Task<UpdatedWorkExperienceResponse> UpdateAsync(UpdateWorkExperienceRequest updateWorkExperienceRequest);
-        Task<IPaginate<GetListWorkExperienceResponse>> GetListAsync();
+        Task<IPaginate<GetListWorkExperienceResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListWorkExperienceResponse> GetByIdAsync(Guid id);
     }
 }

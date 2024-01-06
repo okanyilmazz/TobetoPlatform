@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedCityResponse> AddAsync(CreateCityRequest createCityRequest);
         Task<UpdatedCityResponse> UpdateAsync(UpdateCityRequest updateCityRequest);
         Task<DeletedCityResponse> DeleteAsync(DeleteCityRequest deleteCityRequest);
-        Task<IPaginate<GetListCityResponse>> GetListAsync();
+        Task<IPaginate<GetListCityResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListCityResponse> GetByIdAsync(Guid id);
     }
 }

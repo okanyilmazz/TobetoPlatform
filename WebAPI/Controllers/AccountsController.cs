@@ -4,6 +4,7 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Core.CrossCuttingConcerns.Validation;
+using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -20,9 +21,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("GetList")]
-        public async Task<IActionResult> GetListAsync()
+        public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
         {
-            var result = await _accountService.GetListAsync();
+            var result = await _accountService.GetListAsync(pageRequest);
             return Ok(result);
         }
 

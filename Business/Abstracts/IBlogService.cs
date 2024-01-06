@@ -19,7 +19,7 @@ namespace Business.Abstracts
         Task<CreatedBlogResponse> AddAsync(CreateBlogRequest createBlogRequest);
         Task<UpdatedBlogResponse> UpdateAsync(UpdateBlogRequest updateBlogRequest);
         Task<DeletedBlogResponse> DeleteAsync(DeleteBlogRequest deleteBlogRequest);
-        Task<IPaginate<GetListBlogResponse>> GetListAsync();
+        Task<IPaginate<GetListBlogResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListBlogResponse> GetByIdAsync(Guid Id);
     }
 }

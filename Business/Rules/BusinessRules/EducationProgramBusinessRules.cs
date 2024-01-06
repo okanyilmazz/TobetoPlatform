@@ -17,10 +17,12 @@ public class EducationProgramBusinessRules : BaseBusinessRules
     public async Task IsExistsEducationProgram(Guid educationProgramId)
     {
         var result = await _educationProgramDal.GetAsync(
-        predicate: ep => ep.Id == educationProgramId, enableTracking: false);
-        if (result==null)
+        predicate: ep => ep.Id == educationProgramId,
+        enableTracking: false);
+
+        if (result == null)
         {
-            throw new Exception(BusinessMessages.DataNotFound);
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 

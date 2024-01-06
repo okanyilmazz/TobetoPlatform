@@ -6,20 +6,14 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Abstracts
+namespace Business.Abstracts;
+
+public interface IEducationProgramProgrammingLanguageService
 {
-    public interface IEducationProgramProgrammingLanguageService
-    {
-        Task<CreatedEducationProgramProgrammingLanguageResponse> AddAsync(CreateEducationProgramProgrammingLanguageRequest createEducationProgramProgrammingLanguageRequest);
-        Task<DeletedEducationProgramProgrammingLanguageResponse> DeleteAsync(DeleteEducationProgramProgrammingLanguageRequest deleteEducationProgramProgrammingLanguageRequest);
-        Task<UpdatedEducationProgramProgrammingLanguageResponse> UpdateAsync(UpdateEducationProgramProgrammingLanguageRequest updateEducationProgramProgrammingLanguageRequest);
-        Task<IPaginate<GetListEducationProgramProgrammingLanguageResponse>> GetListAsync();
-        Task<GetListEducationProgramProgrammingLanguageResponse> GetByIdAsync(Guid id);
-    }
+    Task<CreatedEducationProgramProgrammingLanguageResponse> AddAsync(CreateEducationProgramProgrammingLanguageRequest createEducationProgramProgrammingLanguageRequest);
+    Task<DeletedEducationProgramProgrammingLanguageResponse> DeleteAsync(DeleteEducationProgramProgrammingLanguageRequest deleteEducationProgramProgrammingLanguageRequest);
+    Task<UpdatedEducationProgramProgrammingLanguageResponse> UpdateAsync(UpdateEducationProgramProgrammingLanguageRequest updateEducationProgramProgrammingLanguageRequest);
+    Task<IPaginate<GetListEducationProgramProgrammingLanguageResponse>> GetListAsync(PageRequest pageRequest);
+    Task<GetListEducationProgramProgrammingLanguageResponse> GetByIdAsync(Guid id);
 }

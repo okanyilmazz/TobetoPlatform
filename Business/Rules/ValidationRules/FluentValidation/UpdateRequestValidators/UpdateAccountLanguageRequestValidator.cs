@@ -12,9 +12,6 @@ namespace Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidator
     {
         public UpdateAccountLanguageRequestValidator()
         {
-            RuleFor(al => al.AccountId).NotEmpty();
-            RuleFor(al => al.LanguageId).NotEmpty();
-            RuleFor(al => al.LanguageLevelId).NotEmpty();
         }
     }
 }

@@ -19,6 +19,6 @@ namespace Business.Abstracts
         Task<CreatedUniversityResponse> AddAsync(CreateUniversityRequest createUniversityRequest);
         Task<UpdatedUniversityResponse> UpdateAsync(UpdateUniversityRequest updateUniversityRequest);
         Task<DeletedUniversityResponse> DeleteAsync(DeleteUniversityRequest deleteUniversityRequest);
-        Task<IPaginate<GetListUniversityResponse>> GetListAsync();
+        Task<IPaginate<GetListUniversityResponse>> GetListAsync(PageRequest pageRequest);
     }
 }

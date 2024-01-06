@@ -1,20 +1,16 @@
-﻿using Entities.Concretes;
+﻿using Core.Entities;
+using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Contexts;
 
 public class TobetoPlatformContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
-
-
+    public DbSet<OperationClaim> OperationClaims { get; set; }
+    public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
     public DbSet<Skill> Skills { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
     public DbSet<AccountAnswer> AccountAnswers { get; set; }
@@ -70,10 +66,11 @@ public class TobetoPlatformContext : DbContext
     public DbSet<ExamQuestion> ExamQuestions { get; set; }
 
 
+
     public TobetoPlatformContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)
     {
         Configuration = configuration;
-        //Database.EnsureCreated();
+        Database.EnsureCreated();
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

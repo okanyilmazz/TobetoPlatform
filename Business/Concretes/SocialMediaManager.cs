@@ -63,9 +63,11 @@ public class SocialMediaManager : ISocialMediaService
         return mappedSocialMedia;
     }
 
-    public async Task<IPaginate<GetListSocialMediaResponse>> GetListAsync()
+    public async Task<IPaginate<GetListSocialMediaResponse>> GetListAsync(PageRequest pageRequest)
     {
-        var socialMedias = await _socialMediaDal.GetListAsync();
+        var socialMedias = await _socialMediaDal.GetListAsync(
+        index:pageRequest.PageIndex,
+        size: pageRequest.PageSize);
         var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMedias);
         return mappedSocialMedias;
     }

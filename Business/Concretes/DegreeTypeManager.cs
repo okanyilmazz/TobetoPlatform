@@ -60,9 +60,11 @@ namespace Business.Concretes
 
         }
 
-        public async Task<IPaginate<GetListDegreeTypeResponse>> GetListAsync()
+        public async Task<IPaginate<GetListDegreeTypeResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var degreeTypes = await _degreeTypeDal.GetListAsync();
+            var degreeTypes = await _degreeTypeDal.GetListAsync(
+                index: pageRequest.PageIndex,
+                size: pageRequest.PageSize);
             var mappeddegreeTypes = _mapper.Map<Paginate<GetListDegreeTypeResponse>>(degreeTypes);
             return mappeddegreeTypes;
         }

@@ -7,17 +7,13 @@ using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
 
-namespace Business.Abstracts
+namespace Business.Abstracts;
+
+public interface IEducationProgramLessonService
 {
-    public interface IEducationProgramLessonService
-    {
-        Task<CreatedEducationProgramLessonResponse> AddAsync(CreateEducationProgramLessonRequest createEducationProgramLessonRequest);
-        Task<UpdatedEducationProgramLessonResponse> UpdateAsync(UpdateEducationProgramLessonRequest updateEducationProgramLessonRequest);
-        Task<DeletedEducationProgramLessonResponse> DeleteAsync(DeleteEducationProgramLessonRequest deleteEducationProgramLessonRequest);
-        Task<IPaginate<GetListEducationProgramLessonResponse>> GetListAsync();
-        Task<GetListEducationProgramLessonResponse> GetByIdAsync(Guid id);
-
-
-
-    }
+    Task<CreatedEducationProgramLessonResponse> AddAsync(CreateEducationProgramLessonRequest createEducationProgramLessonRequest);
+    Task<UpdatedEducationProgramLessonResponse> UpdateAsync(UpdateEducationProgramLessonRequest updateEducationProgramLessonRequest);
+    Task<DeletedEducationProgramLessonResponse> DeleteAsync(DeleteEducationProgramLessonRequest deleteEducationProgramLessonRequest);
+    Task<IPaginate<GetListEducationProgramLessonResponse>> GetListAsync(PageRequest pageRequest);
+    Task<GetListEducationProgramLessonResponse> GetByIdAsync(Guid id);
 }

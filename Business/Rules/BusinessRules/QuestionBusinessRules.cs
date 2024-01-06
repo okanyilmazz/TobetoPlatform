@@ -2,26 +2,26 @@
 using Core.Business.Rules;
 using DataAccess.Abstracts;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class QuestionBusinessRules : BaseBusinessRules
 {
-    public class QuestionBusinessRules :BaseBusinessRules
+    private readonly IQuestionDal _questionDal;
 
+    public QuestionBusinessRules(IQuestionDal questionDal)
     {
-        private readonly IQuestionDal _questionDal;
+        _questionDal = questionDal;
+    }
 
-        public QuestionBusinessRules(IQuestionDal questionDal)
-        {
-            _questionDal = questionDal;
-        }
+    public async Task IsExistsQuestion(Guid questionId)
+    {
+        var result = await _questionDal.GetAsync(
+            predicate: q => q.Id == questionId,
+            enableTracking: false);
 
-        public async Task IsExistsQuestion(Guid questionId)
+        if (result == null)
         {
-            var result = await _questionDal.GetListAsync(
-                predicate: q => q.Id == questionId, enableTracking: false);
-            if (result.Count == 0)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
+            throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
 }

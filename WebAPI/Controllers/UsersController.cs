@@ -5,6 +5,7 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Validation;
+using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -21,9 +22,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _userService.GetListAsync();
+        var result = await _userService.GetListAsync(pageRequest);
         return Ok(result);
     }
 

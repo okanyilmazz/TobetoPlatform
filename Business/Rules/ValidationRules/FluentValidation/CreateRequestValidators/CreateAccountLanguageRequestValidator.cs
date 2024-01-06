@@ -12,9 +12,7 @@ namespace Business.Rules.ValidationRules.FluentValidation.CreateRequestValidator
     {
         public CreateAccountLanguageRequestValidator()
         {
-            RuleFor(al => al.AccountId).NotEmpty();
-            RuleFor(al => al.LanguageId).NotEmpty();
-            RuleFor(al => al.LanguageLevelId).NotEmpty();
+       
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Core.DataAccess.Repositories;
+using Core.Entities;
 using DataAccess.Abstracts;
 using DataAccess.Contexts;
-using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +15,17 @@ namespace DataAccess.Concretes
         public EfUserDal(TobetoPlatformContext context) : base(context)
         {
         }
+
+        public async Task<List<OperationClaim>> GetClaims(Core.Entities.User user)
+        {
+
+            var result = from operationClaim in Context.OperationClaims
+                         join userOperationClaim in Context.UserOperationClaims
+                             on operationClaim.Id equals userOperationClaim.OperationClaimId
+                         where userOperationClaim.UserId == user.Id
+                         select new OperationClaim { Id = operationClaim.Id, Name = operationClaim.Name };
+            return result.ToList();
+        }
+
     }
 }

@@ -6,21 +6,14 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Abstracts
+namespace Business.Abstracts;
+
+public interface IAccountSessionService
 {
-    public interface IAccountSessionService
-    {
-        Task<CreatedAccountSessionResponse> AddAsync(CreateAccountSessionRequest createAccountSessionRequest);
-        Task<UpdatedAccountSessionResponse> UpdateAsync(UpdateAccountSessionRequest updateAccountSessionRequest);
-        Task<DeletedAccountSessionResponse> DeleteAsync(DeleteAccountSessionRequest deleteAccountSessionRequest);
-        Task<IPaginate<GetListAccountSessionResponse>> GetListAsync();
-        Task<GetListAccountSessionResponse> GetByIdAsync(Guid id);
-
-    }
+    Task<CreatedAccountSessionResponse> AddAsync(CreateAccountSessionRequest createAccountSessionRequest);
+    Task<UpdatedAccountSessionResponse> UpdateAsync(UpdateAccountSessionRequest updateAccountSessionRequest);
+    Task<DeletedAccountSessionResponse> DeleteAsync(DeleteAccountSessionRequest deleteAccountSessionRequest);
+    Task<IPaginate<GetListAccountSessionResponse>> GetListAsync(PageRequest pageRequest);
+    Task<GetListAccountSessionResponse> GetByIdAsync(Guid id);
 }

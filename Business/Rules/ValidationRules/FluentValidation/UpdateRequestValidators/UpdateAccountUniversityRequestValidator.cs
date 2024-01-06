@@ -12,11 +12,8 @@ namespace Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidator
     {
         public UpdateAccountUniversityRequestValidator()
         {
-            RuleFor(au => au.AccountId).NotEmpty();
-            RuleFor(au => au.DegreeTypeId).NotEmpty();
-            RuleFor(au => au.UniversityId).NotEmpty();
-            RuleFor(au => au.UniversityDepartmentId).NotEmpty();
             RuleFor(au => au.StartDate).NotEmpty();
+            RuleFor(au => au.StartDate).LessThan(au => au.EndDate);
             RuleFor(au => au.IsEducationActive).NotEmpty();
         }
     }

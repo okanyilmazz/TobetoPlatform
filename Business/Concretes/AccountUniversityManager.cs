@@ -61,9 +61,11 @@ public class AccountUniversityManager : IAccountUniversityService
         return mappedAccountUniversitie;
     }
 
-    public async Task<IPaginate<GetListAccountUniversityResponse>> GetListAsync()
+    public async Task<IPaginate<GetListAccountUniversityResponse>> GetListAsync(PageRequest pageRequest)
     {
         var accountUniversities = await _accountUniversityDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize,
             include: au => au
             .Include(au => au.University)
             .Include(au => au.DegreeType)

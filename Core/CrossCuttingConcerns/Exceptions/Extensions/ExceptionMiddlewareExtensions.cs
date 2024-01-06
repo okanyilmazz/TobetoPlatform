@@ -1,4 +1,5 @@
 ﻿using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Core.CrossCuttingConcerns.Logging.SeriLog;
 using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ public static class ExceptionMiddlewareExtensions
     public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)
         => app.UseMiddleware<ExceptionMiddleware>().
         UseMiddleware<ValidationMiddleware>().
-        UseMiddleware<CacheMiddleware>();
+        UseMiddleware<CacheMiddleware>().
+        UseMiddleware<SeriLogMiddleware>();
 }

@@ -27,7 +27,7 @@ public class ExamOccupationClassesController : ControllerBase
         return Ok(result);
     }
 
-    [Cache)]
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {

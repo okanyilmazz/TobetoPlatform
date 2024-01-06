@@ -6,6 +6,7 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,8 @@ namespace Business.Abstracts
         Task<CreatedUserResponse> AddAsync(CreateUserRequest createUserRequest);
         Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest);
         Task<DeletedUserResponse> DeleteAsync(DeleteUserRequest deleteUserRequest);
+        Task<GetUserResponse> GetByIdAsync(Guid? id);
+        Task<GetUserResponse> GetByMailAsync(string email);
+        Task<List<OperationClaim>> GetClaimsAsync(User user);
     }
 }

@@ -9,8 +9,8 @@ using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
+using Core.Entities;
 using DataAccess.Abstracts;
-using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +67,25 @@ namespace Business.Concretes
             return mappedList;
         }
 
+        public async Task<GetUserResponse> GetByIdAsync(Guid? id)
+        {
+            User user = await _userDal.GetAsync(predicate: u => u.Id == id);
+            GetUserResponse getUserResponse = _mapper.Map<GetUserResponse>(user);
+            return getUserResponse;
+        }
 
+        public async Task<GetUserResponse> GetByMailAsync(string email)
+        {
+            var getUser = await _userDal.GetAsync(u => u.Email == email);
+            GetUserResponse getUserResponse = _mapper.Map<GetUserResponse>(getUser);
+            return getUserResponse;
+        }
+
+        public async Task<List<OperationClaim>> GetClaimsAsync(User user)
+        {
+            return await _userDal.GetClaims(user);
+
+        }
     }
 }
 

@@ -1,12 +1,13 @@
-using Autofac.Extensions.DependencyInjection;
-using Autofac;
 using Business;
-using Business.DependencyResolvers.Autofac;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Hosting;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
+using Core.Utilities.Security.JWT;
+using Core.Utilities.Security.Encryption;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,20 +18,32 @@ builder.Services.AddControllers()
             options.JsonSerializerOptions.ReferenceHandler =
             ReferenceHandler.IgnoreCycles;
         });
+var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidIssuer = tokenOptions.Issuer,
+            ValidAudience = tokenOptions.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+        };
+    });
+
+
+builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
+
 builder.Services.AddBusinessServices();
 builder.Services.AddDataAccessServices(builder.Configuration);
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//builder.Services.AddCoreServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Host
-//.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-//.ConfigureContainer<ContainerBuilder>(builder =>
-//{
-//    builder.RegisterModule(new AutofacBusinessModule());
-//});
 
 var app = builder.Build();
 
@@ -43,7 +56,15 @@ if (app.Environment.IsDevelopment())
 
 app.ConfigureCustomExceptionMiddleware();
 
+app.UseAuthentication();
+
+app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseCors();
+
 app.UseAuthorization();
+app.UseCors(opt => opt.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 app.MapControllers();
 

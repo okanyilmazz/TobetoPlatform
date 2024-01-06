@@ -7,7 +7,7 @@ using Business.Dtos.Responses.DeletedResponses;
 using Business.Dtos.Responses.GetListResponses;
 using Business.Dtos.Responses.UpdatedResponses;
 using Core.DataAccess.Paging;
-using Entities.Concretes;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +28,10 @@ namespace Business.Profiles
 
             CreateMap<User, DeleteUserRequest>().ReverseMap();
             CreateMap<User, DeletedUserResponse>().ReverseMap();
+
+            CreateMap<User, LoginAuthRequest>().ReverseMap();
+            CreateMap<User, RegisterAuthRequest>().ReverseMap();
+            CreateMap<User, GetUserResponse>().ReverseMap();
 
             CreateMap<User,GetListUserResponse>().ReverseMap();
             CreateMap<IPaginate<User>, Paginate<GetListUserResponse>>().ReverseMap();

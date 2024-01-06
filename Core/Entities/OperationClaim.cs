@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Utilities.Results
+namespace Core.Entities
 {
-    public interface IDataResult<T> : IResult
+    public class OperationClaim : Entity<Guid>
     {
-        T Data { get; }
-
+        public string Name { get; set; }
     }
 }
+

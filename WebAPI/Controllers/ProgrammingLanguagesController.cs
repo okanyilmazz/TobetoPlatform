@@ -5,6 +5,8 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,8 @@ public class ProgrammingLanguagesController : ControllerBase
         _programmingLanguageService = programmingLanguageService;
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
@@ -30,6 +34,9 @@ public class ProgrammingLanguagesController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync([FromQuery] Guid id)
@@ -38,6 +45,9 @@ public class ProgrammingLanguagesController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("ProgrammingLanguages.Get")]
     [CustomValidation(typeof(CreateProgrammingLanguageRequestValidator))]
     [HttpPost("Add")]
@@ -47,6 +57,9 @@ public class ProgrammingLanguagesController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("ProgrammingLanguages.Get")]
     [CustomValidation(typeof(UpdateProgrammingLanguageRequestValidator))]
     [HttpPost("Update")]
@@ -56,6 +69,9 @@ public class ProgrammingLanguagesController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("ProgrammingLanguages.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteProgrammingLanguageRequest deleteProgrammingLanguageRequest)

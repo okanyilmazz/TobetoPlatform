@@ -5,6 +5,8 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,8 @@ public class AccountHomeworksController : ControllerBase
         _accountHomeworkService = accountHomeworkService;
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
@@ -30,6 +34,9 @@ public class AccountHomeworksController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
@@ -38,6 +45,9 @@ public class AccountHomeworksController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("AccountHomeworks.Get")]
     [CustomValidation(typeof(CreateAccountHomeworkRequestValidator))]
     [HttpPost("Add")]
@@ -48,6 +58,8 @@ public class AccountHomeworksController : ControllerBase
     }
 
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("AccountHomeworks.Get")]
     [CustomValidation(typeof(UpdateAccountHomeworkRequestValidator))]
     [HttpPost("Delete")]
@@ -58,6 +70,8 @@ public class AccountHomeworksController : ControllerBase
     }
 
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("AccountHomeworks.Get")]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountHomeworkRequest updateAccountHomeworkRequest)

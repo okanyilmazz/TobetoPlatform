@@ -5,6 +5,8 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +24,8 @@ public class AnnouncementsController : ControllerBase
         _announcementService = announcementService;
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync()
@@ -30,6 +34,9 @@ public class AnnouncementsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid Id)
@@ -38,6 +45,9 @@ public class AnnouncementsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("Announcements.Get")]
     [CustomValidation(typeof(CreateAnnouncementRequestValidator))]
     [HttpPost("Add")]
@@ -47,6 +57,9 @@ public class AnnouncementsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("Announcements.Get")]
     [CustomValidation(typeof(UpdateAnnouncementRequestValidator))]
     [HttpPost("Update")]
@@ -56,6 +69,9 @@ public class AnnouncementsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("Announcements.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteAnnouncementRequest deleteAnnouncementRequest)

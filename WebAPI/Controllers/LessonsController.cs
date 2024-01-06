@@ -5,6 +5,8 @@ using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +24,8 @@ public class LessonsController : ControllerBase
         _lessonService = lessonService;
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
@@ -30,6 +34,9 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetByEducationProgramId")]
     public async Task<IActionResult> GetByEducationProgramIdAsync([FromQuery] Guid id)
@@ -38,6 +45,9 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetByAccountId")]
     public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid id)
@@ -45,6 +55,10 @@ public class LessonsController : ControllerBase
         var result = await _lessonService.GetByAccountIdAsync(id);
         return Ok(result);
     }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -52,6 +66,9 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("Lessons.Get")]
     [CustomValidation(typeof(CreateLessonRequestValidator))]
     [HttpPost("Add")]
@@ -61,6 +78,9 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("Lessons.Get")]
     [CustomValidation(typeof(UpdateLessonRequestValidator))]
     [HttpPost("Update")]
@@ -70,6 +90,9 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("Lessons.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteLessonRequest deleteLessonRequest)

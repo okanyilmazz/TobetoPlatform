@@ -3,6 +3,8 @@ using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,8 @@ public class EducationProgramOccupationClassesController : ControllerBase
         _educationProgramOccupationClassService = educationProgramOccupationClassService;
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
@@ -26,6 +30,10 @@ public class EducationProgramOccupationClassesController : ControllerBase
         var result = await _educationProgramOccupationClassService.GetListAsync(pageRequest);
         return Ok(result);
     }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
@@ -34,6 +42,9 @@ public class EducationProgramOccupationClassesController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("EducationProgramOccupationClasses.Get")]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateEducationProgramOccupationClassRequest createEducationProgramOccupationClassRequest)
@@ -42,6 +53,9 @@ public class EducationProgramOccupationClassesController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("EducationProgramOccupationClasses.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteEducationProgramOccupationClassRequest deleteEducationProgramOccupationClassRequest)
@@ -50,6 +64,9 @@ public class EducationProgramOccupationClassesController : ControllerBase
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("EducationProgramOccupationClasses.Get")]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateEducationProgramOccupationClassRequest updateEducationProgramOccupationClassRequest)

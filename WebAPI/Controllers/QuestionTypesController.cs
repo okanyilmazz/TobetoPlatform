@@ -4,6 +4,8 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +23,8 @@ public class QuestionTypesController : Controller
         _questionTypeService = questionTypeService;
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
@@ -29,6 +33,9 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("QuestionTypes.Get")]
     [CustomValidation(typeof(CreateQuestionTypeRequestValidator))]
     [HttpPost("Add")]
@@ -38,6 +45,9 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("QuestionTypes.Get")]
     [CustomValidation(typeof(UpdateQuestionTypeRequestValidator))]
     [HttpPost("Update")]
@@ -47,6 +57,9 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("QuestionTypes.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteQuestionTypeRequest deleteQuestionTypeRequest)

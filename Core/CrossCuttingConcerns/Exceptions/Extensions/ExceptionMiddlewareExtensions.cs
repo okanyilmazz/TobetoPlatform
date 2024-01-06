@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Core.CrossCuttingConcerns.Caching.Microsoft;
+using Microsoft.AspNetCore.Builder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Core.CrossCuttingConcerns.Exceptions.Extensions;
 public static class ExceptionMiddlewareExtensions
 {
     public static void ConfigureCustomExceptionMiddleware(this IApplicationBuilder app)
-        => app.UseMiddleware<ExceptionMiddleware>().UseMiddleware<ValidationMiddleware>();
+        => app.UseMiddleware<ExceptionMiddleware>().
+        UseMiddleware<ValidationMiddleware>().
+        UseMiddleware<CacheMiddleware>();
 }

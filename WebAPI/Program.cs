@@ -1,23 +1,21 @@
 using Business;
-using DataAccess;
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
-using Core.Utilities.Security.JWT;
 using Core.Utilities.Security.Encryption;
+using Core.Utilities.Security.JWT;
+using DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Core;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler =
             ReferenceHandler.IgnoreCycles;
         });
+
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -42,29 +40,21 @@ builder.Services.AddBusinessServices();
 builder.Services.AddDataAccessServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
-
 
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.ConfigureCustomExceptionMiddleware();
-
 app.UseAuthentication();
-
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.ConfigureCustomExceptionMiddleware();
 app.UseAuthorization();
-app.UseCors(opt => opt.WithOrigins().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
-
+app.UseCors();
 app.MapControllers();
-
 app.Run();

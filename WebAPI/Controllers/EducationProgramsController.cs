@@ -4,6 +4,7 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ public class EducationProgramsController : ControllerBase
         _educationProgramService = EducationProgramService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -28,6 +30,7 @@ public class EducationProgramsController : ControllerBase
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetListByOccupationClassId")]
     public async Task<IActionResult> GetByOccupationClassId([FromQuery] Guid id)
     {
@@ -35,6 +38,7 @@ public class EducationProgramsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationPrograms.Get")]
     [CustomValidation(typeof(CreateEducationProgramRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateEducationProgramRequest createEducationProgramRequest)
@@ -43,6 +47,7 @@ public class EducationProgramsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationPrograms.Get")]
     [CustomValidation(typeof(UpdateEducationProgramRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateEducationProgramRequest updateEducationProgramRequest)
@@ -51,6 +56,7 @@ public class EducationProgramsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationPrograms.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteEducationProgramRequest deleteEducationProgramRequest)
     {

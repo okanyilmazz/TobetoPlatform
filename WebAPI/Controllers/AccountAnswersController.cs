@@ -4,6 +4,7 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ public class AccountAnswersController : ControllerBase
         _accountAnswersService = accountAnswersService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -28,7 +30,7 @@ public class AccountAnswersController : ControllerBase
         return Ok(result);
     }
 
-
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -36,7 +38,7 @@ public class AccountAnswersController : ControllerBase
         return Ok(result);
     }
 
-
+    [CacheRemove("AccountAnswers.Get")]
     [CustomValidation(typeof(CreateAccountAnswerRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountAnswerRequest createAccountAnswerRequest)
@@ -47,6 +49,7 @@ public class AccountAnswersController : ControllerBase
 
 
 
+    [CacheRemove("AccountAnswers.Get")]
     [CustomValidation(typeof(UpdateAccountAnswerRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountAnswerRequest updateAccountAnswerRequest)
@@ -56,6 +59,7 @@ public class AccountAnswersController : ControllerBase
     }
 
 
+    [CacheRemove("AccountAnswers.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountAnswerRequest deleteAccountAnswerRequest)
     {

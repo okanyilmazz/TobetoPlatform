@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Abstracts;
+﻿using Business.Abstracts;
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
+[ApiController]
 public class QuestionTypesController : Controller
 {
     IQuestionTypeService _questionTypeService;
@@ -25,6 +21,7 @@ public class QuestionTypesController : Controller
         _questionTypeService = questionTypeService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -32,6 +29,7 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("QuestionTypes.Get")]
     [CustomValidation(typeof(CreateQuestionTypeRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateQuestionTypeRequest createQuestionTypeRequest)
@@ -40,6 +38,7 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("QuestionTypes.Get")]
     [CustomValidation(typeof(UpdateQuestionTypeRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateQuestionTypeRequest updateQuestionTypeRequest)
@@ -48,6 +47,7 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("QuestionTypes.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteQuestionTypeRequest deleteQuestionTypeRequest)
     {

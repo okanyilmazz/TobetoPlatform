@@ -2,13 +2,13 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Core.CrossCuttingConcerns.Caching;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
+[ApiController]
 public class ExamResultsController : Controller
 {
     IExamResultService _examResultService;
@@ -17,6 +17,7 @@ public class ExamResultsController : Controller
         _examResultService = examResultService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync()
     {
@@ -24,6 +25,7 @@ public class ExamResultsController : Controller
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -31,6 +33,7 @@ public class ExamResultsController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("ExamResults.Get")]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateExamResultRequest createExamResultsRequest)
     {
@@ -38,6 +41,7 @@ public class ExamResultsController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("ExamResults.Get")]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateExamResultRequest updateExamResultRequest)
     {
@@ -45,6 +49,7 @@ public class ExamResultsController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("ExamResults.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteExamResultRequest deleteExamResultRequest)
     {

@@ -2,6 +2,7 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Core.CrossCuttingConcerns.Caching;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -17,6 +18,7 @@ public class EducationProgramLevelsController : ControllerBase
         _educationProgramLevelService = educationProgramLevelService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync()
     {
@@ -24,6 +26,7 @@ public class EducationProgramLevelsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationProgramLevels.Get")]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateEducationProgramLevelRequest createEducationProgramLevelRequest)
     {
@@ -31,6 +34,7 @@ public class EducationProgramLevelsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationProgramLevels.Get")]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateEducationProgramLevelRequest updateEducationProgramLevelRequest)
     {
@@ -38,6 +42,7 @@ public class EducationProgramLevelsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationProgramLevels.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteEducationProgramLevelRequest deleteEducationProgramLevelRequest)
     {

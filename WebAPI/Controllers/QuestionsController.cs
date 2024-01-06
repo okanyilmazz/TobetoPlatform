@@ -3,6 +3,7 @@ using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ public class QuestionsController : ControllerBase
         _questionService = questionService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -27,6 +29,7 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetByExamId")]
     public async Task<IActionResult> GetByExamIdAsync(Guid Id)
     {
@@ -34,6 +37,7 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -41,6 +45,7 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Questions.Get")]
     [CustomValidation(typeof(CreateQuestionRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateQuestionRequest createQuestionRequest)
@@ -49,6 +54,7 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Questions.Get")]
     [CustomValidation(typeof(UpdateQuestionRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateQuestionRequest updateQuestionRequest)
@@ -57,6 +63,7 @@ public class QuestionsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Questions.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteQuestionRequest deleteQuestionRequest)
     {

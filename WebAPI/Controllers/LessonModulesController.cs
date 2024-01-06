@@ -4,6 +4,7 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -16,11 +17,12 @@ public class LessonModulesController : ControllerBase
 {
     ILessonModuleService _lessonModuleService;
 
-    public LessonModulesController(ILessonModuleService lessonsModuleService)  
+    public LessonModulesController(ILessonModuleService lessonsModuleService)
     {
         _lessonModuleService = lessonsModuleService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -28,6 +30,7 @@ public class LessonModulesController : ControllerBase
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -35,6 +38,7 @@ public class LessonModulesController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("LessonModules.Get")]
     [CustomValidation(typeof(CreateLessonModuleRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLessonModuleRequest createLessonModuleRequest)
@@ -43,6 +47,7 @@ public class LessonModulesController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("LessonModules.Get")]
     [CustomValidation(typeof(UpdateLessonModuleRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateLessonModuleRequest updateLessonModuleRequest)
@@ -51,6 +56,7 @@ public class LessonModulesController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("LessonModules.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteLessonModuleRequest deleteLessonModuleRequest)
     {

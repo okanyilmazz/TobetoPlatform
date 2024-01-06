@@ -4,6 +4,7 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ public class SurveysController : ControllerBase
         _surveyService = examService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -28,6 +30,7 @@ public class SurveysController : ControllerBase
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -35,6 +38,7 @@ public class SurveysController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Surveys.Get")]
     [CustomValidation(typeof(CreateSurveyRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateSurveyRequest createSurveyRequest)
@@ -43,6 +47,7 @@ public class SurveysController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Surveys.Get")]
     [CustomValidation(typeof(UpdateSurveyRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateSurveyRequest updateSurveyRequest)
@@ -51,6 +56,7 @@ public class SurveysController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Surveys.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteSurveyRequest deleteSurveyRequest)
     {

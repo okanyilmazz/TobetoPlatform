@@ -2,6 +2,7 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
+using Core.CrossCuttingConcerns.Caching;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ public class EducationProgramProgrammingLanguagesController : ControllerBase
         _educationProgramProgrammingLanguageService = educationProgramProgrammingLanguageservice;
     }
 
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -25,12 +27,15 @@ public class EducationProgramProgrammingLanguagesController : ControllerBase
         return Ok(result);
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
         var result = await _educationProgramProgrammingLanguageService.GetListAsync(pageRequest);
         return Ok(result);
     }
+
+    [CacheRemove("EducationProgramProgrammingLanguages.Get")]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateEducationProgramProgrammingLanguageRequest CreateEducationProgramProgrammingLanguageRequest)
     {
@@ -38,6 +43,7 @@ public class EducationProgramProgrammingLanguagesController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationProgramProgrammingLanguages.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteEducationProgramProgrammingLanguageRequest deleteEducationProgramProgrammingLanguageRequest)
     {
@@ -45,6 +51,7 @@ public class EducationProgramProgrammingLanguagesController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("EducationProgramProgrammingLanguages.Get")]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateEducationProgramProgrammingLanguageRequest updateEducationProgramProgrammingLanguageRequest)
     {

@@ -3,6 +3,7 @@ using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ public class SessionsController : Controller
         _sessionService = sessionService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -27,6 +29,7 @@ public class SessionsController : Controller
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid id)
     {
@@ -34,6 +37,7 @@ public class SessionsController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("Sessions.Get")]
     [CustomValidation(typeof(CreateSessionRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateSessionRequest createSessionRequest)
@@ -42,6 +46,7 @@ public class SessionsController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("Sessions.Get")]
     [CustomValidation(typeof(UpdateSessionRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateSessionRequest updateSessionRequest)
@@ -50,6 +55,7 @@ public class SessionsController : Controller
         return Ok(result);
     }
 
+    [CacheRemove("Sessions.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteSessionRequest deleteSessionRequest)
     {

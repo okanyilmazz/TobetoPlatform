@@ -4,6 +4,7 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,7 @@ public class AccountUniversitiesController : ControllerBase
     }
 
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -30,6 +32,7 @@ public class AccountUniversitiesController : ControllerBase
     }
 
 
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetByIdAsync(Guid Id)
     {
@@ -38,6 +41,7 @@ public class AccountUniversitiesController : ControllerBase
     }
 
 
+    [CacheRemove("AccountUniversities.Get")]
     [CustomValidation(typeof(CreateAccountUniversityRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountUniversityRequest createAccountUniversityRequest)
@@ -47,6 +51,7 @@ public class AccountUniversitiesController : ControllerBase
     }
 
 
+    [CacheRemove("AccountUniversities.Get")]
     [CustomValidation(typeof(UpdateAccountUniversityRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountUniversityRequest updateAccountUniversityRequest)
@@ -56,6 +61,7 @@ public class AccountUniversitiesController : ControllerBase
     }
 
 
+    [CacheRemove("AccountUniversities.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountUniversityRequest deleteAccountUniversityRequest)
     {

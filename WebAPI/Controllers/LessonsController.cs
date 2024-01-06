@@ -4,9 +4,9 @@ using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -22,6 +22,7 @@ public class LessonsController : ControllerBase
         _lessonService = lessonService;
     }
 
+    [Cache(60)]
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
@@ -29,6 +30,7 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetByEducationProgramId")]
     public async Task<IActionResult> GetByEducationProgramIdAsync([FromQuery] Guid id)
     {
@@ -36,6 +38,7 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+    [Cache]
     [HttpGet("GetByAccountId")]
     public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid id)
     {
@@ -49,6 +52,7 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Lessons.Get")]
     [CustomValidation(typeof(CreateLessonRequestValidator))]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateLessonRequest createLessonRequest)
@@ -57,6 +61,7 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Lessons.Get")]
     [CustomValidation(typeof(UpdateLessonRequestValidator))]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateLessonRequest updateLessonRequest)
@@ -65,6 +70,7 @@ public class LessonsController : ControllerBase
         return Ok(result);
     }
 
+    [CacheRemove("Lessons.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteLessonRequest deleteLessonRequest)
     {

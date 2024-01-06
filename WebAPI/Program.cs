@@ -63,7 +63,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
-app.UseCors(opt => opt.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+app.UseCors(opt => opt.WithOrigins().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
 app.MapControllers();
 

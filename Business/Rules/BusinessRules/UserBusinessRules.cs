@@ -1,41 +1,35 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Rules
+namespace Business.Rules;
+
+public class UserBusinessRules : BaseBusinessRules
 {
-    public class UserBusinessRules : BaseBusinessRules
+    IUserDal _userDal;
+
+    public UserBusinessRules(IUserDal userDal)
     {
-        IUserDal _userDal;
+        _userDal = userDal;
+    }
 
-        public UserBusinessRules(IUserDal userDal)
+    public async Task IsExistsUser(Guid userId)
+    {
+        var result = await _userDal.GetAsync(a => a.Id == userId, enableTracking: false);
+        if (result == null)
         {
-            _userDal = userDal;
+            throw new Exception(BusinessMessages.DataNotFound);
         }
+    }
 
-        public async Task IsExistsUser(Guid userId)
+    public async Task IsExistsUserMail(string email)
+    {
+        var result = await _userDal.GetAsync(
+            predicate: a => a.Email == email,
+            enableTracking: false);
+        if (result != null)
         {
-
-            var result = await _userDal.GetAsync(a => a.Id == userId, enableTracking: false);
-            if (result == null)
-            {
-                throw new Exception(BusinessMessages.DataNotFound);
-            }
-        }
-
-        public async Task IsExistsUserMail(string email)
-        {
-            var result = await _userDal.GetListAsync(a => a.Email == email);
-            if (result.Items.Count != 0)
-            {
-                throw new Exception(BusinessMessages.DataAvailable);
-            }
+            throw new Exception(BusinessMessages.DataAvailable);
         }
     }
 }

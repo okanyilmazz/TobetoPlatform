@@ -3,7 +3,7 @@ using Core.CrossCuttingConcerns.Exceptions.Handlers;
 using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails.Types;
 using Microsoft.AspNetCore.Http;
-using ValidationProblemDetails = Core.Exceptions.HttpProblemDetails.ValidationProblemDetails;
+using ValidationProblemDetails = Core.CrossCuttingConcerns.Validation.HttpProblemDetails.ValidationProblemDetails;
 
 namespace Core.Exceptions.Handlers;
 public class HttpExceptionHandler : ExceptionHandler
@@ -24,6 +24,12 @@ public class HttpExceptionHandler : ExceptionHandler
     {
         Response.StatusCode = StatusCodes.Status400BadRequest;
         string details = new ValidationProblemDetails(validationException.Errors).AsJson();
+        return Response.WriteAsync(details);
+    }
+    protected override Task HandleException(Exception exception)
+    {
+        Response.StatusCode = StatusCodes.Status500InternalServerError;
+        string details = new InternalServerErrorProblemDetails(exception.Message).AsJson();
         return Response.WriteAsync(details);
     }
 }

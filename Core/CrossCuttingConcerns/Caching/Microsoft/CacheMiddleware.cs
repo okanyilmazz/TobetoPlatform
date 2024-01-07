@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Utilities.IoC;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System.Reflection;
-using System.Text.RegularExpressions;
+
 
 namespace Core.CrossCuttingConcerns.Caching.Microsoft;
 
 public class CacheMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly IMemoryCache _cache;
+    private readonly ICachingService _cachingService;
 
     public CacheMiddleware(RequestDelegate next)
     {
         _next = next;
-        _cache = new MemoryCache(new MemoryCacheOptions());
+        _cachingService = ServiceTool.ServiceProvider.GetService<ICachingService>();
     }
 
     public async Task Invoke(HttpContext context)
@@ -39,80 +39,48 @@ public class CacheMiddleware
             await _next(context);
         }
     }
-
     private async Task AddCache(HttpContext context, int duration)
     {
-        if (context.Request.Method == HttpMethod.Get.ToString())
+        var methodName = $"{context.Request.Method}.{context.Request.Path}";
+        var arguments = context.Request.Query.ToList();
+
+        var cacheKey = $"{methodName}.{string.Join(",", arguments.Select(x => x.ToString() ?? ""))}";
+
+        if (_cachingService.IsAdded(cacheKey))
         {
-            var cacheKey = GenerateCacheKey(context);
-            if (_cache.TryGetValue(cacheKey, out var cachedResponse))
-            {
-                var responseBody = JsonConvert.SerializeObject(cachedResponse);
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(responseBody);
-                return;
-            }
+            var cachedValue = _cachingService.Get(cacheKey);
 
+            var jsonBody = JsonConvert.DeserializeObject((string)cachedValue);
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(jsonBody));
+            return;
+        }
+
+        using (var memoryStream = new MemoryStream())
+        {
             var originalResponseBody = context.Response.Body;
+            context.Response.Body = memoryStream;
 
-            using (var memoryStream = new MemoryStream())
+            await _next(context);
+
+            if (context.Response.StatusCode == 200)
             {
-                context.Response.Body = memoryStream;
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                var responseBody = await new StreamReader(memoryStream).ReadToEndAsync();
 
-                await _next(context);
+                _cachingService.Add(cacheKey, responseBody, duration);
 
-                memoryStream.Position = 0;
-                var responseBody = new StreamReader(memoryStream).ReadToEnd();
-                var jsonResponse = JsonConvert.DeserializeObject(responseBody);
-                _cache.Set(cacheKey, jsonResponse, TimeSpan.FromSeconds(duration));
-
-                memoryStream.Position = 0;
+                memoryStream.Seek(0, SeekOrigin.Begin);
                 await memoryStream.CopyToAsync(originalResponseBody);
             }
-        }
-        else
-        {
-            await _next(context);
+            context.Response.Body = originalResponseBody;
         }
     }
 
     private async Task RemoveCache(HttpContext context, CacheRemoveAttribute cacheRemoveAttribute)
     {
-        var pattern = GenerateRemoveCacheKey(cacheRemoveAttribute);
-        var fieldInfo = typeof(MemoryCache).GetField("_coherentState", BindingFlags.Instance | BindingFlags.NonPublic);
-        var propertyInfo = fieldInfo.FieldType.GetProperty("EntriesCollection", BindingFlags.Instance | BindingFlags.NonPublic);
-        var value = fieldInfo.GetValue(_cache);
-        var dict = propertyInfo.GetValue(value) as dynamic;
-
-        List<ICacheEntry> cacheCollectionValues = new List<ICacheEntry>();
-        foreach (var cacheItem in dict)
-        {
-            ICacheEntry cacheItemValue = cacheItem.GetType().GetProperty("Value").GetValue(cacheItem, null);
-            cacheCollectionValues.Add(cacheItemValue);
-        }
-
-        var regex = new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        var keysToRemove = cacheCollectionValues.Where(d => regex.IsMatch(d.Key.ToString())).Select(d => d.Key).ToList();
-
-        foreach (var key in keysToRemove)
-        {
-            _cache.Remove(key);
-        }
+        _cachingService.RemoveByPattern(cacheRemoveAttribute.CacheType);
 
         await _next(context);
-    }
-
-    private string GenerateCacheKey(HttpContext context)
-    {
-        return $"{context.Request.Path}";
-    }
-
-    private string GenerateRemoveCacheKey(CacheRemoveAttribute cacheRemoveAttribute)
-    {
-
-        var strArray = cacheRemoveAttribute.CacheType.Split(new[] { "." }, StringSplitOptions.None);
-        var pattern = string.Join("/", strArray);
-
-        return pattern;
     }
 }

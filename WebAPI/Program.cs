@@ -1,5 +1,5 @@
 using Business;
-using Core.CrossCuttingConcerns.Exceptions.Extensions;
+using Core.Extensions;
 using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text.Json.Serialization;
+using Core.DependencyResolvers;
+using Core.Utilities.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,12 +42,7 @@ builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().A
 
 builder.Services.AddBusinessServices();
 builder.Services.AddDataAccessServices(builder.Configuration);
-
-#region Logger-Service
-builder.Services.AddTransient<MsSqlLogger>();
-builder.Services.AddTransient<FileLogger>();
-builder.Services.AddSingleton(Log.Logger);
-#endregion
+builder.Services.AddCoreDependencies(new ICoreModule[] { new CoreModule() });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

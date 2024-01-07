@@ -8,12 +8,8 @@ namespace Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 
 public class FileLogger : LoggerServiceBase
 {
-    private readonly IConfiguration _configuration;
-
     public FileLogger(IConfiguration configuration)
     {
-        _configuration = configuration;
-
         FileLogConfiguration logConfig =
             configuration.GetSection("SeriLogConfigurations:FileLogConfiguration").Get<FileLogConfiguration>()
             ?? throw new Exception(SerilogMessages.NullOptionsMessage);
@@ -31,4 +27,3 @@ public class FileLogger : LoggerServiceBase
              ).CreateLogger();
     }
 }
-

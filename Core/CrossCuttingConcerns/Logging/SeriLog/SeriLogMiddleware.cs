@@ -4,7 +4,6 @@ using Serilog.Context;
 using System.Security.Claims;
 using System.Text.Json;
 
-
 namespace Core.CrossCuttingConcerns.Logging.SeriLog;
 
 public class SeriLogMiddleware

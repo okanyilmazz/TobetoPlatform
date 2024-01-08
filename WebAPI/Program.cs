@@ -1,15 +1,13 @@
 using Business;
+using Core.DependencyResolvers;
 using Core.Extensions;
-using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
 using System.Text.Json.Serialization;
-using Core.DependencyResolvers;
-using Core.Utilities.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +17,16 @@ builder.Services.AddControllers()
             options.JsonSerializerOptions.ReferenceHandler =
             ReferenceHandler.IgnoreCycles;
         });
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("myPolicy",
+    builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -36,9 +44,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
         };
     });
-
-
-builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
 
 builder.Services.AddBusinessServices();
 builder.Services.AddDataAccessServices(builder.Configuration);
@@ -61,6 +66,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.ConfigureCustomExceptionMiddleware();
 app.UseAuthorization();
-app.UseCors();
 app.MapControllers();
+app.UseCors("myPolicy");
 app.Run();

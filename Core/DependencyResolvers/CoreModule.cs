@@ -1,6 +1,5 @@
-﻿using Core.CrossCuttingConcerns.Caching.Microsoft;
-using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Logging.SeriLog;
+﻿using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Caching.Microsoft;
 using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;

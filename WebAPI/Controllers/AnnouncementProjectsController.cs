@@ -2,61 +2,81 @@
 using Business.Dtos.Requests.CreateRequests;
 using Business.Dtos.Requests.DeleteRequests;
 using Business.Dtos.Requests.UpdateRequests;
-using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
 using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
-using Business.ValidationRules.FluentValidation;
+using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Core.CrossCuttingConcerns.Caching;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Core.DataAccess.Paging;
+using Microsoft.AspNetCore.Mvc;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class AnnouncementProjectsController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AnnouncementProjectsController : ControllerBase
+    IAnnouncementProjectService _announcementProjectService;
+
+    public AnnouncementProjectsController(IAnnouncementProjectService announcementProjectService)
     {
-        IAnnouncementProjectService _announcementProjectService;
+        _announcementProjectService = announcementProjectService;
+    }
 
-        public AnnouncementProjectsController(IAnnouncementProjectService announcementProjectService)
-        {
-            _announcementProjectService = announcementProjectService;
-        }
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(60)]
+    [HttpGet("GetList")]
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
+    {
+        var result = await _announcementProjectService.GetListAsync(pageRequest);
+        return Ok(result);
+    }
 
-        [HttpGet("GetList")]
-        public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
-        {
-            var result = await _announcementProjectService.GetListAsync(pageRequest);
-            return Ok(result);
-        }
-        [HttpGet("GetById")]
-        public async Task<IActionResult> GetByIdAsync(Guid Id)
-        {
-            var result = await _announcementProjectService.GetByIdAsync(Id);
-            return Ok(result);
-        }
 
-        [CustomValidation(typeof(CreateAnnouncementProjectRequestValidator))]
-        [HttpPost("Add")]
-        public async Task<IActionResult> AddAsync([FromBody] CreateAnnouncementProjectRequest createAnnouncementProjectRequest)
-        {
-            var result = await _announcementProjectService.AddAsync(createAnnouncementProjectRequest);
-            return Ok(result);
-        }
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid Id)
+    {
+        var result = await _announcementProjectService.GetByIdAsync(Id);
+        return Ok(result);
+    }
 
-        [CustomValidation(typeof(UpdateAnnouncementProjectRequestValidator))]
-        [HttpPost("Update")]
-        public async Task<IActionResult> UpdateAsync([FromBody] UpdateAnnouncementProjectRequest updateAnnouncementProjectRequest)
-        {
-            var result = await _announcementProjectService.UpdateAsync(updateAnnouncementProjectRequest);
-            return Ok(result);
-        }
 
-        [HttpPost("Delete")]
-        public async Task<IActionResult> DeleteAsync([FromBody] DeleteAnnouncementProjectRequest deleteAnnouncementProjectRequest)
-        {
-            var result = await _announcementProjectService.DeleteAsync(deleteAnnouncementProjectRequest);
-            return Ok(result);
-        }
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [CacheRemove("AnnouncementProjects.Get")]
+    [CustomValidation(typeof(CreateAnnouncementProjectRequestValidator))]
+    [HttpPost("Add")]
+    public async Task<IActionResult> AddAsync([FromBody] CreateAnnouncementProjectRequest createAnnouncementProjectRequest)
+    {
+        var result = await _announcementProjectService.AddAsync(createAnnouncementProjectRequest);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [CacheRemove("AnnouncementProjects.Get")]
+    [CustomValidation(typeof(UpdateAnnouncementProjectRequestValidator))]
+    [HttpPost("Update")]
+    public async Task<IActionResult> UpdateAsync([FromBody] UpdateAnnouncementProjectRequest updateAnnouncementProjectRequest)
+    {
+        var result = await _announcementProjectService.UpdateAsync(updateAnnouncementProjectRequest);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [CacheRemove("AnnouncementProjects.Get")]
+    [HttpPost("Delete")]
+    public async Task<IActionResult> DeleteAsync([FromBody] DeleteAnnouncementProjectRequest deleteAnnouncementProjectRequest)
+    {
+        var result = await _announcementProjectService.DeleteAsync(deleteAnnouncementProjectRequest);
+        return Ok(result);
     }
 }

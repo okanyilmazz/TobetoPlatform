@@ -1,18 +1,12 @@
-﻿using Business.Dtos.Requests.CreateRequests;
-using System;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+﻿using System;
 using Core.DataAccess.Paging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Dtos.Responses.ProductionCompanyResponses;
+using Business.Dtos.Requests.ProductionCompanyRequests;
 
 namespace Business.Abstracts
 {

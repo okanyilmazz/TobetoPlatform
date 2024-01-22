@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Core.Entities;
 
-namespace Core.Entities
+public class OperationClaim : Entity<Guid>
 {
-    public class OperationClaim : Entity<Guid>
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }
-

@@ -1,13 +1,8 @@
 ﻿using Business.Abstracts;
 using Business.Concrete;
 using Business.Concretes;
-using Business.Rules;
 using Core.Business.Rules;
 using Core.Utilities.Security.JWT;
-using DataAccess.Abstracts;
-using DataAccess.Concretes;
-using Entities.Concretes;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

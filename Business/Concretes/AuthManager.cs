@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
+using Business.Dtos.Requests.AuthRequests;
+using Business.Dtos.Requests.UserRequests;
 using Business.Messages;
 using Business.Rules;
 using Core.Entities;

@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+using Business.Dtos.Requests.AnnouncementRequests;
+using Business.Dtos.Responses.AnnouncementResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
@@ -59,9 +54,20 @@ namespace Business.Concretes
             return mappedAnnouncement;
         }
 
-        public async Task<IPaginate<GetListAnnouncementResponse>> GetListAsync()
+        public async Task<IPaginate<GetListAnnouncementResponse>> GetListAsync(PageRequest pageRequest)
         {
-            var announcement = await _announcementDal.GetListAsync();
+            var announcement = await _announcementDal.GetListAsync(
+               index:pageRequest.PageIndex,
+               size: pageRequest.PageSize);
+            var mappedAnnouncement = _mapper.Map<Paginate<GetListAnnouncementResponse>>(announcement);
+            return mappedAnnouncement;
+        }
+
+        public async Task<IPaginate<GetListAnnouncementResponse>> GetWithProjectListAsync(PageRequest pageRequest)
+        {
+            var announcement = await _announcementDal.GetListAsync(
+               index: pageRequest.PageIndex,
+               size: pageRequest.PageSize);
             var mappedAnnouncement = _mapper.Map<Paginate<GetListAnnouncementResponse>>(announcement);
             return mappedAnnouncement;
         }

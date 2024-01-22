@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+using Business.Dtos.Requests.AnnouncementProjectRequests;
+using Business.Dtos.Responses.AnnouncementProjectResponses;
 using Core.DataAccess.Paging;
 using Entities.Concretes;
 using System;
@@ -30,12 +25,15 @@ namespace Business.Profiles
             CreateMap<AnnouncementProject, DeletedAnnouncementProjectResponse>().ReverseMap();
 
             CreateMap<AnnouncementProject, GetListAnnouncementProjectResponse>()
-                .ForMember(destinationMember:response=>response.AnnouncementName,memberOptions:
-                opt=>opt.MapFrom(ap=>ap.Announcement.Title))
-                .ForMember(destinationMember:response=>response.ProjectName,memberOptions:
-                opt=>opt.MapFrom(ap=>ap.Project.Name))
-                
-                
+                //.ForMember(destinationMember:response=>response.AnnouncementName,memberOptions:
+                //opt=>opt.MapFrom(ap=>ap.Announcement.Title))
+                //.ForMember(destinationMember:response=>response.ProjectName,memberOptions:
+                //opt=>opt.MapFrom(ap=>ap.Project.Name))
+                 .ForMember(destinationMember: response => response.Announcement, memberOptions:
+                opt => opt.MapFrom(ap => ap.Announcement))
+                .ForMember(destinationMember: response => response.Project, memberOptions:
+                opt => opt.MapFrom(ap => ap.Project))
+
                 .ReverseMap();
             CreateMap<IPaginate<AnnouncementProject>, Paginate<GetListAnnouncementProjectResponse>>().ReverseMap();
 

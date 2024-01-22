@@ -1,25 +1,14 @@
-﻿using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+﻿using Business.Dtos.Requests.LanguageLevelRequests;
+using Business.Dtos.Responses.LanguageLevelResponses;
 using Core.DataAccess.Paging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Abstracts
+namespace Business.Abstracts;
+
+public interface ILanguageLevelService
 {
-    public interface ILanguageLevelService
-    {
-        Task<IPaginate<GetListLanguageLevelResponse>> GetListAsync();
-        Task<CreatedLanguageLevelResponse> AddAsync(CreateLanguageLevelRequest createLanguageLevelRequest);
-        Task<UpdatedLanguageLevelResponse> UpdateAsync(UpdateLanguageLevelRequest updateLanguageLevelRequest);
-        Task<DeletedLanguageLevelResponse> DeleteAsync(DeleteLanguageLevelRequest deleteLanguageLevelRequest);
-        Task<GetListLanguageLevelResponse> GetByIdAsync(Guid id);
-    }
+    Task<IPaginate<GetListLanguageLevelResponse>> GetListAsync(PageRequest pageRequest);
+    Task<CreatedLanguageLevelResponse> AddAsync(CreateLanguageLevelRequest createLanguageLevelRequest);
+    Task<UpdatedLanguageLevelResponse> UpdateAsync(UpdateLanguageLevelRequest updateLanguageLevelRequest);
+    Task<DeletedLanguageLevelResponse> DeleteAsync(DeleteLanguageLevelRequest deleteLanguageLevelRequest);
+    Task<GetListLanguageLevelResponse> GetByIdAsync(Guid id);
 }

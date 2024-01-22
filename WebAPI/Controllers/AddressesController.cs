@@ -1,15 +1,12 @@
 ﻿using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
-using Business.ValidationRules.FluentValidation;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
+using Business.Rules.ValidationRules.FluentValidation.AddressValidators;
+using Business.Dtos.Requests.AddressRequests;
 
 
 namespace WebAPI.Controllers;

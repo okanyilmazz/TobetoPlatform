@@ -1,11 +1,6 @@
 using AutoMapper;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+using Business.Dtos.Requests.LanguageRequests;
+using Business.Dtos.Responses.LanguageResponses;
 using Core.DataAccess.Paging;
 using Entities.Concretes;
 using System;
@@ -29,11 +24,11 @@ namespace Business.Profiles
             CreateMap<Language, DeleteLanguageRequest>().ReverseMap();
             CreateMap<Language, DeletedLanguageResponse>().ReverseMap();
 
-            CreateMap<Language, GetListLanguageResponse>().ReverseMap();
             CreateMap<IPaginate<Language>, Paginate<GetListLanguageResponse>>().ReverseMap();
+            CreateMap<Language, GetListLanguageResponse>().ReverseMap();
 
-            
-
+            CreateMap<List<Language>, Paginate<GetListLanguageResponse>>().ForMember(destinationMember: h => h.Items,
+             memberOptions: opt => opt.MapFrom(h => h.ToList())).ReverseMap();
         }
     }
 }

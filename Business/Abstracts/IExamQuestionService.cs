@@ -1,23 +1,14 @@
-﻿using System;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+﻿using Business.Dtos.Requests.ExamQuestionRequests;
+using Business.Dtos.Responses.ExamQuestionResponses;
 using Core.DataAccess.Paging;
 
-namespace Business.Abstracts
-{
-	public interface IExamQuestionService
+namespace Business.Abstracts;
+
+public interface IExamQuestionService
 	{
-        Task<CreatedExamQuestionResponse> AddAsync(CreateExamQuestionRequest createExamQuestionRequest);
-        Task<UpdatedExamQuestionResponse> UpdateAsync(UpdateExamQuestionRequest updateExamQuestionRequest);
-        Task<DeletedExamQuestionResponse> DeleteAsync(DeleteExamQuestionRequest deleteExamQuestionRequest);
-        Task<IPaginate<GetListExamQuestionResponse>> GetListAsync();
-        Task<GetListExamQuestionResponse> GetByIdAsync(Guid id);
-
-    }
+    Task<CreatedExamQuestionResponse> AddAsync(CreateExamQuestionRequest createExamQuestionRequest);
+    Task<UpdatedExamQuestionResponse> UpdateAsync(UpdateExamQuestionRequest updateExamQuestionRequest);
+    Task<DeletedExamQuestionResponse> DeleteAsync(DeleteExamQuestionRequest deleteExamQuestionRequest);
+    Task<IPaginate<GetListExamQuestionResponse>> GetListAsync(PageRequest pageRequest);
+    Task<GetListExamQuestionResponse> GetByIdAsync(Guid id);
 }
-

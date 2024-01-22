@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+using Business.Dtos.Requests.AccountHomeworkRequests;
+using Business.Dtos.Responses.AccountHomeworkResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
@@ -68,12 +63,12 @@ public class AccountHomeworkManager : IAccountHomeworkService
         return mappedAccountHomework;
     }
 
-    public async Task<UpdatedAccountHomeworkeResponse> UpdateAsync(UpdateAccountHomeworkRequest updateAccountHomeworkRequest)
+    public async Task<UpdatedAccountHomeworkResponse> UpdateAsync(UpdateAccountHomeworkRequest updateAccountHomeworkRequest)
     {
         await _accountHomeworkBusinessRules.IsExistsAccountHomework(updateAccountHomeworkRequest.Id);
         AccountHomework accountHomework = _mapper.Map<AccountHomework>(updateAccountHomeworkRequest);
         AccountHomework updatedAccountHomework = await _accountHomeworkDal.UpdateAsync(accountHomework);
-        UpdatedAccountHomeworkeResponse updatedAccountHomeworkeResponse = _mapper.Map<UpdatedAccountHomeworkeResponse>(updatedAccountHomework);
+        UpdatedAccountHomeworkResponse updatedAccountHomeworkeResponse = _mapper.Map<UpdatedAccountHomeworkResponse>(updatedAccountHomework);
         return updatedAccountHomeworkeResponse;
     }
 }

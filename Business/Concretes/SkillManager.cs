@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+using Business.Dtos.Requests.SkillRequests;
+using Business.Dtos.Responses.SkillResponses;
 using Business.Rules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
@@ -75,7 +70,7 @@ namespace Business.Concretes
             var skills = await _skillDal.GetListAsync(
                 include: s => s.Include(a => a.AccountSkills).ThenInclude(ask => ask.Account));
             var filteredSkills = skills.Items.Where(e => e.AccountSkills.Any(s => s.Account.Id == accountId)).ToList();
-            var mappedSkills = _mapper.Map<Paginate<GetListSkillResponse>>(skills);
+            var mappedSkills = _mapper.Map<Paginate<GetListSkillResponse>>(filteredSkills);
             return mappedSkills;
         }
 

@@ -29,5 +29,7 @@ namespace Entities.Concretes
         public virtual ICollection<AccountSession>? AccountSessions { get; set; }
         public virtual ICollection<AccountHomework>? AccountHomeworks { get; set; }
         public virtual ICollection<AccountLesson>? AccountLessons { get; set; }
+        public virtual ICollection<AccountEducationProgram>? AccountEducationPrograms { get; set; }
+
     }
 }

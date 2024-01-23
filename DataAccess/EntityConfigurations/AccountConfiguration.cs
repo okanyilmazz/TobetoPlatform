@@ -40,8 +40,10 @@ namespace DataAccess.EntityConfigurations
             builder.HasMany(aoc => aoc.AccountOccupationClasses);
             builder.HasMany(ase => ase.AccountSessions);
             builder.HasMany(ask => ask.AccountSkills);
+            builder.HasMany(ask => ask.AccountEducationPrograms);
             builder.HasMany(we => we.WorkExperiences);
             builder.HasMany(c => c.Certificates);
+
 
 
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Business.Dtos.Requests.EducationProgramLevelRequests;
 
-namespace Business.Dtos.Requests.EducationProgramLevelRequests
+public class UpdateEducationProgramLevelRequest
 {
-    public class UpdateEducationProgramLevelRequest
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }

@@ -1,12 +1,13 @@
 ﻿using Business.Dtos.Requests.AccountHomeworkRequests;
 using FluentValidation;
 
-namespace Business.Rules.ValidationRules.FluentValidation.AccountHomeworkValidators;
-
-public class UpdateAccountHomeworkRequestValidator : AbstractValidator<UpdateAccountHomeworkRequest>
+namespace Business.Rules.ValidationRules.FluentValidation.AccountHomeworkValidators
 {
-    public UpdateAccountHomeworkRequestValidator()
+    public class UpdateAccountHomeworkRequestValidator : AbstractValidator<UpdateAccountHomeworkRequest>
     {
-        RuleFor(ah => ah.Status).NotEmpty();
+        public UpdateAccountHomeworkRequestValidator()
+        {
+            RuleFor(ah => ah.Status).NotEmpty();
+        }
     }
 }

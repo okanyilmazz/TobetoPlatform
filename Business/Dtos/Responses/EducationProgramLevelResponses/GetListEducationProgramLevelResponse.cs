@@ -1,7 +1,14 @@
-﻿namespace Business.Dtos.Responses.EducationProgramLevelResponses;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class GetListEducationProgramLevelResponse
+namespace Business.Dtos.Responses.EducationProgramLevelResponses
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
+    public class GetListEducationProgramLevelResponse
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
 }

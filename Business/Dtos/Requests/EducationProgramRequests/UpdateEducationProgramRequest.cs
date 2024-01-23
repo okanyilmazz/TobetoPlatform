@@ -1,15 +1,18 @@
-﻿namespace Business.Dtos.Requests.EducationProgramRequests;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class UpdateEducationProgramRequest
+namespace Business.Dtos.Requests.EducationProgramRequests
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string ThumbnailPath { get; set; }
-    public string Duration { get; set; }
-    public string AuthorizedPerson { get; set; }
-    public decimal Price { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime Deadline { get; set; }
-    public Guid EducationProgramLevelId { get; set; }
+    public class UpdateEducationProgramRequest
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string ThumbnailPath { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime Deadline { get; set; }
+        public Guid EducationProgramLevelId { get; set; }
+    }
 }

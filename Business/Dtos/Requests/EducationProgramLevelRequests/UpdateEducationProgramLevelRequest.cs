@@ -1,7 +1,14 @@
-﻿namespace Business.Dtos.Requests.EducationProgramLevelRequests;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class UpdateEducationProgramLevelRequest
+namespace Business.Dtos.Requests.EducationProgramLevelRequests
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
+    public class UpdateEducationProgramLevelRequest
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+    }
 }

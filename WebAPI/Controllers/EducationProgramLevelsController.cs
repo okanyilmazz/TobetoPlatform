@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Business.Dtos.Requests.EducationProgramLevelRequests;
 using Core.DataAccess.Paging;
 
+
 namespace WebAPI.Controllers;
 
 [Route("api/[controller]")]
@@ -23,9 +24,9 @@ public class EducationProgramLevelsController : ControllerBase
     [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
+    public async Task<IActionResult> GetListAsync()
     {
-        var result = await _educationProgramLevelService.GetListAsync(pageRequest);
+        var result = await _educationProgramLevelService.GetListAsync();
         return Ok(result);
     }
 

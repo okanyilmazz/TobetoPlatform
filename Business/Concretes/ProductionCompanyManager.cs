@@ -2,10 +2,9 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.ProductionCompanyRequests;
 using Business.Dtos.Responses.ProductionCompanyResponses;
-using Business.Rules;
+using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 
 namespace Business.Concretes;

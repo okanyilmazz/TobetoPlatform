@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Business.Dtos.Responses.EducationProgramLevelResponses;
 
-namespace Business.Dtos.Responses.EducationProgramLevelResponses
+public class GetListEducationProgramLevelResponse
 {
-    public class GetListEducationProgramLevelResponse
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }

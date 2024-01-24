@@ -4,7 +4,6 @@ using Business.Dtos.Requests.WorkExperienceResquests;
 using Business.Dtos.Responses.WorkExperienceResponses;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 

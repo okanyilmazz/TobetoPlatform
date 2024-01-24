@@ -16,6 +16,7 @@ public class EducationProgramConfiguration : IEntityTypeConfiguration<EducationP
         builder.Property(ep => ep.Description).HasColumnName("Description").IsRequired();
         builder.Property(ep => ep.Duration).HasColumnName("Duration").IsRequired();
         builder.Property(ep => ep.AuthorizedPerson).HasColumnName("AuthorizedPerson").IsRequired();
+        builder.Property(ep => ep.Price).HasColumnName("Price").IsRequired();
         builder.Property(ep => ep.ThumbnailPath).HasColumnName("ThumbnailPath").IsRequired();
         builder.Property(ep => ep.StartDate).HasColumnName("StartDate").IsRequired();
         builder.Property(ep => ep.Deadline).HasColumnName("Deadline").IsRequired();
@@ -29,7 +30,7 @@ public class EducationProgramConfiguration : IEntityTypeConfiguration<EducationP
         builder.HasMany(ep => ep.EducationProgramLessons);
         builder.HasMany(ep => ep.EducationProgramOccupationClasses);
         builder.HasMany(ep => ep.EducationProgramProgrammingLanguages);
-
+        builder.HasMany(ask => ask.AccountEducationPrograms);
 
         builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
     }

@@ -2,17 +2,11 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.AnnouncementProjectRequests;
 using Business.Dtos.Responses.AnnouncementProjectResponses;
-using Business.Rules;
+using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concretes;
 

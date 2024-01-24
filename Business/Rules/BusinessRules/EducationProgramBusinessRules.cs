@@ -3,7 +3,7 @@ using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
 
-namespace Business.Rules;
+namespace Business.Rules.BusinessRules;
 
 public class EducationProgramBusinessRules : BaseBusinessRules
 {

@@ -68,6 +68,9 @@ public static class BusinessServiceRegistration
         services.AddScoped<IUniversityDepartmentService, UniversityDepartmentManager>();
         services.AddScoped<IUserService, UserManager>();
         services.AddScoped<IWorkExperienceService, WorkExperienceManager>();
+        services.AddScoped<IAccountEducationProgramService, AccountEducationProgramManager>();
+        services.AddScoped<IOccupationService, OccupationManager>();
+
 
 
 

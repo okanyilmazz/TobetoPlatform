@@ -4,6 +4,7 @@ using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.CrossCuttingConcerns.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Dtos.Requests.EducationProgramLevelRequests;
+using Core.DataAccess.Paging;
 
 namespace WebAPI.Controllers;
 
@@ -22,9 +23,9 @@ public class EducationProgramLevelsController : ControllerBase
     [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _educationProgramLevelService.GetListAsync();
+        var result = await _educationProgramLevelService.GetListAsync(pageRequest);
         return Ok(result);
     }
 

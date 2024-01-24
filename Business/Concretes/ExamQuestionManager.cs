@@ -2,7 +2,7 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.ExamQuestionRequests;
 using Business.Dtos.Responses.ExamQuestionResponses;
-using Business.Rules;
+using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;

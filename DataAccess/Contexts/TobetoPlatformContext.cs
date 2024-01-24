@@ -65,6 +65,8 @@ public class TobetoPlatformContext : DbContext
     public DbSet<ExamOccupationClass> ExamOccupationClasses { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<ExamQuestion> ExamQuestions { get; set; }
+    public DbSet<Occupation> Occupations { get; set; }
+
 
 
 

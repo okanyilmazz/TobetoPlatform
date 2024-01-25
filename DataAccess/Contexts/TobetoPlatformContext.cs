@@ -9,11 +9,19 @@ namespace DataAccess.Contexts;
 public class TobetoPlatformContext : DbContext
 {
     protected IConfiguration Configuration { get; set; }
+
+    public DbSet<Account> Accounts { get; set; }
+    public DbSet<AccountAnswer> AccountAnswers { get; set; }
+    public DbSet<AccountOccupationClass> AccountOccupationClasses { get; set; }
+    public DbSet<AccountUniversity> AccountUniversities { get; set; }
+    public DbSet<AccountLanguage> AccountLanguages { get; set; }
+    public DbSet<AccountSession> AccountSessions { get; set; }
+    public DbSet<AccountSkill> AccountSkills { get; set; }
+    public DbSet<AccountHomework> AccountHomeworks { get; set; }
     public DbSet<OperationClaim> OperationClaims { get; set; }
     public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
     public DbSet<Skill> Skills { get; set; }
     public DbSet<Announcement> Announcements { get; set; }
-    public DbSet<AccountAnswer> AccountAnswers { get; set; }
     public DbSet<Homework> Homeworks { get; set; }
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Certificate> Certificates { get; set; }
@@ -24,16 +32,13 @@ public class TobetoPlatformContext : DbContext
     public DbSet<EducationProgramLevel> EducationProgramLevels { get; set; }
     public DbSet<LessonSubType> LessonSubTypes { get; set; }
     public DbSet<LessonSubject> LessonSubjects { get; set; }
-    public DbSet<AccountUniversity> AccountUniversities { get; set; }
     public DbSet<LessonModule> LessonModules { get; set; }
-    public DbSet<AccountOccupationClass> AccountOccupationClasses { get; set; }
     public DbSet<EducationProgram> EducationPrograms { get; set; }
     public DbSet<DegreeType> DegreeTypes { get; set; }
     public DbSet<Exam> Exams { get; set; }
     public DbSet<EducationProgramProgrammingLanguage> EducationProgramProgrammingLanguages { get; set; }
     public DbSet<AccountLesson> AccountLessons { get; set; }
     public DbSet<Language> Languages { get; set; }
-    public DbSet<AccountLanguage> AccountLanguages { get; set; }
     public DbSet<LanguageLevel> LanguageLevels { get; set; }
     public DbSet<MediaNew> MediaNews { get; set; }
     public DbSet<OccupationClass> OccupationClasses { get; set; }
@@ -55,15 +60,13 @@ public class TobetoPlatformContext : DbContext
     public DbSet<City> Cities { get; set; }
     public DbSet<EducationProgramOccupationClass> EducationProgramOccupationClasses { get; set; }
     public DbSet<OccupationClassSurvey> OccupationClassSurveys { get; set; }
-    public DbSet<AccountHomework> AccountHomeworks { get; set; }
     public DbSet<District> Districts { get; set; }
-    public DbSet<AccountSession> AccountSessions { get; set; }
-    public DbSet<Account> Accounts { get; set; }
-    public DbSet<AccountSkill> AccountSkills { get; set; }
     public DbSet<Address> Addresses { get; set; }
     public DbSet<ExamOccupationClass> ExamOccupationClasses { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<ExamQuestion> ExamQuestions { get; set; }
+    public DbSet<Occupation> Occupations { get; set; }
+
 
 
 
@@ -72,10 +75,9 @@ public class TobetoPlatformContext : DbContext
         Configuration = configuration;
         Database.EnsureCreated();
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
-
-
 }

@@ -1,12 +1,7 @@
 ﻿using Business.Dtos.Requests;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
+using Business.Dtos.Requests.LessonModuleRequests;
 using Business.Dtos.Responses;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+using Business.Dtos.Responses.LessonModuleResponses;
 using Core.DataAccess.Paging;
 using Entities.Concretes;
 using System;

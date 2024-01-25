@@ -1,16 +1,11 @@
 ﻿using System;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
+using Business.Dtos.Requests.LessonSubjectRequests;
+using Business.Dtos.Responses.LessonSubjectResponses;
 using Core.DataAccess.Paging;
 
 namespace Business.Abstracts
 {
-	public interface ILessonSubjectService
+    public interface ILessonSubjectService
 	{
         Task<CreatedLessonSubjectResponse> AddAsync(CreateLessonSubjectRequest createLessonSubjectRequest);
         Task<DeletedLessonSubjectResponse> DeleteAsync(DeleteLessonSubjectRequest deleteLessonSubjectRequest);

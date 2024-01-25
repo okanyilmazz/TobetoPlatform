@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
+using Business.Dtos.Requests.AuthRequests;
+using Business.Dtos.Requests.UserRequests;
 using Business.Messages;
-using Business.Rules;
+using Business.Rules.BusinessRules;
 using Core.Entities;
 using Core.Utilities.Security.Hashing;
 using Core.Utilities.Security.JWT;

@@ -1,28 +1,22 @@
 ﻿using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataAccess.EntityConfigurations
+namespace DataAccess.EntityConfigurations;
+
+public class EducationProgramLevelConfiguration : IEntityTypeConfiguration<EducationProgramLevel>
 {
-    public class EducationProgramLevelConfiguration : IEntityTypeConfiguration<EducationProgramLevel>
+    public void Configure(EntityTypeBuilder<EducationProgramLevel> builder)
     {
-        public void Configure(EntityTypeBuilder<EducationProgramLevel> builder)
-        {
-            builder.ToTable("EducationProgramLevels").HasKey(c => c.Id);
+        builder.ToTable("EducationProgramLevels").HasKey(c => c.Id);
 
-            builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
-            builder.Property(c => c.Name).HasColumnName("Name").IsRequired();
+        builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
+        builder.Property(c => c.Name).HasColumnName("Name").IsRequired();
 
 
-            builder.HasIndex(indexExpression:c => c.Name,name:"UK_Name").IsUnique();
-            builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
+        builder.HasIndex(indexExpression:c => c.Name,name:"UK_Name").IsUnique();
+        builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
 
-            builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
-        }
+        builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
     }
 }

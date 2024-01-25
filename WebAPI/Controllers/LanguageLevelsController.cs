@@ -1,11 +1,10 @@
 ﻿using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.CrossCuttingConcerns.Logging;
 using Microsoft.AspNetCore.Mvc;
+using Business.Dtos.Requests.LanguageLevelRequests;
+using Core.DataAccess.Paging;
 
 namespace WebApi.Controllers;
 
@@ -24,9 +23,9 @@ public class LanguageLevelsController : ControllerBase
     [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync()
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
-        var result = await _languageLevelService.GetListAsync();
+        var result = await _languageLevelService.GetListAsync(pageRequest);
         return Ok(result);
     }
 

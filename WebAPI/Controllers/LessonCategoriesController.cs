@@ -1,9 +1,6 @@
 ﻿using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Rules.ValidationRules.FluentValidation.CreateRequestValidators;
-using Business.Rules.ValidationRules.FluentValidation.UpdateRequestValidators;
+using Business.Dtos.Requests.LessonCategoryRequests;
+using Business.Rules.ValidationRules.FluentValidation.LessonCategoryValidators;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;

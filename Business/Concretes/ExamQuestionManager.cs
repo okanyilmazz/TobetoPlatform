@@ -1,23 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
-using Business.Dtos.Requests.CreateRequests;
-using Business.Dtos.Requests.DeleteRequests;
-using Business.Dtos.Requests.UpdateRequests;
-using Business.Dtos.Responses.CreatedResponses;
-using Business.Dtos.Responses.DeletedResponses;
-using Business.Dtos.Responses.GetListResponses;
-using Business.Dtos.Responses.UpdatedResponses;
-using Business.Rules;
+using Business.Dtos.Requests.ExamQuestionRequests;
+using Business.Dtos.Responses.ExamQuestionResponses;
+using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concretes;
 
@@ -46,29 +35,30 @@ public class ExamQuestionManager : IExamQuestionService
     {
         await _examQuestionBusinessRules.IsExistsExamQuestion(deleteExamQuestionRequest.Id);
         ExamQuestion examQuestion = await _examQuestionDal.GetAsync(predicate: a => a.Id == deleteExamQuestionRequest.Id);
-        ExamQuestion deletedExamQuestion = await _examQuestionDal.DeleteAsync(examQuestion, false);
+        ExamQuestion deletedExamQuestion = await _examQuestionDal.DeleteAsync(examQuestion);
         DeletedExamQuestionResponse createdExamQuestionResponse = _mapper.Map<DeletedExamQuestionResponse>(deletedExamQuestion);
         return createdExamQuestionResponse;
-
     }
 
     public async Task<GetListExamQuestionResponse> GetByIdAsync(Guid id)
     {
         var examQuestion = await _examQuestionDal.GetAsync(
              predicate: e => e.Id == id,
-                include: eq => eq.
-                Include(eq => eq.Exam)
-                .Include(eq => eq.Question));
+             include: eq => eq.
+             Include(eq => eq.Exam).
+             Include(eq => eq.Question));
         var mappedExamQuestion = _mapper.Map<GetListExamQuestionResponse>(examQuestion);
         return mappedExamQuestion;
     }
 
-    public async Task<IPaginate<GetListExamQuestionResponse>> GetListAsync()                     
+    public async Task<IPaginate<GetListExamQuestionResponse>> GetListAsync(PageRequest pageRequest)
     {
         var examQuestions = await _examQuestionDal.GetListAsync(
-                include: eq => eq.
-                Include(eq => eq.Exam)
-                .Include(eq => eq.Question));
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize,
+            include: eq => eq.
+            Include(eq => eq.Exam).
+            Include(eq => eq.Question));
         var mappedExamQuestions = _mapper.Map<Paginate<GetListExamQuestionResponse>>(examQuestions);
         return mappedExamQuestions;
     }
@@ -82,13 +72,3 @@ public class ExamQuestionManager : IExamQuestionService
         return updatedExamQuestionResponse;
     }
 }
-//public async Task<GetListAccountOccupationClassResponse> GetByIdAsync(Guid id)
-//{
-//    var accountOccupationClassList = await _accountOccupationClassDal.GetAsync(
-//        predicate: a => a.Id == id,
-//        include: aoc => aoc.
-//        Include(aoc => aoc.OccupationClass)
-//        .Include(aoc => aoc.Account).ThenInclude(a => a.User));
-//    var mappedAccountOccupationClass = _mapper.Map<GetListAccountOccupationClassResponse>(accountOccupationClassList);
-//    return mappedAccountOccupationClass;
-//}

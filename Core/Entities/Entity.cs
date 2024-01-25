@@ -1,26 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Core.Entities;
 
-namespace Core.Entities
+public class Entity<TId> : IEntityTimestamps
 {
-    public class Entity<TId> : IEntityTimestamps
+    public TId Id { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? UpdatedDate { get; set; }
+    public DateTime? DeletedDate { get; set; }
+
+    public Entity()
     {
-        public TId Id { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
+        Id = default;
+    }
 
-        public Entity()
-        {
-            Id = default;
-        }
-
-        public Entity(TId id)
-        {
-            Id = id;
-        }
+    public Entity(TId id)
+    {
+        Id = id;
     }
 }

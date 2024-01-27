@@ -26,7 +26,7 @@ public class EducationProgramLevelsController : ControllerBase
     [HttpGet("GetList")]
     public async Task<IActionResult> GetListAsync()
     {
-        var result = await _educationProgramLevelService.GetListAsync();
+        var result = await _educationProgramLevelService.GetListAsync(new PageRequest());
         return Ok(result);
     }
 

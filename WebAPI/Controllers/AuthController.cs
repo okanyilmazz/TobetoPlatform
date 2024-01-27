@@ -20,7 +20,7 @@ public class AuthController : Controller
     public async Task<IActionResult> Login([FromBody] LoginAuthRequest loginAuthRequest)
     {
         var userToLogin = await _authService.Login(loginAuthRequest);
-        var result = _authService.CreateAccessToken(userToLogin);
+        var result = await _authService.CreateAccessToken(userToLogin);
         return Ok(result);
     }
 

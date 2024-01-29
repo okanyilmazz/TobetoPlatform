@@ -2,6 +2,7 @@
 using Business.Concrete;
 using Business.Concretes;
 using Core.Business.Rules;
+using Core.Entities;
 using Core.Utilities.Security.JWT;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -68,8 +69,11 @@ public static class BusinessServiceRegistration
         services.AddScoped<IUniversityDepartmentService, UniversityDepartmentManager>();
         services.AddScoped<IUserService, UserManager>();
         services.AddScoped<IWorkExperienceService, WorkExperienceManager>();
+        services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
+        services.AddScoped<IOperationClaimService, OperationClaimManager>();
         services.AddScoped<IAccountEducationProgramService, AccountEducationProgramManager>();
         services.AddScoped<IOccupationService, OccupationManager>();
+        services.AddScoped<ICalendarSessionService, CalendarSessionManager>();
 
 
 

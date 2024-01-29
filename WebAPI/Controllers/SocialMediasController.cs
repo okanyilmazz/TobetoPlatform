@@ -7,6 +7,7 @@ using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Rules.ValidationRules.FluentValidation.SocialMediaValidators;
 using Business.Dtos.Requests.SocialMediaRequests;
+using Core.BusinessAspects;
 
 namespace WebAPI.Controllers;
 
@@ -30,7 +31,6 @@ public class SocialMediasController : ControllerBase
         var result = await _socialMediaService.GetListAsync(pageRequest);
         return Ok(result);
     }
-
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

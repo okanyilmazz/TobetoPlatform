@@ -1,4 +1,5 @@
-﻿using Entities.Concretes;
+﻿using Core.Entities;
+using Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,8 @@ namespace Business.Dtos.Responses.SessionResponses
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string RecordPath { get; set; }
+        //public Guid UserId { get; set; }
+        //public string UserFirstName { get; set; }
+        //public string UserLastName { get; set; }
     }
 }

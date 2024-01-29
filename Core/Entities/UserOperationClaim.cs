@@ -1,7 +1,10 @@
-﻿namespace Core.Entities;
-
-public class UserOperationClaim : Entity<Guid>
+﻿namespace Core.Entities
 {
-    public Guid UserId { get; set; }
-    public Guid OperationClaimId { get; set; }
+    public class UserOperationClaim : Entity<Guid>
+    {
+        public Guid UserId { get; set; }
+        public Guid OperationClaimId { get; set; }
+        public User? User { get; set; }
+
+    }
 }

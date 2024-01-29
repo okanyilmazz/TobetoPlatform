@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
 using Business.Dtos.Requests.SessionRequests;
+using Business.Dtos.Responses.AccountResponses;
 using Business.Dtos.Responses.SessionResponses;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,8 +49,8 @@ public class SessionManager : ISessionService
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
             include: s => s
-            .Include(s => s.OccupationClass));
-
+            .Include(s => s.OccupationClass)
+            );
 
         var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
         return mappedSession;
@@ -73,4 +75,6 @@ public class SessionManager : ISessionService
         UpdatedSessionResponse updatedSessionResponse = _mapper.Map<UpdatedSessionResponse>(updatedSession);
         return updatedSessionResponse;
     }
+
+
 }

@@ -2,5 +2,5 @@
 
 public class OperationClaim : Entity<Guid>
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }

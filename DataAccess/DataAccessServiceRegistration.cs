@@ -72,10 +72,11 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IAnnouncementDal, EfAnnouncementDal>();
         services.AddScoped<IOccupationClassDal, EfOccupationClassDal>();
         services.AddScoped<IEducationProgramOccupationClassDal, EfEducationProgramOccupationClassDal>();
+        services.AddScoped<IUserOperationClaimDal, EfUserOperationClaimDal>();
+        services.AddScoped<IOperationClaimDal, EfOperationClaimDal>();
         services.AddScoped<IAccountEducationProgramDal, EfAccountEducationProgramDal>();
         services.AddScoped<IOccupationDal, EfOccupationDal>();
-
-
+        services.AddScoped<ICalendarSessionDal, EfCalendarSessionDal>();
 
 
         return services;

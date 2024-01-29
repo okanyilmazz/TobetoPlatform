@@ -1,4 +1,5 @@
 ﻿using Business.Dtos.Requests.AuthRequests;
+using Business.Dtos.Responses.AuthResponses;
 using Core.Entities;
 using Core.Utilities.Security.JWT;
 
@@ -8,5 +9,5 @@ public interface IAuthService
 {
     Task<User> Register(RegisterAuthRequest registerAuthRequest, string password);
     Task<User> Login(LoginAuthRequest loginAuthRequest);
-    Task<AccessToken> CreateAccessToken(User user);
+    Task<LoginResponse> CreateAccessToken(User user);
 }

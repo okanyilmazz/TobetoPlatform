@@ -2,6 +2,7 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.AuthRequests;
 using Business.Dtos.Requests.UserRequests;
+using Business.Dtos.Responses.AuthResponses;
 using Business.Messages;
 using Business.Rules.BusinessRules;
 using Core.Entities;
@@ -59,11 +60,13 @@ public class AuthManager : IAuthService
         return user;
     }
 
-    public async Task<AccessToken> CreateAccessToken(User user)
+    public async Task<LoginResponse> CreateAccessToken(User user)
     {
         var claims = await _userService.GetClaimsAsync(user);
         var accessToken = _tokenHelper.CreateToken(user, claims);
-        return accessToken;
+        LoginResponse loginResponse = _mapper.Map<LoginResponse>(accessToken);
+
+        return loginResponse;
     }
 
 }

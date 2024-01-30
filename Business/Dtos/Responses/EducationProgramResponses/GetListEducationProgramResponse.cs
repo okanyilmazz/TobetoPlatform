@@ -12,5 +12,6 @@ public class GetListEducationProgramResponse
     public DateTime StartDate { get; set; }
     public DateTime Deadline { get; set; }
 
-    public string EducationProgramLevelName { get; set; }
+    public Guid EducationProgramLevelId { get; set; }
+    public Guid EducationProgramDevelopmentId { get; set; }
 }

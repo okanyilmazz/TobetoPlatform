@@ -35,6 +35,17 @@ public class UniversityDepartmentsController : Controller
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _universityDepartmentService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("UniversityDepartments.Get")]
     [CustomValidation(typeof(CreateUniversityDepartmentRequestValidator))]
     [HttpPost("Add")]

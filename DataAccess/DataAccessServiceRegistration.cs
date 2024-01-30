@@ -12,13 +12,13 @@ public static class DataAccessServiceRegistration
 {
     public static IServiceCollection AddDataAccessServices(this IServiceCollection services, IConfiguration configuration)
     {
-        //services.AddDbContext<TobetoPlatformContext>(options => options.UseSqlServer(configuration.GetConnectionString("TobetoPlatformContext")));
-        services.AddDbContext<TobetoPlatformContext>(options => options.UseSqlServer(configuration.GetConnectionString("TobetoPlatformContextMAC")));
+        services.AddDbContext<TobetoPlatformContext>(options => options.UseSqlServer(configuration.GetConnectionString("TobetoPlatformContext")));
+        //services.AddDbContext<TobetoPlatformContext>(options => options.UseSqlServer(configuration.GetConnectionString("TobetoPlatformContextMAC")));
 
         services.AddScoped<ILessonDal, EfLessonDal>();
         services.AddScoped<ILessonCategoryDal, EfLessonCategoryDal>();
         services.AddScoped<IEducationProgramLevelDal, EfEducationProgramLevelDal>();
-        services.AddScoped<ILessonSubjectDal, EfLessonSubjectDal>();
+        services.AddScoped<ISubjectDal, EfSubjectDal>();
         services.AddScoped<IEducationProgramDal, EfEducationProgramDal>();
         services.AddScoped<IAccountOccupationClassDal, EfAccountOccupationClassDal>();
         services.AddScoped<ILessonSubTypeDal, EfLessonSubTypeDal>();
@@ -74,6 +74,9 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IEducationProgramOccupationClassDal, EfEducationProgramOccupationClassDal>();
         services.AddScoped<IAccountEducationProgramDal, EfAccountEducationProgramDal>();
         services.AddScoped<IOccupationDal, EfOccupationDal>();
+        services.AddScoped<IEducationProgramSubjectDal, EfEducationProgramSubjectDal>();
+        services.AddScoped<IEducationProgramDevelopmentDal, EfEducationProgramDevelopmentDal>();
+
 
 
 

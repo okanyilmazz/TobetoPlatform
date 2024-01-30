@@ -31,7 +31,7 @@ public class TobetoPlatformContext : DbContext
     public DbSet<LessonCategory> LessonCategories { get; set; }
     public DbSet<EducationProgramLevel> EducationProgramLevels { get; set; }
     public DbSet<LessonSubType> LessonSubTypes { get; set; }
-    public DbSet<LessonSubject> LessonSubjects { get; set; }
+    public DbSet<Subject> Subjects { get; set; }
     public DbSet<LessonModule> LessonModules { get; set; }
     public DbSet<EducationProgram> EducationPrograms { get; set; }
     public DbSet<DegreeType> DegreeTypes { get; set; }
@@ -55,6 +55,7 @@ public class TobetoPlatformContext : DbContext
     public DbSet<WorkExperience> WorkExperiences { get; set; }
     public DbSet<University> Universities { get; set; }
     public DbSet<EducationProgramLesson> EducationProgramLessons { get; set; }
+    public DbSet<EducationProgramSubject> EducationProgramSubjects { get; set; }
     public DbSet<UniversityDepartment> UniversityDepartments { get; set; }
     public DbSet<ExamQuestionType> ExamQuestionTypes { get; set; }
     public DbSet<City> Cities { get; set; }
@@ -66,6 +67,8 @@ public class TobetoPlatformContext : DbContext
     public DbSet<Country> Countries { get; set; }
     public DbSet<ExamQuestion> ExamQuestions { get; set; }
     public DbSet<Occupation> Occupations { get; set; }
+    public DbSet<EducationProgramDevelopment> EducationProgramDevelopments { get; set; }
+
 
 
 

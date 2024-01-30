@@ -28,7 +28,6 @@ public class UniversityDepartmentManager : IUniversityDepartmentService
         UniversityDepartment addedUniversityDepartment = await _universityDepartmentDal.AddAsync(universityDepartment);
         CreatedUniversityDepartmentResponse createdUniversityDepartmentResponse = _mapper.Map<CreatedUniversityDepartmentResponse>(addedUniversityDepartment);
         return createdUniversityDepartmentResponse;
-
     }
 
     public async Task<DeletedUniversityDepartmentResponse> DeleteAsync(DeleteUniversityDepartmentRequest deleteUniversityDepartmentRequest)
@@ -38,6 +37,13 @@ public class UniversityDepartmentManager : IUniversityDepartmentService
         UniversityDepartment deletedUniversityDepartment = await _universityDepartmentDal.DeleteAsync(universityDepartment);
         DeletedUniversityDepartmentResponse deletedUniversityDepartmentResponse = _mapper.Map<DeletedUniversityDepartmentResponse>(deletedUniversityDepartment);
         return deletedUniversityDepartmentResponse;
+    }
+
+    public async Task<GetListUniversityDepartmentResponse> GetByIdAsync(Guid id)
+    {
+        var universityDepartment = await _universityDepartmentDal.GetAsync(ud => ud.Id == id);
+        var mappedUniversityDepartment = _mapper.Map<GetListUniversityDepartmentResponse>(universityDepartment);
+        return mappedUniversityDepartment;
     }
 
     public async Task<IPaginate<GetListUniversityDepartmentResponse>> GetListAsync(PageRequest pageRequest)
@@ -57,5 +63,4 @@ public class UniversityDepartmentManager : IUniversityDepartmentService
         UpdatedUniversityDepartmentResponse updatedUniversityDepartmentResponse = _mapper.Map<UpdatedUniversityDepartmentResponse>(updatedUniversityDepartment);
         return updatedUniversityDepartmentResponse;
     }
-
 }

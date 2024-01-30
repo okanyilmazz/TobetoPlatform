@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using Business.Dtos.Requests.LessonSubjectRequests;
-using Business.Dtos.Responses.LessonSubjectResponses;
+using Business.Dtos.Requests.SubjectRequests;
+using Business.Dtos.Responses.SubjectResponses;
 using Core.DataAccess.Paging;
 using Entities.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Profiles
 {
@@ -15,16 +10,16 @@ namespace Business.Profiles
     {
         public LessonSubjectProfile()
         {
-            CreateMap<LessonSubject, CreateLessonSubjectRequest>().ReverseMap();
-            CreateMap<LessonSubject, UpdateLessonSubjectRequest>().ReverseMap();
-            CreateMap<LessonSubject, DeleteLessonSubjectRequest>().ReverseMap();
+            CreateMap<Subject, CreateSubjectRequest>().ReverseMap();
+            CreateMap<Subject, UpdateSubjectRequest>().ReverseMap();
+            CreateMap<Subject, DeleteSubjectRequest>().ReverseMap();
 
-            CreateMap<LessonSubject, CreatedLessonSubjectResponse>().ReverseMap();
-            CreateMap<LessonSubject, UpdatedLessonSubjectResponse>().ReverseMap();
-            CreateMap<LessonSubject, DeletedLessonSubjectResponse>().ReverseMap();
+            CreateMap<Subject, CreatedSubjectResponse>().ReverseMap();
+            CreateMap<Subject, UpdatedSubjectResponse>().ReverseMap();
+            CreateMap<Subject, DeletedSubjectResponse>().ReverseMap();
 
-            CreateMap<IPaginate<LessonSubject>, Paginate<GetListLessonSubjectResponse>>().ReverseMap();
-            CreateMap<LessonSubject, GetListLessonSubjectResponse>().ReverseMap();
+            CreateMap<IPaginate<Subject>, Paginate<GetListSubjectResponse>>().ReverseMap();
+            CreateMap<Subject, GetListSubjectResponse>().ReverseMap();
         }
     }
 }

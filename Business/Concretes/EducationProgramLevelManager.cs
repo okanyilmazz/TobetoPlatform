@@ -40,12 +40,19 @@ public class EducationProgramLevelManager : IEducationProgramLevelService
         (deletedEducationProgramLevel);
         return deletedEducationProgramLevelResponse;
     }
+    public async Task<GetListEducationProgramLevelResponse> GetByIdAsync(Guid id)
+    {
+
+        var educationProgramLevel = await _educationProgramLevelDal.GetAsync(epl => epl.Id == id);
+        var mappedEducationProgramLevel = _mapper.Map<GetListEducationProgramLevelResponse>(educationProgramLevel);
+        return mappedEducationProgramLevel;
+    }
 
     public async Task<IPaginate<GetListEducationProgramLevelResponse>> GetListAsync(PageRequest pageRequest)
     {
         var educationProgramLevelResponse = await _educationProgramLevelDal.GetListAsync(
-            index:pageRequest.PageIndex,
-            size:pageRequest.PageSize);
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize);
         var mappedEducationProgramLevelList = _mapper.Map<Paginate<GetListEducationProgramLevelResponse>>(educationProgramLevelResponse);
         return mappedEducationProgramLevelList;
     }

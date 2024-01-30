@@ -12,4 +12,6 @@ public class CreateEducationProgramRequest
     public DateTime Deadline { get; set; }
 
     public Guid EducationProgramLevelId { get; set; }
+    public Guid EducationProgramDevelopmentId { get; set; }
+
 }

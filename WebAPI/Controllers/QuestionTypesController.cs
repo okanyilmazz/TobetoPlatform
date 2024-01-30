@@ -31,6 +31,16 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetByIdAsync(Guid id)
+    {
+        var result = await _questionTypeService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

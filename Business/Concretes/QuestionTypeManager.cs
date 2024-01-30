@@ -11,7 +11,6 @@ namespace Business.Concretes;
 
 public class QuestionTypeManager : IQuestionTypeService
 {
-
     IQuestionTypeDal _questionTypeDal;
     IMapper _mapper;
     QuestionTypeBusinessRules _questionTypeBusinessRules;
@@ -39,6 +38,12 @@ public class QuestionTypeManager : IQuestionTypeService
         return deletedQuestionTypeResponse;
     }
 
+    public async Task<GetListQuestionTypeResponse> GetByIdAsync(Guid id)
+    {
+        var questionType = await _questionTypeDal.GetAsync(ud => ud.Id == id);
+        var mappedQuestionType = _mapper.Map<GetListQuestionTypeResponse>(questionType);
+        return mappedQuestionType;
+    }
 
     public async Task<IPaginate<GetListQuestionTypeResponse>> GetListAsync(PageRequest pageRequest)
     {
@@ -59,4 +64,3 @@ public class QuestionTypeManager : IQuestionTypeService
         return updatedQuestionTypeResponse;
     }
 }
-

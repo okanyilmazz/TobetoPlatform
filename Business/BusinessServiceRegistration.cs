@@ -35,10 +35,12 @@ public static class BusinessServiceRegistration
         services.AddScoped<IDegreeTypeService, DegreeTypeManager>();
         services.AddScoped<IDistrictService, DistrictManager>();
         services.AddScoped<IEducationProgramService, EducationProgramManager>();
+        services.AddScoped<IEducationProgramDevelopmentService, EducationProgramDevelopmentManager>();
         services.AddScoped<IEducationProgramLessonService, EducationProgramLessonManager>();
         services.AddScoped<IEducationProgramLevelService, EducationProgramLevelManager>();
         services.AddScoped<IEducationProgramOccupationClassService, EducationProgramOccupationClassManager>();
         services.AddScoped<IEducationProgramProgrammingLanguageService, EducationProgramProgrammingLanguageManager>();
+        services.AddScoped<IEducationProgramSubjectService, EducationProgramSubjectManager>();
         services.AddScoped<IExamService, ExamManager>();
         services.AddScoped<IExamOccupationClassService, ExamOccupationClassManager>();
         services.AddScoped<IExamQuestionService, ExamQuestionManager>();
@@ -51,7 +53,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<ILessonCategoryService, LessonCategoryManager>();
         services.AddScoped<ILessonModuleService, LessonModuleManager>();
         services.AddScoped<ILessonSubTypeService, LessonSubTypeManager>();
-        services.AddScoped<ILessonSubjectService, LessonSubjectManager>();
         services.AddScoped<IMediaNewService, MediaNewManager>();
         services.AddScoped<IOccupationClassService, OccupationClassManager>();
         services.AddScoped<IOccupationClassSurveyService, OccupationClassSurveyManager>();
@@ -63,6 +64,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<ISessionService, SessionManager>();
         services.AddScoped<ISkillService, SkillManager>();
         services.AddScoped<ISocialMediaService, SocialMediaManager>();
+        services.AddScoped<ISubjectService, SubjectManager>();
         services.AddScoped<ISurveyService, SurveyManager>();
         services.AddScoped<IUniversityService, UniversityManager>();
         services.AddScoped<IUniversityDepartmentService, UniversityDepartmentManager>();

@@ -28,6 +28,8 @@ namespace DataAccess.EntityConfigurations
             builder.HasIndex(indexExpression: a => a.AddressId, name: "UK_AddressId").IsUnique();
             builder.HasIndex(indexExpression: a => a.UserId, name: "UK_UserId").IsUnique();
             builder.HasIndex(indexExpression: a => a.PhoneNumber, name: "UK_PhoneNumber").IsUnique();
+            builder.HasIndex(indexExpression: a => a.NationalId, name: "UK_NationalId").IsUnique();
+
 
             builder.HasOne(a => a.Address);
             builder.HasOne(a => a.User);

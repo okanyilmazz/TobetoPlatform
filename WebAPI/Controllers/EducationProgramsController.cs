@@ -7,6 +7,7 @@ using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Rules.ValidationRules.FluentValidation.EducationProgramValidators;
 using Business.Dtos.Requests.EducationProgramRequests;
+using Business.Dtos.Requests.FilterRequest;
 
 namespace WebAPI.Controllers;
 
@@ -28,6 +29,26 @@ public class EducationProgramsController : ControllerBase
     public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
     {
         var result = await _educationProgramService.GetListAsync(pageRequest);
+        return Ok(result);
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetById")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _educationProgramService.GetByIdAsync(id);
+        return Ok(result);
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [CacheRemove("EducationPrograms.Get")]
+    [HttpPost("GetListByFiltered")]
+    public async Task<IActionResult> GetListByFiltered([FromBody] EducationProgramFilterRequest educationProgramFilterRequest)
+    {
+        var result = await _educationProgramService.GetListByFiltered(educationProgramFilterRequest);
         return Ok(result);
     }
 
@@ -76,4 +97,7 @@ public class EducationProgramsController : ControllerBase
         var result = await _educationProgramService.DeleteAsync(deleteEducationProgramRequest);
         return Ok(result);
     }
+
+
+ 
 }

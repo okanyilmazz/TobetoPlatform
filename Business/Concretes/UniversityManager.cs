@@ -39,6 +39,13 @@ public class UniversityManager : IUniversityService
         return deletedUniversityResponse;
     }
 
+    public async Task<GetListUniversityResponse> GetByIdAsync(Guid id)
+    {
+        var university = await _universityDal.GetAsync(u => u.Id == id);
+        var mappedUniversity = _mapper.Map<GetListUniversityResponse>(university);
+        return mappedUniversity;
+    }
+
     public async Task<IPaginate<GetListUniversityResponse>> GetListAsync(PageRequest pageRequest)
     {
         var University = await _universityDal.GetListAsync(

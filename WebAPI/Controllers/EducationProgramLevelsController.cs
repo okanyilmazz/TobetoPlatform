@@ -24,11 +24,8 @@ public class EducationProgramLevelsController : ControllerBase
     [Logging(typeof(FileLogger))]
     [Cache(60)]
     [HttpGet("GetList")]
-<<<<<<< HEAD
-    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest )
-=======
-    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
->>>>>>> Rumeysa
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest
+)
     {
         var result = await _educationProgramLevelService.GetListAsync(pageRequest);
         return Ok(result);

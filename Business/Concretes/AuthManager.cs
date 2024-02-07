@@ -44,8 +44,8 @@ public class AuthManager : IAuthService
 
     public async Task<User> Login(LoginAuthRequest loginAuthRequest)
     {
-        User user = _mapper.Map<User>(loginAuthRequest);
-        var userToCheck = await _userService.GetByMailAsync(user.Email);
+        var userToCheck = await _userService.GetByMailAsync(loginAuthRequest.Email);
+        User user = _mapper.Map<User>(userToCheck);
 
         if (userToCheck == null)
         {

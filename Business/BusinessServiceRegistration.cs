@@ -72,6 +72,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IWorkExperienceService, WorkExperienceManager>();
         services.AddScoped<IAccountEducationProgramService, AccountEducationProgramManager>();
         services.AddScoped<IOccupationService, OccupationManager>();
+        services.AddScoped<IManagementProgramService, ManagementProgramManager>();
+
 
 
 

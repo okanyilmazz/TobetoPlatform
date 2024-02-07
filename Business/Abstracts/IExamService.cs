@@ -11,4 +11,6 @@ public interface IExamService
     Task<DeletedExamResponse> DeleteAsync(DeleteExamRequest deleteExamRequest);
     Task<IPaginate<GetListExamResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListExamResponse> GetByIdAsync(Guid id);
+    Task<IPaginate<GetListExamResponse>> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest);
+
 }

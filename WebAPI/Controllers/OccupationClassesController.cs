@@ -42,6 +42,16 @@ public class OccupationClassesController : ControllerBase
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId)
+    {
+        var result = await _occupationClassService.GetByAccountIdAsync(accountId);
+        return Ok(result);
+    }
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

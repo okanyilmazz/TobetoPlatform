@@ -30,7 +30,7 @@ public class AuthController : Controller
         //await _authService.UserExists(registerAuthRequest.Email);
         var registerResult = await _authService.Register(registerAuthRequest, registerAuthRequest.Password);
 
-        var result = _authService.CreateAccessToken(registerResult);
+        var result = await _authService.CreateAccessToken(registerResult);
         if (result != null)
         {
             return Ok(result);

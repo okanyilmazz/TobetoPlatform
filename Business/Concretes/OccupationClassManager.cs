@@ -6,6 +6,7 @@ using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes;
 
@@ -44,6 +45,15 @@ public class OccupationClassManager : IOccupationClassService
         var occupationClassId = await _occupationClassDal.GetAsync(o => o.Id == id);
         var mappedoccupationClass = _mapper.Map<GetListOccupationClassResponse>(occupationClassId);
         return mappedoccupationClass;
+    }
+
+    public async Task<GetListOccupationClassResponse> GetByAccountIdAsync(Guid accountId)
+    {
+        var occupationClassId = await _occupationClassDal.GetAsync(
+            include: o => o.Include(o => o.AccountOccupationClasses),
+            predicate: o => o.AccountOccupationClasses.Any(aoc => aoc.AccountId == accountId));
+        var mappedOccupationClass = _mapper.Map<GetListOccupationClassResponse>(occupationClassId);
+        return mappedOccupationClass;
     }
 
     public async Task<IPaginate<GetListOccupationClassResponse>> GetListAsync(PageRequest pageRequest)

@@ -39,6 +39,15 @@ public class ExamResultsController : Controller
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId)
+    {
+        var result = await _examResultService.GetByAccountIdAsync(accountId);
+        return Ok(result);
+    }
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

@@ -6,6 +6,7 @@ public class EducationProgramFilterRequest
     public Guid? EducationProgramLevelId { get; set; }
     public Guid? SubjectId { get; set; }
     public Guid? ProgrammingLanguageId { get; set; }
+    public Guid? EducationProgramDevelopmentId { get; set; }
     public Guid? AccountId { get; set; }
 
     public int CompleteStatus { get; set; }

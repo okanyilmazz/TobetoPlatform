@@ -25,7 +25,4 @@
   <ItemGroup>
     <None Remove="Dtos\Responses\AuthResponses\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dtos\Responses\AuthResponses\" />
-  </ItemGroup>
 </Project>

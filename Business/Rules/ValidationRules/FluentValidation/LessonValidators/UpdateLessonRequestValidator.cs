@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Rules.ValidationRules.FluentValidation.LessosValidators
+namespace Business.Rules.ValidationRules.FluentValidation.LessonValidators
 {
     public class UpdateLessonRequestValidator : AbstractValidator<UpdateLessonRequest>
     {

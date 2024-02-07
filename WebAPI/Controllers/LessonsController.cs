@@ -5,7 +5,7 @@ using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
-using Business.Rules.ValidationRules.FluentValidation.LessosValidators;
+using Business.Rules.ValidationRules.FluentValidation.LessonValidators;
 using Business.Dtos.Requests.LessonRequests;
 
 namespace WebAPI.Controllers;

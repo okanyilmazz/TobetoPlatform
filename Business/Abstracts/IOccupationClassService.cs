@@ -11,5 +11,7 @@ namespace Business.Abstracts
         Task<DeletedOccupationClassResponse> DeleteAsync(DeleteOccupationClassRequest deleteOccupationClassRequest);
         Task<IPaginate<GetListOccupationClassResponse>> GetListAsync(PageRequest pageRequest);
         Task<GetListOccupationClassResponse> GetByIdAsync(Guid id);
+        Task<GetListOccupationClassResponse> GetByAccountIdAsync(Guid accountId);
+
     }
 }

@@ -1,19 +1,13 @@
 ﻿using Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Entities.Concretes
+namespace Entities.Concretes;
+
+public class AccountSession : Entity<Guid>
 {
-    public class AccountSession : Entity<Guid>
-    {
-        public Guid SessionId { get; set; }
-        public Guid AccountId { get; set; }
-        public bool Status { get; set; }
+    public Guid SessionId { get; set; }
+    public Guid AccountId { get; set; }
+    public bool Status { get; set; }
 
-        public Session Session { get; set; }
-        public Account Account { get; set; }
-    }
+    public Session Session { get; set; }
+    public Account Account { get; set; }
 }

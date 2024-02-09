@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Microsoft.Identity.Client;
 
 namespace Entities.Concretes;
 

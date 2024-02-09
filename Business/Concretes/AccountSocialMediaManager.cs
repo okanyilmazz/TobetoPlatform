@@ -33,7 +33,7 @@ public class AccountSocialMediaManager : IAccountSocialMediaService
     public async Task<DeletedAccountSocialMediaResponse> DeleteAsync(DeleteAccountSocialMediaRequest deleteAccountSocialMediaRequest)
     {
         AccountSocialMedia accountSocialMedia = await _accountSocialMediaDal.GetAsync(predicate: a => a.Id == deleteAccountSocialMediaRequest.Id);
-        AccountSocialMedia deletedAccountSocialMedia = await _accountSocialMediaDal.DeleteAsync(accountSocialMedia, false);
+        AccountSocialMedia deletedAccountSocialMedia = await _accountSocialMediaDal.DeleteAsync(accountSocialMedia);
         DeletedAccountSocialMediaResponse deletedAccountSocialMediaResponse = _mapper.Map<DeletedAccountSocialMediaResponse>(deletedAccountSocialMedia);
         return deletedAccountSocialMediaResponse;
     }

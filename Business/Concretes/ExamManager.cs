@@ -50,6 +50,7 @@ public class ExamManager : IExamService
     public async Task<IPaginate<GetListExamResponse>> GetListAsync(PageRequest pageRequest)
     {
         var exams = await _examDal.GetListAsync(
+            include: e => e.Include(e => e.ExamQuestions).ThenInclude(eq => eq.Question).ThenInclude(q => q.QuestionType),
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
         var mappedExams = _mapper.Map<Paginate<GetListExamResponse>>(exams);
@@ -71,7 +72,9 @@ public class ExamManager : IExamService
         var exams = await _examDal.GetListAsync(
            index: pageRequest.PageIndex,
            size: pageRequest.PageSize,
-            include: e => e.Include(e => e.ExamOccupationClasses),
+            include: e => e
+            .Include(e => e.ExamOccupationClasses)
+            .Include(e => e.ExamQuestions).ThenInclude(eq => eq.Question).ThenInclude(q => q.QuestionType),
             predicate: e => e.ExamOccupationClasses.Any(eoc => eoc.OccupationClassId == occupationClass.Id));
         var mappedExams = _mapper.Map<Paginate<GetListExamResponse>>(exams);
         return mappedExams;

@@ -1,11 +1,10 @@
-﻿namespace Business.Dtos.Responses.BlogResponses
+﻿namespace Business.Dtos.Responses.BlogResponses;
+
+public class DeletedBlogResponse
 {
-    public class DeletedBlogResponse
-    {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ReleaseDate { get; set; }
-        public string ThumbnailPath { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime ReleaseDate { get; set; }
+    public string ThumbnailPath { get; set; }
 }

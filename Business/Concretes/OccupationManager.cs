@@ -34,7 +34,7 @@ public class OccupationManager : IOccupationService
     {
         await _occupationBusinessRules.IsExistsOccupation(deleteOccupationRequest.Id);
         Occupation occupation = await _occupationDal.GetAsync(predicate: c => c.Id == deleteOccupationRequest.Id);
-        Occupation deletedOccupation = await _occupationDal.DeleteAsync(occupation, false);
+        Occupation deletedOccupation = await _occupationDal.DeleteAsync(occupation);
         DeletedOccupationResponse deletedOccupationResponse = _mapper.Map<DeletedOccupationResponse>(deletedOccupation);
         return deletedOccupationResponse;
     }

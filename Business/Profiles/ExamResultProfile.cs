@@ -1,31 +1,32 @@
 ﻿using AutoMapper;
 using Business.Dtos.Requests.ExamResultRequests;
 using Business.Dtos.Responses.ExamResultResponses;
+using Business.Dtos.Responses.OccupationClassSurveyResponses;
 using Core.DataAccess.Paging;
 using Entities.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Business.Profiles
+namespace Business.Profiles;
+
+public class ExamResultProfile : Profile
 {
-    public class ExamResultProfile : Profile
+    public ExamResultProfile()
     {
-        public ExamResultProfile()
-        {
-            CreateMap<ExamResult, CreateExamResultRequest>().ReverseMap();
-            CreateMap<ExamResult, CreatedExamResultResponse>().ReverseMap();
+        CreateMap<ExamResult, CreateExamResultRequest>().ReverseMap();
+        CreateMap<ExamResult, CreatedExamResultResponse>().ReverseMap();
 
-            CreateMap<ExamResult, UpdateExamResultRequest>().ReverseMap();
-            CreateMap<ExamResult, UpdatedExamResultResponse>().ReverseMap();
+        CreateMap<ExamResult, UpdateExamResultRequest>().ReverseMap();
+        CreateMap<ExamResult, UpdatedExamResultResponse>().ReverseMap();
 
-            CreateMap<ExamResult, DeleteExamResultRequest>().ReverseMap();
-            CreateMap<ExamResult, DeletedExamResultResponse>().ReverseMap();
+        CreateMap<ExamResult, DeleteExamResultRequest>().ReverseMap();
+        CreateMap<ExamResult, DeletedExamResultResponse>().ReverseMap();
 
-            CreateMap<IPaginate<ExamResult>, Paginate<GetListExamResultResponse>>().ReverseMap();
-            CreateMap<ExamResult, GetListExamResultResponse>().ReverseMap();
-        }
+        CreateMap<IPaginate<ExamResult>, Paginate<GetListExamResultResponse>>().ReverseMap();
+
+        CreateMap<ExamResult, GetListExamResultResponse>()
+            .ForMember(destinationMember: response => response.ExamName,
+            memberOptions: opt => opt.MapFrom(er => er.Exam.Name)).ReverseMap();
+
+        CreateMap<List<ExamResult>, Paginate<GetListExamResultResponse>>().ForMember(destinationMember: h => h.Items,
+       memberOptions: opt => opt.MapFrom(h => h.ToList())).ReverseMap();
     }
 }

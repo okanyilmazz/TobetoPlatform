@@ -1,19 +1,12 @@
 ﻿using Core.Entities;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Entities.Concretes
+namespace Entities.Concretes;
+
+public class AccountSkill : Entity<Guid>
 {
-    public class AccountSkill : Entity<Guid>
-    {
-        public Guid SkillId { get; set; }
-        public Guid AccountId { get; set; }
+    public Guid SkillId { get; set; }
+    public Guid AccountId { get; set; }
 
-        public Account Account { get; set; }
-        public Skill Skill { get; set; }
-    }
+    public Account Account { get; set; }
+    public Skill Skill { get; set; }
 }

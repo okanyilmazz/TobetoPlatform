@@ -34,7 +34,7 @@ public class AccountSkillManager : IAccountSkillService
     {
         await _accountSkillBusinessRules.IsExistsAccountSkill(deleteAccountSkillRequest.Id);
         AccountSkill accountSkill = await _accountSkillDal.GetAsync(predicate: a => a.Id == deleteAccountSkillRequest.Id);
-        AccountSkill deletedAccountSkill = await _accountSkillDal.DeleteAsync(accountSkill, false);
+        AccountSkill deletedAccountSkill = await _accountSkillDal.DeleteAsync(accountSkill);
         DeletedAccountSkillResponse deletedAccountSkillResponse = _mapper.Map<DeletedAccountSkillResponse>(deletedAccountSkill);
         return deletedAccountSkillResponse;
     }

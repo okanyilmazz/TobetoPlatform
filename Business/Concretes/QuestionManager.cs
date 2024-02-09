@@ -35,7 +35,7 @@ public class QuestionManager : IQuestionService
     {
         await _questionBusinessRules.IsExistsQuestion(deleteQuestionRequest.Id);
         Question question = await _questionDal.GetAsync(predicate: a => a.Id == deleteQuestionRequest.Id);
-        Question deletedQuestion = await _questionDal.DeleteAsync(question, false);
+        Question deletedQuestion = await _questionDal.DeleteAsync(question);
         DeletedQuestionResponse createdQuestionResponse = _mapper.Map<DeletedQuestionResponse>(deletedQuestion);
         return createdQuestionResponse;
     }

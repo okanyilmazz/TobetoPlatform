@@ -34,7 +34,7 @@ public class MediaNewManager : IMediaNewService
     {
         await _mediaNewBusinessRules.IsExistsMediaNew(deleteMediaNewRequest.Id);
         MediaNew mediaNew = await _mediaNewDal.GetAsync(predicate: a => a.Id == deleteMediaNewRequest.Id);
-        MediaNew deletedMediaNew = await _mediaNewDal.DeleteAsync(mediaNew, false);
+        MediaNew deletedMediaNew = await _mediaNewDal.DeleteAsync(mediaNew);
         DeletedMediaNewResponse deletedMediaNewResponse = _mapper.Map<DeletedMediaNewResponse>(deletedMediaNew);
         return deletedMediaNewResponse;
     }

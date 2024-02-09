@@ -77,6 +77,8 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IOccupationDal, EfOccupationDal>();
         services.AddScoped<IEducationProgramSubjectDal, EfEducationProgramSubjectDal>();
         services.AddScoped<IEducationProgramDevelopmentDal, EfEducationProgramDevelopmentDal>();
+        services.AddScoped<IBadgeDal, EfBadgeDal>();
+        services.AddScoped<IAccountBadgeDal, EfAccountBadgeDal>();
         services.AddScoped<IManagementProgramDal, EfManagementProgramDal>();
 
 

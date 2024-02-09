@@ -15,7 +15,9 @@ public class EducationProgram : Entity<Guid>
 
     public Guid EducationProgramLevelId { get; set; }
     public Guid EducationProgramDevelopmentId { get; set; }
+    public Guid BadgeId { get; set; }
 
+    public Badge Badge { get; set; }
     public EducationProgramLevel EducationProgramLevel { get; set; }
     public EducationProgramDevelopment EducationProgramDevelopment { get; set; }
     public virtual ICollection<AccountEducationProgram>? AccountEducationPrograms { get; set; }

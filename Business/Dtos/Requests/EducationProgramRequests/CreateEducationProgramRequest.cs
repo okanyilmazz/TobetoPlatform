@@ -13,5 +13,6 @@ public class CreateEducationProgramRequest
 
     public Guid EducationProgramLevelId { get; set; }
     public Guid EducationProgramDevelopmentId { get; set; }
+    public Guid BadgeId { get; set; }
 
 }

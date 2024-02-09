@@ -35,7 +35,7 @@ public class OccupationClassManager : IOccupationClassService
     {
         await _occupationClassBusinessRules.IsExistsOccupationClass(deleteOccupationClassRequest.Id);
         OccupationClass occupationClass = await _occupationClassDal.GetAsync(predicate: o => o.Id == deleteOccupationClassRequest.Id);
-        OccupationClass deletedOccupationClass = await _occupationClassDal.DeleteAsync(occupationClass, false);
+        OccupationClass deletedOccupationClass = await _occupationClassDal.DeleteAsync(occupationClass);
         DeletedOccupationClassResponse deletedOccupationClassResponse = _mapper.Map<DeletedOccupationClassResponse>(deletedOccupationClass);
         return deletedOccupationClassResponse;
     }

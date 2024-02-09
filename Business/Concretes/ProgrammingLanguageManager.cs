@@ -34,7 +34,7 @@ public class ProgrammingLanguageManager : IProgrammingLanguageService
     {
         await _programmingLanguageBusinessRules.IsExistsProgrammingLanguage(deleteProgrammingLanguageRequest.Id);
         ProgrammingLanguage programmingLanguage = await _programmingLanguageDal.GetAsync(predicate: a => a.Id == deleteProgrammingLanguageRequest.Id);
-        ProgrammingLanguage deletedProgrammingLanguage = await _programmingLanguageDal.DeleteAsync(programmingLanguage, false);
+        ProgrammingLanguage deletedProgrammingLanguage = await _programmingLanguageDal.DeleteAsync(programmingLanguage);
         DeletedProgrammingLanguageResponse createdProgrammingLanguageResponse = _mapper.Map<DeletedProgrammingLanguageResponse>(deletedProgrammingLanguage);
         return createdProgrammingLanguageResponse;
     }

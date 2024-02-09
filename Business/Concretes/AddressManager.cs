@@ -35,7 +35,7 @@ public class AddressManager : IAddressService
     {
         await _addressBusinessRules.IsExistsAdress(deleteAddressRequest.Id);
         Address address = await _addressDal.GetAsync(predicate: l => l.Id == deleteAddressRequest.Id);
-        Address deletedAddress = await _addressDal.DeleteAsync(address,false);
+        Address deletedAddress = await _addressDal.DeleteAsync(address);
         DeletedAddressResponse deletedAddressResponse = _mapper.Map<DeletedAddressResponse>(deletedAddress);
         return deletedAddressResponse;
     }

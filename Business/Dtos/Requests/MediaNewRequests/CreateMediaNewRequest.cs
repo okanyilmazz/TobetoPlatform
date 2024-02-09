@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Business.Dtos.Requests.MediaNewRequests;
 
-namespace Business.Dtos.Requests.MediaNewRequests
+public class CreateMediaNewRequest
 {
-    public class CreateMediaNewRequest
-    {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime ReleaseDate { get; set; }
-        public string ThumbnailPath { get; set; }
-    }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime ReleaseDate { get; set; }
+    public string ThumbnailPath { get; set; }
 }

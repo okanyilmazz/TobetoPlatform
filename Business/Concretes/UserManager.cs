@@ -43,7 +43,7 @@ public class UserManager : IUserService
     {
         await _userBusinessRules.IsExistsUser(deleteUserRequest.Id);
         User user = await _userDal.GetAsync(predicate: u => u.Id == deleteUserRequest.Id);
-        User deletedUser = await _userDal.DeleteAsync(user, true);
+        User deletedUser = await _userDal.DeleteAsync(user);
         DeletedUserResponse responseUser = _mapper.Map<DeletedUserResponse>(deletedUser);
         return responseUser;
     }

@@ -41,6 +41,28 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByQuestionId")]
+    public async Task<IActionResult> GetByQuestionIdAsync(Guid questionId)
+    {
+        var result = await _questionTypeService.GetByQuestionIdAsync(questionId);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByExamId")]
+    public async Task<IActionResult> GetByExamIdAsync(Guid examId)
+    {
+        var result = await _questionTypeService.GetByExamIdAsync(examId);
+        return Ok(result);
+    }
+
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
@@ -76,4 +98,3 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 }
-

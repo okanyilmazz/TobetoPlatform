@@ -53,7 +53,8 @@ public class EducationProgramManager : IEducationProgramService
             .Include(ep => ep.EducationProgramLessons).ThenInclude(ep => ep.Lesson)
             .Include(ep => ep.EducationProgramOccupationClasses).ThenInclude(ep => ep.OccupationClass)
             .Include(ep => ep.EducationProgramProgrammingLanguages).ThenInclude(ep => ep.ProgrammingLanguage)
-            .Include(ep => ep.EducationProgramSubjects).ThenInclude(ep => ep.Subject),
+            .Include(ep => ep.EducationProgramSubjects).ThenInclude(ep => ep.Subject)
+            .Include(ep => ep.Badge)            ,
 
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
@@ -62,6 +63,7 @@ public class EducationProgramManager : IEducationProgramService
         return mappedEducationPrograms;
     }
 
+   
     public async Task<IPaginate<GetListEducationProgramResponse>> GetListByFiltered(EducationProgramFilterRequest educationProgramFilterRequest)
     {
         var educationProgramList = await _educationProgramDal.GetListAsync(

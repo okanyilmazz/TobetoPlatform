@@ -29,13 +29,8 @@ namespace Business.Profiles
             CreateMap<UserOperationClaim, DeleteUserOperationClaimRequest>().ReverseMap();
             CreateMap<UserOperationClaim, DeletedUserOperationClaimResponse>().ReverseMap();
 
-            CreateMap<UserOperationClaim, GetListUserOperationClaimResponse>()
-                .ForMember(destinationMember: uoc => uoc.FirstName,
-                memberOptions: uoc => uoc.MapFrom(uoc => uoc.User.FirstName))
-                .ForMember(destinationMember: uoc => uoc.LastName,
-                memberOptions: uoc => uoc.MapFrom(uoc => uoc.User.LastName))
-                .ReverseMap();
-
+            CreateMap<UserOperationClaim, GetListUserOperationClaimResponse>();
+            
             CreateMap<IPaginate<UserOperationClaim>, Paginate<GetListUserOperationClaimResponse>>();
         }
     }

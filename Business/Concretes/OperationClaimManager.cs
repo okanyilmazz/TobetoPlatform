@@ -46,7 +46,7 @@ namespace Business.Concretes
         {
             await _operationClaimBusinessRules.IsExistsOperationClaim(deleteOperationClaimRequest.Id);
             OperationClaim operationClaim = await _operationClaimDal.GetAsync(predicate: op => op.Id == deleteOperationClaimRequest.Id);
-            OperationClaim deletedOperationClaim = await _operationClaimDal.DeleteAsync(operationClaim,false);
+            OperationClaim deletedOperationClaim = await _operationClaimDal.DeleteAsync(operationClaim);
             DeletedOperationClaimResponse deletedOperationClaimResponse = _mapper.Map<DeletedOperationClaimResponse>(deletedOperationClaim);
             return deletedOperationClaimResponse;
         }

@@ -57,6 +57,7 @@ public class AuthManager : IAuthService
             throw new BusinessException(BusinessMessages.PasswordUncorrect);
         }
 
+        user = _mapper.Map<User>(userToCheck);
         return user;
     }
 

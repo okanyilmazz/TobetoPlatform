@@ -10,5 +10,6 @@ public static class MiddlewareExtensions
         => app.UseMiddleware<ExceptionMiddleware>().
         UseMiddleware<ValidationMiddleware>().
         UseMiddleware<CacheMiddleware>().
-        UseMiddleware<SeriLogMiddleware>();
+        UseMiddleware<SeriLogMiddleware>().
+        UseMiddleware<SecuredOperationMiddleware>();
 }

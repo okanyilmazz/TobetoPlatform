@@ -18,6 +18,8 @@ namespace DataAccess.EntityConfigurations
             builder.Property(op => op.Id).HasColumnName("Id").IsRequired();
             builder.Property(op => op.Name).HasColumnName("Name").IsRequired();
 
+            builder.HasMany(s => s.UserOperationClaim);
+
             builder.HasQueryFilter(op => !op.DeletedDate.HasValue);
         }
     }

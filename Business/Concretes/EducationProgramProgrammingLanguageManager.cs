@@ -35,7 +35,7 @@ public class EducationProgramProgrammingLanguageManager : IEducationProgramProgr
     {
         await _educationProgramProgrammingLanguageBusinessRules.IsExistsEducationProgramProgrammingLanguage(deleteEducationProgramProgrammingLanguageRequest.Id);
         EducationProgramProgrammingLanguage educationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.GetAsync(predicate: l => l.Id == deleteEducationProgramProgrammingLanguageRequest.Id);
-        EducationProgramProgrammingLanguage deletedEducationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.DeleteAsync(educationProgramProgrammingLanguage, true);
+        EducationProgramProgrammingLanguage deletedEducationProgramProgrammingLanguage = await _educationProgramProgrammingLanguageDal.DeleteAsync(educationProgramProgrammingLanguage);
         DeletedEducationProgramProgrammingLanguageResponse deletedEducationProgramProgrammingLanguageResponse = _mapper.Map<DeletedEducationProgramProgrammingLanguageResponse>(deletedEducationProgramProgrammingLanguage);
         return deletedEducationProgramProgrammingLanguageResponse;
     }
@@ -54,7 +54,7 @@ public class EducationProgramProgrammingLanguageManager : IEducationProgramProgr
     public async Task<IPaginate<GetListEducationProgramProgrammingLanguageResponse>> GetListAsync(PageRequest pageRequest)
     {
         var EducationProgramProgrammingLanguages = await _educationProgramProgrammingLanguageDal.GetListAsync(
-            index:pageRequest.PageIndex,
+            index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
             include: ep => ep
             .Include(ep => ep.EducationProgram)

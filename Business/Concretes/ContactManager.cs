@@ -33,32 +33,32 @@ public class ContactManager : IContactService
     public async Task<DeletedContactResponse> DeleteAsync(DeleteContactRequest deleteContactRequest)
     {
         await _contactBusinessRules.IsExistsContact(deleteContactRequest.Id);
-        Contact contact = await _contactDal.GetAsync(predicate: c=>c.Id == deleteContactRequest.Id);
-        Contact deletedContact = await _contactDal.DeleteAsync(contact,false);
+        Contact contact = await _contactDal.GetAsync(predicate: c => c.Id == deleteContactRequest.Id);
+        Contact deletedContact = await _contactDal.DeleteAsync(contact);
         DeletedContactResponse deletedContactResponse = _mapper.Map<DeletedContactResponse>(deletedContact);
         return deletedContactResponse;
     }
 
     public async Task<GetListContactResponse> GetByIdAsync(Guid id)
     {
-        var Contact = await _contactDal.GetAsync(p => p.Id == id);
-        var mappedContact = _mapper.Map<GetListContactResponse>(Contact);
+        var contact = await _contactDal.GetAsync(p => p.Id == id);
+        var mappedContact = _mapper.Map<GetListContactResponse>(contact);
         return mappedContact;
     }
 
     public async Task<IPaginate<GetListContactResponse>> GetListAsync(PageRequest pageRequest)
     {
-        var Contact = await _contactDal.GetListAsync(
+        var contact = await _contactDal.GetListAsync(
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
-        var mappedContact = _mapper.Map<Paginate<GetListContactResponse>>(Contact);
+        var mappedContact = _mapper.Map<Paginate<GetListContactResponse>>(contact);
         return mappedContact;
     }
 
     public async Task<UpdatedContactResponse> UpdateAsync(UpdateContactRequest updateContactRequest)
     {
         await _contactBusinessRules.IsExistsContact(updateContactRequest.Id);
-        Contact contact = _mapper.Map<Contact> (updateContactRequest);
+        Contact contact = _mapper.Map<Contact>(updateContactRequest);
         Contact updatedContact = await _contactDal.UpdateAsync(contact);
         UpdatedContactResponse updatedContactResponse = _mapper.Map<UpdatedContactResponse>(updatedContact);
         return updatedContactResponse;

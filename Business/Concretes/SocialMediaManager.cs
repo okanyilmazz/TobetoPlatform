@@ -34,8 +34,8 @@ public class SocialMediaManager : ISocialMediaService
     public async Task<DeletedSocialMediaResponse> DeleteAsync(DeleteSocialMediaRequest deleteSocialMediaRequest)
     {
         await _socialMediaBusinessRules.IsExistsSocialMedia(deleteSocialMediaRequest.Id);
-        SocialMedia socialMedia = await _socialMediaDal.GetAsync(predicate: s=>s.Id == deleteSocialMediaRequest.Id);
-        SocialMedia deletedSocialMedia = await _socialMediaDal.DeleteAsync(socialMedia,false);
+        SocialMedia socialMedia = await _socialMediaDal.GetAsync(predicate: s => s.Id == deleteSocialMediaRequest.Id);
+        SocialMedia deletedSocialMedia = await _socialMediaDal.DeleteAsync(socialMedia);
         DeletedSocialMediaResponse deletedSocialMediaResponse = _mapper.Map<DeletedSocialMediaResponse>(deletedSocialMedia);
         return deletedSocialMediaResponse;
     }
@@ -43,7 +43,7 @@ public class SocialMediaManager : ISocialMediaService
     public async Task<IPaginate<GetListSocialMediaResponse>> GetByAccountIdAsync(Guid accountId)
     {
         var socialMediaList = await _socialMediaDal.GetListAsync(
-            include: s => s.Include(a => a.AccountSocialMedias).ThenInclude(asm=>asm.Account));
+            include: s => s.Include(a => a.AccountSocialMedias).ThenInclude(asm => asm.Account));
         var filteredSocialMedias = socialMediaList
             .Items.Where(e => e.AccountSocialMedias.Any(s => s.AccountId == accountId)).ToList();
         var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMediaList);
@@ -60,7 +60,7 @@ public class SocialMediaManager : ISocialMediaService
     public async Task<IPaginate<GetListSocialMediaResponse>> GetListAsync(PageRequest pageRequest)
     {
         var socialMedias = await _socialMediaDal.GetListAsync(
-        index:pageRequest.PageIndex,
+        index: pageRequest.PageIndex,
         size: pageRequest.PageSize);
         var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMedias);
         return mappedSocialMedias;

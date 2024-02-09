@@ -36,7 +36,7 @@ public class OccupationClassSurveyManager : IOccupationClassSurveyService
     {
         await _occupationClassSurveyBusinessRules.IsExistsOccupationClassSurvey(deleteOccupationClassSurveyRequest.Id);
         OccupationClassSurvey occupationClassSurvey = await _occupationClassSurveyDal.GetAsync(predicate: a => a.Id == deleteOccupationClassSurveyRequest.Id);
-        OccupationClassSurvey deletedOccupationClassSurvey = await _occupationClassSurveyDal.DeleteAsync(occupationClassSurvey, false);
+        OccupationClassSurvey deletedOccupationClassSurvey = await _occupationClassSurveyDal.DeleteAsync(occupationClassSurvey);
         DeletedOccupationClassSurveyResponse deletedOccupationClassSurveyResponse = _mapper.Map<DeletedOccupationClassSurveyResponse>(deletedOccupationClassSurvey);
         return deletedOccupationClassSurveyResponse;
     }

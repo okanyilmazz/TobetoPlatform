@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Entities.Concretes;
 

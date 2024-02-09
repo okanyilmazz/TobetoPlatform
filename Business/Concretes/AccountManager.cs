@@ -82,6 +82,20 @@ public class AccountManager : IAccountService
         return mappedAccount;
     }
 
+
+    public async Task<GetListAccountResponse> GetAsync(Guid id)
+    {
+        var account = await _accountDal.GetAsync(
+            predicate: a => a.Id == id,
+            include: a => a
+            .Include(a => a.Address).ThenInclude(a => a.District)
+            .Include(a => a.Address).ThenInclude(a => a.City)
+            .Include(a => a.Address).ThenInclude(a => a.Country)
+            .Include(a => a.User));
+        var mappedAccount = _mapper.Map<GetListAccountResponse>(account);
+        return mappedAccount;
+    }
+
     public async Task<UpdatedAccountResponse> UpdateAsync(UpdateAccountRequest updateAccountRequest)
     {
         await _accountBusinessRules.IsExistsAccount(updateAccountRequest.Id);

@@ -25,5 +25,5 @@ public class Account : Entity<Guid>
     public virtual ICollection<AccountHomework>? AccountHomeworks { get; set; }
     public virtual ICollection<AccountLesson>? AccountLessons { get; set; }
     public virtual ICollection<AccountEducationProgram>? AccountEducationPrograms { get; set; }
-
+    public virtual ICollection<AccountBadge>? AccountBadges { get; set; }
 }

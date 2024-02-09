@@ -35,7 +35,7 @@ public class AccountOccupationClassManager : IAccountOccupationClassService
     {
         await _accountOccupationClassRules.IsExistsAccountOccupationClass(deleteAccountOccupationClassRequest.Id);
         AccountOccupationClass accountOccupationClass = await _accountOccupationClassDal.GetAsync(predicate: a => a.Id == deleteAccountOccupationClassRequest.Id);
-        AccountOccupationClass deletedAccountOccupationClass = await _accountOccupationClassDal.DeleteAsync(accountOccupationClass, false);
+        AccountOccupationClass deletedAccountOccupationClass = await _accountOccupationClassDal.DeleteAsync(accountOccupationClass);
         var mappedAccountOccupationClass = _mapper.Map<DeletedAccountOccupationClassResponse>(deletedAccountOccupationClass);
         return mappedAccountOccupationClass;
     }

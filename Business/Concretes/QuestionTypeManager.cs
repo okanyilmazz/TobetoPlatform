@@ -6,20 +6,24 @@ using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Nodes;
 
 namespace Business.Concretes;
 
 public class QuestionTypeManager : IQuestionTypeService
 {
     IQuestionTypeDal _questionTypeDal;
+    IQuestionService _questionService;
     IMapper _mapper;
     QuestionTypeBusinessRules _questionTypeBusinessRules;
 
-    public QuestionTypeManager(IQuestionTypeDal questionTypeDal, IMapper mapper, QuestionTypeBusinessRules questionTypeBusinessRules)
+    public QuestionTypeManager(IQuestionTypeDal questionTypeDal, IMapper mapper, QuestionTypeBusinessRules questionTypeBusinessRules, IQuestionService questionService)
     {
         _questionTypeDal = questionTypeDal;
         _mapper = mapper;
         _questionTypeBusinessRules = questionTypeBusinessRules;
+        _questionService = questionService;
     }
     public async Task<CreatedQuestionTypeResponse> AddAsync(CreateQuestionTypeRequest createQuestionTypeRequest)
     {
@@ -43,6 +47,40 @@ public class QuestionTypeManager : IQuestionTypeService
         var questionType = await _questionTypeDal.GetAsync(ud => ud.Id == id);
         var mappedQuestionType = _mapper.Map<GetListQuestionTypeResponse>(questionType);
         return mappedQuestionType;
+    }
+
+    public async Task<GetListQuestionTypeResponse> GetByQuestionIdAsync(Guid questionId)
+    {
+        var questionType = await _questionTypeDal.GetAsync(
+            include: qt => qt.Include(qt => qt.Questions),
+            predicate: ud => ud.Questions.Any(q => q.Id == questionId));
+        var mappedQuestionType = _mapper.Map<GetListQuestionTypeResponse>(questionType);
+        return mappedQuestionType;
+    }
+
+    public async Task<GetListQuestionTypeNameResponse> GetByExamIdAsync(Guid examId)
+    {
+        var questions = await _questionService.GetByExamIdAsync(examId);
+        var uniqueQuestionTypes = new HashSet<string>();
+
+        foreach (var question in questions.Items)
+        {
+            var questionType = await _questionTypeDal.GetAsync(
+                include: qt => qt.Include(qt => qt.Questions),
+                predicate: ud => ud.Questions.Any(q => q.Id == question.Id));
+
+            if (!uniqueQuestionTypes.Contains(questionType.Name))
+            {
+                uniqueQuestionTypes.Add(questionType.Name);
+            }
+        }
+
+        var response = new GetListQuestionTypeNameResponse
+        {
+            Names = uniqueQuestionTypes.ToArray()
+        };
+
+        return response;
     }
 
     public async Task<IPaginate<GetListQuestionTypeResponse>> GetListAsync(PageRequest pageRequest)

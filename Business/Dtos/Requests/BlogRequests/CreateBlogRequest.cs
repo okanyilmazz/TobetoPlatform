@@ -6,4 +6,3 @@ public class CreateBlogRequest
     public DateTime ReleaseDate { get; set; }
     public string ThumbnailPath { get; set; }
 }
-

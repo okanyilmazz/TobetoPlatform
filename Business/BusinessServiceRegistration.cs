@@ -3,6 +3,7 @@ using Business.Concrete;
 using Business.Concretes;
 using Core.Business.Rules;
 using Core.Utilities.Security.JWT;
+using DataAccess.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -74,6 +75,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IWorkExperienceService, WorkExperienceManager>();
         services.AddScoped<IAccountEducationProgramService, AccountEducationProgramManager>();
         services.AddScoped<IOccupationService, OccupationManager>();
+        services.AddScoped<IOperationClaimService, OperationClaimManager>();
+        services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
         services.AddScoped<IManagementProgramService, ManagementProgramManager>();
 
 

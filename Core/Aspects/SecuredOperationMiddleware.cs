@@ -47,4 +47,4 @@ public class SecuredOperationMiddleware
             await _next(context);
         }
     }
-}
+} 

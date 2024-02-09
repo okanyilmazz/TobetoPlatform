@@ -70,4 +70,4 @@ public class AuthManager : IAuthService
         return loginResponse;
     }
 
-}
+} 

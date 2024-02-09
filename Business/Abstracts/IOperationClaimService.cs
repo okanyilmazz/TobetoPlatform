@@ -16,4 +16,4 @@ namespace Business.Abstracts
         Task<DeletedOperationClaimResponse> DeleteAsync(DeleteOperationClaimRequest deleteOperationClaimRequest);
         Task<IPaginate<GetListOperationClaimResponse>> GetListAsync(PageRequest pageRequest);
     }
-}
+} 

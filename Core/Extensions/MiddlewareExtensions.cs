@@ -12,4 +12,4 @@ public static class MiddlewareExtensions
         UseMiddleware<CacheMiddleware>().
         UseMiddleware<SeriLogMiddleware>().
         UseMiddleware<SecuredOperationMiddleware>();
-}
+} 

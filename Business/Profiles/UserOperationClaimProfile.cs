@@ -34,4 +34,4 @@ namespace Business.Profiles
             CreateMap<IPaginate<UserOperationClaim>, Paginate<GetListUserOperationClaimResponse>>();
         }
     }
-}
+} 

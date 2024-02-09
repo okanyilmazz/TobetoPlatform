@@ -29,4 +29,4 @@ namespace Business.Profiles
             CreateMap<IPaginate<OperationClaim>, Paginate<GetListOperationClaimResponse>>().ReverseMap();
         }
     }
-}
+} 

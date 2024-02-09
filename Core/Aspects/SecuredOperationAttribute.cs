@@ -15,5 +15,5 @@ public class SecuredOperationAttribute : Attribute
     {
         Roles = roles;
     }
-}
+} 
 

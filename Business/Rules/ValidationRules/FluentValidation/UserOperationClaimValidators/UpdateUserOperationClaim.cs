@@ -15,4 +15,4 @@ namespace Business.Rules.ValidationRules.FluentValidation.UserOperationClaimVali
 
         }
     }
-}
+} 

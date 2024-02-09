@@ -12,4 +12,4 @@ namespace DataAccess.Abstracts
     {
 
     }
-}
+} 

@@ -29,7 +29,6 @@ namespace DataAccess.EntityConfigurations
                 .WithOne(d => d.City)
                 .HasForeignKey(d => d.CityId);
 
-
             builder.HasQueryFilter(l => !l.DeletedDate.HasValue);
         }
     }

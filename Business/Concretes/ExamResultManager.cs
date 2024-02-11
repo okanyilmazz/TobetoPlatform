@@ -1,11 +1,17 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
 using Business.Dtos.Requests.ExamResultRequests;
+using Business.Dtos.Responses.AccountBadgeResponses;
+using Business.Dtos.Responses.AccountEducationProgramResponses;
 using Business.Dtos.Responses.ExamResultResponses;
+using Business.Dtos.Responses.HomeworkResponses;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Business.Concretes;
 
@@ -34,7 +40,9 @@ public class ExamResultManager : IExamResultService
     {
         var examResult = await _examResultDal.GetListAsync(
             index: pageRequest.PageIndex,
-            size: pageRequest.PageSize);
+            size: pageRequest.PageSize,
+            include: er => er.Include(er => er.Exam)
+            );
         var mappedExamResults = _mapper.Map<Paginate<GetListExamResultResponse>>(examResult);
         return mappedExamResults;
     }
@@ -59,7 +67,9 @@ public class ExamResultManager : IExamResultService
 
     public async Task<GetListExamResultResponse> GetByIdAsync(Guid id)
     {
-        var examResult = await _examResultDal.GetListAsync(h => h.Id == id);
+        var examResult = await _examResultDal.GetListAsync(
+            predicate: er => er.Id == id,
+            include: er => er.Include(er => er.Exam));        
         return _mapper.Map<GetListExamResultResponse>(examResult.Items.FirstOrDefault());
     }
 

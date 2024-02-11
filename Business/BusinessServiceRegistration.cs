@@ -3,6 +3,7 @@ using Business.Concrete;
 using Business.Concretes;
 using Core.Business.Rules;
 using Core.Utilities.Security.JWT;
+using DataAccess.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -16,6 +17,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<ITokenHelper, JwtHelper>();
         services.AddScoped<IAccountService, AccountManager>();
         services.AddScoped<IAccountAnswerService, AccountAnswerManager>();
+        services.AddScoped<IAccountBadgeService, AccountBadgeManager>();
         services.AddScoped<IAccountHomeworkService, AccountHomeworkManager>();
         services.AddScoped<IAccountLanguageService, AccountLanguageManager>();
         services.AddScoped<IAccountLessonService, AccountLessonManager>();
@@ -27,6 +29,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<IAddressService, AddressManager>();
         services.AddScoped<IAnnouncementService, AnnouncementManager>();
         services.AddScoped<IAnnouncementProjectService, AnnouncementProjectManager>();
+        services.AddScoped<IBadgeService, BadgeManager>();
         services.AddScoped<IBlogService, BlogManager>();
         services.AddScoped<ICertificateService, CertificateManager>();
         services.AddScoped<ICityService, CityManager>();
@@ -72,6 +75,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IWorkExperienceService, WorkExperienceManager>();
         services.AddScoped<IAccountEducationProgramService, AccountEducationProgramManager>();
         services.AddScoped<IOccupationService, OccupationManager>();
+        services.AddScoped<IOperationClaimService, OperationClaimManager>();
+        services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
         services.AddScoped<IManagementProgramService, ManagementProgramManager>();
 
 

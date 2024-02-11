@@ -17,6 +17,9 @@ public class EducationProgramLevelConfiguration : IEntityTypeConfiguration<Educa
         builder.HasIndex(indexExpression:c => c.Name,name:"UK_Name").IsUnique();
         builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
 
+
+        builder.HasMany(ec => ec.EducationPrograms);
+
         builder.HasQueryFilter(b => !b.DeletedDate.HasValue);
     }
 }

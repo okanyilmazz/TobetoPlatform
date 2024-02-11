@@ -33,7 +33,7 @@ public class ProductionCompanyManager : IProductionCompanyService
     {
         await _productionCompanyBusinessRules.IsExistsProductionCompany(deleteProductionCompanyRequest.Id);
         ProductionCompany productionCompany = await _productionCompanyDal.GetAsync(predicate: a => a.Id == deleteProductionCompanyRequest.Id);
-        ProductionCompany deletedProductionCompany = await _productionCompanyDal.DeleteAsync(productionCompany, false);
+        ProductionCompany deletedProductionCompany = await _productionCompanyDal.DeleteAsync(productionCompany);
         DeletedProductionCompanyResponse deletedProductionCompanyResponse = _mapper.Map<DeletedProductionCompanyResponse>(deletedProductionCompany);
         return deletedProductionCompanyResponse;
     }

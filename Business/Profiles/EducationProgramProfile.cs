@@ -19,12 +19,15 @@ public class EducationProgramProfile : Profile
         CreateMap<EducationProgram, DeletedEducationProgramResponse>().ReverseMap();
 
         CreateMap<IPaginate<EducationProgram>, Paginate<GetListEducationProgramResponse>>().ReverseMap();
-          
-        CreateMap<EducationProgram, GetListEducationProgramResponse>().ReverseMap();
-        
+
+        CreateMap<EducationProgram, GetListEducationProgramResponse>()
+            .ForMember(destinationMember: response => response.BadgeName,
+            memberOptions: opt => opt.MapFrom(ep => ep.Badge.ThumbnailPath))
+            .ReverseMap();
+
         CreateMap<List<EducationProgram>, Paginate<GetListEducationProgramResponse>>()
             .ForMember(destinationMember: p => p.Items,
-            memberOptions: opt => opt.MapFrom(p => p.ToList())).ReverseMap();         
+            memberOptions: opt => opt.MapFrom(p => p.ToList())).ReverseMap();
 
     }
 }

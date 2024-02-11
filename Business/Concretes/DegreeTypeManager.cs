@@ -34,8 +34,8 @@ public class DegreeTypeManager : IDegreeTypeService
     public async Task<DeletedDegreeTypeResponse> DeleteAsync(DeleteDegreeTypeRequest deleteDegreeTypeRequest)
     {
         await _degreeTypeBusinessRules.IsExistsDegreeType(deleteDegreeTypeRequest.Id);
-        DegreeType degreeType = await _degreeTypeDal.GetAsync(predicate:d=>d.Id == deleteDegreeTypeRequest.Id);
-        DegreeType deleteddegreeType = await _degreeTypeDal.DeleteAsync(degreeType, false);
+        DegreeType degreeType = await _degreeTypeDal.GetAsync(predicate: d => d.Id == deleteDegreeTypeRequest.Id);
+        DegreeType deleteddegreeType = await _degreeTypeDal.DeleteAsync(degreeType);
         DeletedDegreeTypeResponse deleteddegreeTypeResponse =
         _mapper.Map<DeletedDegreeTypeResponse>(deleteddegreeType);
         return deleteddegreeTypeResponse;
@@ -61,7 +61,7 @@ public class DegreeTypeManager : IDegreeTypeService
     public async Task<UpdatedDegreeTypeResponse> UpdateAsync(UpdateDegreeTypeRequest updatedegreeTypeRequest)
     {
         await _degreeTypeBusinessRules.IsExistsDegreeType(updatedegreeTypeRequest.Id);
-        DegreeType degreeType = _mapper.Map<DegreeType>(updatedegreeTypeRequest); 
+        DegreeType degreeType = _mapper.Map<DegreeType>(updatedegreeTypeRequest);
         DegreeType updateddegreeType = await _degreeTypeDal.UpdateAsync(degreeType);
         UpdatedDegreeTypeResponse updateddegreeTypeResponse = _mapper.Map<UpdatedDegreeTypeResponse>
         (updateddegreeType);

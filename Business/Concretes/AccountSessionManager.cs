@@ -36,7 +36,7 @@ public class AccountSessionManager : IAccountSessionService
     {
         await _accountSessionBusinessRules.IsExistsAccountSession(deleteAccountSessionRequest.Id);
         AccountSession accountSession = await _accountSessionDal.GetAsync(predicate: a => a.Id == deleteAccountSessionRequest.Id);
-        AccountSession deletedAccountSession = await _accountSessionDal.DeleteAsync(accountSession, false);
+        AccountSession deletedAccountSession = await _accountSessionDal.DeleteAsync(accountSession);
         DeletedAccountSessionResponse createdAccountSessionResponse = _mapper.Map<DeletedAccountSessionResponse>(deletedAccountSession);
         return createdAccountSessionResponse;
 

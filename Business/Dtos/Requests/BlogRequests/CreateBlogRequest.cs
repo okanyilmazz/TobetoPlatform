@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Business.Dtos.Requests.BlogRequests;
+﻿namespace Business.Dtos.Requests.BlogRequests;
 public class CreateBlogRequest
 {
     public string Title { get; set; }
@@ -12,4 +6,3 @@ public class CreateBlogRequest
     public DateTime ReleaseDate { get; set; }
     public string ThumbnailPath { get; set; }
 }
-

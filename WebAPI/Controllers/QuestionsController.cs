@@ -7,6 +7,7 @@ using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Rules.ValidationRules.FluentValidation.QuestionValidators;
 using Business.Dtos.Requests.QuestionRequests;
+using Core.CrossCuttingConcerns.Authorization;
 
 namespace WebAPI.Controllers;
 
@@ -20,7 +21,7 @@ public class QuestionsController : ControllerBase
     {
         _questionService = questionService;
     }
-
+    [SecuredOperation("Admin", "Instructor", "Moderator")]
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [Cache(60)]

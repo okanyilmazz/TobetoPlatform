@@ -62,7 +62,7 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 
-
+    
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
@@ -98,3 +98,4 @@ public class QuestionTypesController : Controller
         return Ok(result);
     }
 }
+

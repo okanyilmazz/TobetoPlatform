@@ -1,7 +1,6 @@
-﻿namespace Business.Dtos.Requests.OperationClaimRequests
+﻿namespace Business.Dtos.Requests.OperationClaimRequests;
+
+public class DeleteOperationClaimRequest
 {
-    public class DeleteOperationClaimRequest
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 } 

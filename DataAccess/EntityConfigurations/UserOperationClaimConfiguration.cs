@@ -1,29 +1,28 @@
 ﻿using Core.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DataAccess.EntityConfigurations
+namespace DataAccess.EntityConfigurations;
+
+public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOperationClaim>
 {
-    public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOperationClaim>
+    public void Configure(EntityTypeBuilder<UserOperationClaim> builder)
     {
-        public void Configure(EntityTypeBuilder<UserOperationClaim> builder)
-        {
 
-            builder.ToTable("UserOperationClaims").HasKey(u => u.Id);
+        builder.ToTable("UserOperationClaims").Ignore(u => u.Id);
+        builder.HasKey(uop => new { uop.UserId, uop.OperationClaimId });
 
-            builder.Property(u => u.UserId).HasColumnName("UserId").IsRequired();
-            builder.Property(u => u.OperationClaimId).HasColumnName("OperationClaimId").IsRequired();
+        builder.Property(u => u.UserId).HasColumnName("UserId").IsRequired();
+        builder.Property(u => u.OperationClaimId).HasColumnName("OperationClaimId").IsRequired();
 
-            builder.HasQueryFilter(u => !u.DeletedDate.HasValue);
+        builder.HasQueryFilter(u => !u.DeletedDate.HasValue);
 
-            builder.HasOne(uop => uop.User);
-            builder.HasOne(uop => uop.OperationClaim);
+        builder.HasOne(uop => uop.User)
+            .WithMany(uop => uop.UserOperationClaims)
+            .HasForeignKey(uop => uop.UserId);
 
-        }
+        builder.HasOne(uop => uop.OperationClaim)
+           .WithMany(uop => uop.UserOperationClaims)
+           .HasForeignKey(uop => uop.OperationClaimId);
     }
 } 

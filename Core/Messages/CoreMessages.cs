@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Messages
+﻿namespace Core.Messages
 {
     public class CoreMessages
     {
-
-        public static string AuthorizationDenied = "Authorization Denied";
-
+        public static string NoPermission = "You don't have permission to operation";
     }
 }

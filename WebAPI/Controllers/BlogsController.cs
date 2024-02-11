@@ -43,6 +43,7 @@ public class BlogsController : ControllerBase
     }
 
 
+    //[SecuredOperation("Admin,SuperAdmin")]
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [CacheRemove("Blogs.Get")]

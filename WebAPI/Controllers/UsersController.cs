@@ -31,6 +31,17 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(10)]
+    [HttpGet("GetListInstructor")]
+    public async Task<IActionResult> GetListInstructorAsync([FromQuery] PageRequest pageRequest)
+    {
+        var result = await _userService.GetListInstructorAsync(pageRequest);
+        return Ok(result);
+    }
+
+    
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

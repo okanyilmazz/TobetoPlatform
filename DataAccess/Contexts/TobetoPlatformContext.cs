@@ -3,7 +3,6 @@ using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
-using System.Security.AccessControl;
 
 namespace DataAccess.Contexts;
 
@@ -72,8 +71,6 @@ public class TobetoPlatformContext : DbContext
     public DbSet<AccountBadge> AccountBadges { get; set; }
     public DbSet<Badge> Badges { get; set; }
     public DbSet<ManagementProgram> ManagementPrograms { get; set; }
-
-
 
 
     public TobetoPlatformContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)

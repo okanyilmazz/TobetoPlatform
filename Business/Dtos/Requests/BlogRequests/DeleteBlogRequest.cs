@@ -1,11 +1,10 @@
-﻿namespace Business.Dtos.Requests.BlogRequests
+﻿namespace Business.Dtos.Requests.BlogRequests;
+
+public class DeleteBlogRequest
 {
-    public class DeleteBlogRequest
-    {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ReleaseDate { get; set; }
-        public string ThumbnailPath { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime ReleaseDate { get; set; }
+    public string ThumbnailPath { get; set; }
 }

@@ -33,8 +33,8 @@ public class CountryManager : ICountryService
     public async Task<DeletedCountryResponse> DeleteAsync(DeleteCountryRequest deleteCountryRequest)
     {
         await _countryBusinessRules.IsExistsCountry(deleteCountryRequest.Id);
-        Country country = await _countryDal.GetAsync(predicate:c=>c.Id == deleteCountryRequest.Id);
-        Country deletedCountry = await _countryDal.DeleteAsync(country, false);
+        Country country = await _countryDal.GetAsync(predicate: c => c.Id == deleteCountryRequest.Id);
+        Country deletedCountry = await _countryDal.DeleteAsync(country);
         DeletedCountryResponse deletedCountryResponse = _mapper.Map<DeletedCountryResponse>(deletedCountry);
         return deletedCountryResponse;
     }

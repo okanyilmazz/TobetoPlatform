@@ -63,7 +63,6 @@ public class EducationProgramsController : ControllerBase
         return Ok(result);
     }
 
-
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [CacheRemove("EducationPrograms.Get")]

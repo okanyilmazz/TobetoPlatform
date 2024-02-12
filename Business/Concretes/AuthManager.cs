@@ -57,16 +57,19 @@ public class AuthManager : IAuthService
             throw new BusinessException(BusinessMessages.PasswordUncorrect);
         }
 
+        user = _mapper.Map<User>(userToCheck);
         return user;
     }
 
     public async Task<LoginResponse> CreateAccessToken(User user)
     {
         var claims = await _userService.GetClaimsAsync(user);
-        var accessToken = _tokenHelper.CreateToken(user, claims);
+        var mapped = _mapper.Map<List<OperationClaim>>(claims);
+
+        var accessToken = _tokenHelper.CreateToken(user, mapped);
         LoginResponse loginResponse = _mapper.Map<LoginResponse>(accessToken);
 
         return loginResponse;
     }
 
-}
+} 

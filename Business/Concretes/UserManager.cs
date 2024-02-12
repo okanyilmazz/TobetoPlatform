@@ -2,24 +2,28 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.UserRequests;
 using Business.Dtos.Responses.UserResponses;
+using Business.Messages;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using Core.Entities;
 using DataAccess.Abstracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Concretes;
 
 public class UserManager : IUserService
 {
     IUserDal _userDal;
+    IOperationClaimService _operationClaimService;
     IMapper _mapper;
     UserBusinessRules _userBusinessRules;
 
-    public UserManager(IUserDal userDal, IMapper mapper, UserBusinessRules userBusinessRules)
+    public UserManager(IUserDal userDal, IMapper mapper, UserBusinessRules userBusinessRules, IOperationClaimService operationClaimService)
     {
         _mapper = mapper;
         _userDal = userDal;
         _userBusinessRules = userBusinessRules;
+        _operationClaimService = operationClaimService;
     }
 
     public async Task<CreatedUserResponse> AddAsync(CreateUserRequest createUserRequest)
@@ -43,7 +47,7 @@ public class UserManager : IUserService
     {
         await _userBusinessRules.IsExistsUser(deleteUserRequest.Id);
         User user = await _userDal.GetAsync(predicate: u => u.Id == deleteUserRequest.Id);
-        User deletedUser = await _userDal.DeleteAsync(user, true);
+        User deletedUser = await _userDal.DeleteAsync(user);
         DeletedUserResponse responseUser = _mapper.Map<DeletedUserResponse>(deletedUser);
         return responseUser;
     }
@@ -51,6 +55,18 @@ public class UserManager : IUserService
     public async Task<IPaginate<GetListUserResponse>> GetListAsync(PageRequest pageRequest)
     {
         var userList = await _userDal.GetListAsync(
+        index: pageRequest.PageIndex,
+        size: pageRequest.PageSize);
+        var mappedList = _mapper.Map<Paginate<GetListUserResponse>>(userList);
+        return mappedList;
+    }
+
+
+    public async Task<IPaginate<GetListUserResponse>> GetListInstructorAsync(PageRequest pageRequest)
+    {
+        var userList = await _userDal.GetListAsync(
+            include: u => u.Include(u => u.UserOperationClaims),
+            predicate: u => u.UserOperationClaims.Any(uoc => uoc.OperationClaim.Name.Contains(Roles.Instructor)),
         index: pageRequest.PageIndex,
         size: pageRequest.PageSize);
         var mappedList = _mapper.Map<Paginate<GetListUserResponse>>(userList);
@@ -73,8 +89,9 @@ public class UserManager : IUserService
 
     public async Task<List<OperationClaim>> GetClaimsAsync(User user)
     {
-        return await _userDal.GetClaims(user);
-
+        var operationClaims = await _operationClaimService.GetByUserIdAsync(user.Id);
+        var mappedOperationClaims = _mapper.Map<List<OperationClaim>>(operationClaims);
+        return mappedOperationClaims;
     }
 }
 

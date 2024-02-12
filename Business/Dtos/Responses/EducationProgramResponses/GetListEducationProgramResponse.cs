@@ -14,4 +14,5 @@ public class GetListEducationProgramResponse
 
     public Guid EducationProgramLevelId { get; set; }
     public Guid EducationProgramDevelopmentId { get; set; }
+    public string BadgeName { get; set; }
 }

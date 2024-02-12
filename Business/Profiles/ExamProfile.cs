@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Profiles
 {
-    public class ExamProfile:Profile
+    public class ExamProfile : Profile
     {
         public ExamProfile()
         {
@@ -24,9 +24,15 @@ namespace Business.Profiles
             CreateMap<Exam, DeleteExamRequest>().ReverseMap();
             CreateMap<Exam, DeletedExamResponse>().ReverseMap();
 
-            CreateMap<Exam, GetListExamResponse>().ReverseMap();
             CreateMap<IPaginate<Exam>, Paginate<GetListExamResponse>>().ReverseMap();
+            CreateMap<Exam, GetListExamResponse>()
+                .ForMember(
+                    dest => dest.QuestionTypeNames,
+                    opt => opt.MapFrom(
+                        src => src.ExamQuestions.Select(eq => eq.Question.QuestionType.Name).ToList()
+                    )
+                )
+                .ReverseMap();
         }
     }
 }
-

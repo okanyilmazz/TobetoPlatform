@@ -17,10 +17,10 @@ namespace DataAccess.EntityConfigurations
 
             builder.Property(p => p.Id).HasColumnName("Id").IsRequired();
             builder.Property(b => b.Description).HasColumnName("Description").IsRequired();
-            builder.Property(b => b.OptionA).HasColumnName("OptionA").IsRequired();
-            builder.Property(b => b.OptionB).HasColumnName("OptionB").IsRequired();
-            builder.Property(b => b.OptionC).HasColumnName("OptionC").IsRequired();
-            builder.Property(b => b.OptionD).HasColumnName("OptionD").IsRequired();
+            builder.Property(b => b.OptionA).HasColumnName("OptionA");
+            builder.Property(b => b.OptionB).HasColumnName("OptionB");
+            builder.Property(b => b.OptionC).HasColumnName("OptionC");
+            builder.Property(b => b.OptionD).HasColumnName("OptionD");
             builder.Property(b => b.CorrectOption).HasColumnName("CorrectOption").IsRequired();
 
             builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();

@@ -1,4 +1,5 @@
-﻿namespace Core.Entities;
+﻿
+namespace Core.Entities;
 
 public class User : Entity<Guid>
 {
@@ -9,4 +10,6 @@ public class User : Entity<Guid>
     public byte[] PasswordSalt { get; set; }
     public byte[] PasswordHash { get; set; }
     public bool Status { get; set; }
+
+    public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
 }

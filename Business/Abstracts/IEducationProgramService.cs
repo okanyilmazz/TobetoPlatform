@@ -2,8 +2,6 @@
 using Business.Dtos.Requests.FilterRequest;
 using Business.Dtos.Responses.EducationProgramResponses;
 using Core.DataAccess.Paging;
-using Core.Entities;
-using Entities.Concretes;
 
 namespace Business.Abstracts;
 

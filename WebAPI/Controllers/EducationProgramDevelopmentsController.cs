@@ -3,6 +3,7 @@ using Business.Dtos.Requests.EducationProgramDevelopmentRequests;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
+using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,6 +46,8 @@ public class EducationProgramDevelopmentsController : ControllerBase
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [CacheRemove("EducationProgramDevelopments.Get")]
+    [CustomValidation(typeof(CreateEducationProgramDevelopmentRequest))]
+
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateEducationProgramDevelopmentRequest createEducationProgramDevelopmentRequest)
     {
@@ -56,6 +59,8 @@ public class EducationProgramDevelopmentsController : ControllerBase
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [CacheRemove("EducationProgramDevelopments.Get")]
+    [CustomValidation(typeof(UpdateEducationProgramDevelopmentRequest))]
+
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateEducationProgramDevelopmentRequest updateEducationProgramDevelopmentRequest)
     {

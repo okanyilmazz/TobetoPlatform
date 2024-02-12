@@ -18,8 +18,7 @@ namespace DataAccess.Concretes
 
         public async Task<List<OperationClaim>> GetClaims(Core.Entities.User user)
         {
-
-            var result = from operationClaim in Context.OperationClaims
+                var result = from operationClaim in Context.OperationClaims
                          join userOperationClaim in Context.UserOperationClaims
                              on operationClaim.Id equals userOperationClaim.OperationClaimId
                          where userOperationClaim.UserId == user.Id

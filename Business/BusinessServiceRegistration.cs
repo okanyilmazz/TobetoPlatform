@@ -78,6 +78,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
         services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
         services.AddScoped<IManagementProgramService, ManagementProgramManager>();
+        services.AddScoped<IOperationClaimService, OperationClaimManager>();
+
 
 
 

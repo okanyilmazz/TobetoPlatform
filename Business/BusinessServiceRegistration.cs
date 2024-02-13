@@ -2,6 +2,7 @@
 using Business.Concrete;
 using Business.Concretes;
 using Core.Business.Rules;
+using Core.Utilities.Helpers;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
@@ -79,6 +80,10 @@ public static class BusinessServiceRegistration
         services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
         services.AddScoped<IManagementProgramService, ManagementProgramManager>();
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
+        services.AddScoped<IFileHelper, FileHelper>();
+        services.AddScoped<FileBusinessRules>();
+
+
 
 
 

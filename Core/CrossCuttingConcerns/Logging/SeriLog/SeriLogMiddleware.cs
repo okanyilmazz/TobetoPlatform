@@ -20,7 +20,7 @@ public class SeriLogMiddleware
         var endpoint = context.Features.Get<IEndpointFeature>()?.Endpoint;
         var loggingAttributes = endpoint?.Metadata.ToList().Where(c => c.ToString().Contains(nameof(LoggingAttribute))).ToList();
 
-        if (loggingAttributes.Count != 0)
+        if (loggingAttributes !=null)
         {
             foreach (var loggingAttribute in loggingAttributes)
             {

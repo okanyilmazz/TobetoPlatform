@@ -82,20 +82,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
         services.AddScoped<IManagementProgramService, ManagementProgramManager>();
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
-<<<<<<< HEAD
-        
-=======
         services.AddScoped<IFileHelper, FileHelper>();
         services.AddScoped<FileBusinessRules>();
-
-
-
->>>>>>> master
-
-
-
-
-
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
         return services;

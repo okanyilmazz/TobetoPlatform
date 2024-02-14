@@ -2,10 +2,15 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.CertificateRequests;
 using Business.Dtos.Responses.CertificateResponses;
+using Business.Messages;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
+using Core.Utilities.Helpers;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace Business.Concretes;
 
@@ -14,21 +19,26 @@ public class CertificateManager : ICertificateService
     ICertificateDal _certificateDal;
     IMapper _mapper;
     CertificateBusinessRules _certificateBusinessRules;
+    IFileHelper _fileHelper;
 
-    public CertificateManager(ICertificateDal certificateDal, IMapper mapper, CertificateBusinessRules certificateBusinessRules)
+    public CertificateManager(ICertificateDal certificateDal, IMapper mapper, CertificateBusinessRules certificateBusinessRules, IFileHelper fileHelper)
     {
         _certificateDal = certificateDal;
         _mapper = mapper;
         _certificateBusinessRules = certificateBusinessRules;
+        _fileHelper = fileHelper;
     }
 
-    public async Task<CreatedCertificateResponse> AddAsync(CreateCertificateRequest createCertificateRequest)
+    public async Task<CreatedCertificateResponse> AddAsync(CreateCertificateRequest createCertificateRequest, string currentPath)
     {
+        var uploadResult = _fileHelper.Add(createCertificateRequest.File, currentPath);
+        string newFolderPath = uploadResult.Result.Replace(currentPath, PathConstant.CertificatesPath);
+        createCertificateRequest.FolderPath = newFolderPath;
+
         Certificate certificate = _mapper.Map<Certificate>(createCertificateRequest);
         Certificate addedCertificate = await _certificateDal.AddAsync(certificate);
         CreatedCertificateResponse createdCertificateResponse = _mapper.Map<CreatedCertificateResponse>(addedCertificate);
         return createdCertificateResponse;
-
     }
 
     public async Task<DeletedCertificateResponse> DeleteAsync(DeleteCertificateRequest deleteCertificateRequest)

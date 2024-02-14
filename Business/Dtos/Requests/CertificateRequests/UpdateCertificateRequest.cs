@@ -2,9 +2,20 @@
 
 public class UpdateCertificateRequest
 {
+<<<<<<< HEAD
     public Guid Id { get; set; }
     public Guid AccountId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string FolderPath { get; set; }
+=======
+    public class UpdateCertificateRequest
+    {
+        public Guid Id { get; set; }
+        public Guid AccountId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string FolderPath { get; set; }
+    }
+>>>>>>> master
 }

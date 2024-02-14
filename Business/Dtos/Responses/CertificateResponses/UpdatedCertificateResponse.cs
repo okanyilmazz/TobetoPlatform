@@ -1,6 +1,4 @@
-﻿using Entities.Concretes;
-
-namespace Business.Dtos.Responses.CertificateResponses
+﻿namespace Business.Dtos.Responses.CertificateResponses
 {
     public class UpdatedCertificateResponse
     {
@@ -8,6 +6,9 @@ namespace Business.Dtos.Responses.CertificateResponses
         public string Name { get; set; }
         public string Description { get; set; }
         public string FolderPath { get; set; }
+<<<<<<< HEAD
         
+=======
+>>>>>>> master
     }
 }

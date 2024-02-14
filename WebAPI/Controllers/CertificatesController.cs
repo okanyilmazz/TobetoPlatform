@@ -7,7 +7,11 @@ using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Rules.ValidationRules.FluentValidation.CertificateValidators;
 using Business.Dtos.Requests.CertificateRequests;
+<<<<<<< HEAD
 using Microsoft.Identity.Client;
+=======
+using Business.Messages;
+>>>>>>> master
 
 namespace WebAPI.Controllers;
 
@@ -16,10 +20,12 @@ namespace WebAPI.Controllers;
 public class CertificatesController : Controller
 {
     ICertificateService _certificateService;
+    public static IWebHostEnvironment _webHostEnvironment;
 
-    public CertificatesController(ICertificateService certificateService)
+    public CertificatesController(ICertificateService certificateService, IWebHostEnvironment webHostEnvironment)
     {
         _certificateService = certificateService;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     [Logging(typeof(MsSqlLogger))]
@@ -47,11 +53,11 @@ public class CertificatesController : Controller
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [CacheRemove("Certificates.Get")]
-    [CustomValidation(typeof(CreateCertificateRequestValidator))]
     [HttpPost("Add")]
-    public async Task<IActionResult> AddAsync([FromBody] CreateCertificateRequest createCertificateRequest)
+    public async Task<IActionResult> AddAsync([FromForm]CreateCertificateRequest createCertificateRequest)
     {
-        var result = await _certificateService.AddAsync(createCertificateRequest);
+        var currentPath = _webHostEnvironment.ContentRootPath + PathConstant.CertificatesPath;
+        var result = await _certificateService.AddAsync(createCertificateRequest,currentPath);
         return Ok(result);
     }
 

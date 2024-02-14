@@ -33,7 +33,7 @@ public class CountriesController : ControllerBase
         return Ok(result);
     }
 
-    [SecuredOperation("Moderator")]
+    //[SecuredOperation("Moderator")]
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [Cache(60)]
@@ -44,7 +44,7 @@ public class CountriesController : ControllerBase
         return Ok(result);
     }
 
-    [SecuredOperation("Admin")]
+    //[SecuredOperation("Admin")]
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [CacheRemove("Countries.Get")]

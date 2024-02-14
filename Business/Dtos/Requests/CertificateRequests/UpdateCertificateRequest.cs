@@ -9,6 +9,5 @@ namespace Business.Dtos.Requests.CertificateRequests
         public string Name { get; set; }
         public string Description { get; set; }
         public string FolderPath { get; set; }
-        public Account Account { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Entities.Concretes;
-
-namespace Business.Dtos.Responses.CertificateResponses
+﻿namespace Business.Dtos.Responses.CertificateResponses
 {
     public class DeletedCertificateResponse
     {
@@ -9,6 +7,5 @@ namespace Business.Dtos.Responses.CertificateResponses
         public string Name { get; set; }
         public string Description { get; set; }
         public string FolderPath { get; set; }
-        public Account Account { get; set; }
     }
 }

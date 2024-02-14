@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using Core.CrossCuttingConcerns.Validation;
+﻿using Core.CrossCuttingConcerns.Validation;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;

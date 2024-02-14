@@ -86,9 +86,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseHttpsRedirection();
-app.UseRouting();
+   app.UseStaticFiles();
 app.ConfigureCustomExceptionMiddleware();
+app.UseRouting();
+app.UseCors("myPolicy");
 app.UseAuthorization();
 app.MapControllers();
-app.UseCors("myPolicy");
 app.Run();

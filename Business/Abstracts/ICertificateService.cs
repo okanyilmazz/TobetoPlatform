@@ -12,4 +12,5 @@ public interface ICertificateService
     Task<DeletedCertificateResponse> DeleteAsync(DeleteCertificateRequest deleteCertificateRequest);
     Task<IPaginate<GetListCertificateResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListCertificateResponse> GetByIdAsync(Guid id);
+    Task<IPaginate<GetListCertificateResponse>> GetByAccountIdAsync(Guid accountId);
 }

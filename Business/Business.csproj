@@ -24,5 +24,20 @@
 
   <ItemGroup>
     <None Remove="Dtos\Responses\AuthResponses\" />
+    <None Remove="Dtos\Requests\ActivityMapRequests\" />
+    <None Remove="Dtos\Responses\ActivityMapResponses\" />
+    <None Remove="Rules\ValidationRules\FluentValidation\ActivityMapValidators\" />
+    <None Remove="Dtos\Requests\AccountActivityMapRequests\" />
+    <None Remove="Dtos\Responses\AccountActivityMapResponses\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dtos\Requests\ActivityMapRequests\" />
+    <Folder Include="Dtos\Responses\ActivityMapResponses\" />
+    <Folder Include="Rules\ValidationRules\FluentValidation\ActivityMapValidators\" />
+    <Folder Include="Dtos\Requests\AccountActivityMapRequests\" />
+    <Folder Include="Dtos\Responses\AccountActivityMapResponses\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Concretes\IAccountActivityMapService.cs" />
   </ItemGroup>
 </Project>

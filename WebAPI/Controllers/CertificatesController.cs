@@ -1,13 +1,14 @@
 ﻿using Business.Abstracts;
+using Business.Dtos.Requests.CertificateRequests;
+using Business.Messages;
+using Business.Rules.ValidationRules.FluentValidation.CertificateValidators;
 using Core.CrossCuttingConcerns.Caching;
-using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.CrossCuttingConcerns.Logging;
+using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
 using Core.CrossCuttingConcerns.Validation;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
-using Business.Rules.ValidationRules.FluentValidation.CertificateValidators;
-using Business.Dtos.Requests.CertificateRequests;
-using Business.Messages;
+
 
 namespace WebAPI.Controllers;
 
@@ -77,6 +78,16 @@ public class CertificatesController : Controller
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteCertificateRequest deleteCertificateRequest)
     {
         var result = await _certificateService.DeleteAsync(deleteCertificateRequest);
+        return Ok(result);
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId)
+    {
+        var result = await _certificateService.GetByAccountIdAsync(accountId);
         return Ok(result);
     }
 }

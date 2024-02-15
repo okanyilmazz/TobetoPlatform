@@ -73,6 +73,13 @@ public class CertificateManager : ICertificateService
         var mappedCertificate = _mapper.Map<GetListCertificateResponse>(certificate);
         return mappedCertificate;
     }
+
+    public async Task<IPaginate<GetListCertificateResponse>> GetByAccountIdAsync(Guid accountId)
+    {
+        var certificates = await _certificateDal.GetListAsync(c => c.AccountId == accountId);
+        var mappedCertificates = _mapper.Map<Paginate<GetListCertificateResponse>>(certificates);
+        return mappedCertificates;
+    }
 }
 
 

@@ -26,4 +26,5 @@ public class Account : Entity<Guid>
     public virtual ICollection<AccountLesson>? AccountLessons { get; set; }
     public virtual ICollection<AccountEducationProgram>? AccountEducationPrograms { get; set; }
     public virtual ICollection<AccountBadge>? AccountBadges { get; set; }
+    public virtual ICollection<AccountActivityMap> ActivityMaps { get; set; }
 }

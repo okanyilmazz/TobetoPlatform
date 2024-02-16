@@ -1,12 +1,12 @@
-﻿using Business.Abstracts;
+﻿using System.Reflection;
+using Business.Abstracts;
 using Business.Concrete;
 using Business.Concretes;
 using Core.Business.Rules;
 using Core.Utilities.Helpers;
 using Core.Utilities.Security.JWT;
-using DataAccess.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
+
 
 namespace Business;
 
@@ -17,6 +17,8 @@ public static class BusinessServiceRegistration
         services.AddScoped<IAuthService, AuthManager>();
         services.AddScoped<ITokenHelper, JwtHelper>();
         services.AddScoped<IAccountService, AccountManager>();
+        services.AddScoped<IActivityMapService, ActivityMapManager>();
+        services.AddScoped<IAccountActivityMapService, AccountActivityMapManager>();
         services.AddScoped<IAccountAnswerService, AccountAnswerManager>();
         services.AddScoped<IAccountBadgeService, AccountBadgeManager>();
         services.AddScoped<IAccountHomeworkService, AccountHomeworkManager>();
@@ -82,14 +84,6 @@ public static class BusinessServiceRegistration
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
         services.AddScoped<IFileHelper, FileHelper>();
         services.AddScoped<FileBusinessRules>();
-
-
-
-
-
-
-
-
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
         return services;

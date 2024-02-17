@@ -34,9 +34,9 @@ public class LessonManager : ILessonService
     public async Task<DeletedLessonResponse> DeleteAsync(DeleteLessonRequest deleteLessonRequest)
     {
         await _lessonBusinessRules.IsExistsLesson(deleteLessonRequest.Id);
-        Lesson lesson= await _lessonDal.GetAsync(predicate:l=>l.Id == deleteLessonRequest.Id);
+        Lesson lesson = await _lessonDal.GetAsync(predicate: l => l.Id == deleteLessonRequest.Id);
         Lesson deletedLesson = await _lessonDal.DeleteAsync(lesson);
-        DeletedLessonResponse deletedLessonResponse= _mapper.Map<DeletedLessonResponse>(deletedLesson);
+        DeletedLessonResponse deletedLessonResponse = _mapper.Map<DeletedLessonResponse>(deletedLesson);
         return deletedLessonResponse;
     }
 
@@ -52,7 +52,12 @@ public class LessonManager : ILessonService
     public async Task<IPaginate<GetListLessonResponse>> GetByEducationProgramIdAsync(Guid educationProgramId)
     {
         var lessonList = await _lessonDal.GetListAsync(
-            include: l => l.Include(ep => ep.EducationProgramLessons).ThenInclude(epl => epl.Lesson));
+            include: l => l.Include(ep => ep.EducationProgramLessons).ThenInclude(epl => epl.EducationProgram).
+            Include(ep => ep.Language).
+            Include(ep => ep.LessonCategory).
+            Include(ep => ep.LessonModule).
+            Include(ep => ep.ProductionCompany).
+            Include(ep => ep.LessonSubType));
 
         var filteredLessons = lessonList.Items.Where(e => e.EducationProgramLessons.Any(s => s.EducationProgramId == educationProgramId)).ToList();
         var mappedLesson = _mapper.Map<Paginate<GetListLessonResponse>>(filteredLessons);
@@ -71,7 +76,12 @@ public class LessonManager : ILessonService
     public async Task<IPaginate<GetListLessonResponse>> GetByAccountIdAsync(Guid id)
     {
         var lessonList = await _lessonDal.GetListAsync(
-           include: l => l.Include(a => a.AccountLessons).ThenInclude(al => al.Account));
+           include: l => l.Include(a => a.AccountLessons).ThenInclude(al => al.Account).
+            Include(ep => ep.Language).
+            Include(ep => ep.LessonCategory).
+            Include(ep => ep.LessonModule).
+            Include(ep => ep.ProductionCompany).
+            Include(ep => ep.LessonSubType));
 
         var filteredLessons = lessonList
             .Items.SelectMany(l => l.AccountLessons.Where(a => a.Id == id).Select(a => l)).ToList();
@@ -81,7 +91,14 @@ public class LessonManager : ILessonService
 
     public async Task<GetListLessonResponse> GetByIdAsync(Guid id)
     {
-        var lessons = await _lessonDal.GetAsync(l => l.Id == id);
+        var lessons = await _lessonDal.GetAsync(
+            predicate: l => l.Id == id,
+            include: l => l.
+            Include(ep => ep.Language).
+            Include(ep => ep.LessonCategory).
+            Include(ep => ep.LessonModule).
+            Include(ep => ep.ProductionCompany).
+            Include(ep => ep.LessonSubType));
         var mappedLessons = _mapper.Map<GetListLessonResponse>(lessons);
         return mappedLessons;
     }

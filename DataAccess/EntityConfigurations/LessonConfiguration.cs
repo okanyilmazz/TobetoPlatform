@@ -37,6 +37,8 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 
         builder.HasMany(l => l.EducationProgramLessons);
         builder.HasMany(l => l.AccountLessons);
+        builder.HasMany(l => l.LessonLikes);
+
 
 
         builder.HasQueryFilter(b => !b.DeletedDate.HasValue);

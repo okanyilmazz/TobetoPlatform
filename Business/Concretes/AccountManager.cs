@@ -82,6 +82,37 @@ public class AccountManager : IAccountService
         return mappedAccount;
     }
 
+    public async Task<IPaginate<GetListAccountResponse>> GetByLessonIdForLikeAsync(Guid lessonId, PageRequest pageRequest)
+    {
+        var account = await _accountDal.GetListAsync(
+            predicate: a => a.LessonLikes.Any(ll => ll.LessonId == lessonId),
+            size: pageRequest.PageSize,
+            index:pageRequest.PageIndex,
+            include: a => a
+            .Include(a => a.Address).ThenInclude(a => a.District)
+            .Include(a => a.Address).ThenInclude(a => a.City)
+            .Include(a => a.Address).ThenInclude(a => a.Country)
+            .Include(a => a.LessonLikes)
+            .Include(a => a.User));
+        var mappedAccount = _mapper.Map<Paginate<GetListAccountResponse>>(account);
+        return mappedAccount;
+    }
+
+    public async Task<IPaginate<GetListAccountResponse>> GetByEducationProgramIdForLikeAsync(Guid educationProgramId, PageRequest pageRequest)
+    {
+        var account = await _accountDal.GetListAsync(
+            predicate: a => a.EducationProgramLikes.Any(epl => epl.EducationProgramId == educationProgramId),
+            size: pageRequest.PageSize,
+            index: pageRequest.PageIndex,
+            include: a => a
+            .Include(a => a.Address).ThenInclude(a => a.District)
+            .Include(a => a.Address).ThenInclude(a => a.City)
+            .Include(a => a.Address).ThenInclude(a => a.Country)
+            .Include(a => a.EducationProgramLikes)
+            .Include(a => a.User));
+        var mappedAccount = _mapper.Map<Paginate<GetListAccountResponse>>(account);
+        return mappedAccount;
+    } 
 
     public async Task<GetListAccountResponse> GetAsync(Guid id)
     {
@@ -95,6 +126,7 @@ public class AccountManager : IAccountService
         var mappedAccount = _mapper.Map<GetListAccountResponse>(account);
         return mappedAccount;
     }
+
 
     public async Task<UpdatedAccountResponse> UpdateAsync(UpdateAccountRequest updateAccountRequest)
     {

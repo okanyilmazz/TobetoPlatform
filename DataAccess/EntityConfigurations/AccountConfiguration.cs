@@ -41,6 +41,8 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.HasMany(we => we.WorkExperiences);
         builder.HasMany(c => c.Certificates);
         builder.HasMany(ab => ab.AccountBadges);
+        builder.HasMany(ll => ll.LessonLikes);
+
 
         builder.HasQueryFilter(a => !a.DeletedDate.HasValue);
     }

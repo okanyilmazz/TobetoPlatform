@@ -6,6 +6,7 @@ public class AccountLesson : Entity<Guid>
 {
     public Guid LessonId { get; set; }
     public Guid AccountId { get; set; }
+    public int StatusPercent { get; set; }
 
     public Lesson Lesson{ get; set; }
     public Account Account{ get; set; }

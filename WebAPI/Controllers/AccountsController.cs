@@ -43,6 +43,26 @@ public class AccountsController : ControllerBase
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByLessonIdForLike")]
+    public async Task<IActionResult> GetByLessonIdForLikeAsync(Guid lessonId, [FromQuery] PageRequest pageRequest)
+    {
+        var result = await _accountService.GetByLessonIdForLikeAsync(lessonId, pageRequest);
+        return Ok(result);
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByEducationProgramIdForLike")]
+    public async Task<IActionResult> GetByEducationProgramIdForLikeAsync(Guid educationProgramId, [FromQuery] PageRequest pageRequest)
+    {
+        var result = await _accountService.GetByEducationProgramIdForLikeAsync(educationProgramId, pageRequest);
+        return Ok(result);
+    }
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

@@ -86,6 +86,9 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IOperationClaimDal, EfOperationClaimDal>();
         services.AddScoped<IActivityMapDal, EfActivityMapDal>();
         services.AddScoped<IAccountActivityMapDal, EfAccountActivityMapDal>();
+        services.AddScoped<ILessonLikeDal, EfLessonLikeDal>();
+        services.AddScoped<IEducationProgramLikeDal, EfEducationLikeDal>();
+
 
 
         return services;

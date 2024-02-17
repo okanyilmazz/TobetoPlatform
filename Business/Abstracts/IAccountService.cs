@@ -12,4 +12,6 @@ public interface IAccountService
     Task<IPaginate<GetListAccountResponse>> GetListAsync(PageRequest pageRequest);
     Task<IPaginate<GetListAccountResponse>> GetBySessionIdAsync(Guid id);
     Task<GetListAccountResponse> GetByIdAsync(Guid id);
+    Task<IPaginate<GetListAccountResponse>> GetByLessonIdForLikeAsync(Guid lessonId, PageRequest pageRequest);
+    Task<IPaginate<GetListAccountResponse>> GetByEducationProgramIdForLikeAsync(Guid educationProgramId, PageRequest pageRequest);   
 }

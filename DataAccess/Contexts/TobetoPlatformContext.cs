@@ -71,6 +71,11 @@ public class TobetoPlatformContext : DbContext
     public DbSet<AccountBadge> AccountBadges { get; set; }
     public DbSet<Badge> Badges { get; set; }
     public DbSet<ManagementProgram> ManagementPrograms { get; set; }
+    public DbSet<CompetenceCategory> CompetenceCategories { get; set; }
+    public DbSet<CompetenceQuestion> CompetenceQuestions { get; set; }
+    public DbSet<CompetenceResult> CompetenceResults { get; set; }
+    public DbSet<CompetenceTest> CompetenceTests { get; set; }
+    public DbSet<CompetenceTestQuestion> CompetenceTestQuestions { get; set; }
     public DbSet<ActivityMap> ActivityMaps { get; set; }
     public DbSet<AccountActivityMap> AccountActivityMaps { get; set; }
     public DbSet<LessonLike> LessonLikes { get; set; }

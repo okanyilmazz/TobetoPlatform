@@ -21,4 +21,6 @@ public class Lesson : Entity<Guid>
     public Language Language { get; set; }
     public virtual ICollection<EducationProgramLesson> EducationProgramLessons { get; set; }
     public virtual ICollection<AccountLesson>? AccountLessons { get; set; }
+    public virtual ICollection<LessonLike>? LessonLikes { get; set; }
+
 }

@@ -32,7 +32,7 @@ namespace Business.Profiles
                 .ForMember(destinationMember: response => response.CountryName,
                 memberOptions: a => a.MapFrom(a => a.Address.Country.Name))
                 .ForMember(destinationMember: response => response.UserName,
-                memberOptions: a => a.MapFrom(a => a.User.FirstName))
+                memberOptions: a => a.MapFrom(a => a.User.FirstName + " "+ a.User.LastName))
                 .ReverseMap();
             CreateMap<IPaginate<Account>, Paginate<GetListAccountResponse>>().ReverseMap();
 

@@ -83,7 +83,12 @@ public static class BusinessServiceRegistration
         services.AddScoped<IManagementProgramService, ManagementProgramManager>();
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
         services.AddScoped<IFileHelper, FileHelper>();
+        services.AddScoped<ILessonLikeService, LessonLikeManager>();
+        services.AddScoped<IEducationProgramLikeService, EducationProgramLikeManager>();
+        services.AddScoped<IFileHelper, FileHelper>();
         services.AddScoped<FileBusinessRules>();
+
+
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddSubClassesOfType(Assembly.GetExecutingAssembly(), typeof(BaseBusinessRules));
         return services;

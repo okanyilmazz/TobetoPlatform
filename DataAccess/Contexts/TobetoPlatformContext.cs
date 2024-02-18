@@ -71,8 +71,12 @@ public class TobetoPlatformContext : DbContext
     public DbSet<AccountBadge> AccountBadges { get; set; }
     public DbSet<Badge> Badges { get; set; }
     public DbSet<ManagementProgram> ManagementPrograms { get; set; }
-    public DbSet <ActivityMap> ActivityMaps{ get; set; }
+    public DbSet<ActivityMap> ActivityMaps { get; set; }
     public DbSet<AccountActivityMap> AccountActivityMaps { get; set; }
+    public DbSet<LessonLike> LessonLikes { get; set; }
+    public DbSet<EducationProgramLike> EducationProgramLikes { get; set; }
+
+
 
 
     public TobetoPlatformContext(DbContextOptions dbContextOptions, IConfiguration configuration) : base(dbContextOptions)

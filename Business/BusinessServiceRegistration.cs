@@ -81,6 +81,15 @@ public static class BusinessServiceRegistration
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
         services.AddScoped<IUserOperationClaimService, UserOperationClaimManager>();
         services.AddScoped<IManagementProgramService, ManagementProgramManager>();
+        services.AddScoped<ICompetenceCategoryService, CompetenceCategoryManager>();
+        services.AddScoped<ICompetenceResultService, CompetenceResultManager>();
+        services.AddScoped<ICompetenceQuestionService, CompetenceQuestionManager>();
+        services.AddScoped<ICompetenceTestService, CompetenceTestManager>();
+        services.AddScoped<ICompetenceTestQuestionService, CompetenceTestQuestionManager>();
+
+
+
+
         services.AddScoped<IOperationClaimService, OperationClaimManager>();
         services.AddScoped<IFileHelper, FileHelper>();
         services.AddScoped<ILessonLikeService, LessonLikeManager>();

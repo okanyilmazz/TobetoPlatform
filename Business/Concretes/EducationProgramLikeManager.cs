@@ -65,7 +65,7 @@ public class EducationProgramLikeManager : IEducationProgramLikeService
 
     public async Task<IPaginate<GetListEducationProgramLikeResponse>> GetByAccountIdAsync(Guid accountId)
     {
-        var educationProgramLike = await _educationProgramLikeDal.GetAsync(
+        var educationProgramLike = await _educationProgramLikeDal.GetListAsync(
             predicate: l => l.AccountId == accountId,
             include: l => l.
             Include(l => l.EducationProgram).
@@ -77,7 +77,7 @@ public class EducationProgramLikeManager : IEducationProgramLikeService
 
     public async Task<IPaginate<GetListEducationProgramLikeResponse>> GetByEducationProgramIdAsync(Guid educationProgramId)
     {
-        var educationProgramLike = await _educationProgramLikeDal.GetAsync(
+        var educationProgramLike = await _educationProgramLikeDal.GetListAsync(
             predicate: l => l.EducationProgramId == educationProgramId,
             include: l => l.
             Include(l => l.EducationProgram).

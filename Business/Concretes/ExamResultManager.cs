@@ -75,8 +75,8 @@ public class ExamResultManager : IExamResultService
 
     public async Task<IPaginate<GetListExamResultResponse>> GetByAccountIdAsync(Guid accountId)
     {
-        var examresult = await _examResultDal.GetListAsync(a => a.AccountId == accountId);
-        var mappedExamResult = _mapper.Map<Paginate<GetListExamResultResponse>>(examresult);
+        var examResult = await _examResultDal.GetListAsync(a => a.AccountId == accountId);
+        var mappedExamResult = _mapper.Map<Paginate<GetListExamResultResponse>>(examResult);
         return mappedExamResult;
     }
 }

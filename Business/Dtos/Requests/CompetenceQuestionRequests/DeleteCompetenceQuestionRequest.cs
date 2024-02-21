@@ -3,5 +3,4 @@
 public class DeleteCompetenceQuestionRequest
 {
     public Guid Id { get; set; }
-
 }

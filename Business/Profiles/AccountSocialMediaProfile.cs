@@ -22,7 +22,9 @@ public class AccountSocialMediaProfile : Profile
             .ForMember(destinationMember: response => response.SocialMediaName,
             memberOptions: opt => opt.MapFrom(asm => asm.SocialMedia.Name))
             .ForMember(destinationMember: response => response.AccountName,
-            memberOptions: opt => opt.MapFrom(asm => asm.Account.User.FirstName +" "+ asm.Account.User.FirstName))
+            memberOptions: opt => opt.MapFrom(asm => asm.Account.User.FirstName + " " + asm.Account.User.FirstName))
+            .ForMember(destinationMember: response => response.IconPath,
+            memberOptions: opt => opt.MapFrom(asm => asm.SocialMedia.IconPath))
             .ReverseMap();
         CreateMap<IPaginate<AccountSocialMedia>, Paginate<GetListAccountSocialMediaResponse>>().ReverseMap();
     }

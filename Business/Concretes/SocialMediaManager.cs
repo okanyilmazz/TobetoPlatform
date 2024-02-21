@@ -46,7 +46,7 @@ public class SocialMediaManager : ISocialMediaService
             include: s => s.Include(a => a.AccountSocialMedias).ThenInclude(asm => asm.Account));
         var filteredSocialMedias = socialMediaList
             .Items.Where(e => e.AccountSocialMedias.Any(s => s.AccountId == accountId)).ToList();
-        var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(socialMediaList);
+        var mappedSocialMedias = _mapper.Map<Paginate<GetListSocialMediaResponse>>(filteredSocialMedias);
         return mappedSocialMedias;
     }
 

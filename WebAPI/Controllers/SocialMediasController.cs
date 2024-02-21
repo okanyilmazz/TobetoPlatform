@@ -47,9 +47,9 @@ public class SocialMediasController : ControllerBase
     [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetByAccountId")]
-    public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid id)
+    public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid accountId)
     {
-        var result = await _socialMediaService.GetByAccountIdAsync(id);
+        var result = await _socialMediaService.GetByAccountIdAsync(accountId);
         return Ok(result);
     }
 

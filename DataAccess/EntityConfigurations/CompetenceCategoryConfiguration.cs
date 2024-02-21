@@ -11,6 +11,8 @@ public class CompetenceCategoryConfiguration : IEntityTypeConfiguration<Competen
         builder.Property(c => c.Id).HasColumnName("Id").IsRequired();
         builder.Property(c => c.Name).HasColumnName("Name");
 
+        builder.HasMany(e => e.CompetenceQuestions);
+
         builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
     }
 }

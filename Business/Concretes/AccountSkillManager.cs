@@ -22,12 +22,20 @@ public class AccountSkillManager : IAccountSkillService
         _mapper = mapper;
         _accountSkillBusinessRules = accountSkillBusinessRules;
     }
-    public async Task<CreatedAccountSkillResponse> AddAsync(CreateAccountSkillRequest createAccountSkillRequest)
+    public async Task<CreatedAccountSkillResponse> AddAsync(CreateAccountSkillRequest createAccountSkillRequests)
     {
-        AccountSkill accountSkill = _mapper.Map<AccountSkill>(createAccountSkillRequest);
+        AccountSkill accountSkill = _mapper.Map<AccountSkill>(createAccountSkillRequests);
         AccountSkill addedAccountSkill = await _accountSkillDal.AddAsync(accountSkill);
         CreatedAccountSkillResponse createdAccountSkillResponse = _mapper.Map<CreatedAccountSkillResponse>(addedAccountSkill);
         return createdAccountSkillResponse;
+    }
+
+    public async Task<ICollection<CreatedAccountSkillResponse>> AddRangeAsync(ICollection<CreateAccountSkillRequest> createAccountSkillRequests)
+    {
+        ICollection<AccountSkill> accountSkills = _mapper.Map<ICollection<AccountSkill>>(createAccountSkillRequests);
+        ICollection<AccountSkill> addedAccountSkills = await _accountSkillDal.AddRangeAsync(accountSkills);
+        ICollection<CreatedAccountSkillResponse> createdAccountSkillResponses = _mapper.Map<ICollection<CreatedAccountSkillResponse>>(addedAccountSkills);
+        return createdAccountSkillResponses;
     }
 
     public async Task<DeletedAccountSkillResponse> DeleteAsync(DeleteAccountSkillRequest deleteAccountSkillRequest)
@@ -47,6 +55,19 @@ public class AccountSkillManager : IAccountSkillService
             Include(acs => acs.Skill)
             .Include(acs => acs.Account).ThenInclude(a => a.User));
         var mappedAccountSkill = _mapper.Map<GetListAccountSkillResponse>(accountSkill);
+        return mappedAccountSkill;
+    }
+
+    public async Task<IPaginate<GetListAccountSkillResponse>> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest)
+    {
+        var accountSkill = await _accountSkillDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize,
+            predicate: a => a.AccountId == accountId,
+            include: acs => acs.
+            Include(acs => acs.Skill)
+            .Include(acs => acs.Account).ThenInclude(a => a.User));
+        var mappedAccountSkill = _mapper.Map<Paginate<GetListAccountSkillResponse>>(accountSkill);
         return mappedAccountSkill;
     }
 

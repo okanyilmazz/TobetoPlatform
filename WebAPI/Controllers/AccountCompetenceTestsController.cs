@@ -45,7 +45,7 @@ public class AccountCompetenceTestsController : ControllerBase
     //[SecuredOperation("Admin,SuperAdmin")]
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
-    [CacheRemove("Blogs.Get")]
+    [CacheRemove("AccountCompetenceTest.Get")]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountCompetenceTestRequest createAccountCompetenceTestRequest)
     {
@@ -56,7 +56,7 @@ public class AccountCompetenceTestsController : ControllerBase
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
-    [CacheRemove("Blogs.Get")]
+    [CacheRemove("AccountCompetenceTest.Get")]
     [HttpPost("Delete")]
     public async Task<IActionResult> DeleteAsync([FromBody] DeleteAccountCompetenceTestRequest deleteAccountCompetenceTestRequest)
     {
@@ -67,7 +67,7 @@ public class AccountCompetenceTestsController : ControllerBase
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
-    [CacheRemove("Blogs.Get")]
+    [CacheRemove("AccountCompetenceTest.Get")]
     [HttpPost("Update")]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateAccountCompetenceTestRequest updateAccountCompetenceTestRequest)
     {

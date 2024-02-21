@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
 using Business.Dtos.Requests.AccountSocialMediaRequests;
+using Business.Dtos.Responses.AccountSkillResponses;
 using Business.Dtos.Responses.AccountSocialMediaResponses;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,6 +51,19 @@ public class AccountSocialMediaManager : IAccountSocialMediaService
 
         var mappedAccountSocialMedias = _mapper.Map<GetListAccountSocialMediaResponse>(accountSocialMedia);
         return mappedAccountSocialMedias;
+    }
+
+    public async Task<IPaginate<GetListAccountSocialMediaResponse>> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest)
+    {
+        var accountSocialMedia = await _accountSocialMediaDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize,
+            predicate: a => a.AccountId == accountId,
+            include: acs => acs
+            .Include(acs => acs.SocialMedia)
+            .Include(acs => acs.Account).ThenInclude(a => a.User));
+        var mappedAccountSocialMedia = _mapper.Map<Paginate<GetListAccountSocialMediaResponse>>(accountSocialMedia);
+        return mappedAccountSocialMedia;
     }
 
     public async Task<IPaginate<GetListAccountSocialMediaResponse>> GetListAsync(PageRequest pageRequest)

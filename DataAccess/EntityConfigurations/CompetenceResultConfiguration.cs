@@ -11,9 +11,12 @@ public class CompetenceResultConfiguration : IEntityTypeConfiguration<Competence
         builder.ToTable("CompetenceResults").HasKey(cr => cr.Id);
 
         builder.Property(cr => cr.Id).HasColumnName("Id").IsRequired();
-        builder.Property(cr => cr.CompetenceCategoryId).HasColumnName("CompetenceId").IsRequired();
-        builder.Property(cr => cr.AccountId).HasColumnName("AccountId").IsRequired();
+        builder.Property(cr => cr.CompetenceCategoryId).HasColumnName("CompetenceCategoryId");
+        builder.Property(cr => cr.AccountId).HasColumnName("AccountId");
         builder.Property(cr => cr.Point).HasColumnName("Point").IsRequired();
+
+        builder.HasOne(e => e.CompetenceCategory);
+        builder.HasOne(e => e.Account);
 
         builder.HasQueryFilter(cr => !cr.DeletedDate.HasValue);
     }

@@ -1,9 +1,10 @@
 ﻿using Business.Messages;
+using Core.Business.Rules;
 using DataAccess.Abstracts;
 
 namespace Business.Rules.BusinessRules;
 
-public class CompetenceTestQuestionBusinessRules
+public class CompetenceTestQuestionBusinessRules : BaseBusinessRules
 {
     ICompetenceTestQuestionDal _competenceTestQuestionDal;
 

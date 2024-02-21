@@ -18,8 +18,8 @@ public class CompetenceTestConfiguration : IEntityTypeConfiguration<CompetenceTe
         builder.HasIndex(indexExpression: c => c.Id, name: "UK_Id").IsUnique();
 
 
-        //builder.HasMany(e => e.CompetenceQuestions);
-        //builder.HasMany(e => e.AccountCompetenceTests);
+        builder.HasMany(e => e.CompetenceTestQuestions);
+        builder.HasMany(e => e.AccountCompetenceTests);
 
 
         builder.HasQueryFilter(b => !b.DeletedDate.HasValue);

@@ -48,7 +48,6 @@ public class CompetenceTestManager : ICompetenceTestService
     public async Task<IPaginate<GetListCompetenceTestResponse>> GetListAsync(PageRequest pageRequest)
     {
         var competenceTests = await _competenceTestDal.GetListAsync(
-            include: ct => ct.Include(e => ct.CompetenceTestQuestions).ThenInclude(ctq => ctq.CompetenceQuestion).ThenInclude(cq => cq.CompetenceCategory),
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
         var mappedCompetenceTests = _mapper.Map<Paginate<GetListCompetenceTestResponse>>(competenceTests);
@@ -67,11 +66,11 @@ public class CompetenceTestManager : ICompetenceTestService
     {
         var competenceTests = await _competenceTestDal.GetListAsync(
            index: pageRequest.PageIndex,
-           size: pageRequest.PageSize
+           size: pageRequest.PageSize,
             include: ct => ct
             .Include(ct  => ct.AccountCompetenceTests)
             .Include(ct => ct.CompetenceTestQuestions).ThenInclude(ctq => ctq.CompetenceQuestion).ThenInclude(cq => cq.CompetenceCategory),
-            predicate: ct => ct.AccountCompetenceTests.Any(act => act.AccountId == accountId.Id)
+            predicate: ct => ct.AccountCompetenceTests.Any(act => act.AccountId == accountId)
             );
         var mappedCompetenceTests = _mapper.Map<Paginate<GetListCompetenceTestResponse>>(competenceTests);
         return mappedCompetenceTests;

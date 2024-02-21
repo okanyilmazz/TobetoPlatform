@@ -2,7 +2,7 @@
 
 public class CreateCompetenceQuestionRequest
 {
-    public Guid CompetenceId { get; set; }
-    public string Question { get; set; }
+    public Guid CompetenceCategoryId { get; set; }
+    public string Description { get; set; }
     public int MaxOption { get; set; }
 }

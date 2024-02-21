@@ -1,7 +1,6 @@
 ﻿using Business.Messages;
 using Core.Business.Rules;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 
 namespace Business.Rules.BusinessRules;
 

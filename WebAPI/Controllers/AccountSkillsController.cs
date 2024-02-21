@@ -40,6 +40,17 @@ public class AccountSkillsController : ControllerBase
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest)
+    {
+        var result = await _accountSkillsService.GetByAccountIdAsync(accountId, pageRequest);
+        return Ok(result);
+    }
+
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
@@ -51,7 +62,15 @@ public class AccountSkillsController : ControllerBase
         return Ok(result);
     }
 
-
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [CacheRemove("AccountSkills.Get")]
+    [HttpPost("AddRange")]
+    public async Task<IActionResult> AddRangeAsync([FromBody] ICollection<CreateAccountSkillRequest> createAccountSkillRequests)
+    {
+        var result = await _accountSkillsService.AddRangeAsync(createAccountSkillRequests);
+        return Ok(result);
+    }
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

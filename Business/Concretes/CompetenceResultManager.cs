@@ -30,7 +30,6 @@ public class CompetenceResultManager : ICompetenceResultService
 
     public async Task<DeletedCompetenceResultResponse> DeleteAsync(DeleteCompetenceResultRequest deleteCompetenceResultRequest)
     {
-        //await _cityBusinessRules.IsExistsCity(deleteCityRequest.Id);
         CompetenceResult competenceResult = await _competenceResultDal.GetAsync(predicate: c => c.Id == deleteCompetenceResultRequest.Id);
         CompetenceResult deletedCompetenceResult = await _competenceResultDal.DeleteAsync(competenceResult);
         DeletedCompetenceResultResponse deletedCompetenceResultResponse = _mapper.Map<DeletedCompetenceResultResponse>(deletedCompetenceResult);
@@ -62,7 +61,6 @@ public class CompetenceResultManager : ICompetenceResultService
 
     public async Task<UpdatedCompetenceResultResponse> UpdateAsync(UpdateCompetenceResultRequest updateCompetenceResultRequest)
     {
-        //await _contactBusinessRules.IsExistsContact(updateContactRequest.Id);
         CompetenceResult competenceResult = _mapper.Map<CompetenceResult>(updateCompetenceResultRequest);
         CompetenceResult updatedCompetenceResult = await _competenceResultDal.UpdateAsync(competenceResult);
         UpdatedCompetenceResultResponse updatedCompetenceResultResponse = _mapper.Map<UpdatedCompetenceResultResponse>(updatedCompetenceResult);

@@ -11,9 +11,14 @@ public class CompetenceQuestionConfiguration : IEntityTypeConfiguration<Competen
         builder.ToTable("CompetenceQuestions").HasKey(cq => cq.Id);
 
         builder.Property(cq => cq.Id).HasColumnName("Id").IsRequired();
-        builder.Property(cq => cq.CompetenceCategoryId).HasColumnName("CompetenceId").IsRequired();
-        builder.Property(cq => cq.Question).HasColumnName("Question").IsRequired();
+        builder.Property(cq => cq.CompetenceCategoryId).HasColumnName("CompetenceCategoryId").IsRequired();
+        builder.Property(cq => cq.Description).HasColumnName("Description").IsRequired();
         builder.Property(cq => cq.MaxOption).HasColumnName("MaxOption").IsRequired();
+
+
+        builder.HasOne(cq => cq.CompetenceCategory);
+        builder.HasMany(cq => cq.CompetenceTestQuestions);
+
 
         builder.HasQueryFilter(cq => !cq.DeletedDate.HasValue);
     }

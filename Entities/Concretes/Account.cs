@@ -6,6 +6,7 @@ public class Account : Entity<Guid>
 {
     public Guid AddressId { get; set; }
     public Guid UserId { get; set; }
+    public Guid CompetenceQuestionId { get; set; }
     public string PhoneNumber { get; set; }
     public string NationalId { get; set; }
     public string Description { get; set; }
@@ -14,6 +15,7 @@ public class Account : Entity<Guid>
 
     public User User { get; set; }
     public Address Address { get; set; }
+    public CompetenceQuestion CompetenceQuestion { get; set; }
     public virtual ICollection<WorkExperience>? WorkExperiences { get; set; }
     public virtual ICollection<AccountOccupationClass>? AccountOccupationClasses { get; set; }
     public virtual ICollection<AccountSkill>? AccountSkills { get; set; }

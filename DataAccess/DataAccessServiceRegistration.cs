@@ -83,11 +83,17 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IBadgeDal, EfBadgeDal>();
         services.AddScoped<IAccountBadgeDal, EfAccountBadgeDal>();
         services.AddScoped<IManagementProgramDal, EfManagementProgramDal>();
+        services.AddScoped<ICompetenceCategoryDal, EfCompetenceCategoryDal>();
+        services.AddScoped<ICompetenceQuestionDal, EfCompetenceQuestionDal>();
+        services.AddScoped<ICompetenceResultDal, EfCompetenceResultDal>();
+        services.AddScoped<ICompetenceTestDal, EfCompetenceTestDal>();
+        services.AddScoped<ICompetenceTestQuestionDal, EfCompetenceTestQuestionDal>();
         services.AddScoped<IOperationClaimDal, EfOperationClaimDal>();
         services.AddScoped<IActivityMapDal, EfActivityMapDal>();
         services.AddScoped<IAccountActivityMapDal, EfAccountActivityMapDal>();
         services.AddScoped<ILessonLikeDal, EfLessonLikeDal>();
         services.AddScoped<IEducationProgramLikeDal, EfEducationLikeDal>();
+        services.AddScoped<IAccountCompetenceTestDal, EfAccountCompetenceTestDal>();
 
 
 

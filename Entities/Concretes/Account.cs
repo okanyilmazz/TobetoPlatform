@@ -14,6 +14,7 @@ public class Account : Entity<Guid>
 
     public User User { get; set; }
     public Address Address { get; set; }
+
     public virtual ICollection<WorkExperience>? WorkExperiences { get; set; }
     public virtual ICollection<AccountOccupationClass>? AccountOccupationClasses { get; set; }
     public virtual ICollection<AccountSkill>? AccountSkills { get; set; }

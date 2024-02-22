@@ -54,7 +54,7 @@ public class EducationProgramManager : IEducationProgramService
             .Include(ep => ep.EducationProgramOccupationClasses).ThenInclude(ep => ep.OccupationClass)
             .Include(ep => ep.EducationProgramProgrammingLanguages).ThenInclude(ep => ep.ProgrammingLanguage)
             .Include(ep => ep.EducationProgramSubjects).ThenInclude(ep => ep.Subject)
-            .Include(ep => ep.Badge)            ,
+            .Include(ep => ep.Badge),
 
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
@@ -63,7 +63,7 @@ public class EducationProgramManager : IEducationProgramService
         return mappedEducationPrograms;
     }
 
-   
+
     public async Task<IPaginate<GetListEducationProgramResponse>> GetListByFiltered(EducationProgramFilterRequest educationProgramFilterRequest)
     {
         var educationProgramList = await _educationProgramDal.GetListAsync(
@@ -80,14 +80,14 @@ public class EducationProgramManager : IEducationProgramService
                 (educationProgramFilterRequest.SubjectId == Guid.Empty || e.EducationProgramSubjects.Any(eps => eps.SubjectId == educationProgramFilterRequest.SubjectId)) &&
 
                 (educationProgramFilterRequest.EducationProgramDevelopmentId == Guid.Empty || e.EducationProgramDevelopmentId == educationProgramFilterRequest.EducationProgramDevelopmentId) &&
-                
+
                 //(educationProgramFilterRequest.AccountId == Guid.Empty || e.AccountEducationPrograms.Any(aep => aep.AccountId == educationProgramFilterRequest.AccountId)) &&
                 (
                     educationProgramFilterRequest.CompleteStatus == -1 ? true :
                     educationProgramFilterRequest.CompleteStatus == 0 ? e.AccountEducationPrograms.Any(aep => aep.AccountId == educationProgramFilterRequest.RequestingAccountId) :
                     educationProgramFilterRequest.CompleteStatus == 1 ? e.AccountEducationPrograms.Any(aep => aep.StatusPercent == 0 && aep.AccountId == educationProgramFilterRequest.RequestingAccountId) :
                     educationProgramFilterRequest.CompleteStatus == 2 ? e.AccountEducationPrograms.Any(aep => aep.StatusPercent == 100 && aep.AccountId == educationProgramFilterRequest.RequestingAccountId) :
-                    educationProgramFilterRequest.CompleteStatus == 3 ? e.AccountEducationPrograms.Any(aep => aep.StatusPercent > 0 && aep.StatusPercent < 100 && aep.AccountId == educationProgramFilterRequest.RequestingAccountId):true
+                    educationProgramFilterRequest.CompleteStatus == 3 ? e.AccountEducationPrograms.Any(aep => aep.StatusPercent > 0 && aep.StatusPercent < 100 && aep.AccountId == educationProgramFilterRequest.RequestingAccountId) : true
                 ) &&
 
                 (
@@ -95,9 +95,9 @@ public class EducationProgramManager : IEducationProgramService
                     educationProgramFilterRequest.Paid == 0 ? e.Price > 0 :
                     educationProgramFilterRequest.Paid == 1 ? e.Price == 0 :
                     true
-                )&&
+                ) &&
                   (
-                  educationProgramFilterRequest.SpecialForMe ==  true ? e.AccountEducationPrograms.Any(aep => aep.AccountId == educationProgramFilterRequest.RequestingAccountId) : 
+                  educationProgramFilterRequest.SpecialForMe == true ? e.AccountEducationPrograms.Any(aep => aep.AccountId == educationProgramFilterRequest.RequestingAccountId) :
                     true
                 )
             )
@@ -133,50 +133,4 @@ public class EducationProgramManager : IEducationProgramService
         var mappedEducationProgram = _mapper.Map<GetListEducationProgramResponse>(educationProgram);
         return mappedEducationProgram;
     }
-
-
-
-    //public async Task<IPaginate<GetListEducationProgramResponse>> GetListByFiltered(EducationProgramFilterRequest educationProgramFilterRequest)
-    //{
-    //    var educationProgramList = await _educationProgramDal.GetListAsync(
-    //        include: ep => ep.Include(ep => ep.EducationProgramProgrammingLanguages)
-    //                        .Include(ep => ep.EducationProgramSubjects)
-    //                        .Include(ep => ep.AccountEducationPrograms));
-
-    //    var filteredEducationPrograms = educationProgramList.Items
-    //        .Where(e =>
-    //            IsMatchingEducationProgram(e, educationProgramFilterRequest))
-    //        .ToList();
-
-    //    var mappedEducationProgram = _mapper.Map<Paginate<GetListEducationProgramResponse>>(filteredEducationPrograms);
-    //    return mappedEducationProgram;
-    //}
-
-    //private bool IsMatchingEducationProgram(EducationProgram e, EducationProgramFilterRequest request)
-    //{
-    //    return
-    //        (request.EducationProgramLevelId == Guid.Empty || e.EducationProgramLevelId == request.EducationProgramLevelId) &&
-    //        (request.ProgrammingLanguageId == Guid.Empty || e.EducationProgramProgrammingLanguages.Any(eppl => eppl.ProgrammingLanguageId == request.ProgrammingLanguageId)) &&
-    //        (request.SubjectId == Guid.Empty || e.EducationProgramSubjects.Any(eps => eps.SubjectId == request.SubjectId)) &&
-    //        (request.AccountId == Guid.Empty || e.AccountEducationPrograms.Any(aep => aep.AccountId == request.AccountId)) &&
-    //        (
-    //            request.CompleteStatus switch
-    //            {
-    //                0 => e.AccountEducationPrograms.Any(aep => aep.AccountId == request.RequestingAccountId),
-    //                1 => e.AccountEducationPrograms.Any(aep => aep.StatusPercent == 0 && aep.AccountId == request.RequestingAccountId),
-    //                2 => e.AccountEducationPrograms.Any(aep => aep.StatusPercent == 100 && aep.AccountId == request.RequestingAccountId),
-    //                3 => e.AccountEducationPrograms.Any(aep => aep.StatusPercent > 0 && aep.StatusPercent < 100 && aep.AccountId == request.RequestingAccountId),
-    //                _ => false
-    //            }
-    //        ) &&
-    //        (
-    //            request.Paid switch
-    //            {
-    //                0 => e.Price > 0,
-    //                1 => e.Price == 0,
-    //                _ => false
-    //            }
-    //        );
-    //}
-
 }

@@ -25,7 +25,7 @@ namespace Business.Profiles
                 .ForMember(destinationMember: response => response.CityName,
                 memberOptions: opt => opt.MapFrom(a => a.City.Name))
                 .ForMember(destinationMember: response => response.CountryName,
-                memberOptions: opt => opt.MapFrom(a => a.Country.Name))
+                memberOptions: opt => opt.MapFrom(a => a.Country.Name)) 
                 .ReverseMap();
         }
     }

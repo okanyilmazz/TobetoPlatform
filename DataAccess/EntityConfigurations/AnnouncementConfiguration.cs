@@ -25,6 +25,7 @@ namespace DataAccess.EntityConfigurations
 
 
             builder.HasMany(s => s.AnnouncementProjects);
+            builder.HasMany(s => s.AnnouncementReads);
 
 
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);

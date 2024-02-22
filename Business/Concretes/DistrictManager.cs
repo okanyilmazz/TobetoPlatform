@@ -44,6 +44,18 @@ public class DistrictManager : IDistrictService
         return deletedDistrictResponse;
     }
 
+    public async Task<IPaginate<GetListDistrictResponse>> GetByCityIdAsync(Guid cityId)
+    {
+        var district = await _districtDal.GetListAsync(
+            predicate: a => a.CityId == cityId,
+            include: d => d
+            .Include(d => d.City)
+            );
+        var mappedDistrict = _mapper.Map<Paginate<GetListDistrictResponse>>(district);
+        return mappedDistrict;
+    }
+
+
     public async Task<GetListDistrictResponse> GetByIdAsync(Guid id)
     {
         var district = await _districtDal.GetAsync(

@@ -42,6 +42,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.HasMany(c => c.Certificates);
         builder.HasMany(ab => ab.AccountBadges);
         builder.HasMany(ll => ll.LessonLikes);
+        builder.HasMany(s => s.AnnouncementReads);
 
 
         builder.HasQueryFilter(a => !a.DeletedDate.HasValue);

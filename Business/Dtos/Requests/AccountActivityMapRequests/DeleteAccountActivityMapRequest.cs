@@ -1,9 +1,7 @@
-﻿using System;
-namespace Business.Dtos.Requests.AccountActivityMapRequests
-{
-	public class DeleteAccountActivityMapRequest
+﻿namespace Business.Dtos.Requests.AccountActivityMapRequests;
+
+public class DeleteAccountActivityMapRequest
 	{
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }
 

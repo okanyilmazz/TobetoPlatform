@@ -6,4 +6,6 @@ public class GetListAnnouncementResponse
     public string Title { get; set; }
     public string Description { get; set; }
     public DateTime AnnouncementDate { get; set; }
+    public string AnnouncementTypeName { get; set; }
+
 }

@@ -19,6 +19,16 @@ public class DistrictsController : ControllerBase
     public DistrictsController(IDistrictService districtService)
     {
         _districtService = districtService;
+    }   
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(60)]
+    [HttpGet("GetList")]
+    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
+    {
+        var result = await _districtService.GetListAsync(pageRequest);
+        return Ok(result);
     }
 
     [Logging(typeof(MsSqlLogger))]
@@ -31,14 +41,13 @@ public class DistrictsController : ControllerBase
         return Ok(result);
     }
 
-
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
-    [Cache(60)]
-    [HttpGet("GetList")]
-    public async Task<IActionResult> GetListAsync([FromQuery] PageRequest pageRequest)
+    [Cache]
+    [HttpGet("GetByCityId")]
+    public async Task<IActionResult> GetByCityIdAsync(Guid cityId)
     {
-        var result = await _districtService.GetListAsync(pageRequest);
+        var result = await _districtService.GetByCityIdAsync(cityId);
         return Ok(result);
     }
 

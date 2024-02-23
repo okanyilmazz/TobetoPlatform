@@ -49,6 +49,8 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
             include: ap => ap
             .Include(ap => ap.Announcement)
             .Include(ap => ap.Project)
+            .Include(ap => ap.Announcement.AnnouncementType)
+
             );
         var mappedAnnouncementProject = _mapper.Map<GetListAnnouncementProjectResponse>(announcementProject);
         return mappedAnnouncementProject;
@@ -59,7 +61,9 @@ public class AnnouncementProjectManager : IAnnouncementProjectService
         var announcementProject = await _announcementProjectDal.GetListAsync(
              include: ap => ap
             .Include(ap => ap.Announcement)
-            .Include(ap => ap.Project),
+            .Include(ap => ap.Project)
+            .Include(ap => ap.Announcement.AnnouncementType)
+            ,
              index: pageRequest.PageIndex,
              size: pageRequest.PageSize);
         var mappedAnnouncementProject = _mapper.Map<Paginate<GetListAnnouncementProjectResponse>>(announcementProject);

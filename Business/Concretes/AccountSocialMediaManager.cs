@@ -49,6 +49,7 @@ public class AccountSocialMediaManager : IAccountSocialMediaService
             .Include(asm => asm.Account).ThenInclude(a => a.User)
             );
 
+
         var mappedAccountSocialMedias = _mapper.Map<GetListAccountSocialMediaResponse>(accountSocialMedia);
         return mappedAccountSocialMedias;
     }

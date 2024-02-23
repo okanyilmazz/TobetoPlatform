@@ -96,6 +96,9 @@ public static class BusinessServiceRegistration
         services.AddScoped<IEducationProgramLikeService, EducationProgramLikeManager>();
         services.AddScoped<IFileHelper, FileHelper>();
         services.AddScoped<FileBusinessRules>();
+        services.AddScoped<IAnnouncementTypeService, AnnouncementTypeManager>();
+        services.AddScoped<IAnnouncementReadService, AnnouncementReadManager>();
+
 
 
         services.AddAutoMapper(Assembly.GetExecutingAssembly());

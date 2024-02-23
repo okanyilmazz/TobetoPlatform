@@ -5,6 +5,7 @@ using Business.Concretes;
 using Core.Business.Rules;
 using Core.Utilities.Helpers;
 using Core.Utilities.Security.JWT;
+using DataAccess.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 
 

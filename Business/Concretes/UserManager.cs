@@ -94,4 +94,3 @@ public class UserManager : IUserService
         return mappedOperationClaims;
     }
 }
-

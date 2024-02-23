@@ -21,7 +21,6 @@ public class AccountLanguageManager : IAccountLanguageService
         _accountLanguageBusinessRules = accountLanguageBusinessRules;
     }
 
-
     public async Task<CreatedAccountLanguageResponse> AddAsync(CreateAccountLanguageRequest createAccountLanguageRequest)
     {
         var AccountLanguage = _mapper.Map<AccountLanguage>(createAccountLanguageRequest);

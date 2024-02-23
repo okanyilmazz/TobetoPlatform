@@ -27,8 +27,9 @@ namespace Business.Profiles
             CreateMap<IPaginate<Session>, Paginate<GetListSessionResponse>>().ReverseMap();
 
             CreateMap<Session, GetListSessionResponse>()
-            .ForMember(destinationMember: response => response.OccupationClassName,
-            memberOptions: opt => opt.MapFrom(s => s.OccupationClass.Name)).ReverseMap();
+                .ForMember(dest => dest.OccupationClassName, opt => opt.MapFrom(src => src.OccupationClass.Name))
+                .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => string.Join(", ", src.AccountSessions.Select(accountSession => $"{accountSession.Account.User.FirstName} {accountSession.Account.User.LastName}"))))
+                .ReverseMap();
         }
     }
 }

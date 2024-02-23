@@ -2,6 +2,7 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.SessionRequests;
 using Business.Dtos.Responses.SessionResponses;
+using Business.Messages;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
@@ -40,6 +41,26 @@ public class SessionManager : ISessionService
         DeletedSessionResponse deletedSessionResponse = _mapper.Map<DeletedSessionResponse>(deletedSession);
         return deletedSessionResponse;
     }
+
+    public async Task<IPaginate<GetListSessionResponse>> GetListWithInstructorAsync(PageRequest pageRequest)
+    {
+        var session = await _sessionDal.GetListAsync(
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize,
+            predicate: s => s.AccountSessions.Any(a => a.Account.User.UserOperationClaims.Any(claim => claim.OperationClaim.Name == Roles.Instructor)),
+            include: s => s
+                .Include(s => s.OccupationClass)
+                .Include(s => s.AccountSessions)
+                .ThenInclude(s => s.Account)
+                .ThenInclude(s => s.User)
+                .ThenInclude(s => s.UserOperationClaims)
+                .ThenInclude(s => s.OperationClaim));
+
+        var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
+        return mappedSession;
+    }
+
+
 
     public async Task<IPaginate<GetListSessionResponse>> GetListAsync(PageRequest pageRequest)
     {

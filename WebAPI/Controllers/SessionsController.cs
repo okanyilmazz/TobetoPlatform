@@ -29,6 +29,16 @@ public class SessionsController : Controller
     {
         var result = await _sessionService.GetListAsync(pageRequest);
         return Ok(result);
+    }  
+    
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(60)]
+    [HttpGet("GetListWithInstructor")]
+    public async Task<IActionResult> GetListWithInstructorAsync([FromQuery] PageRequest pageRequest)
+    {
+        var result = await _sessionService.GetListWithInstructorAsync(pageRequest);
+        return Ok(result); 
     }
 
 

@@ -20,12 +20,12 @@ namespace Business.Profiles
 
             CreateMap<IPaginate<Address>, Paginate<GetListAddressResponse>>().ReverseMap();
             CreateMap<Address, GetListAddressResponse>()
-                .ForMember(destinationMember: response => response.DistrictName,
-                memberOptions: opt => opt.MapFrom(a => a.District.Name))
-                .ForMember(destinationMember: response => response.CityName,
-                memberOptions: opt => opt.MapFrom(a => a.City.Name))
-                .ForMember(destinationMember: response => response.CountryName,
-                memberOptions: opt => opt.MapFrom(a => a.Country.Name)) 
+                //.ForMember(destinationMember: response => response.DistrictName,
+                //memberOptions: opt => opt.MapFrom(a => a.District.Name))
+                //.ForMember(destinationMember: response => response.CityName,
+                //memberOptions: opt => opt.MapFrom(a => a.City.Name))
+                //.ForMember(destinationMember: response => response.CountryName,
+                //memberOptions: opt => opt.MapFrom(a => a.Country.Name)) 
                 .ReverseMap();
         }
     }

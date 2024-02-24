@@ -11,4 +11,5 @@ public interface IAccountLanguageService
     Task<DeletedAccountLanguageResponse> DeleteAsync(DeleteAccountLanguageRequest deleteAccountLanguageRequest);
     Task<IPaginate<GetListAccountLanguageResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListAccountLanguageResponse> GetByIdAsync(Guid id);
+    Task<IPaginate<GetListAccountLanguageResponse>> GetByAccountIdAsync(Guid accountId);
 }

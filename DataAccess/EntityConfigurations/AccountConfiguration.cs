@@ -11,7 +11,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.ToTable("Accounts").HasKey(a => a.Id);
 
         builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
-        builder.Property(a => a.AddressId).HasColumnName("AddressId").IsRequired();
+        //builder.Property(a => a.AddressId).HasColumnName("AddressId").IsRequired();
         builder.Property(a => a.UserId).HasColumnName("UserId").IsRequired();
         builder.Property(a => a.PhoneNumber).HasColumnName("PhoneNumber").IsRequired();
         builder.Property(a => a.NationalId).HasColumnName("NationalId").IsRequired();
@@ -20,13 +20,13 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.Property(a => a.ProfilePhotoPath).HasColumnName("ProfilePhotoPath");
 
         builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
-        builder.HasIndex(indexExpression: a => a.AddressId, name: "UK_AddressId").IsUnique();
+        //builder.HasIndex(indexExpression: a => a.AddressId, name: "UK_AddressId").IsUnique();
         builder.HasIndex(indexExpression: a => a.UserId, name: "UK_UserId").IsUnique();
         builder.HasIndex(indexExpression: a => a.PhoneNumber, name: "UK_PhoneNumber").IsUnique();
         builder.HasIndex(indexExpression: a => a.NationalId, name: "UK_NationalId").IsUnique();
 
 
-        builder.HasOne(a => a.Address);
+        //builder.HasOne(a => a.Address);
         builder.HasOne(a => a.User);
 
         builder.HasMany(au => au.AccountUniversities);

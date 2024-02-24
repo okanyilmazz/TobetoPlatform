@@ -3,7 +3,6 @@
 public class CreatedAccountResponse
 {
     public Guid Id { get; set; }
-    public Guid AddressId { get; set; }
     public Guid UserId { get; set; }
     public string PhoneNumber { get; set; }
     public string NationalId { get; set; }

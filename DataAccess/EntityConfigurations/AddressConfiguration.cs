@@ -16,6 +16,7 @@ namespace DataAccess.EntityConfigurations
             builder.ToTable("Addresses").HasKey(a => a.Id);
 
             builder.Property(a => a.Id).HasColumnName("Id").IsRequired();
+            builder.Property(a => a.AccountId).HasColumnName("AccountId");
             builder.Property(a => a.CityId).HasColumnName("CityId");
             builder.Property(a => a.CountryId).HasColumnName("CountryId");
             builder.Property(a => a.DistrictId).HasColumnName("DistrictId");
@@ -24,10 +25,11 @@ namespace DataAccess.EntityConfigurations
 
             builder.HasIndex(indexExpression: a => a.Id, name: "UK_Id").IsUnique();
 
-
             builder.HasOne(a => a.City);
             builder.HasOne(a => a.District);
             builder.HasOne(a => a.Country);
+            builder.HasOne(a => a.Account);
+
 
 
             builder.HasQueryFilter(a => !a.DeletedDate.HasValue);

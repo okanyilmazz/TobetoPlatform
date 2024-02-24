@@ -44,7 +44,7 @@ public class AccountSkillsController : ControllerBase
     [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetByAccountId")]
-    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest)
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId, [FromQuery] PageRequest pageRequest)
     {
         var result = await _accountSkillsService.GetByAccountIdAsync(accountId, pageRequest);
         return Ok(result);

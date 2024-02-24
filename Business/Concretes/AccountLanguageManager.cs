@@ -50,6 +50,18 @@ public class AccountLanguageManager : IAccountLanguageService
         return mappedListed;
     }
 
+    public async Task<IPaginate<GetListAccountLanguageResponse>> GetByAccountIdAsync(Guid accountId)
+    { 
+        var accountLanguageListed = await _accountLanguageDal.GetListAsync(
+            predicate: a => a.AccountId == accountId,
+            include: al => al
+            .Include(al => al.Language)
+            .Include(al => al.LanguageLevel)
+            .Include(al => al.Account).ThenInclude(a => a.User));
+        var mappedListed = _mapper.Map<Paginate<GetListAccountLanguageResponse>>(accountLanguageListed);
+        return mappedListed;
+    }
+
     public async Task<IPaginate<GetListAccountLanguageResponse>> GetListAsync(PageRequest pageRequest)
     {
         var AccountLanguageListed = await _accountLanguageDal.GetListAsync(

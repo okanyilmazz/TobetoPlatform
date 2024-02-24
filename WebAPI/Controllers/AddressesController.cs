@@ -46,6 +46,17 @@ public class AddressesController : ControllerBase
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId)
+    {
+        var result = await _addressService.GetByAccountIdAsync(accountId);
+        return Ok(result);
+    }
+    
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("Addresses.Get")]
     [CustomValidation(typeof(CreateAddressRequestValidator))]
     [HttpPost("Add")]

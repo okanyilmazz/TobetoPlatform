@@ -70,7 +70,7 @@ public class EducationProgramsController : ControllerBase
     public async Task<IActionResult> GetByAccountIdAsync([FromQuery] PageRequest pageRequest, Guid accountId)
     {
         var result = await _educationProgramService.GetByAccountIdAsync(accountId, pageRequest);
-        return Ok(result);
+        return Ok(result); 
     }
 
     [Logging(typeof(MsSqlLogger))]

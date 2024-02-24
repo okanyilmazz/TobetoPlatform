@@ -116,7 +116,7 @@ public class EducationProgramManager : IEducationProgramService
         var educationProgram = await GetByOccupationClassIdAsync(occupationClass.Id);
 
         var mappedExams = _mapper.Map<Paginate<GetListEducationProgramResponse>>(educationProgram);
-        return mappedExams;
+        return mappedExams; 
     }
 
     public async Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId)

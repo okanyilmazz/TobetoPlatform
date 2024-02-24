@@ -46,8 +46,8 @@ namespace Business.Concretes
     public async Task<List<GetListOperationClaimResponse>> GetByUserIdAsync(Guid userId)
     {
         var operationClaims = await _operationClaimDal.GetListAsync(
-            include: oc => oc.Include(oc => oc.UserOperationClaim),
-            predicate: oc => oc.UserOperationClaim.Any(uoc => uoc.UserId == userId));
+            include: oc => oc.Include(oc => oc.UserOperationClaims),
+            predicate: oc => oc.UserOperationClaims.Any(uoc => uoc.UserId == userId));
 
         var operationClaimResponse = _mapper.Map<List<GetListOperationClaimResponse>>(operationClaims.Items);
         return operationClaimResponse;

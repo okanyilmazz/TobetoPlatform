@@ -20,7 +20,7 @@ public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOper
             builder.HasOne(uop => uop.OperationClaim);
 
         builder.HasOne(uop => uop.OperationClaim)
-           .WithMany(uop => uop.UserOperationClaim)
+           .WithMany(uop => uop.UserOperationClaims)
            .HasForeignKey(uop => uop.OperationClaimId);
     }
 } 

@@ -57,10 +57,8 @@ public class SessionManager : ISessionService
                 .ThenInclude(s => s.OperationClaim));
 
         var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
-        return mappedSession;
+        return mappedSession; 
     }
-
-
 
     public async Task<IPaginate<GetListSessionResponse>> GetListAsync(PageRequest pageRequest)
     {
@@ -69,7 +67,6 @@ public class SessionManager : ISessionService
             size: pageRequest.PageSize,
             include: s => s
             .Include(s => s.OccupationClass));
-
 
         var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
         return mappedSession;

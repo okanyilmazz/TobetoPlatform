@@ -29,7 +29,7 @@ namespace Business.Profiles
             CreateMap<Session, GetListSessionResponse>()
                 .ForMember(dest => dest.OccupationClassName, opt => opt.MapFrom(src => src.OccupationClass.Name))
                 .ForMember(dest => dest.AccountName, opt => opt.MapFrom(src => string.Join(", ", src.AccountSessions.Select(accountSession => $"{accountSession.Account.User.FirstName} {accountSession.Account.User.LastName}"))))
-                .ReverseMap();
+                .ReverseMap(); 
         }
     }
 }

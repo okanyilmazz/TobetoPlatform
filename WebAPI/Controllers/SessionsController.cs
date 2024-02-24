@@ -38,7 +38,7 @@ public class SessionsController : Controller
     public async Task<IActionResult> GetListWithInstructorAsync([FromQuery] PageRequest pageRequest)
     {
         var result = await _sessionService.GetListWithInstructorAsync(pageRequest);
-        return Ok(result);
+        return Ok(result); 
     }
 
 

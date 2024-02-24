@@ -37,7 +37,13 @@ public class UserManager : IUserService
     public async Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest)
     {
         await _userBusinessRules.IsExistsUser(updateUserRequest.Id);
+        GetUserResponse getUpdatedUser = await GetByIdAsync(updateUserRequest.Id);
+ 
         User user = _mapper.Map<User>(updateUserRequest);
+        user.PasswordHash = getUpdatedUser.PasswordHash;
+        user.Password = getUpdatedUser.Password;
+
+        user.PasswordSalt = getUpdatedUser.PasswordSalt;
         User updatedUser = await _userDal.UpdateAsync(user);
         UpdatedUserResponse mappedProduct = _mapper.Map<UpdatedUserResponse>(updatedUser);
         return mappedProduct;
@@ -75,7 +81,8 @@ public class UserManager : IUserService
 
     public async Task<GetUserResponse> GetByIdAsync(Guid? id)
     {
-        User user = await _userDal.GetAsync(predicate: u => u.Id == id);
+        User user = await _userDal.GetAsync(predicate: u => u.Id == id,
+            enableTracking:false);
         GetUserResponse getUserResponse = _mapper.Map<GetUserResponse>(user);
         return getUserResponse;
     }

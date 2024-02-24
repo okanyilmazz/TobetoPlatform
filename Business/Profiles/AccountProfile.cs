@@ -20,12 +20,12 @@ public class AccountProfile : Profile
         CreateMap<Account, DeletedAccountResponse>().ReverseMap();
 
         CreateMap<Account, GetListAccountResponse>()
-            .ForMember(destinationMember: response => response.DistrictName,
-            memberOptions: a => a.MapFrom(a => a.Address.District.Name))
-            .ForMember(destinationMember: response => response.CityName,
-            memberOptions: a => a.MapFrom(a => a.Address.City.Name))
-            .ForMember(destinationMember: response => response.CountryName,
-            memberOptions: a => a.MapFrom(a => a.Address.Country.Name))
+            //.ForMember(destinationMember: response => response.DistrictId,
+            //memberOptions: a => a.MapFrom(a => a.Address.District.Id))
+            //.ForMember(destinationMember: response => response.CityId,
+            //memberOptions: a => a.MapFrom(a => a.Address.City.Id))
+            //.ForMember(destinationMember: response => response.CountryId,
+            //memberOptions: a => a.MapFrom(a => a.Address.Country.Id))
             .ForMember(destinationMember: response => response.FirstName,
             memberOptions: a => a.MapFrom(a => a.User.FirstName))
               .ForMember(destinationMember: response => response.LastName,

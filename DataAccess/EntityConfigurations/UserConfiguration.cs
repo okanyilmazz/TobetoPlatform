@@ -29,6 +29,7 @@ namespace DataAccess.EntityConfigurations
             builder.HasIndex(indexExpression: u => u.Email, name: "UK_Email").IsUnique();
 
             builder.HasMany(u => u.UserOperationClaims);
+
             builder.HasQueryFilter(u => !u.DeletedDate.HasValue);
         }
     }

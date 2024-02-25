@@ -1,4 +1,5 @@
 ﻿using Business.Dtos.Requests.AccountUniversityRequests;
+using Business.Dtos.Responses.AccountSocialMediaResponses;
 using Business.Dtos.Responses.AccountUniversityResponses;
 using Core.DataAccess.Paging;
 
@@ -11,5 +12,6 @@ public interface IAccountUniversityService
     Task<DeletedAccountUniversityResponse> DeleteAsync(DeleteAccountUniversityRequest deleteAccountUniversityRequest);
     Task<IPaginate<GetListAccountUniversityResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListAccountUniversityResponse> GetByIdAsync(Guid Id);
+    Task<IPaginate<GetListAccountUniversityResponse>> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest);
 
 }

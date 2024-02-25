@@ -65,6 +65,16 @@ public class EducationProgramsController : ControllerBase
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync([FromQuery] PageRequest pageRequest, Guid accountId)
+    {
+        var result = await _educationProgramService.GetByAccountIdAsync(accountId, pageRequest);
+        return Ok(result); 
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("EducationPrograms.Get")]
     [CustomValidation(typeof(CreateEducationProgramRequestValidator))]
     [HttpPost("Add")]

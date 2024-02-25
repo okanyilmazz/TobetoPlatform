@@ -52,6 +52,14 @@ public class AddressManager : IAddressService
         return mappedAddresses;
     }
 
+    public async Task<GetListAddressResponse> GetByAccountIdAsync(Guid accountId)
+    {
+        var accountAddress = await _addressDal.GetAsync(
+            predicate: a => a.AccountId == accountId);
+        var mappedAccountAddress = _mapper.Map<GetListAddressResponse>(accountAddress);
+        return mappedAccountAddress;
+    }
+
     public async Task<IPaginate<GetListAddressResponse>> GetListAsync(PageRequest pageRequest)
     {
         var address = await _addressDal.GetListAsync(

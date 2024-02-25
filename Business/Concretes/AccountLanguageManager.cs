@@ -21,7 +21,6 @@ public class AccountLanguageManager : IAccountLanguageService
         _accountLanguageBusinessRules = accountLanguageBusinessRules;
     }
 
-
     public async Task<CreatedAccountLanguageResponse> AddAsync(CreateAccountLanguageRequest createAccountLanguageRequest)
     {
         var AccountLanguage = _mapper.Map<AccountLanguage>(createAccountLanguageRequest);
@@ -48,6 +47,18 @@ public class AccountLanguageManager : IAccountLanguageService
             .Include(al => al.LanguageLevel)
             .Include(al => al.Account).ThenInclude(a => a.User));
         var mappedListed = _mapper.Map<GetListAccountLanguageResponse>(AccountLanguageListed);
+        return mappedListed;
+    }
+
+    public async Task<IPaginate<GetListAccountLanguageResponse>> GetByAccountIdAsync(Guid accountId)
+    { 
+        var accountLanguageListed = await _accountLanguageDal.GetListAsync(
+            predicate: a => a.AccountId == accountId,
+            include: al => al
+            .Include(al => al.Language)
+            .Include(al => al.LanguageLevel)
+            .Include(al => al.Account).ThenInclude(a => a.User));
+        var mappedListed = _mapper.Map<Paginate<GetListAccountLanguageResponse>>(accountLanguageListed);
         return mappedListed;
     }
 

@@ -3,9 +3,11 @@ using Business.Abstracts;
 using Business.Dtos.Requests.EducationProgramRequests;
 using Business.Dtos.Requests.FilterRequest;
 using Business.Dtos.Responses.EducationProgramResponses;
+using Business.Dtos.Responses.ExamResponses;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,13 +18,14 @@ public class EducationProgramManager : IEducationProgramService
     IEducationProgramDal _educationProgramDal;
     IMapper _mapper;
     EducationProgramBusinessRules _educationProgramBusinessRules;
+    IOccupationClassService _occupationClassService;
 
-    public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper, EducationProgramBusinessRules educationProgramBusinessRules)
+    public EducationProgramManager(IEducationProgramDal educationProgramDal, IMapper mapper, EducationProgramBusinessRules educationProgramBusinessRules, IOccupationClassService occupationClassService)
     {
         _educationProgramDal = educationProgramDal;
         _mapper = mapper;
         _educationProgramBusinessRules = educationProgramBusinessRules;
-
+        _occupationClassService = occupationClassService;
     }
 
     public async Task<CreatedEducationProgramResponse> AddAsync(CreateEducationProgramRequest createEducationProgramRequest)
@@ -107,6 +110,14 @@ public class EducationProgramManager : IEducationProgramService
         return mappedEducationProgram;
     }
 
+    public async Task<IPaginate<GetListEducationProgramResponse>> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest)
+    {
+        var occupationClass = await _occupationClassService.GetByAccountIdAsync(accountId);
+        var educationProgram = await GetByOccupationClassIdAsync(occupationClass.Id);
+
+        var mappedExams = _mapper.Map<Paginate<GetListEducationProgramResponse>>(educationProgram);
+        return mappedExams; 
+    }
 
     public async Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId)
     {

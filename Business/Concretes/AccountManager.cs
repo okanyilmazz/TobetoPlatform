@@ -28,6 +28,9 @@ public class AccountManager : IAccountService
 
     public async Task<CreatedAccountResponse> AddAsync(CreateAccountRequest createAccountRequest)
     {
+        await _accountBusinessRules.IsExistsNationalId(createAccountRequest.NationalId);
+        await _accountBusinessRules.IsExistsPhoneNumber(createAccountRequest.PhoneNumber);
+
         Account account = _mapper.Map<Account>(createAccountRequest);
         Account addedAccount = await _accountDal.AddAsync(account);
         CreatedAccountResponse createdAccountResponse = _mapper.Map<CreatedAccountResponse>(addedAccount);
@@ -61,9 +64,6 @@ public class AccountManager : IAccountService
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
             include: a => a
-            //.Include(a => a.Address).ThenInclude(a => a.District)
-            //.Include(a => a.Address).ThenInclude(a => a.City)
-            //.Include(a => a.Address).ThenInclude(a => a.Country)
             .Include(a => a.User));
         var mappedAccountSession = _mapper.Map<Paginate<GetListAccountResponse>>(account);
         return mappedAccountSession;
@@ -74,9 +74,6 @@ public class AccountManager : IAccountService
         var account = await _accountDal.GetAsync(
             predicate: a => a.Id == id,
             include: a => a
-            //.Include(a => a.Address).ThenInclude(a => a.District)
-            //.Include(a => a.Address).ThenInclude(a => a.City)
-            //.Include(a => a.Address).ThenInclude(a => a.Country)
             .Include(a => a.User));
         var mappedAccount = _mapper.Map<GetListAccountResponse>(account);
         return mappedAccount;
@@ -87,11 +84,8 @@ public class AccountManager : IAccountService
         var account = await _accountDal.GetListAsync(
             predicate: a => a.LessonLikes.Any(ll => ll.LessonId == lessonId),
             size: pageRequest.PageSize,
-            index:pageRequest.PageIndex,
+            index: pageRequest.PageIndex,
             include: a => a
-            //.Include(a => a.Address).ThenInclude(a => a.District)
-            //.Include(a => a.Address).ThenInclude(a => a.City)
-            //.Include(a => a.Address).ThenInclude(a => a.Country)
             .Include(a => a.LessonLikes)
             .Include(a => a.User));
         var mappedAccount = _mapper.Map<Paginate<GetListAccountResponse>>(account);
@@ -105,23 +99,17 @@ public class AccountManager : IAccountService
             size: pageRequest.PageSize,
             index: pageRequest.PageIndex,
             include: a => a
-            //.Include(a => a.Address).ThenInclude(a => a.District)
-            //.Include(a => a.Address).ThenInclude(a => a.City)
-            //.Include(a => a.Address).ThenInclude(a => a.Country)
             .Include(a => a.EducationProgramLikes)
             .Include(a => a.User));
         var mappedAccount = _mapper.Map<Paginate<GetListAccountResponse>>(account);
         return mappedAccount;
-    } 
+    }
 
     public async Task<GetListAccountResponse> GetAsync(Guid id)
     {
         var account = await _accountDal.GetAsync(
             predicate: a => a.Id == id,
             include: a => a
-            //.Include(a => a.Address).ThenInclude(a => a.District)
-            //.Include(a => a.Address).ThenInclude(a => a.City)
-            //.Include(a => a.Address).ThenInclude(a => a.Country)
             .Include(a => a.User));
         var mappedAccount = _mapper.Map<GetListAccountResponse>(account);
         return mappedAccount;

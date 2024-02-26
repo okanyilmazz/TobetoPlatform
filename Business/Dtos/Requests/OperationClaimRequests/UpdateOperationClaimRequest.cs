@@ -1,7 +1,9 @@
-﻿namespace Business.Dtos.Requests.OperationClaimRequests;
-
-public class UpdateOperationClaimRequest
+﻿namespace Business.Dtos.Requests.OperationClaimRequests
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-}
+    public class UpdateOperationClaimRequest
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
+    }
+} 

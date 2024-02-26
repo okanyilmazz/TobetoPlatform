@@ -11,6 +11,7 @@ public interface IEducationProgramService
     Task<UpdatedEducationProgramResponse> UpdateAsync(UpdateEducationProgramRequest updateEducationProgramRequest);
     Task<DeletedEducationProgramResponse> DeleteAsync(DeleteEducationProgramRequest deleteEducationProgramRequest);
     Task<IPaginate<GetListEducationProgramResponse>> GetListAsync(PageRequest pageRequest);
+    Task<IPaginate<GetListEducationProgramResponse>> GetByAccountIdAsync(Guid accountId,PageRequest pageRequest);
     Task<IPaginate<GetListEducationProgramResponse>> GetByOccupationClassIdAsync(Guid occupationClassId);
     Task<GetListEducationProgramResponse> GetByIdAsync(Guid id);
     Task<IPaginate<GetListEducationProgramResponse>> GetListByFiltered(EducationProgramFilterRequest educationProgramFilterRequest);

@@ -1,7 +1,6 @@
 ﻿using Business.Abstracts;
 using Business.Dtos.Requests.CountryRequests;
 using Business.Rules.ValidationRules.FluentValidation.CountryValidators;
-using Core.CrossCuttingConcerns.Authorization;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Logging;
 using Core.CrossCuttingConcerns.Logging.SeriLog.Logger;
@@ -33,7 +32,6 @@ public class CountriesController : ControllerBase
         return Ok(result);
     }
 
-    //[SecuredOperation("Moderator")]
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [Cache(60)]
@@ -44,7 +42,6 @@ public class CountriesController : ControllerBase
         return Ok(result);
     }
 
-    //[SecuredOperation("Admin")]
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [CacheRemove("Countries.Get")]

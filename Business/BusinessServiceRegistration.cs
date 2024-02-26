@@ -5,6 +5,7 @@ using Business.Concretes;
 using Core.Business.Rules;
 using Core.Utilities.Helpers;
 using Core.Utilities.Security.JWT;
+using DataAccess.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -86,7 +87,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<ICompetenceQuestionService, CompetenceQuestionManager>();
         services.AddScoped<ICompetenceTestService, CompetenceTestManager>();
         services.AddScoped<ICompetenceTestQuestionService, CompetenceTestQuestionManager>();
-        services.AddScoped<IAccountCompetenceTestService, AccountCompetenceTestManager>();        
+        services.AddScoped<IAccountCompetenceTestService, AccountCompetenceTestManager>();
 
 
 

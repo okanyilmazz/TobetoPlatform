@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
 using Business.Dtos.Requests.AccountUniversityRequests;
+using Business.Dtos.Responses.AccountSocialMediaResponses;
 using Business.Dtos.Responses.AccountUniversityResponses;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +45,20 @@ public class AccountUniversityManager : IAccountUniversityService
 
     }
 
+    public async Task<IPaginate<GetListAccountUniversityResponse>> GetByAccountIdAsync(Guid accountId, PageRequest pageRequest)
+    {
+        var accountUniversities = await _accountUniversityDal.GetListAsync(
+           index: pageRequest.PageIndex,
+           size: pageRequest.PageSize,
+             include: au => au
+            .Include(au => au.University)
+            .Include(au => au.DegreeType)
+            .Include(au => au.UniversityDepartment)
+            .Include(au => au.Account).ThenInclude(a => a.User));
+        var mappedAccountUniversities = _mapper.Map<Paginate<GetListAccountUniversityResponse>>(accountUniversities);
+        return mappedAccountUniversities;
+    }
+
     public async Task<GetListAccountUniversityResponse> GetByIdAsync(Guid Id)
     {
         var accountUniversities = await _accountUniversityDal.GetAsync(
@@ -69,6 +85,7 @@ public class AccountUniversityManager : IAccountUniversityService
         var mappedaccountUniversities = _mapper.Map<Paginate<GetListAccountUniversityResponse>>(accountUniversities);
         return mappedaccountUniversities;
     }
+
 
     public async Task<UpdatedAccountUniversityResponse> UpdateAsync(UpdateAccountUniversityRequest updateAccountUniversityRequest)
     {

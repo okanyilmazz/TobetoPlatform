@@ -1,7 +1,8 @@
-﻿namespace Core.Messages;
-
-public class CoreMessages
+﻿namespace Core.Messages
 {
-    public static string NoPermission = "You don't have permission to operation";
-    public static string FileNotFound = "File not found";
+    public class CoreMessages
+    {
+        public static string NoPermission = "You don't have permission to operation";
+        public static string FileNotFound = "File not found";
+    }
 }

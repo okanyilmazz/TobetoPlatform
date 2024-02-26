@@ -49,6 +49,7 @@ public class OccupationClassManager : IOccupationClassService
 
     public async Task<GetListOccupationClassResponse> GetByAccountIdAsync(Guid accountId)
     {
+        await _occupationClassBusinessRules.IsExistUser(accountId);
         var occupationClassId = await _occupationClassDal.GetAsync(
             include: o => o.Include(o => o.AccountOccupationClasses),
             predicate: o => o.AccountOccupationClasses.Any(aoc => aoc.AccountId == accountId));

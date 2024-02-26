@@ -43,6 +43,15 @@ public class AccountUniversitiesController : ControllerBase
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId, [FromQuery] PageRequest pageRequest)
+    {
+        var result = await _accountUniversityService.GetByAccountIdAsync(accountId, pageRequest);
+        return Ok(result);
+    }
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

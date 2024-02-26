@@ -27,13 +27,32 @@ public class AccountBusinessRules : BaseBusinessRules
 
     public async Task IsExistsNationalId(string nationalId)
     {
-        var result = await _accountDal.GetAsync(
-            predicate: a => a.NationalId == nationalId,
+        if (nationalId != null)
+        {
+            var result = await _accountDal.GetAsync(
+                predicate: a => a.NationalId == nationalId,
+                enableTracking: false);
+            if (result != null)
+            {
+                throw new BusinessException(BusinessMessages.DataAvailable);
+            }
+        }
+
+
+    }
+
+    public async Task IsExistsPhoneNumber(string phoneNumber)
+    {
+        if (phoneNumber != null)
+        {
+            var result = await _accountDal.GetAsync(
+            predicate: a => a.PhoneNumber == phoneNumber,
             enableTracking: false);
 
-        if (result == null)
-        {
-            throw new BusinessException(BusinessMessages.DataAvailable);
+            if (result != null)
+            {
+                throw new BusinessException(BusinessMessages.DataAvailable);
+            }
         }
     }
 }

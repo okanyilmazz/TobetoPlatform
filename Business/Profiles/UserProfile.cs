@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Business.Dtos.Requests.AuthRequests;
 using Business.Dtos.Requests.UserRequests;
+using Business.Dtos.Responses.HomeworkResponses;
 using Business.Dtos.Responses.UserResponses;
 using Core.DataAccess.Paging;
 using Core.Entities;
+using Entities.Concretes;
 
 namespace Business.Profiles;
 
@@ -24,7 +26,19 @@ public class UserProfile : Profile
         CreateMap<User, RegisterAuthRequest>().ReverseMap();
         CreateMap<User, GetUserResponse>().ReverseMap();
 
-        CreateMap<User,GetListUserResponse>().ReverseMap();
+        CreateMap<GetListUserResponse, User>()
+     .ReverseMap()
+     .ForMember(dest => dest.RoleName,
+                opt => opt.MapFrom(src => string.Join(", ", src.UserOperationClaims.Select(uopc => uopc.OperationClaim.Name))))
+     ;
+
+
+
+        CreateMap<Homework, GetListHomeworkResponse>()
+          .ForMember(destinationMember: response => response.OccupationClassName,
+          memberOptions: opt => opt.MapFrom(h => h.OccupationClass.Name)).ReverseMap();
+
+
         CreateMap<IPaginate<User>, Paginate<GetListUserResponse>>().ReverseMap();
     }
 }

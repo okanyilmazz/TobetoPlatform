@@ -15,4 +15,5 @@ public interface IUserService
     Task<GetUserResponse> GetByMailAsync(string email);
     Task<List<OperationClaim>> GetClaimsAsync(User user);
     Task<IPaginate<GetListUserResponse>> GetListInstructorAsync(PageRequest pageRequest);
+    Task<IPaginate<GetListUserResponse>> GetListStudent(PageRequest pageRequest);
 }

@@ -43,6 +43,11 @@ public class LessonManager : ILessonService
     public async Task<IPaginate<GetListLessonResponse>> GetListAsync(PageRequest pageRequest)
     {
         var lessons = await _lessonDal.GetListAsync(
+            include: l => l.Include(ep => ep.Language).
+            Include(ep => ep.LessonCategory).
+            Include(ep => ep.LessonModule).
+            Include(ep => ep.ProductionCompany).
+            Include(ep => ep.LessonSubType),
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
         var mappedLessons = _mapper.Map<Paginate<GetListLessonResponse>>(lessons);
@@ -51,6 +56,7 @@ public class LessonManager : ILessonService
 
     public async Task<IPaginate<GetListLessonResponse>> GetByEducationProgramIdAsync(Guid educationProgramId)
     {
+
         var lessonList = await _lessonDal.GetListAsync(
             include: l => l.Include(ep => ep.EducationProgramLessons).ThenInclude(epl => epl.EducationProgram).
             Include(ep => ep.Language).

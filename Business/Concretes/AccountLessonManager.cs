@@ -49,6 +49,28 @@ public class AccountLessonManager : IAccountLessonService
         return mappedListed;
     }
 
+    public async Task<IPaginate<GetListAccountLessonResponse>> GetByAccountIdAsync(Guid accountId)
+    {
+        var accountLessonListed = await _accountLessonDal.GetListAsync(
+            predicate: a => a.AccountId == accountId,
+            include: al => al
+            .Include(al => al.Account).ThenInclude(a => a.User)
+            .Include(al => al.Lesson));
+        var mappedListed = _mapper.Map<Paginate<GetListAccountLessonResponse>>(accountLessonListed);
+        return mappedListed;
+    }
+
+    public async Task<GetListAccountLessonResponse> GetByAccountIdAndLessonIdAsync(Guid accountId, Guid lessonId)
+    {
+        var accountLesson = await _accountLessonDal.GetAsync(
+            predicate: a => a.AccountId == accountId && a.LessonId == lessonId,
+            include: al => al
+            .Include(al => al.Account).ThenInclude(a => a.User)
+            .Include(al => al.Lesson));
+        var mappedListed = _mapper.Map<GetListAccountLessonResponse>(accountLesson);
+        return mappedListed;
+    }
+
     public async Task<IPaginate<GetListAccountLessonResponse>> GetListAsync(PageRequest pageRequest)
     {
         var AccountLessonListed = await _accountLessonDal.GetListAsync(

@@ -4,6 +4,8 @@ public class BusinessMessages
 {
     public static string DataNotFound = "This data could not be found.";
     public static string DataAvailable = "This data is available.";
+    public static string NotAssignedToOccupationClass = "Henüz bir sınıfa atanmadınız.";
+
 
     //User,Authorization
     public static string UserNotFound = "User not found";

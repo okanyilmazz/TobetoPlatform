@@ -43,6 +43,18 @@ public class EducationProgramLessonsController : ControllerBase
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByEducationProgramId")]
+    public async Task<IActionResult> GetByEducationProgramIdAsync(Guid educationProgramId)
+    {
+        var result = await _educationProgramLessonService.GetByEducationProgramIdAsync(educationProgramId);
+        return Ok(result);
+    }
+
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("EducationProgramLessons.Get")]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateEducationProgramLessonRequest createEducationProgramLessonRequest)

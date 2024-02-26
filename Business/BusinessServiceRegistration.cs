@@ -99,6 +99,10 @@ public static class BusinessServiceRegistration
         services.AddScoped<FileBusinessRules>();
         services.AddScoped<IAnnouncementTypeService, AnnouncementTypeManager>();
         services.AddScoped<IAnnouncementReadService, AnnouncementReadManager>();
+        services.AddScoped<IModuleService, ModuleManager>();
+        services.AddScoped<IEducationProgramModuleService, EducationProgramModuleManager>();
+
+
 
 
 

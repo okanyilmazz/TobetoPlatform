@@ -1,4 +1,7 @@
-﻿namespace Business.Dtos.Responses.EducationProgramResponses;
+﻿using Business.Dtos.Responses.ModuleResponses;
+using Entities.Concretes;
+
+namespace Business.Dtos.Responses.EducationProgramResponses;
 
 public class GetListEducationProgramResponse
 {
@@ -15,4 +18,6 @@ public class GetListEducationProgramResponse
     public Guid EducationProgramLevelId { get; set; }
     public Guid EducationProgramDevelopmentId { get; set; }
     public string BadgeName { get; set; }
+
+    public ICollection<GetListModuleResponse>  Modules { get; set; }
 }

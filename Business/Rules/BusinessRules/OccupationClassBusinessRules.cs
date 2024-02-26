@@ -24,4 +24,15 @@ public class OccupationClassBusinessRules : BaseBusinessRules
             throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
+    public async Task IsExistUser(Guid accountId)
+    {
+        var result = await _occupationClassDal.GetAsync(
+            predicate: a => a.AccountOccupationClasses.Any(aoc=>aoc.AccountId== accountId),
+            enableTracking: false);
+
+        if (result == null)
+        {
+            throw new BusinessException(BusinessMessages.NotAssignedToOccupationClass);
+        }
+    }
 }

@@ -23,6 +23,10 @@ public class EducationProgramProfile : Profile
         CreateMap<EducationProgram, GetListEducationProgramResponse>()
             .ForMember(destinationMember: response => response.BadgeName,
             memberOptions: opt => opt.MapFrom(ep => ep.Badge.ThumbnailPath))
+
+              .ForMember(destinationMember: response => response.Modules,
+            memberOptions: opt => opt.MapFrom(ep => ep.EducationProgramModules.Select(epm=>epm.Module)))
+
             .ReverseMap();
 
         CreateMap<List<EducationProgram>, Paginate<GetListEducationProgramResponse>>()

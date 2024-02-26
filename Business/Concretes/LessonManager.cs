@@ -13,14 +13,16 @@ namespace Business.Concretes;
 public class LessonManager : ILessonService
 {
     ILessonDal _lessonDal;
+    IModuleService _moduleService;
     IMapper _mapper;
     LessonBusinessRules _lessonBusinessRules;
 
-    public LessonManager(ILessonDal lessonDal, IMapper mapper, LessonBusinessRules lessonBusinessRules)
+    public LessonManager(ILessonDal lessonDal, IMapper mapper, LessonBusinessRules lessonBusinessRules, IModuleService moduleService)
     {
         _lessonDal = lessonDal;
         _mapper = mapper;
         _lessonBusinessRules = lessonBusinessRules;
+        _moduleService = moduleService;
     }
 
     public async Task<CreatedLessonResponse> AddAsync(CreateLessonRequest createLessonRequest)
@@ -43,6 +45,11 @@ public class LessonManager : ILessonService
     public async Task<IPaginate<GetListLessonResponse>> GetListAsync(PageRequest pageRequest)
     {
         var lessons = await _lessonDal.GetListAsync(
+            include: l => l.Include(ep => ep.Language).
+            Include(ep => ep.LessonCategory).
+            Include(ep => ep.LessonModules).
+            Include(ep => ep.ProductionCompany).
+            Include(ep => ep.LessonSubType),
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
         var mappedLessons = _mapper.Map<Paginate<GetListLessonResponse>>(lessons);
@@ -51,11 +58,12 @@ public class LessonManager : ILessonService
 
     public async Task<IPaginate<GetListLessonResponse>> GetByEducationProgramIdAsync(Guid educationProgramId)
     {
+
         var lessonList = await _lessonDal.GetListAsync(
             include: l => l.Include(ep => ep.EducationProgramLessons).ThenInclude(epl => epl.EducationProgram).
             Include(ep => ep.Language).
             Include(ep => ep.LessonCategory).
-            Include(ep => ep.LessonModule).
+            Include(ep => ep.LessonModules).
             Include(ep => ep.ProductionCompany).
             Include(ep => ep.LessonSubType));
 
@@ -79,7 +87,7 @@ public class LessonManager : ILessonService
            include: l => l.Include(a => a.AccountLessons).ThenInclude(al => al.Account).
             Include(ep => ep.Language).
             Include(ep => ep.LessonCategory).
-            Include(ep => ep.LessonModule).
+            Include(ep => ep.LessonModules).
             Include(ep => ep.ProductionCompany).
             Include(ep => ep.LessonSubType));
 
@@ -96,7 +104,7 @@ public class LessonManager : ILessonService
             include: l => l.
             Include(ep => ep.Language).
             Include(ep => ep.LessonCategory).
-            Include(ep => ep.LessonModule).
+            Include(ep => ep.LessonModules).
             Include(ep => ep.ProductionCompany).
             Include(ep => ep.LessonSubType));
         var mappedLessons = _mapper.Map<GetListLessonResponse>(lessons);

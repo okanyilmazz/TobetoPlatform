@@ -43,6 +43,29 @@ public class AccountLessonsController : ControllerBase
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId)
+    {
+        var result = await _accountLessonService.GetByAccountIdAsync(accountId);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountIdAndLessonId")]
+    public async Task<IActionResult> GetByAccountIdAndLessonIdAsync(Guid accountId, Guid lessonId)
+    {
+        var result = await _accountLessonService.GetByAccountIdAndLessonIdAsync(accountId,lessonId);
+        return Ok(result);
+    }
+
+    
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("AccountLessons.Get")]
     [HttpPost("Add")]
     public async Task<IActionResult> AddAsync([FromBody] CreateAccountLessonRequest createAccountLessonRequest)

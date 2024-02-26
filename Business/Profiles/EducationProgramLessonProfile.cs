@@ -28,8 +28,9 @@ namespace Business.Profiles
                 .ForMember(destinationMember: response => response.EducationProgramName,
                 memberOptions: opt => opt.MapFrom(epl => epl.EducationProgram.Name)
                 ).ForMember(destinationMember: response => response.LessonName,
-                memberOptions: opt => opt.MapFrom(epl => epl.Lesson.Name)
-                )
+                memberOptions: opt => opt.MapFrom(epl => epl.Lesson.Name))
+                .ForMember(destinationMember: response => response.LessonSubTypeName,
+                memberOptions: opt => opt.MapFrom(epl => epl.Lesson.LessonSubType.Name))
                 .ReverseMap();
             CreateMap<IPaginate<EducationProgramLesson>, Paginate<GetListEducationProgramLessonResponse>>().ReverseMap();
         }

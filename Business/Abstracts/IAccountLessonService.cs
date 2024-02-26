@@ -16,5 +16,6 @@ public interface IAccountLessonService
     Task<DeletedAccountLessonResponse> DeleteAsync(DeleteAccountLessonRequest deleteLessonOfAccountRequest);
     Task<IPaginate<GetListAccountLessonResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListAccountLessonResponse> GetByIdAsync(Guid id);
-
+    Task<IPaginate<GetListAccountLessonResponse>> GetByAccountIdAsync(Guid accountId);
+    Task<GetListAccountLessonResponse> GetByAccountIdAndLessonIdAsync(Guid accountId,Guid lessonId);
 }

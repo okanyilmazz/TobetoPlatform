@@ -9,12 +9,12 @@ public abstract class ExceptionHandler
         {
             BusinessException businessException => HandleException(businessException),
             ValidationException validationException => HandleException(validationException),
-            AuthorizationException authorizationException => HandleException(authorizationException),
-            _ => HandleException(exception)
+            AuthorizationException authorizationException => HandleException(authorizationException)
+            //_ => HandleException(exception)
         };
 
     protected abstract Task HandleException(BusinessException businessException);
     protected abstract Task HandleException(ValidationException validationException);
     protected abstract Task HandleException(AuthorizationException authorizationException);
-    protected abstract Task HandleException(Exception exception);
+    //protected abstract Task HandleException(Exception exception);
 }

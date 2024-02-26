@@ -37,6 +37,8 @@ public class EducationProgramConfiguration : IEntityTypeConfiguration<EducationP
         builder.HasMany(ep => ep.EducationProgramProgrammingLanguages);
         builder.HasMany(ask => ask.AccountEducationPrograms);
         builder.HasMany(ep => ep.EducationProgramSubjects);
+        builder.HasMany(ep => ep.EducationProgramModules);
+
 
         builder.HasQueryFilter(e => !e.DeletedDate.HasValue);
     }

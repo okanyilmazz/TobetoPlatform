@@ -2,6 +2,7 @@
 using Business.Abstracts;
 using Business.Dtos.Requests.EducationProgramLessonRequests;
 using Business.Dtos.Responses.EducationProgramLessonResponses;
+using Business.Dtos.Responses.EducationProgramLikeResponses;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
@@ -42,12 +43,24 @@ public class EducationProgramLessonManager : IEducationProgramLessonService
 
     public async Task<GetListEducationProgramLessonResponse> GetByIdAsync(Guid id)
     {
-        var EducationProgramLesson = await _educationProgramLessonDal.GetAsync(
+        var educationProgramLesson = await _educationProgramLessonDal.GetAsync(
             predicate: h => h.Id == id,
             include: epl => epl
-                .Include(epl => epl.Lesson)
+                .Include(epl => epl.Lesson).ThenInclude(l => l.LessonSubType)
                 .Include(epl => epl.EducationProgram));
-        return _mapper.Map<GetListEducationProgramLessonResponse>(EducationProgramLesson);
+        return _mapper.Map<GetListEducationProgramLessonResponse>(educationProgramLesson);
+    }
+
+    public async Task<IPaginate<GetListEducationProgramLessonResponse>> GetByEducationProgramIdAsync(Guid educationProgramId)
+    {
+        var educationProgramLesson = await _educationProgramLessonDal.GetListAsync(
+            predicate: l => l.EducationProgramId == educationProgramId,
+            include: l => l.
+            Include(l => l.EducationProgram).
+            Include(l => l.Lesson).ThenInclude(l => l.LessonSubType));
+
+        var mappedEducationProgramLesson = _mapper.Map<Paginate<GetListEducationProgramLessonResponse>>(educationProgramLesson);
+        return mappedEducationProgramLesson;
     }
 
     public async Task<IPaginate<GetListEducationProgramLessonResponse>> GetListAsync(PageRequest pageRequest)
@@ -56,7 +69,7 @@ public class EducationProgramLessonManager : IEducationProgramLessonService
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
             include: epl => epl
-            .Include(epl => epl.Lesson)
+            .Include(epl => epl.Lesson).ThenInclude(l => l.LessonSubType)
             .Include(epl => epl.EducationProgram)
             );
         var mappedEducationProgramLesson = _mapper.Map<Paginate<GetListEducationProgramLessonResponse>>(EducationProgramLesson);

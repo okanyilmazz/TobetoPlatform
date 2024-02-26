@@ -2,7 +2,7 @@
 {
     public class CreateLessonModuleRequest
     {
-        public string Name { get; set; }
-
+        public Guid LessonId { get; set; }
+        public Guid ModuleId { get; set; }
     }
 }

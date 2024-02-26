@@ -28,6 +28,9 @@ public class AccountManager : IAccountService
 
     public async Task<CreatedAccountResponse> AddAsync(CreateAccountRequest createAccountRequest)
     {
+        await _accountBusinessRules.IsExistsNationalId(createAccountRequest.NationalId);
+        await _accountBusinessRules.IsExistsPhoneNumber(createAccountRequest.PhoneNumber);
+
         Account account = _mapper.Map<Account>(createAccountRequest);
         Account addedAccount = await _accountDal.AddAsync(account);
         CreatedAccountResponse createdAccountResponse = _mapper.Map<CreatedAccountResponse>(addedAccount);

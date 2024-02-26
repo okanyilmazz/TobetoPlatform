@@ -3,6 +3,7 @@
     public class CreatedLessonModuleResponse
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public Guid LessonId { get; set; }
+        public Guid ModuleId { get; set; }
     }
 }

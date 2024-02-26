@@ -20,8 +20,6 @@ public class LessonProfile : Profile
         CreateMap<Lesson, GetListLessonResponse>().
             ForMember(destinationMember: l => l.ProductionCompanyName,
             memberOptions: gl => gl.MapFrom(gll => gll.ProductionCompany.Name)).
-              ForMember(destinationMember: l => l.LessonModuleName,
-            memberOptions: gl => gl.MapFrom(gll => gll.LessonModule.Name)).
               ForMember(destinationMember: l => l.LessonSubTypeName,
             memberOptions: gl => gl.MapFrom(gll => gll.LessonSubType.Name)).
               ForMember(destinationMember: l => l.LessonCategoryName,

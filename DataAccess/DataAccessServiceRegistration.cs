@@ -2,6 +2,7 @@
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using DataAccess.Contexts;
+using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -96,8 +97,9 @@ public static class DataAccessServiceRegistration
         services.AddScoped<IAnnouncementTypeDal, EfAnnouncementTypeDal>();
         services.AddScoped<IAnnouncementReadDal, EfAnnouncementReadDal>();
         services.AddScoped<IAccountCompetenceTestDal, EfAccountCompetenceTestDal>();
-
-
+        services.AddScoped<IModuleDal, EfModuleDal>();
+        services.AddScoped<IEducationProgramModuleDal, EfEducationProgramModuleDal>();
+        
 
         return services;
     }

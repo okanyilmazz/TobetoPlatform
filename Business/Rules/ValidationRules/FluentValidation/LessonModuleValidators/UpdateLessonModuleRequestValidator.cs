@@ -12,7 +12,7 @@ namespace Business.Rules.ValidationRules.FluentValidation.LessonModuleValidators
     {
         public UpdateLessonModuleRequestValidator()
         {
-            RuleFor(lm => lm.Name).NotEmpty();
+           
         }
     }
 }

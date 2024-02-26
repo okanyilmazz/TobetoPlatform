@@ -7,7 +7,7 @@ namespace Business.Abstracts;
 
 public interface IAuthService
 {
-    Task<User> Register(RegisterAuthRequest registerAuthRequest, string password);
+    Task<LoginResponse> Register(RegisterAuthRequest registerAuthRequest, string password);
     Task<User> Login(LoginAuthRequest loginAuthRequest);
     Task<LoginResponse> CreateAccessToken(User user);
 }

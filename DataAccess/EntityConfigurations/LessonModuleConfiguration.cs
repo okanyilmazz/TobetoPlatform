@@ -1,27 +1,29 @@
 ﻿using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataAccess.EntityConfigurations
+namespace DataAccess.EntityConfigurations;
+
+public class LessonModuleConfiguration : IEntityTypeConfiguration<LessonModule>
 {
-    public class LessonModuleConfiguration : IEntityTypeConfiguration<LessonModule>
+    public void Configure(EntityTypeBuilder<LessonModule> builder)
     {
-        public void Configure(EntityTypeBuilder<LessonModule> builder)
-        {
-            builder.ToTable("LessonModules").HasKey(l => l.Id);
+        builder.ToTable("LessonModules").HasKey(l => l.Id);
 
-            builder.Property(l => l.Id).HasColumnName("Id").IsRequired();
-            builder.Property(l => l.Name).HasColumnName("Name").IsRequired();
+        builder.Property(l => l.Id).HasColumnName("Id").IsRequired();
+        builder.Property(l => l.LessonId).HasColumnName("LessonId");
+        builder.Property(l => l.ModuleId).HasColumnName("ModuleId");
 
-            builder.HasIndex(indexExpression: l => l.Name, name: "UK_Name").IsUnique();
-            builder.HasIndex(indexExpression: l => l.Id, name: "UK_Id").IsUnique();
+        builder.HasIndex(indexExpression: l => l.Id, name: "UK_Id").IsUnique();
 
-            builder.HasQueryFilter(l => !l.DeletedDate.HasValue);
-        }
+        builder.HasOne(l => l.Lesson)
+            .WithMany(l=>l.LessonModules)
+            .HasForeignKey(lm=>lm.LessonId);
+
+        builder.HasOne(l => l.Module)
+           .WithMany(l => l.LessonModules)
+           .HasForeignKey(lm => lm.ModuleId);
+
+        builder.HasQueryFilter(l => !l.DeletedDate.HasValue);
     }
 }

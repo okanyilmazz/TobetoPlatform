@@ -3,6 +3,7 @@ using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+using Module = Entities.Concretes.Module;
 
 namespace DataAccess.Contexts;
 
@@ -82,6 +83,10 @@ public class TobetoPlatformContext : DbContext
     public DbSet<EducationProgramLike> EducationProgramLikes { get; set; }
     public DbSet<AnnouncementType> AnnouncementTypes { get; set; }
     public DbSet<AnnouncementRead> AnnouncementReads { get; set; }
+    public DbSet<Module> Modules { get; set; }
+    public DbSet<EducationProgramModule> EducationProgramModules { get; set; }
+
+
 
 
 

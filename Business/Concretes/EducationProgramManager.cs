@@ -57,8 +57,11 @@ public class EducationProgramManager : IEducationProgramService
             .Include(ep => ep.EducationProgramOccupationClasses).ThenInclude(ep => ep.OccupationClass)
             .Include(ep => ep.EducationProgramProgrammingLanguages).ThenInclude(ep => ep.ProgrammingLanguage)
             .Include(ep => ep.EducationProgramSubjects).ThenInclude(ep => ep.Subject)
-            .Include(ep => ep.Badge),
-
+            .Include(ep => ep.Badge)
+            .Include(ep => ep.EducationProgramModules).ThenInclude(epm=>epm.Module).ThenInclude(m=>m.Children).ThenInclude(c=>c.LessonModules).ThenInclude(lm=>lm.Lesson).ThenInclude(l=>l.Language)
+            .Include(ep => ep.EducationProgramModules).ThenInclude(epm => epm.Module).ThenInclude(m => m.Children).ThenInclude(c => c.LessonModules).ThenInclude(lm => lm.Lesson).ThenInclude(l => l.LessonCategory)
+            .Include(ep => ep.EducationProgramModules).ThenInclude(epm => epm.Module).ThenInclude(m => m.Children).ThenInclude(c => c.LessonModules).ThenInclude(lm => lm.Lesson).ThenInclude(l => l.LessonSubType)
+            .Include(ep => ep.EducationProgramModules).ThenInclude(epm => epm.Module).ThenInclude(m => m.Children).ThenInclude(c => c.LessonModules).ThenInclude(lm => lm.Lesson).ThenInclude(l => l.ProductionCompany),
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize);
 
@@ -140,7 +143,12 @@ public class EducationProgramManager : IEducationProgramService
 
     public async Task<GetListEducationProgramResponse> GetByIdAsync(Guid id)
     {
-        var educationProgram = await _educationProgramDal.GetAsync(ep => ep.Id == id);
+        var educationProgram = await _educationProgramDal.GetAsync(
+            predicate:ep => ep.Id == id,
+             include:ep=>ep.Include(ep => ep.EducationProgramModules).ThenInclude(epm => epm.Module).ThenInclude(m => m.Children).ThenInclude(c => c.LessonModules).ThenInclude(lm => lm.Lesson).ThenInclude(l => l.Language)
+            .Include(ep => ep.EducationProgramModules).ThenInclude(epm => epm.Module).ThenInclude(m => m.Children).ThenInclude(c => c.LessonModules).ThenInclude(lm => lm.Lesson).ThenInclude(l => l.LessonCategory)
+            .Include(ep => ep.EducationProgramModules).ThenInclude(epm => epm.Module).ThenInclude(m => m.Children).ThenInclude(c => c.LessonModules).ThenInclude(lm => lm.Lesson).ThenInclude(l => l.LessonSubType)
+            .Include(ep => ep.EducationProgramModules).ThenInclude(epm => epm.Module).ThenInclude(m => m.Children).ThenInclude(c => c.LessonModules).ThenInclude(lm => lm.Lesson).ThenInclude(l => l.ProductionCompany));
         var mappedEducationProgram = _mapper.Map<GetListEducationProgramResponse>(educationProgram);
         return mappedEducationProgram;
     }

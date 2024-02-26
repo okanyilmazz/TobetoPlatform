@@ -18,10 +18,11 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
         builder.Property(l => l.Id).HasColumnName("Id").IsRequired();
         builder.Property(l => l.LanguageId).HasColumnName("LanguageId").IsRequired();
         builder.Property(l => l.LessonCategoryId).HasColumnName("LessonCategoryId").IsRequired();
-        builder.Property(l => l.LessonModuleId).HasColumnName("LessonModuleId").IsRequired();
+        //builder.Property(l => l.LessonModuleId).HasColumnName("LessonModuleId").IsRequired();
         builder.Property(l => l.LessonSubTypeId).HasColumnName("LessonSubTypeId").IsRequired();
         builder.Property(l => l.ProductionCompanyId).HasColumnName("ProductionCompanyId").IsRequired();
         builder.Property(l => l.Name).HasColumnName("Name").IsRequired();
+        builder.Property(l => l.LessonPath).HasColumnName("LessonPath").IsRequired();
         builder.Property(l => l.StartDate).HasColumnName("StartDate").IsRequired();
         builder.Property(l => l.EndDate).HasColumnName("EndDate").IsRequired();
         builder.Property(l => l.Duration).HasColumnName("Duration").IsRequired();
@@ -30,7 +31,7 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
         builder.HasIndex(indexExpression: l => l.Id, name: "UK_Id").IsUnique();
         builder.HasIndex(indexExpression: l => l.Name, name: "UK_Name").IsUnique();
 
-        builder.HasOne(l => l.LessonModule);
+        //builder.HasOne(l => l.LessonModule);
         builder.HasOne(l => l.LessonSubType);
         builder.HasOne(l => l.ProductionCompany);
         builder.HasOne(l => l.Language);
@@ -38,6 +39,8 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
         builder.HasMany(l => l.EducationProgramLessons);
         builder.HasMany(l => l.AccountLessons);
         builder.HasMany(l => l.LessonLikes);
+        builder.HasMany(l => l.LessonModules);
+
 
 
 

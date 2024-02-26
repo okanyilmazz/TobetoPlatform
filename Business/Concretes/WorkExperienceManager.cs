@@ -1,9 +1,16 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
+using Business.Dtos.Requests.BadgeRequests;
 using Business.Dtos.Requests.WorkExperienceResquests;
+using Business.Dtos.Responses.AnnouncementReadResponses;
+using Business.Dtos.Responses.BadgeResponses;
+using Business.Dtos.Responses.LessonLikeResponses;
+using Business.Dtos.Responses.OccupationClassResponses;
 using Business.Dtos.Responses.WorkExperienceResponses;
+using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,11 +20,12 @@ public class WorkExperienceManager : IWorkExperienceService
 {
     IWorkExperienceDal _workExperienceDal;
     IMapper _mapper;
-
-    public WorkExperienceManager(IWorkExperienceDal workExperienceDal, IMapper mapper)
+    WorkExperienceBusinessRules _workExperienceBusinessRules;
+    public WorkExperienceManager(IWorkExperienceDal workExperienceDal, IMapper mapper, WorkExperienceBusinessRules workExperienceBusinessRules)
     {
         _workExperienceDal = workExperienceDal;
         _mapper = mapper;
+        _workExperienceBusinessRules = workExperienceBusinessRules;
     }
     public async Task<CreatedWorkExperienceResponse> AddAsync(CreateWorkExperienceRequest createWorkExperienceRequest)
     {
@@ -29,10 +37,11 @@ public class WorkExperienceManager : IWorkExperienceService
 
     public async Task<DeletedWorkExperienceResponse> DeleteAsync(DeleteWorkExperienceRequest deleteWorkExperienceRequest)
     {
-        WorkExperience workExperience = _mapper.Map<WorkExperience>(deleteWorkExperienceRequest);
+        await _workExperienceBusinessRules.IsExistsWorkExperience(deleteWorkExperienceRequest.Id);
+        WorkExperience workExperience = await _workExperienceDal.GetAsync(predicate: we => we.Id == deleteWorkExperienceRequest.Id);
         WorkExperience deletedWorkExperience = await _workExperienceDal.DeleteAsync(workExperience);
         DeletedWorkExperienceResponse deletedWorkExperienceResponse = _mapper.Map<DeletedWorkExperienceResponse>(deletedWorkExperience);
-        return deletedWorkExperienceResponse;
+        return deletedWorkExperienceResponse;       
     }
 
     public async Task<IPaginate<GetListWorkExperienceResponse>> GetListAsync(PageRequest pageRequest)
@@ -40,7 +49,7 @@ public class WorkExperienceManager : IWorkExperienceService
         var workExperience = await _workExperienceDal.GetListAsync(
                 include: we => we
                 .Include(we => we.City)
-                .Include(we => we.Account).ThenInclude(we=>we.User),
+                .Include(we => we.Account).ThenInclude(we => we.User),
                 index: pageRequest.PageIndex,
                 size: pageRequest.PageSize);
 
@@ -61,9 +70,22 @@ public class WorkExperienceManager : IWorkExperienceService
 
     public async Task<UpdatedWorkExperienceResponse> UpdateAsync(UpdateWorkExperienceRequest updateWorkExperienceRequest)
     {
+        await _workExperienceBusinessRules.IsExistsWorkExperience(updateWorkExperienceRequest.Id);
         WorkExperience workExperience = _mapper.Map<WorkExperience>(updateWorkExperienceRequest);
         WorkExperience updatedWorkExperience = await _workExperienceDal.UpdateAsync(workExperience);
         UpdatedWorkExperienceResponse updatedWorkExperienceResponse = _mapper.Map<UpdatedWorkExperienceResponse>(updatedWorkExperience);
         return updatedWorkExperienceResponse;
+    }
+
+    public async Task<IPaginate<GetListWorkExperienceResponse>> GetByAccountIdAsync(Guid accountId)
+    {
+        var workExperience = await _workExperienceDal.GetListAsync(
+            predicate: we => we.AccountId == accountId,
+            include: we => we.Include(we => we.City)
+            .Include(we => we.Account).ThenInclude(we => we.User));
+
+        var mappedWorkExperiences = _mapper.Map<Paginate<GetListWorkExperienceResponse>>(workExperience);
+        return mappedWorkExperiences;
+
     }
 }

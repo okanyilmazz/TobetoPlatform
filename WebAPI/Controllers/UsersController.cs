@@ -31,6 +31,8 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
+  
+
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [Cache(10)]
@@ -41,7 +43,18 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
 
-    
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(10)]
+    [HttpGet("GetListStudent")]
+    public async Task<IActionResult> GetListStudent([FromQuery] PageRequest pageRequest)
+    {
+        var result = await _userService.GetListStudent(pageRequest);
+        return Ok(result);
+    }
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

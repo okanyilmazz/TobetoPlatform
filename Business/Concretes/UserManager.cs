@@ -61,6 +61,8 @@ public class UserManager : IUserService
     public async Task<IPaginate<GetListUserResponse>> GetListAsync(PageRequest pageRequest)
     {
         var userList = await _userDal.GetListAsync(
+              include: u => u.Include(u => u.UserOperationClaims)
+              .ThenInclude(uopc => uopc.OperationClaim),
         index: pageRequest.PageIndex,
         size: pageRequest.PageSize);
         var mappedList = _mapper.Map<Paginate<GetListUserResponse>>(userList);
@@ -73,6 +75,16 @@ public class UserManager : IUserService
         var userList = await _userDal.GetListAsync(
             include: u => u.Include(u => u.UserOperationClaims),
             predicate: u => u.UserOperationClaims.Any(uoc => uoc.OperationClaim.Name.Contains(Roles.Instructor)),
+        index: pageRequest.PageIndex,
+        size: pageRequest.PageSize);
+        var mappedList = _mapper.Map<Paginate<GetListUserResponse>>(userList);
+        return mappedList;
+    }
+    public async Task<IPaginate<GetListUserResponse>> GetListStudent(PageRequest pageRequest)
+    {
+        var userList = await _userDal.GetListAsync(
+            include: u => u.Include(u => u.UserOperationClaims),
+            predicate: u => u.UserOperationClaims.Any(uoc => uoc.OperationClaim.Name.Contains(Roles.Student)),
         index: pageRequest.PageIndex,
         size: pageRequest.PageSize);
         var mappedList = _mapper.Map<Paginate<GetListUserResponse>>(userList);

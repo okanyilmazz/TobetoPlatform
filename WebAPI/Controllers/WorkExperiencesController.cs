@@ -45,6 +45,17 @@ public class WorkExperiencesController : ControllerBase
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync([FromQuery] Guid accountId)
+    {
+        var result = await _workExperienceService.GetByAccountIdAsync(accountId);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
     [CacheRemove("WorkExperiences.Get")]
     [CustomValidation(typeof(CreateWorkExperienceRequestValidator))]
     [HttpPost("Add")]

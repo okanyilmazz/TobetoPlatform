@@ -55,11 +55,21 @@ public class HomeworkManager : IHomeworkService
         var homework = await _homeworkDal.GetAsync(
         predicate: h => h.Id == id,
         include: h => h
-        .Include(h => h.OccupationClass));
+        .Include(h => h.Lesson));
 
 
         var mappedHomework = _mapper.Map<GetListHomeworkResponse>(homework);
         return mappedHomework;
+    }
+
+    public async Task<IPaginate<GetListHomeworkResponse>> GetByLessonIdAsync(Guid lessonId)
+    {
+        var homeworks = await _homeworkDal.GetListAsync(
+        predicate: h => h.LessonId == lessonId,
+        include: h => h
+        .Include(h => h.Lesson));
+        var mappedHomeworks = _mapper.Map<Paginate<GetListHomeworkResponse>>(homeworks);
+        return mappedHomeworks;
     }
 
     public async Task<IPaginate<GetListHomeworkResponse>> GetListAsync(PageRequest pageRequest)
@@ -67,7 +77,7 @@ public class HomeworkManager : IHomeworkService
         var homework = await _homeworkDal.GetListAsync(
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
-            include: h => h.Include(h => h.OccupationClass));
+            include: h => h.Include(h => h.Lesson));
 
         var mappedHomework = _mapper.Map<Paginate<GetListHomeworkResponse>>(homework);
         return mappedHomework;

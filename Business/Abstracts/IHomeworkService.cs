@@ -10,6 +10,7 @@ public interface IHomeworkService
     Task<DeletedHomeworkResponse> DeleteAsync(DeleteHomeworkRequest deleteHomeworkRequest);
     Task<UpdatedHomeworkResponse> UpdateAsync(UpdateHomeworkRequest updateHomeworkRequest);
     Task<IPaginate<GetListHomeworkResponse>> GetListAsync(PageRequest pageRequest);
-    Task<IPaginate<GetListHomeworkResponse>> GetByAccountIdAsync(Guid id);
+    Task<IPaginate<GetListHomeworkResponse>> GetByAccountIdAsync(Guid accountId);
+    Task<IPaginate<GetListHomeworkResponse>> GetByLessonIdAsync(Guid lessonId);    
     Task<GetListHomeworkResponse> GetByIdAsync(Guid id);
 }

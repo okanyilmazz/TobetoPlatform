@@ -40,6 +40,11 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
         builder.HasMany(l => l.AccountLessons);
         builder.HasMany(l => l.LessonLikes);
 
+        builder.HasMany(oc => oc.Sessions)
+          .WithOne(s => s.Lesson)
+          .HasForeignKey(h => h.LessonId);
+
+
 
 
         builder.HasQueryFilter(b => !b.DeletedDate.HasValue);

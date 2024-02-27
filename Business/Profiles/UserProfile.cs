@@ -27,16 +27,9 @@ public class UserProfile : Profile
         CreateMap<User, GetUserResponse>().ReverseMap();
 
         CreateMap<GetListUserResponse, User>()
-     .ReverseMap()
+.ReverseMap()
      .ForMember(dest => dest.RoleName,
-                opt => opt.MapFrom(src => string.Join(", ", src.UserOperationClaims.Select(uopc => uopc.OperationClaim.Name))))
-     ;
-
-
-
-        CreateMap<Homework, GetListHomeworkResponse>()
-          .ForMember(destinationMember: response => response.OccupationClassName,
-          memberOptions: opt => opt.MapFrom(h => h.OccupationClass.Name)).ReverseMap();
+                opt => opt.MapFrom(src => string.Join(", ", src.UserOperationClaims.Select(uopc => uopc.OperationClaim.Name))));
 
 
         CreateMap<IPaginate<User>, Paginate<GetListUserResponse>>().ReverseMap();

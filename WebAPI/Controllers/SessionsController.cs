@@ -7,6 +7,7 @@ using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Rules.ValidationRules.FluentValidation.SessionValidators;
 using Business.Dtos.Requests.SessionRequests;
+using Business.Dtos.Responses.SessionResponses;
 
 namespace WebAPI.Controllers;
 
@@ -29,8 +30,18 @@ public class SessionsController : Controller
     {
         var result = await _sessionService.GetListAsync(pageRequest);
         return Ok(result);
-    }  
-    
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(60)]
+    [HttpGet("GetByLessonId")]
+    public async Task<IActionResult> GetByLessonIdAsync(Guid lessonId)
+    {
+        var result = await _sessionService.GetByLessonIdAsync(lessonId);
+        return Ok(result);
+    }
+
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [Cache(60)]

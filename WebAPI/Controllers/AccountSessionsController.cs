@@ -7,6 +7,7 @@ using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Rules.ValidationRules.FluentValidation.AccountSessionValidators;
 using Business.Dtos.Requests.AccountSessionRequests;
+using Business.Dtos.Responses.AccountSessionResponses;
 
 namespace WebAPI.Controllers;
 
@@ -42,6 +43,26 @@ public class AccountSessionsController : ControllerBase
         return Ok(result);
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId)
+    {
+        var result = await _accountSessionService.GetByAccountIdAsync(accountId);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountAndSessionId")]
+    public async Task<IActionResult> GetByAccountAndSessionIdAsync(Guid accountId, Guid sessionId)
+    {
+        var result = await _accountSessionService.GetByAccountAndSessionIdAsync(accountId, sessionId);
+        return Ok(result);
+    }
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

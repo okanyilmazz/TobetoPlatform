@@ -16,16 +16,16 @@ namespace DataAccess.EntityConfigurations
             builder.ToTable("Sessions").HasKey(s => s.Id);
 
             builder.Property(s => s.Id).HasColumnName("Id").IsRequired();
-            builder.Property(s => s.OccupationClassId).HasColumnName("OccupationClassId");
+            builder.Property(s => s.LessonId).HasColumnName("OccupationClassId");
             builder.Property(s => s.StartDate).HasColumnName("StartDate");
             builder.Property(s => s.EndDate).HasColumnName("EndDate");
             builder.Property(s => s.RecordPath).HasColumnName("RecordPath");
 
             builder.HasIndex(indexExpression: qt => qt.Id, name: "UK_Id").IsUnique();
 
-            builder.HasOne(s => s.OccupationClass)
+            builder.HasOne(s => s.Lesson)
                 .WithMany(s => s.Sessions)
-                .HasForeignKey(s => s.OccupationClassId);
+                .HasForeignKey(s => s.LessonId);
 
             builder.HasMany(s => s.AccountSessions);
 

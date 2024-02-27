@@ -26,7 +26,7 @@ public class HomeworkProfile : Profile
             memberOptions: opt => opt.MapFrom(h=>h.ToList())).ReverseMap();
 
         CreateMap<Homework, GetListHomeworkResponse>()
-          .ForMember(destinationMember: response => response.OccupationClassName,
-          memberOptions: opt => opt.MapFrom(h => h.OccupationClass.Name)).ReverseMap();
+          .ForMember(destinationMember: response => response.LessonName,
+          memberOptions: opt => opt.MapFrom(h => h.Lesson.Name)).ReverseMap();
     }
 }

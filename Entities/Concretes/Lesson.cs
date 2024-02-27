@@ -23,5 +23,6 @@ public class Lesson : Entity<Guid>
     public virtual ICollection<EducationProgramLesson> EducationProgramLessons { get; set; }
     public virtual ICollection<AccountLesson>? AccountLessons { get; set; }
     public virtual ICollection<LessonLike>? LessonLikes { get; set; }
-
+    public virtual ICollection<Session>? Sessions { get; set; }
+    public virtual ICollection<Homework>? Homeworks { get; set; }
 }

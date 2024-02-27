@@ -1,6 +1,4 @@
-﻿using Entities.Concretes;
-
-namespace Business.Dtos.Responses.AccountHomeworkResponses
+﻿namespace Business.Dtos.Responses.AccountHomeworkResponses
 {
     public class DeletedAccountHomeworkResponse
     {
@@ -8,5 +6,6 @@ namespace Business.Dtos.Responses.AccountHomeworkResponses
         public Guid HomeworkId { get; set; }
         public Guid AccountId { get; set; }
         public bool Status { get; set; }
+        public string FilePath { get; set; }
     }
 }

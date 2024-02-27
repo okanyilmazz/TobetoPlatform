@@ -7,5 +7,5 @@ public class GetListAnnouncementResponse
     public string Description { get; set; }
     public DateTime AnnouncementDate { get; set; }
     public string AnnouncementTypeName { get; set; }
-
+    public Guid AnnouncementTypeId { get; set; }
 }

@@ -24,4 +24,16 @@ public class AccountSessionBusinessRules : BaseBusinessRules
             throw new BusinessException(BusinessMessages.DataNotFound);
         }
     }
+
+    public async Task IsExistsAccountSessionByAccountAndSessionId(Guid accountId, Guid sessionId)
+    {
+        var result = await _accountSessionDal.GetAsync(
+            predicate: a => a.AccountId == accountId && a.SessionId == sessionId,
+            enableTracking: false);
+
+        if (result != null)
+        {   
+            throw new BusinessException(BusinessMessages.JoinedSession);
+        }
+    }
 }

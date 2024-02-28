@@ -1,5 +1,6 @@
 ﻿using Business.Abstracts;
 using Business.Dtos.Requests.AuthRequests;
+using Business.Dtos.Requests.UserRequests;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -30,4 +31,21 @@ public class AuthController : Controller
         var registerResult = await _authService.Register(registerAuthRequest, registerAuthRequest.Password);
         return Ok(registerResult);
     }
+
+    [HttpPost("ChangePassword")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest changePasswordRequest)
+    {
+        await _authService.ChangePassword(changePasswordRequest);
+        return Ok(true);
+    }
+
+    [HttpGet("PasswordReset")]
+    public async Task<IActionResult> PasswordResetAsync([FromQuery] string email)
+    {
+        await _authService.PasswordResetAsync(email);
+        return Ok(true);
+    }
+
+    
+
 }

@@ -3,7 +3,7 @@
 public class GetListAccountActivityMapResponse
 	{
     public Guid Id { get; set; }
-    public string AccountName { get; set; }
-    public DateTime Date { get; set; }
+    public int Count { get; set; }
+    public string DateTime { get; set; }
 }
 

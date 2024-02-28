@@ -23,13 +23,13 @@ namespace DataAccess.EntityConfigurations
             builder.HasIndex(indexExpression: p => p.Name, name: "UK_Name").IsUnique();
 
 
-            builder.HasMany(oc => oc.Homeworks)
-                .WithOne(h => h.OccupationClass)
-                .HasForeignKey(h => h.OccupationClassId);
+            //builder.HasMany(oc => oc.Homeworks)
+            //    .WithOne(h => h.OccupationClass)
+            //    .HasForeignKey(h => h.OccupationClassId);
 
-            builder.HasMany(oc => oc.Sessions)
-                .WithOne(s => s.OccupationClass)
-                .HasForeignKey(h => h.OccupationClassId);
+            //builder.HasMany(oc => oc.Sessions)
+            //    .WithOne(s => s.OccupationClass)
+            //    .HasForeignKey(h => h.OccupationClassId);
 
             builder.HasMany(oc => oc.EducationProgramOccupationClasses);
             builder.HasMany(oc => oc.ExamOccupationClasses);

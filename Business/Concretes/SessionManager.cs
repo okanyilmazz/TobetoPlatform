@@ -49,7 +49,7 @@ public class SessionManager : ISessionService
             size: pageRequest.PageSize,
             predicate: s => s.AccountSessions.Any(a => a.Account.User.UserOperationClaims.Any(claim => claim.OperationClaim.Name == Roles.Instructor)),
             include: s => s
-                .Include(s => s.OccupationClass)
+                .Include(s => s.Lesson)
                 .Include(s => s.AccountSessions)
                 .ThenInclude(s => s.Account)
                 .ThenInclude(s => s.User)
@@ -66,7 +66,7 @@ public class SessionManager : ISessionService
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
             include: s => s
-            .Include(s => s.OccupationClass));
+            .Include(s => s.Lesson));
 
         var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
         return mappedSession;
@@ -77,9 +77,20 @@ public class SessionManager : ISessionService
         var session = await _sessionDal.GetAsync(
        predicate: s => s.Id == id,
        include: s => s
-       .Include(s => s.OccupationClass));
+       .Include(s => s.Lesson));
 
         var mappedSession = _mapper.Map<GetListSessionResponse>(session);
+        return mappedSession;
+    }
+
+    public async Task<IPaginate<GetListSessionResponse>> GetByLessonIdAsync(Guid lessonId)
+    {
+        var session = await _sessionDal.GetListAsync(
+            predicate: s => s.LessonId == lessonId,
+            include: s => s
+            .Include(s => s.Lesson));
+
+        var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
         return mappedSession;
     }
 

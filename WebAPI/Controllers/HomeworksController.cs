@@ -44,6 +44,17 @@ public class HomeworksController : ControllerBase
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [Cache]
+    [HttpGet("GetByLessonId")]
+    public async Task<IActionResult> GetByLessonIdAsync(Guid lessonId)
+    {
+        var result = await _homeworkService.GetByLessonIdAsync(lessonId);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
     [HttpGet("GetById")]
     public async Task<IActionResult> GetById(Guid id)
     {

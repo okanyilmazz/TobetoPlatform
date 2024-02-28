@@ -89,4 +89,29 @@ public class UsersController : ControllerBase
         var result = await _userService.DeleteAsync(deleteProductRequest);
         return Ok(result);
     }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(10)]
+    [HttpPost("GetByResetToken")]
+    public async Task<IActionResult>GetByResetTokenAsync([FromBody] ResetTokenUserRequest resetTokenUserRequest)
+    {
+        var result = await _userService.GetByResetTokenAsync(resetTokenUserRequest);
+        return Ok(result);
+    }
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(10)]
+    [HttpGet("GetByMail")]
+    public async Task<IActionResult> GetByMailAsync([FromQuery] string email)
+    {
+        var result = await _userService.GetByMailAsync(email);
+            return Ok(result);
+    }
+
+
+
+
 }

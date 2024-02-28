@@ -16,4 +16,5 @@ public interface IUserService
     Task<List<OperationClaim>> GetClaimsAsync(User user);
     Task<IPaginate<GetListUserResponse>> GetListInstructorAsync(PageRequest pageRequest);
     Task<IPaginate<GetListUserResponse>> GetListStudent(PageRequest pageRequest);
+    Task<GetUserResponse> GetByResetTokenAsync(ResetTokenUserRequest resetTokenUserRequest);
 }

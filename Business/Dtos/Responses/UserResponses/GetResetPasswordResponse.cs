@@ -1,8 +1,8 @@
-﻿
-namespace Core.Entities;
+﻿namespace Business.Dtos.Responses.UserResponses;
 
-public class User : Entity<Guid>
+public class GetResetPasswordResponse
 {
+    public Guid Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
@@ -11,5 +11,4 @@ public class User : Entity<Guid>
     public byte[] PasswordHash { get; set; }
     public string? PasswordReset { get; set; }
     public bool Status { get; set; }
-    public ICollection<UserOperationClaim> UserOperationClaims { get; set; }
 }

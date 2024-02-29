@@ -37,17 +37,14 @@ public class UserManager : IUserService
     public async Task<UpdatedUserResponse> UpdateAsync(UpdateUserRequest updateUserRequest)
     {
         await _userBusinessRules.IsExistsUser(updateUserRequest.Id);
-        GetUserResponse getUpdatedUser = await GetByIdAsync(updateUserRequest.Id);
- 
         User user = _mapper.Map<User>(updateUserRequest);
-        user.PasswordHash = getUpdatedUser.PasswordHash;
-        user.Password = getUpdatedUser.Password;
 
-        user.PasswordSalt = getUpdatedUser.PasswordSalt;
-        User updatedUser = await _userDal.UpdateAsync(user);
-        UpdatedUserResponse mappedProduct = _mapper.Map<UpdatedUserResponse>(updatedUser);
-        return mappedProduct;
+        var updatedUser = await _userDal.UpdateAsync(user);
+        UpdatedUserResponse mappedUser = _mapper.Map<UpdatedUserResponse>(updatedUser);
+        return mappedUser;
     }
+
+
 
     public async Task<DeletedUserResponse> DeleteAsync(DeleteUserRequest deleteUserRequest)
     {
@@ -101,8 +98,17 @@ public class UserManager : IUserService
 
     public async Task<GetUserResponse> GetByMailAsync(string email)
     {
-        var getUser = await _userDal.GetAsync(u => u.Email == email);
+        var getUser = await _userDal.GetAsync(u => u.Email == email,enableTracking:false);
         GetUserResponse getUserResponse = _mapper.Map<GetUserResponse>(getUser);
+        return getUserResponse;
+    }
+
+    public async Task<GetUserResponse> GetByResetTokenAsync(ResetTokenUserRequest resetTokenUserRequest)
+    {
+        await _userBusinessRules.IsExistsResetToken(resetTokenUserRequest.ResetToken);
+        User user = await _userDal.GetAsync(predicate: u => u.PasswordReset == resetTokenUserRequest.ResetToken,
+            enableTracking: false);
+        GetUserResponse getUserResponse = _mapper.Map<GetUserResponse>(user);
         return getUserResponse;
     }
 

@@ -1,11 +1,6 @@
 ﻿using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.EntityConfigurations;
 
@@ -29,7 +24,6 @@ public class LessonConfiguration : IEntityTypeConfiguration<Lesson>
 
 
         builder.HasIndex(indexExpression: l => l.Id, name: "UK_Id").IsUnique();
-        builder.HasIndex(indexExpression: l => l.Name, name: "UK_Name").IsUnique();
 
         builder.HasOne(l => l.LessonModule);
         builder.HasOne(l => l.LessonSubType);

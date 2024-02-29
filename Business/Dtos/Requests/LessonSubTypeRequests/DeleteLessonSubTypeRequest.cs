@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Business.Dtos.Requests.LessonSubTypeRequests;
 
-namespace Business.Dtos.Requests.LessonSubTypeRequests
+public class DeleteLessonSubTypeRequest
 {
-    public class DeleteLessonSubTypeRequest
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid Id { get; set; }
 }

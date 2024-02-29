@@ -23,5 +23,7 @@ public class LessonBusinessRules : BaseBusinessRules
         {
             throw new BusinessException(BusinessMessages.DataNotFound);
         }
+
     }
+      
 }

@@ -11,5 +11,5 @@ public interface IQuestionService
     Task<DeletedQuestionResponse> DeleteAsync(DeleteQuestionRequest deleteQuestionRequest);
     Task<IPaginate<GetListQuestionResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListQuestionResponse> GetByIdAsync(Guid id);
-    Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid examId);
+    Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid examId, PageRequest pageRequest);
 }

@@ -12,6 +12,6 @@ public interface IQuestionTypeService
     Task<DeletedQuestionTypeResponse> DeleteAsync(DeleteQuestionTypeRequest deleteQuestionTypeRequest);
     Task<GetListQuestionTypeResponse> GetByIdAsync(Guid id);
     Task<GetListQuestionTypeResponse> GetByQuestionIdAsync(Guid questionId);
-    Task<GetListQuestionTypeNameResponse> GetByExamIdAsync(Guid examId);
+    Task<GetListQuestionTypeNameResponse> GetByExamIdAsync(Guid examId, PageRequest pageRequest);
 
 }

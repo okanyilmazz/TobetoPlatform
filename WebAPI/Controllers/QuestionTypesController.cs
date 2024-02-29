@@ -56,9 +56,9 @@ public class QuestionTypesController : Controller
     [Logging(typeof(FileLogger))]
     [Cache]
     [HttpGet("GetByExamId")]
-    public async Task<IActionResult> GetByExamIdAsync(Guid examId)
+    public async Task<IActionResult> GetByExamIdAsync(Guid examId,[FromQuery] PageRequest pageRequest)
     {
-        var result = await _questionTypeService.GetByExamIdAsync(examId);
+        var result = await _questionTypeService.GetByExamIdAsync(examId, pageRequest);
         return Ok(result);
     }
 

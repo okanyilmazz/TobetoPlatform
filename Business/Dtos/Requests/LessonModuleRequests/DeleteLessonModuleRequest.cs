@@ -1,8 +1,7 @@
-﻿namespace Business.Dtos.Requests.LessonModuleRequests
+﻿namespace Business.Dtos.Requests.LessonModuleRequests;
+
+public class DeleteLessonModuleRequest
 {
-    public class DeleteLessonModuleRequest
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-    }
+    public Guid Id { get; set; }
+
 }

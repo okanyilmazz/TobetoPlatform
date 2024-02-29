@@ -15,7 +15,6 @@ public class AccountManager : IAccountService
 {
 
     IAccountDal _accountDal;
-
     IMapper _mapper;
     AccountBusinessRules _accountBusinessRules;
 
@@ -64,7 +63,8 @@ public class AccountManager : IAccountService
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
             include: a => a
-            .Include(a => a.User));
+            .Include(a => a.User)
+            .Include(a=> a.AccountOccupationClasses).ThenInclude(aoc => aoc.OccupationClass));
         var mappedAccountSession = _mapper.Map<Paginate<GetListAccountResponse>>(account);
         return mappedAccountSession;
     }
@@ -74,7 +74,8 @@ public class AccountManager : IAccountService
         var account = await _accountDal.GetAsync(
             predicate: a => a.Id == id,
             include: a => a
-            .Include(a => a.User));
+             .Include(a => a.User)
+            .Include(a => a.AccountOccupationClasses).ThenInclude(aoc => aoc.OccupationClass));
         var mappedAccount = _mapper.Map<GetListAccountResponse>(account);
         return mappedAccount;
     }
@@ -110,7 +111,8 @@ public class AccountManager : IAccountService
         var account = await _accountDal.GetAsync(
             predicate: a => a.Id == id,
             include: a => a
-            .Include(a => a.User));
+            .Include(a => a.User)
+            .Include(a => a.AccountOccupationClasses).ThenInclude(aoc => aoc.OccupationClass));
         var mappedAccount = _mapper.Map<GetListAccountResponse>(account);
         return mappedAccount;
     }
@@ -119,9 +121,21 @@ public class AccountManager : IAccountService
     public async Task<UpdatedAccountResponse> UpdateAsync(UpdateAccountRequest updateAccountRequest)
     {
         await _accountBusinessRules.IsExistsAccount(updateAccountRequest.Id);
+
         Account account = _mapper.Map<Account>(updateAccountRequest);
         Account updatedAccount = await _accountDal.UpdateAsync(account);
         UpdatedAccountResponse updatedAccountResponse = _mapper.Map<UpdatedAccountResponse>(updatedAccount);
         return updatedAccountResponse;
+    }
+
+    public async Task<IPaginate<GetListAccountResponse>> GetByEducationProgramIAsync(Guid educationProgramId)
+    {
+        var account = await _accountDal.GetListAsync(
+            predicate: a => a.AccountEducationPrograms.Any(epl => epl.EducationProgramId == educationProgramId),
+             include: a => a
+            .Include(a => a.AccountEducationPrograms)
+            .ThenInclude(a => a.EducationProgram));
+        var mappedAccount = _mapper.Map<Paginate<GetListAccountResponse>>(account);
+        return mappedAccount;
     }
 }

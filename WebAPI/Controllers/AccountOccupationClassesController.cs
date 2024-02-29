@@ -5,6 +5,7 @@ using Core.CrossCuttingConcerns.Logging;
 using Core.DataAccess.Paging;
 using Microsoft.AspNetCore.Mvc;
 using Business.Dtos.Requests.AccountOccupationClassRequests;
+using Microsoft.Identity.Client;
 
 namespace WebAPI.Controllers;
 
@@ -40,6 +41,21 @@ public class AccountOccupationClassesController : ControllerBase
         var result = await _accountOccupationClass.GetByIdAsync(id);
         return Ok(result);
     }
+
+
+
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountIdAndOccupationClassId")]
+    public async Task<IActionResult> GetByAccountIdAndOccupationClassId(Guid accountId, Guid occupationClassId)
+    {
+        var result = await _accountOccupationClass.GetByAccountIdAndOccupationClassId(accountId, occupationClassId);
+        return Ok(result);
+    }
+
+
 
 
     [Logging(typeof(MsSqlLogger))]

@@ -50,6 +50,7 @@ public class SessionManager : ISessionService
             predicate: s => s.AccountSessions.Any(a => a.Account.User.UserOperationClaims.Any(claim => claim.OperationClaim.Name == Roles.Instructor)),
             include: s => s
                 .Include(s => s.Lesson)
+                 .Include(s => s.OccupationClass)
                 .Include(s => s.AccountSessions)
                 .ThenInclude(s => s.Account)
                 .ThenInclude(s => s.User)
@@ -66,7 +67,9 @@ public class SessionManager : ISessionService
             index: pageRequest.PageIndex,
             size: pageRequest.PageSize,
             include: s => s
-            .Include(s => s.Lesson));
+            .Include(s => s.Lesson)
+            .Include(s=>s.OccupationClass)
+            .Include(s=>s.AccountSessions).ThenInclude(a=>a.Account).ThenInclude(a=>a.User));
 
         var mappedSession = _mapper.Map<Paginate<GetListSessionResponse>>(session);
         return mappedSession;

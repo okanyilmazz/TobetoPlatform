@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Business.Abstracts;
 using Business.Dtos.Requests.QuestionRequests;
+using Business.Dtos.Responses.AccountSkillResponses;
 using Business.Dtos.Responses.QuestionResponses;
 using Business.Rules.BusinessRules;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
+using DataAccess.Concretes;
 using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,13 +68,15 @@ public class QuestionManager : IQuestionService
         return updatedQuestionResponse;
     }
 
-    public async Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid examId)
+    public async Task<IPaginate<GetListQuestionResponse>> GetByExamIdAsync(Guid examId, PageRequest pageRequest)
     {
         var questionsList = await _questionDal.GetListAsync(
-            include: q => q.Include(e => e.ExamQuestions).ThenInclude(eq => eq.Exam));
-        var filteredQuestionList = questionsList.Items.Where(e => e.ExamQuestions.Any(s => s.ExamId == examId)).ToList();
+             index: pageRequest.PageIndex,
+             size: pageRequest.PageSize,
+             include: q => q.Include(e => e.ExamQuestions).ThenInclude(eq => eq.Exam),
+             predicate: q => q.ExamQuestions.Any(eq => eq.ExamId == examId));
 
-        var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(filteredQuestionList);
+        var mappedQuestions = _mapper.Map<Paginate<GetListQuestionResponse>>(questionsList);
         return mappedQuestions;
     }
 }

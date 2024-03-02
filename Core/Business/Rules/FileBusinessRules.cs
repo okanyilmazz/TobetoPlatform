@@ -29,4 +29,13 @@ public class FileBusinessRules : BaseBusinessRules
     {
         Directory.CreateDirectory(destinationFolderPath);
     }
+
+    public async Task CheckFileExtension(string fileName)
+    {
+        if(!fileName.Contains("png") || !fileName.Contains("pdf") || !fileName.Contains("jpg") || !fileName.Contains("jpeg"))
+        {
+            throw new BusinessException(CoreMessages.InvalidExtension);
+
+        }
+    }
 }

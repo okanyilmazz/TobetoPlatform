@@ -17,8 +17,6 @@ namespace DataAccess.EntityConfigurations
 
             builder.Property(s => s.Id).HasColumnName("Id").IsRequired();
             builder.Property(s => s.LessonId).HasColumnName("LessonId");
-            builder.Property(s => s.OccupationClassId).HasColumnName("OccupationClassId");
-
             builder.Property(s => s.StartDate).HasColumnName("StartDate");
             builder.Property(s => s.EndDate).HasColumnName("EndDate");
             builder.Property(s => s.RecordPath).HasColumnName("RecordPath");

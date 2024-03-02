@@ -16,7 +16,7 @@ namespace DataAccess.EntityConfigurations
             builder.ToTable("Sessions").HasKey(s => s.Id);
 
             builder.Property(s => s.Id).HasColumnName("Id").IsRequired();
-            builder.Property(s => s.LessonId).HasColumnName("OccupationClassId");
+            builder.Property(s => s.LessonId).HasColumnName("LessonId");
             builder.Property(s => s.StartDate).HasColumnName("StartDate");
             builder.Property(s => s.EndDate).HasColumnName("EndDate");
             builder.Property(s => s.RecordPath).HasColumnName("RecordPath");

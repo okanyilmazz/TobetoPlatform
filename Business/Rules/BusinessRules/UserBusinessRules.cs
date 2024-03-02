@@ -25,6 +25,18 @@ public class UserBusinessRules : BaseBusinessRules
         }
     }
 
+    public async Task IsExistsUserByMail(string email)
+    {
+        var result = await _userDal.GetAsync(
+            predicate: a => a.Email == email,
+            enableTracking: false);
+
+        if (result == null)
+        {
+            throw new BusinessException(BusinessMessages.DataNotFound);
+        }
+    }
+
     public async Task IsExistsUserMail(string email)
     {
         var result = await _userDal.GetAsync(

@@ -90,15 +90,17 @@ public class UserManager : IUserService
 
     public async Task<GetUserResponse> GetByIdAsync(Guid? id)
     {
-        User user = await _userDal.GetAsync(predicate: u => u.Id == id,
-            enableTracking:false);
+        User user = await _userDal.GetAsync(
+            predicate: u => u.Id == id,
+            enableTracking: false);
         GetUserResponse getUserResponse = _mapper.Map<GetUserResponse>(user);
         return getUserResponse;
     }
 
     public async Task<GetUserResponse> GetByMailAsync(string email)
     {
-        var getUser = await _userDal.GetAsync(u => u.Email == email,enableTracking:false);
+        await _userBusinessRules.IsExistsUserByMail(email);
+        var getUser = await _userDal.GetAsync(u => u.Email == email, enableTracking: false);
         GetUserResponse getUserResponse = _mapper.Map<GetUserResponse>(getUser);
         return getUserResponse;
     }

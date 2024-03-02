@@ -5,8 +5,6 @@ namespace Core.Utilities.Helpers;
 
 public class FileHelper : IFileHelper
 {
-    //Path.GetExtension --Dosya uzantısını alır
-
     FileBusinessRules _fileBusinessRules;
 
     public FileHelper(FileBusinessRules fileBusinessRules)
@@ -16,6 +14,7 @@ public class FileHelper : IFileHelper
 
     public async Task<string> Add(IFormFile file, string destinationFolderPath)
     {
+        await _fileBusinessRules.CheckFileExtension(Path.GetExtension(file.FileName));
         await _fileBusinessRules.IsExistDestinationFolder(destinationFolderPath);
         string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
         return CreateFile(file, destinationFolderPath + newFileName);
@@ -32,8 +31,6 @@ public class FileHelper : IFileHelper
         await _fileBusinessRules.CheckFileExist(oldFilePath);
         Delete(oldFilePath);
         CreateFile(file, oldFilePath);
-
-        // File.Delete(oldFilePath);
     }
 
     public string CreateFile(IFormFile file, string destinationFolderPath)

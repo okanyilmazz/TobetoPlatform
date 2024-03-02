@@ -4,6 +4,7 @@ using Business.Dtos.Requests.AccountActivityMapRequests;
 using Business.Dtos.Requests.AccountBadgeRequests;
 using Business.Dtos.Responses.AccountActivityMapResponses;
 using Business.Dtos.Responses.AccountBadgeResponses;
+using Business.Dtos.Responses.LessonResponses;
 using Core.DataAccess.Paging;
 using Entities.Concretes;
 
@@ -22,18 +23,13 @@ public class AccountActivityMapProfile : Profile
 
         CreateMap<AccountActivityMap, DeleteAccountActivityMapRequest>().ReverseMap();
         CreateMap<AccountActivityMap, DeletedAccountActivityMapResponse>().ReverseMap();
+
         CreateMap<IPaginate<AccountActivityMap>, Paginate<GetListAccountActivityMapResponse>>().ReverseMap();
 
-        CreateMap<AccountActivityMap, GetListAccountActivityMapResponse>()
-            .ForMember(destinationMember: response => response.AccountName,
-            memberOptions: opt => opt.MapFrom(ab => ab.Account.User.FirstName + " " + ab.Account.User.LastName))
-            
-            .ReverseMap();
+        CreateMap<AccountActivityMap, GetListAccountActivityMapResponse>();
 
-        CreateMap<List<AccountActivityMap>, Paginate<GetListAccountActivityMapResponse>>()
-            .ForMember(destinationMember: ab => ab.Items,
-            memberOptions: opt => opt.MapFrom(h => h.ToList())).ReverseMap();
+        CreateMap<List<GetListAccountActivityMapResponse>, Paginate<GetListAccountActivityMapResponse>>().ForMember
+      (destinationMember: a => a.Items, memberOptions: l => l.MapFrom(l => l.ToList())).ReverseMap();
 
     }
 }
-

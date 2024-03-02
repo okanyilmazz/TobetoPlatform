@@ -50,14 +50,18 @@ public class AccountActivityMapManager : IAccountActivityMapService
     public async Task<IPaginate<GetListAccountActivityMapResponse>> GetByAccountIdAsync(Guid Id)
     {
         var accountActivityMapList = await _accountActivityMapDal.GetListAsync(
-             include: ab => ab
-               .Include(ab => ab.Account)
-               .Include(ab => ab.ActivityMap)
-               );
-        var filteredAccountActivityMaps = accountActivityMapList
-            .Items.Where(ab => ab.AccountId == Id).ToList();
+            predicate: ab => ab.AccountId == Id,
+            include: ab => ab   
+            .Include(ab => ab.Account).ThenInclude(ab => ab.User)
+            .Include(ab => ab.ActivityMap));
 
-        var mappedAccountActivityMaps = _mapper.Map<Paginate<GetListAccountActivityMapResponse>>(filteredAccountActivityMaps);
+        var groupedItems = accountActivityMapList.Items
+     .GroupBy(c => c.ActivityMap.Date)
+     .Select(group => new GetListAccountActivityMapResponse {DateTime=group.Key.ToString(),Count=group.Count()})
+     .ToList();
+
+
+        var mappedAccountActivityMaps = _mapper.Map<Paginate<GetListAccountActivityMapResponse>>(groupedItems);
         return mappedAccountActivityMaps;
     }
 
@@ -67,8 +71,8 @@ public class AccountActivityMapManager : IAccountActivityMapService
         var accountActivityMap = await _accountActivityMapDal.GetAsync(
             predicate: b => b.Id == Id,
             include: ab => ab
-               .Include(ab => ab.Account)
-               .Include(ab => ab.ActivityMap)) ;
+            .Include(ab => ab.Account).ThenInclude(ab => ab.User)
+            .Include(ab => ab.ActivityMap));
         var mappedAccountActivityMap = _mapper.Map<GetListAccountActivityMapResponse>(accountActivityMap);
         return mappedAccountActivityMap;
     }
@@ -79,7 +83,7 @@ public class AccountActivityMapManager : IAccountActivityMapService
                index: pageRequest.PageIndex,
                size: pageRequest.PageSize,
                include: ab => ab
-               .Include(ab => ab.Account)
+               .Include(ab => ab.Account).ThenInclude(ab => ab.User)
                .Include(ab => ab.ActivityMap)
                );
         var mappedAccountActivityMaps = _mapper.Map<Paginate<GetListAccountActivityMapResponse>>(accountActivityMaps);

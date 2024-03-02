@@ -8,6 +8,7 @@ public interface ISessionService
 {
     Task<IPaginate<GetListSessionResponse>> GetListAsync(PageRequest pageRequest);
     Task<IPaginate<GetListSessionResponse>> GetListWithInstructorAsync(PageRequest pageRequest);
+    Task<IPaginate<GetListSessionResponse>> GetByIdWithInstructorAsync(Guid id, PageRequest pageRequest);
     Task<GetListSessionResponse> GetByIdAsync(Guid id);
     Task<CreatedSessionResponse> AddAsync(CreateSessionRequest createSessionRequest);
     Task<UpdatedSessionResponse> UpdateAsync(UpdateSessionRequest updateSessionRequest);

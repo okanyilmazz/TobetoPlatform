@@ -52,6 +52,16 @@ public class SessionsController : Controller
         return Ok(result); 
     }
 
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache(60)]
+    [HttpGet("GetByIdWithInstructor")]
+    public async Task<IActionResult> GetByIdWithInstructorAsync(Guid id,[FromQuery] PageRequest pageRequest)
+    {
+        var result = await _sessionService.GetByIdWithInstructorAsync(id,pageRequest);
+        return Ok(result);
+    }
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

@@ -10,10 +10,10 @@ public class CreateSessionRequestValidator : AbstractValidator<CreateSessionRequ
     {
 
 
-        RuleFor(s => s.StartDate).NotEmpty();
-        RuleFor(s => s.EndDate).NotEmpty();
-        RuleFor(s => s.StartDate).LessThan(s => s.EndDate);
-        RuleFor(s => s.RecordPath).NotEmpty();
+        //RuleFor(s => s.StartDate).NotEmpty();
+        //RuleFor(s => s.EndDate).NotEmpty();
+        //RuleFor(s => s.StartDate).LessThan(s => s.EndDate);
+        //RuleFor(s => s.RecordPath).NotEmpty();
 
     }
 }

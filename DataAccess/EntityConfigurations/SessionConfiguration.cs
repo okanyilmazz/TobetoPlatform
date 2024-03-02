@@ -27,6 +27,7 @@ namespace DataAccess.EntityConfigurations
                 .WithMany(s => s.Sessions)
                 .HasForeignKey(s => s.LessonId);
 
+
             builder.HasMany(s => s.AccountSessions);
 
             builder.HasQueryFilter(s => !s.DeletedDate.HasValue);

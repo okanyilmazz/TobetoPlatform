@@ -58,9 +58,9 @@ public class QuestionTypeManager : IQuestionTypeService
         return mappedQuestionType;
     }
 
-    public async Task<GetListQuestionTypeNameResponse> GetByExamIdAsync(Guid examId)
+    public async Task<GetListQuestionTypeNameResponse> GetByExamIdAsync(Guid examId, PageRequest pageRequest)
     {
-        var questions = await _questionService.GetByExamIdAsync(examId);
+        var questions = await _questionService.GetByExamIdAsync(examId, pageRequest);
         var uniqueQuestionTypes = new HashSet<string>();
 
         foreach (var question in questions.Items)

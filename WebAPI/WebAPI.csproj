@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <Folder Include="Logs\" />
+    <Folder Include="Uploads\Files\Certificates\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://json.schemastore.org/azure-iot-edge-deployment-template-4.0.json" /></VisualStudio></ProjectExtensions>

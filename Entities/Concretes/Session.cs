@@ -12,6 +12,5 @@ public class Session : Entity<Guid>
 
     public virtual ICollection<AccountSession>? AccountSessions { get; set; }
     public Lesson Lesson { get; set; }
-    public OccupationClass? OccupationClass { get; set; }
 
 }

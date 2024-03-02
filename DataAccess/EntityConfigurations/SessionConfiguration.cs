@@ -27,7 +27,6 @@ namespace DataAccess.EntityConfigurations
                 .WithMany(s => s.Sessions)
                 .HasForeignKey(s => s.LessonId);
 
-            builder.HasOne(s => s.OccupationClass);
 
             builder.HasMany(s => s.AccountSessions);
 

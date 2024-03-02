@@ -63,6 +63,7 @@ public class AccountBadgeManager : IAccountBadgeService
         return mappedAccountBadges;
     }
 
+    public async Task<GetListAccountBadgeResponse> GetByAccountAndBadgeIdAsync(Guid accountId, Guid badgeId) { var accountBadge = await _accountBadgeDal.GetAsync(predicate: b => b.AccountId == accountId && b.BadgeId == badgeId, include: ab => ab.Include(ab => ab.Account).ThenInclude(a => a.User).Include(ab => ab.Badge)); var mappedAccountBadge = _mapper.Map<GetListAccountBadgeResponse>(accountBadge); return mappedAccountBadge; }
 
     public async Task<GetListAccountBadgeResponse> GetByIdAsync(Guid Id)
     {

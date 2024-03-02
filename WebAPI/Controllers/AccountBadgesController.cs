@@ -44,6 +44,16 @@ public class AccountBadgesController : ControllerBase
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]
     [Cache]
+    [HttpGet("GetByAccountAndBadgeId")]
+    public async Task<IActionResult> GetByAccountAndBadgeIdAsync(Guid accountId, Guid badgeId)
+    {
+        var result = await _accountBadgeService.GetByAccountAndBadgeIdAsync(accountId, badgeId);
+        return Ok(result);
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
     [HttpGet("GetByAccountId")]
     public async Task<IActionResult> GetByAccountIdAsync(Guid id)
     {

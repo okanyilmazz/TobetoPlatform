@@ -12,4 +12,5 @@ public interface IAccountBadgeService
     Task<GetListAccountBadgeResponse> GetByIdAsync(Guid Id);
     Task<IPaginate<GetListAccountBadgeResponse>> GetListAsync(PageRequest pageRequest);
     Task<IPaginate<GetListAccountBadgeResponse>> GetByAccountIdAsync(Guid Id);
+    Task<GetListAccountBadgeResponse> GetByAccountAndBadgeIdAsync(Guid accountId, Guid badgeId);
 }

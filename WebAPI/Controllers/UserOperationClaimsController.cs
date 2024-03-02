@@ -65,5 +65,29 @@ namespace WebAPI.Controllers
             var result = await _userOperationClaimService.UpdateAsync(updateUserOperationClaimRequest);
             return Ok(result);
         }
+
+
+
+        [Logging(typeof(MsSqlLogger))]
+        [Logging(typeof(FileLogger))]
+        [Cache(60)]
+        [HttpGet("GetByUserIdAndOperationClaimId")]
+        public async Task<IActionResult> GetByUserIdAndOperationClaimId(Guid userId, Guid operationClaimId)
+        {
+            var result = await _userOperationClaimService.GetByUserIdAndOperationClaimId(userId, operationClaimId);
+            return Ok(result);
+        }
+
+
+        [Logging(typeof(MsSqlLogger))]
+        [Logging(typeof(FileLogger))]
+        [Cache(60)]
+        [HttpGet("GetByUserId")]
+        public async Task<IActionResult> GetByUserId(Guid userId )
+        {
+            var result = await _userOperationClaimService.GetByUserId(userId);
+            return Ok(result);
+        }
+        
     }
 }

@@ -32,7 +32,13 @@ public class AccountProfile : Profile
             memberOptions: a => a.MapFrom(a => a.User.LastName))
             .ForMember(destinationMember: response => response.Email,
             memberOptions: a => a.MapFrom(a => a.User.Email))
-            .ReverseMap();
+         .ForMember(dest => dest.OccupationClassName, opt => opt.MapFrom
+         (src => string.Join(", ", src.AccountOccupationClasses.Select(aoc => aoc.OccupationClass.Name))))
+           .ForMember(dest => dest.OccupationClassId, opt => opt.MapFrom
+         (src => string.Join(", ", src.AccountOccupationClasses.Select(aoc => aoc.OccupationClass.Id))));
+
+
+
         CreateMap<IPaginate<Account>, Paginate<GetListAccountResponse>>().ReverseMap();
 
         CreateMap<List<Account>, Paginate<GetListAccountResponse>>().ForMember(destinationMember: h => h.Items,

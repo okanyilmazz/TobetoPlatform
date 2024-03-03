@@ -5,5 +5,5 @@ public class UpdateAccountEducationProgramRequest
     public Guid Id { get; set; }
     public Guid AccountId { get; set; }
     public Guid EducationProgramId { get; set; }
-    public int StatusPercent { get; set; }
+    public double StatusPercent { get; set; }
 }

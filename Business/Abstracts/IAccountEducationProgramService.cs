@@ -11,4 +11,6 @@ public interface IAccountEducationProgramService
     Task<DeletedAccountEducationProgramResponse> DeleteAsync(DeleteAccountEducationProgramRequest deleteAccountEducationProgramRequest);
     Task<IPaginate<GetListAccountEducationProgramResponse>> GetListAsync(PageRequest pageRequest);
     Task<GetListAccountEducationProgramResponse> GetByIdAsync(Guid id);
+    Task<IPaginate<GetListAccountEducationProgramResponse>> GetByAccountIdAsync(Guid accountId);
+    Task<GetListAccountEducationProgramResponse> GetByAccountIdAndEducationProgramIdAsync(Guid accountId, Guid educationProgramId);  
 }

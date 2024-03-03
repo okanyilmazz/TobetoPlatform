@@ -17,8 +17,6 @@ namespace DataAccess.EntityConfigurations
 
             builder.Property(s => s.Id).HasColumnName("Id").IsRequired();
             builder.Property(s => s.LessonId).HasColumnName("LessonId");
-            builder.Property(s => s.OccupationClassId).HasColumnName("OccupationClassId");
-
             builder.Property(s => s.StartDate).HasColumnName("StartDate");
             builder.Property(s => s.EndDate).HasColumnName("EndDate");
             builder.Property(s => s.RecordPath).HasColumnName("RecordPath");
@@ -29,7 +27,6 @@ namespace DataAccess.EntityConfigurations
                 .WithMany(s => s.Sessions)
                 .HasForeignKey(s => s.LessonId);
 
-            builder.HasOne(s => s.OccupationClass);
 
             builder.HasMany(s => s.AccountSessions);
 

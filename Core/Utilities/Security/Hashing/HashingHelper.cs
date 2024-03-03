@@ -25,7 +25,8 @@ public class HashingHelper
             {
                 if (computedHash[i] != passwordHash[i]) //Password ve RePassword eşleşmiyorsa
                 {
-                    return false;
+                    throw new BusinessException(Messages.CoreMessages.UserNotFound);
+
                 }
             }
             return true;

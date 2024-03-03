@@ -40,6 +40,28 @@ public class AccountEducationProgramManager : IAccountEducationProgramService
         return deletedAccountEducationProgrameResponse;
     }
 
+    public async Task<IPaginate<GetListAccountEducationProgramResponse>> GetByAccountIdAsync(Guid accountId)
+    {
+        var accountEducationProgram = await _accountEducationProgramDal.GetListAsync(
+           predicate: a => a.AccountId == accountId,
+           include: ah => ah
+           .Include(ah => ah.Account).ThenInclude(a => a.User)
+           .Include(ah => ah.EducationProgram));
+        var mappedAccountEducationProgram = _mapper.Map<IPaginate<GetListAccountEducationProgramResponse>>(accountEducationProgram);
+        return mappedAccountEducationProgram;
+    }
+
+    public async Task<GetListAccountEducationProgramResponse> GetByAccountIdAndEducationProgramIdAsync(Guid accountId, Guid educationProgramId)
+    {
+        var accountEducationProgram = await _accountEducationProgramDal.GetAsync(
+           predicate: a => a.AccountId == accountId && a.EducationProgramId == educationProgramId,
+           include: ah => ah
+           .Include(ah => ah.Account).ThenInclude(a => a.User)
+           .Include(ah => ah.EducationProgram));
+        var mappedAccountEducationProgram = _mapper.Map<GetListAccountEducationProgramResponse>(accountEducationProgram);
+        return mappedAccountEducationProgram;
+    }
+
     public async Task<GetListAccountEducationProgramResponse> GetByIdAsync(Guid id)
     {
         var accountEducationProgram = await _accountEducationProgramDal.GetAsync(

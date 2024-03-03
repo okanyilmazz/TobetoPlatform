@@ -20,10 +20,7 @@ public class EducationProgramProfile : Profile
 
         CreateMap<IPaginate<EducationProgram>, Paginate<GetListEducationProgramResponse>>().ReverseMap();
 
-        CreateMap<EducationProgram, GetListEducationProgramResponse>()
-            .ForMember(destinationMember: response => response.BadgeName,
-            memberOptions: opt => opt.MapFrom(ep => ep.Badge.ThumbnailPath))
-            .ReverseMap();
+        CreateMap<EducationProgram, GetListEducationProgramResponse>().ReverseMap();
 
         CreateMap<List<EducationProgram>, Paginate<GetListEducationProgramResponse>>()
             .ForMember(destinationMember: p => p.Items,

@@ -1,5 +1,6 @@
 ﻿using Business.Abstracts;
 using Business.Dtos.Requests.AccountEducationProgramRequests;
+using Business.Dtos.Responses.AccountEducationProgramResponses;
 using Business.Rules.ValidationRules.FluentValidation.AccountEducationProgramValidators;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Logging;
@@ -41,6 +42,27 @@ public class AccountEducationProgramsController : ControllerBase
         var result = await _accountEducationProgramService.GetByIdAsync(id);
         return Ok(result);
     }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountId")]
+    public async Task<IActionResult> GetByAccountIdAsync(Guid accountId)
+    {
+        var result = await _accountEducationProgramService.GetByAccountIdAsync(accountId);
+        return Ok(result);
+    }
+
+    [Logging(typeof(MsSqlLogger))]
+    [Logging(typeof(FileLogger))]
+    [Cache]
+    [HttpGet("GetByAccountIdAndEducationProgramId")]
+    public async Task<IActionResult> GetByAccountIdAndEducationProgramIdAsync(Guid accountId, Guid educationProgramId)
+    {
+        var result = await _accountEducationProgramService.GetByAccountIdAndEducationProgramIdAsync(accountId,educationProgramId);
+        return Ok(result);
+    }
+
 
     [Logging(typeof(MsSqlLogger))]
     [Logging(typeof(FileLogger))]

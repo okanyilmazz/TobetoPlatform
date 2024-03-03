@@ -9,6 +9,6 @@ public class UpdateAccountRequest
     public string Description { get; set; }
     public DateTime BirthDate { get; set; }
     public string? ProfilePhotoPath { get; set; }
-    public Guid OccupationClassId { get; set; }
+    //public Guid OccupationClassId { get; set; }
 
 }

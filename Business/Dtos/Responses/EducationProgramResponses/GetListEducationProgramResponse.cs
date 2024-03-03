@@ -12,7 +12,7 @@ public class GetListEducationProgramResponse
     public DateTime StartDate { get; set; }
     public DateTime Deadline { get; set; }
 
+    public Guid BadgeId { get; set; }
     public Guid EducationProgramLevelId { get; set; }
     public Guid EducationProgramDevelopmentId { get; set; }
-    public string BadgeName { get; set; }
 }

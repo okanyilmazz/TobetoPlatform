@@ -5,5 +5,5 @@ public class GetListAccountEducationProgramResponse
     public Guid Id { get; set; }
     public string AccountName { get; set; }
     public string EducationProgramName { get; set; }
-    public int StatusPercent { get; set; }
+    public double StatusPercent { get; set; }
 }

@@ -24,7 +24,7 @@ public class AccountEducationProgramProfile : Profile
             .ForMember(destinationMember: response => response.EducationProgramName,
             memberOptions: opt => opt.MapFrom(aep => aep.EducationProgram.Name))
             .ForMember(destinationMember: response => response.AccountName,
-            memberOptions: opt => opt.MapFrom(aep => aep.Account.User.FirstName))
+            memberOptions: opt => opt.MapFrom(aep => aep.Account.User.FirstName + " " + aep.Account.User.LastName))
             .ReverseMap();
     }
 }

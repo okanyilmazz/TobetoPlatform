@@ -40,8 +40,9 @@ public class SessionProfile : Profile
         var accountNames = src.Lesson.EducationProgramLessons
             .SelectMany(epl => epl.EducationProgram.EducationProgramOccupationClasses
                 .SelectMany(epoc => epoc.OccupationClass.AccountOccupationClasses
-                    .Select(aoc => aoc.Account.User.FirstName)));
+                    .Select(aoc => aoc.Account.User.FirstName+ " " + aoc.Account.User.LastName)));
 
         return string.Join(", ", accountNames);
     }
+
 }

@@ -47,7 +47,7 @@ public class AccountEducationProgramManager : IAccountEducationProgramService
            include: ah => ah
            .Include(ah => ah.Account).ThenInclude(a => a.User)
            .Include(ah => ah.EducationProgram));
-        var mappedAccountEducationProgram = _mapper.Map<IPaginate<GetListAccountEducationProgramResponse>>(accountEducationProgram);
+        var mappedAccountEducationProgram = _mapper.Map<Paginate<GetListAccountEducationProgramResponse>>(accountEducationProgram);
         return mappedAccountEducationProgram;
     }
 
